@@ -2,7 +2,7 @@
 
 eval $(cat ~/.fehbg) &
 kmix --keepvisibility &
-compton -b -C -G --config ~/.conpton.conf &
+compton -b -C -G --config ~/.compton.conf &
 /usr/lib64/kde4/libexec/polkit-kde-authentication-agent-1 &
 
 ibus-daemon -dx &
