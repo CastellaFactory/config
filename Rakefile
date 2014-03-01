@@ -132,6 +132,7 @@ namespace :linux do
     make_symlink 'dotfiles/dot.xprofile', "#{home}/.xprofile"
     make_symlink 'dotfiles/dot.Xresources', "#{home}/.Xresources"
     make_symlink 'dotfiles/dot.xsession', "#{home}/.xsession"
+    make_symlink 'dotfiles/dot.compton.conf', "#{home}/.compton.conf"
   end
 
 end
