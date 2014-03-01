@@ -1,1 +1,1 @@
-feh  --bg-scale '$HOME/.local/share/wallpapers/1920.jpg' 
+feh --no-fehbg --bg-scale ~/.local/share/wallpapers/xmonad.png

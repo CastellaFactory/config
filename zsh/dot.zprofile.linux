@@ -7,6 +7,3 @@ if [ -e /etc/profile.d/autojump.zsh ]; then
 fi
 
 export AUTOJUMP_IGNORE_CASE=1
-
-source $HOME/.zshenv
-
