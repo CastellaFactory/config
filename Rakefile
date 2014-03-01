@@ -131,6 +131,7 @@ namespace :linux do
   task :X do
     make_symlink 'dotfiles/dot.xprofile', "#{home}/.xprofile"
     make_symlink 'dotfiles/dot.Xresources', "#{home}/.Xresources"
+    make_symlink 'dotfiles/dot.xsession', "#{home}/.xsession"
   end
 
 end
