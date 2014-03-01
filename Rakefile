@@ -72,7 +72,9 @@ namespace :common do
 
     next unless installed? 'git'
     chdir "#{home}/.zsh/plugins" do
-      sh "git clone git://github.com/zsh-users/zaw.git"
+		unless File.directory? "#{home}/.zsh/plugins/zaw"
+			sh "git clone git://github.com/zsh-users/zaw.git"
+		end
     end
   end
 
