@@ -275,7 +275,7 @@ defaults = defaultConfig {
            , ((myModMask .|. shiftMask, xK_a), runOrRaise "emacs" (className =? "Emacs"))
 
            , ((myModMask, xK_e), spawn "gvim")
-           , ((myModMask .|. shiftMask, xK_e), spawn "gvim -u ~/.vimrc_practice -N")
+           , ((myModMask .|. shiftMask, xK_e), spawn "gvim -u ~/.vim/vimrc_practice -N")
 
              -- Magnifier
            , ((myModMask .|. controlMask , xK_semicolon), sendMessage Mag.MagnifyMore)
