@@ -28,7 +28,7 @@ def installed?(name)
 end
 
 def make_symlink(src, dest) 
-  ln_s "#{$this_script_dir}/#{src}", dest
+  ln_sf "#{$this_script_dir}/#{src}", dest
 end
 
 
@@ -43,7 +43,7 @@ namespace :common do
   task :vim do
     unless File.directory? "#{home}/.vim"
       mkdir "#{home}/.vim"
-      ln_s "#{home}/.vim", "#{home}/vim"
+      ln_sf "#{home}/.vim", "#{home}/vim"
       mkdir "#{home}/.vim/undo"
       mkdir "#{home}/.vim/backups"
     end
