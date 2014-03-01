@@ -26,8 +26,8 @@ urxvt.depth: 32
 urxvt*font: xft:Meslo LG M for Powerline:size=12:bold:antialias=true
 urxvt*inheritPixmap: True
 urxvt.transparent: true
-urxvt*shading: 70
-URxvt.fading: 50
+urxvt*shading: 45
+URxvt.fading: 30
 urxvt*scrollBar: false
 ! urxvt*scrollBar_floating: true
 ! urxvt*scrollBar_right: true
