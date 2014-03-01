@@ -1,0 +1,11 @@
+{
+	"name": "color scheme for terminal prompts",
+	"groups": {
+		"background:divider": { "fg": "gray5", "bg": "gray0" },
+		"session": { "fg": "black", "bg": "gray10", "attr": ["bold"] },
+		"date": { "fg": "gray10", "bg": "gray2", "attr": ["bold"] },
+		"time": { "fg": "gray10", "bg": "gray2", "attr": ["bold"] },
+		"time:divider": { "fg": "gray5", "bg": "gray2" },
+		"environment": { "fg": "gray8", "bg": "gray0" }
+	}
+}

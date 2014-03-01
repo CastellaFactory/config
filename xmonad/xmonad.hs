@@ -1,0 +1,284 @@
+----------------------------------------------------------------------
+-- XMonad config
+----------------------------------------------------------------------
+
+import qualified Data.Map as M
+import qualified XMonad.StackSet as W
+import Data.Monoid
+import System.Exit
+import XMonad
+import XMonad.Actions.WindowGo
+-- import XMonad.Prompt
+-- import XMonad.Prompt.Shell
+import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops
+-- import XMonad.Hooks.FadeWindows
+-- import XMonad.Hooks.FadeInactive
+import XMonad.Hooks.SetWMName
+-- import XMonad.Hooks.ICCCMFocus
+-- import XMonad.Hooks.UrgencyHook
+-- import XMonad.Hooks.ManageHelpers
+-- import XMonad.Layout
+import XMonad.Layout.LayoutHints
+import XMonad.Layout.NoBorders
+import qualified XMonad.Layout.Fullscreen as F
+import XMonad.Layout.MultiToggle
+import XMonad.Layout.MultiToggle.Instances
+import qualified XMonad.Layout.Magnifier as Mag
+import XMonad.Util.EZConfig
+-- import XMonad.Util.Run
+-- import System.IO
+import Control.Monad (liftM2)
+
+-- mySetting
+myTerminal          :: String
+myTerminal          = "urxvt"
+myFocusFollowsMouse :: Bool
+myFocusFollowsMouse = False
+myClickJustFocuses  :: Bool
+myClickJustFocuses  = False
+myBorderWidth       = 1
+myModMask           :: KeyMask
+myModMask           = mod4Mask
+myWorkspaces        :: [String]
+myWorkspaces        = ["1:General","2:Web","3:Code","4:Skype","5:Mikutter","6:Reading","7:Media","8:Office","9"]
+myNormalBorderColor :: String
+myNormalBorderColor = "#99ccff"
+myFocuseBorderColor :: String
+myFocuseBorderColor = "#0033dd"
+
+
+
+------------------------------------------------------------------------
+-- Key bindings. Add, modify or remove key bindings here.
+--
+myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
+myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
+
+  -- ターミナル起動(Win+Shift+RET)
+  [((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
+
+  -- dmenu起動(Win+p)
+  , ((modm,               xK_p     ), spawn "dmenu_run -fn 'CodeM-11'")
+
+    -- gmrun起動(Win+Shift+p)
+  , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
+
+    -- フォーカスしているウィンドウを閉じる(Win+Shift+c)
+  , ((modm .|. shiftMask, xK_c     ), kill)
+
+    -- レイアウト切り替える(Win+Space)
+  , ((modm,               xK_space ), sendMessage NextLayout)
+
+    --  レイアウトをリセット(Win+Shift+Space)
+  , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
+
+    -- ウィンドウをリフレッシュ(Win+n)
+  , ((modm,               xK_n     ), refresh)
+
+    -- 次のウィンドウにフォーカスを移す(Win+Tab)
+  , ((modm,               xK_Tab   ), windows W.focusDown)
+
+    -- 次のウィンドウにフォーカスを移す(Win+j)
+  , ((modm,               xK_j     ), windows W.focusDown)
+
+    -- 前のウィンドウにフォーカスを移す(Win+k)
+  , ((modm,               xK_k     ), windows W.focusUp  )
+
+    -- マスターウィンドウにフォーカスを移す(Win+m)
+  , ((modm,               xK_m     ), windows W.focusMaster  )
+
+    -- マスターウィンドウとフォーカスウィンドウを入れ替える(Win+RET)
+  , ((modm,               xK_Return), windows W.swapMaster)
+
+    -- Swap the focused window with the next window(Win+Shift+j)
+  , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
+
+    -- Swap the focused window with the previous window(Win+Shift+k)
+  , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
+
+    -- マスターエリアを縮める(Win+h)
+  , ((modm,               xK_h     ), sendMessage Shrink)
+
+    --マスターエリアを広げる(Win+l)
+  , ((modm,               xK_l     ), sendMessage Expand)
+
+    -- Push window back into tiling(Win+t)
+  , ((modm,               xK_t     ), withFocused $ windows . W.sink)
+
+    -- Increment the number of windows in the master area(Win+,)
+  , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
+
+    -- Deincrement the number of windows in the master area(Win+.)
+  , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
+
+    -- XMonadを終了(Win+Shift+q)
+  , ((modm .|. shiftMask, xK_q     ), io exitSuccess)
+
+    -- XMonadを再起動(Win+q)
+  , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")]
+
+
+  ++
+
+--
+-- mod-[1..9], Switch to workspace N
+-- mod-shift-[1..9], Move client to workspace N
+--
+  [((m .|. modm, k), windows $ f i)
+  | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
+  , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+  ++
+
+--
+-- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
+-- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
+--
+  [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
+  | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+  , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+
+
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+-- Mouse bindings: default actions bound to mouse events
+--
+myMouseBindings :: XConfig t -> M.Map (KeyMask, Button) (Window -> X())
+myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList
+
+-- mod-button1, Set the window to floating mode and move by dragging
+  [
+  ((modm, button1), \w -> focus w >> mouseMoveWindow w
+                          >> windows W.shiftMaster)
+
+-- mod-button2, Raise the window to the top of the stack
+  , ((modm, button2), \w -> focus w >> windows W.shiftMaster)
+
+-- mod-button3, Set the window to floating mode and resize by dragging
+  , ((modm, button3), \w -> focus w >> mouseResizeWindow w
+                            >> windows W.shiftMaster)
+
+-- you may also bind events to the mouse scroll wheel (button4 and button5)
+  ]
+
+
+------------------------------------------------------------------------
+-- Layouts:
+-- フルスクリーンにするにはWin+F
+
+myLayout = layoutHints
+           $ smartBorders $ Mag.magnifiercz 1.2
+           $ mkToggle (NOBORDERS ?? FULL ?? EOT)
+           $ Tall 1 (3/100) (1/2) ||| Mirror (Tall 1 (3/100) (1/2))
+
+
+------------------------------------------------------------------------
+-- Window rules:
+-- ウィンドウ作成時のデフォルトワークスペース，フローティングの設定
+myManageHook :: Query (Endo WindowSet)
+myManageHook = manageDocks <+> F.fullscreenManageHook 
+               <+> composeAll
+               [ className =? "MPlayer"                               --> doFloat
+               , className =? "Smplayer"                              --> doFloat
+               , className =? "Kmix"                                  --> doFloat
+               , className =? "Firefox"                               --> viewShift "2:Web"
+               , className =? "Thunderbird"                           --> viewShift "2:Web"
+               , className =? "Mikutter.rb"                           --> viewShift "5:Mikutter"
+               , className =? "Chromium-browser"                      --> viewShift "2:Web"
+                 --             , className =? "Gvim"                 --> viewShift "3:Code"
+                 --             , className =? "Emacs"                --> viewShift "3:Code"
+               , className =? "Skype"                                 --> doShift "4:Skype"
+               , className =? "Skype"                                 --> doFloat
+               , className =? "Calibre-gui"                           --> viewShift "6:Reading"
+               , className =? "Calibre-ebook-viewer"                  --> viewShift "6:Reading"
+               , className =? "Calibre-ebook-viewer"                  --> doFloat
+               , className =? "Audacious"                             --> doShift "7:Media"
+               , className =? "Audacious"                             --> doFloat
+               , (className =? "Firefox" <&&> resource =? "Download") --> doFloat
+               , title =? "Minecraft 1.6.4"                           --> doFloat
+               , resource  =? "desktop_window"                        --> doIgnore
+               , resource  =? "kdesktop"                              --> doIgnore
+               ]
+  where viewShift = doF . liftM2 (.) W.view W.shift
+-- viewShift...起動してワークスペースを切り替える
+
+
+----------------------------------------------------------------------
+-- Event handling
+myEventHook :: Event -> X All
+myEventHook = F.fullscreenEventHook <+> hintsEventHook
+
+
+------------------------------------------------------------------------
+-- Status bars and logging
+myLogHook :: X ()
+myLogHook  = ewmhDesktopsLogHook
+
+
+------------------------------------------------------------------------
+-- Startup hook
+myStartupHook :: X ()
+myStartupHook = setWMName "LG3D"
+
+
+------------------------------------------------------------------------
+-- xmobar
+myBar :: String
+myBar = "xmobar"
+myPP :: PP
+-- Hintedは非表示にする length "Hinted " --> 7
+myPP = xmobarPP { ppCurrent = xmobarColor "#429942" "" . wrap "[" "]",
+                  ppSep = " : ",
+                  ppLayout = drop 7
+       }
+toggleStrutsKey XConfig {XMonad.modMask = modm} = (modm, xK_b)
+
+
+------------------------------------------------------------------------
+main :: IO ()
+main = xmonad =<< statusBar myBar myPP toggleStrutsKey defaults
+
+defaults = defaultConfig {
+                         -- simple stuff
+                         terminal           = myTerminal,
+                         focusFollowsMouse  = myFocusFollowsMouse,
+                         clickJustFocuses   = myClickJustFocuses,
+                         borderWidth        = myBorderWidth,
+                         modMask            = myModMask,
+                         workspaces         = myWorkspaces,
+                         normalBorderColor  = myNormalBorderColor,
+                         focusedBorderColor = myFocuseBorderColor,
+
+                         -- key bindings
+                         keys               = myKeys,
+                         mouseBindings      = myMouseBindings,
+
+                         -- hooks, layouts
+                         layoutHook         = myLayout,
+                         manageHook         = myManageHook ,
+                         handleEventHook    = myEventHook,
+                         logHook            = myLogHook,
+                         startupHook        = myStartupHook
+                         }
+
+
+           `additionalKeys`
+           [
+             ((myModMask, xK_f), sendMessage $ Toggle FULL)
+
+             -- アプリケーションを起動
+           , ((myModMask, xK_o), runOrRaise "firefox" (className =? "Firefox"))
+           , ((myModMask .|. shiftMask, xK_o), runOrRaise "thunderbird" (className =? "Thunderbird"))
+
+           , ((myModMask, xK_a), runOrRaise "dolphin" (className =? "Dolphin"))
+           , ((myModMask .|. shiftMask, xK_a), runOrRaise "emacs" (className =? "Emacs"))
+
+           , ((myModMask, xK_e), spawn "gvim")
+           , ((myModMask .|. shiftMask, xK_e), spawn "gvim -u ~/.vimrc_practice -N")
+
+             -- Magnifier
+           , ((myModMask .|. controlMask , xK_semicolon), sendMessage Mag.MagnifyMore)
+           , ((myModMask .|. controlMask , xK_colon), sendMessage Mag.MagnifyLess)
+           , ((myModMask .|. controlMask , xK_z ), sendMessage Mag.Toggle )
+           ]

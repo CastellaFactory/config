@@ -1,0 +1,12 @@
+[user]
+	name = CastellaFactory
+	email = castellafactory@gmail.com
+[core]
+	editor = vim
+	excludesfile = ~/.gitignore
+[color]
+	ui = true
+[push]
+	default = simple
+[github]
+	user = CastellaFactory

@@ -1,0 +1,22 @@
+# Editor's backup file
+.\#*
+.*.sw?
+.sw?
+
+# C and C++
+*.o
+*.a
+*.lib
+*.so
+*.dylib
+*.pch
+*.dSYM
+a.out
+
+# Haskell
+*.hi
+
+# Platform
+.DS_Store
+.directory
+Thumbs.db

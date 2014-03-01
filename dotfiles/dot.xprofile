@@ -1,0 +1,16 @@
+#!/bin/sh
+
+export XMODIFIERS="@im=ibus"
+export GTK_IM_MODULE="ibus"
+export QT_IM_MODULE="ibus" 
+ibus-daemon -dx &
+dropbox &
+SpiderOak &
+
+xset -b
+
+xrdb -merge ~/.vim/bundle/base16-xresources/base16-ocean.dark.xresources
+xrdb -merge ~/.Xresources
+
+
+xmodmap ~/.Xmodmap
