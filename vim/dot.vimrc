@@ -336,9 +336,9 @@ if g:is_linux_p
 endif
 
 " edit vimrc and reload
-nnoremap <Space>.   :<C-u>edit ~/repo/vimrc/dot.vimrc<CR>
-nnoremap <Space>t.  :<C-u>tabnew ~/repo/vimrc/dot.vimrc<CR>
-nnoremap <Space>s.  :<C-u>source ~/repo/vimrc/dot.vimrc<CR>
+nnoremap <Space>.   :<C-u>edit ~/.vim/vimrc<CR>
+nnoremap <Space>t.  :<C-u>tabnew ~/.vim/vimrc<CR>
+nnoremap <Space>s.  :<C-u>source ~/.vim/vimrc<CR>
 " 2}}}
 " Insert-mode keymapping  " {{{2
 inoremap <C-p> <Up>
