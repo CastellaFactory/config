@@ -41,7 +41,8 @@ NeoBundleLazy 'Valloric/YouCompleteMe', {
             \       'unix' : 'git submodule update --init --recursive && ./install.sh --clang-completer --system-libclang',
             \       'mac' : 'git submodule update --init --recursive && ./install.sh --clang-completer'},
             \   'autoload' : {'insert' : 1, 'commands' : ['YcmCompleter']} }
-NeoBundleLazy 'SirVer/ultisnips', { 'autoload' : {'on_source' : ['YouCompleteMe']} }
+" NeoBundleLazy 'SirVer/ultisnips', { 'autoload' : {'on_source' : ['YouCompleteMe']} }
+NeoBundle 'SirVer/ultisnips'
 NeoBundleLazy 'eagletmt/neco-ghc', {
             \   'autoload' : {'filetypes' : ['haskell']} }
 " 2}}}
@@ -335,10 +336,10 @@ if g:is_linux_p
     nnoremap : ;
 endif
 
-" edit vimrc and reload
-nnoremap <Space>.   :<C-u>edit ~/.vim/vimrc<CR>
-nnoremap <Space>t.  :<C-u>tabnew ~/.vim/vimrc<CR>
-nnoremap <Space>s.  :<C-u>source ~/.vim/vimrc<CR>
+" edit vimrc and reload (don't use $MYVIMRC)
+nnoremap <Space>.   :<C-u>edit ~/repo/config/vim/dot.vimrc<CR>
+nnoremap <Space>t.  :<C-u>tabnew ~/repo/config/vim/dot.vimrc<CR>
+nnoremap <Space>s.  :<C-u>source ~/repo/config/vim/dot.vimrc<CR>
 " 2}}}
 " Insert-mode keymapping  " {{{2
 inoremap <C-p> <Up>
@@ -529,11 +530,6 @@ let g:UltiSnipsJumpForwardTrigger = '<C-k>'
 let g:UltiSnipsJumpBackwardTrigger = '<M-k>'
 let g:snips_author = 'Castella'
 
-let s:bundle = neobundle#get('ultisnips')
-function! s:bundle.hooks.on_post_source(bundle)
-    call UltiSnips#FileTypeChanged()
-endfunction
-unlet s:bundle
 " 2}}}
 " unite  " {{{2
 nnoremap <Space>ub  :<C-u>Unite buffer_tab<CR>
