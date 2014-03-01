@@ -48,9 +48,9 @@ namespace :common do
       mkdir "#{home}/.vim/backups"
     end
 
-    make_symlink 'vim/dot.vimrc', "#{home}/.vim/.vimrc"
-    make_symlink 'vim/dot.gvimrc', "#{home}/.vim/.gvimrc"
-    make_symlink 'vim/dot.vimrc_practice', "#{home}/.vim/.vimrc_practice"
+    make_symlink 'vim/dot.vimrc', "#{home}/.vim/vimrc"
+    make_symlink 'vim/dot.gvimrc', "#{home}/.vim/gvimrc"
+    make_symlink 'vim/dot.vimrc_practice', "#{home}/.vim/vimrc_practice"
     
     next unless installed? 'git'
     unless File.directory? "#{home}/.vim/bundle"
