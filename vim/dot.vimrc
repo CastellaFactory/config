@@ -386,11 +386,7 @@ nmap <Leader>ca <Plug>(caw:a:toggle)
 nmap <Leader>cw <Plug>(caw:wrap:toggle)
 " 2}}}
 " colorsceme  " {{{2
-if !has('gui_running')
-    set t_Co=256
-endif
 set background=dark
-
 syntax enable
 "colorscheme base16-ocean
 colorscheme iceberg
