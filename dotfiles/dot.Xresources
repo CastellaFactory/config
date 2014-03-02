@@ -24,7 +24,7 @@ Xft.hintstyle: hintslight
 !! urxvt
 urxvt.depth: 32
 urxvt*font: xft:Meslo LG M for Powerline:size=12:bold:antialias=true
-urxvt*inheritPixmap: True
+! urxvt*inheritPixmap: True
 urxvt.transparent: true
 urxvt*shading: 45
 URxvt.fading: 30
