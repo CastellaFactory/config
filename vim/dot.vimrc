@@ -40,9 +40,9 @@ NeoBundleLazy 'Valloric/YouCompleteMe', {
             \   'build' : {
             \       'unix' : 'git submodule update --init --recursive && ./install.sh --clang-completer --system-libclang',
             \       'mac' : 'git submodule update --init --recursive && ./install.sh --clang-completer'},
-            \   'autoload' : {'insert' : 1, 'commands' : ['YcmCompleter']} }
-" NeoBundleLazy 'SirVer/ultisnips', { 'autoload' : {'on_source' : ['YouCompleteMe']} }
-NeoBundle 'SirVer/ultisnips'
+            \   'autoload' : {'insert' : 1, 'commands' : ['YcmCompleter']},
+            \   'augroup' : 'youcompletemeStart'}
+NeoBundleLazy 'SirVer/ultisnips', {'autoload' : {'functions' : ['UltiSnips#FileTypeChanged']}}
 NeoBundleLazy 'eagletmt/neco-ghc', {
             \   'autoload' : {'filetypes' : ['haskell']} }
 " 2}}}
@@ -81,10 +81,7 @@ NeoBundleLazy 'junegunn/vim-easy-align', {
             \   'autoload' : {'mappings' : ['<Plug>(EasyAlign)']} }
 " 2}}}
 " Quickrun  " {{{2
-NeoBundleLazy 'thinca/vim-quickrun', {
-            \   'autoload' : {
-            \       'commands' : [{'name' : 'QuickRun', 'complete' : 'customlist,quickrun#complete'}],
-            \       'mappings' : ['<Plug>(quickrun)']}}
+NeoBundle 'thinca/vim-quickrun'
 " 2}}}
 " Filetype  " {{{2
 " C/C++
@@ -529,7 +526,17 @@ let g:UltiSnipsExpandTrigger = '<C-k>'
 let g:UltiSnipsJumpForwardTrigger = '<C-k>'
 let g:UltiSnipsJumpBackwardTrigger = '<M-k>'
 let g:snips_author = 'Castella'
-
+" とりあえず様子見
+augroup UltiSnipsWorkaround
+    if !neobundle#is_sourced('ultisnips')
+        autocmd FileType * call UltiSnips#FileTypeChanged()
+    endif
+augroup END
+let s:bundle = neobundle#get('ultisnips')
+function! s:bundle.hooks.on_post_source(bundle)
+    autocmd! UltiSnipsWorkaround
+endfunction
+unlet s:bundle
 " 2}}}
 " unite  " {{{2
 nnoremap <Space>ub  :<C-u>Unite buffer_tab<CR>
@@ -585,18 +592,11 @@ function! s:bundle.hooks.on_source(bundle)
 endfunction
 unlet s:bundle
 
-let s:bundle = neobundle#get('YouCompleteMe')
-function! s:bundle.hooks.on_post_source(bundle)
-    call youcompleteme#Enable()
-endfunction
-unlet s:bundle
-
 autocmd MyAutoCmd FileType c,cpp nnoremap <buffer> <Leader>pg :<C-u>YcmCompleter GoToDefinitionElseDeclaration<CR>
 autocmd MyAutoCmd FileType c,cpp nnoremap <buffer> <Leader>pd :<C-u>YcmCompleter GoToDefinition<CR>
 autocmd MyAutoCmd FileType c,cpp nnoremap <buffer> <Leader>pc :<C-u>YcmCompleter GoToDeclaration<CR>
 " 2}}}
 " quickrun  " {{{2
-let g:quickrun_no_default_key_mappings = 1
 " default setting
 let g:quickrun_config = {}
 let g:quickrun_config._ = {
@@ -636,7 +636,6 @@ let g:quickrun_config.haskell_compile = {
             \   'outputter' : 'quickfix',
             \ }
 
-map <Leader>r <Plug>(quickrun)    " for NeoBundleLazy
 autocmd MyAutoCmd FileType c nnoremap <buffer> <Leader>R :<C-u>QuickRun c_compile<CR>
 autocmd MyAutoCmd FileType cpp nnoremap <buffer> <Leader>R :<C-u>QuickRun cpp_compile<CR>
 autocmd MyAutoCmd FileType haskell nnoremap <buffer> <Leader>R :<C-u>QuickRun haskell_compile<CR>
