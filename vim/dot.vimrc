@@ -525,6 +525,7 @@ let g:UltiSnipsSnippetDirectories = ['ultisnips-snippets']
 let g:UltiSnipsExpandTrigger = '<C-k>'
 let g:UltiSnipsJumpForwardTrigger = '<C-k>'
 let g:UltiSnipsJumpBackwardTrigger = '<M-k>'
+let g:UltiSnipsListSnippets = '<M-Tab>'
 let g:snips_author = 'Castella'
 " とりあえず様子見
 augroup UltiSnipsWorkaround
