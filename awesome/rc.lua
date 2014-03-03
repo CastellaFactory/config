@@ -438,6 +438,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 os.execute("kmix --keepvisibility &")
 os.execute("ibus-daemon -dx &")
 os.execute("SpiderOak &")
-os.execute("(sleep 1; dropbox) &")
+os.execute("(sleep 3; dropbox) &")
 os.execute("xrdb -merge ~/.vim/bundle/base16-xresources/base16-ocean.dark.xresources")
 os.execute("xrdb -merge ~/.Xresources")
