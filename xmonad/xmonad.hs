@@ -273,9 +273,10 @@ myEventHook = F.fullscreenEventHook <+> hintsEventHook <+> fadeWindowsEventHook
 myLogHook :: X ()
 myLogHook  = ewmhDesktopsLogHook <+> fadeWindowsLogHook myFadeHook
   where myFadeHook = composeAll [
-                        className =? "Gvim"   --> transparency 0.25
-                        , isUnfocused         --> transparency 0.55
+                        opaque
                         , isFloating          --> opaque
+                        , className =? "Gvim"   --> transparency 0.25
+                        , isUnfocused         --> transparency 0.55
                      ]
 
 
