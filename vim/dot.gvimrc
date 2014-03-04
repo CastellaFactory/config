@@ -42,3 +42,4 @@ elseif g:is_linux_p
 
 endif
 colorscheme iceberg
+
