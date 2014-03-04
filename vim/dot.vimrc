@@ -184,9 +184,6 @@ set splitbelow splitright
 
 set nrformats-=octal
 
-" cursorline
-set cursorline
-
 " show line number
 set number
 set ruler
