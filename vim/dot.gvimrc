@@ -41,4 +41,4 @@ elseif g:is_linux_p
     set guifontwide=Hiragino\ Kaku\ Gothic\ Pro\ Bold\ 12
 
 endif
-
+colorscheme iceberg

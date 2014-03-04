@@ -1,43 +1,45 @@
 !! base-16で全体の色が設定されるので個別に色を設定すること
+!! Note:
+!! To make these settings universal for all forms of URxvt, you may add a wildcard.
+!! For example, URxvt.depth would become URxvt*.depth
 
 !! Emacs
 Emacs*.useXIM: false
-Emacs.FontBackend: xft
+Emacs*.FontBackend: xft
 
 !! Gnuplot(Default color)
-gnuplot*background: white
-gnuplot*textColor: black
-gnuplot*borderColor: black
-gnuplot*axisColor: black
-gnuplot*line1Color: red
-gnuplot*line2Color: green
-gnuplot*line3Color: blue
-gnuplot*line4Color: magenta
-gnuplot*line5Color: cyan
-gnuplot*line6Color: sienna
-gnuplot*line7Color: orange
-gnuplot*line8Color: coral
+gnuplot*.background: white
+gnuplot*.textColor: black
+gnuplot*.borderColor: black
+gnuplot*.axisColor: black
+gnuplot*.line1Color: red
+gnuplot*.line2Color: green
+gnuplot*.line3Color: blue
+gnuplot*.line4Color: magenta
+gnuplot*.line5Color: cyan
+gnuplot*.line6Color: sienna
+gnuplot*.line7Color: orange
+gnuplot*.line8Color: coral
     
 !! Xft(/etc/X11/Xresources)
 Xft.hintstyle: hintslight
 
 !! urxvt
-urxvt.depth: 32
-urxvt*font: xft:Meslo LG M for Powerline:size=12:bold:antialias=true
-! urxvt*inheritPixmap: True
-urxvt.transparent: true
-urxvt*shading: 45
+URxvt.depth: 32
+URxvt.font: xft:Meslo LG M for Powerline:size=12:bold:antialias=true
+URxvt.transparent: true
+URxvt.shading: 45
 URxvt.fading: 30
-urxvt*scrollBar: false
-! urxvt*scrollBar_floating: true
-! urxvt*scrollBar_right: true
-! urxvt*scrollColor: #40ffff
-urxvt*termName: rxvt-256color
-urxvt*saveLines: 2048
+URxvt.scrollBar: false
+! URxvt.scrollBar_floating: true
+! URxvt.scrollBar_right: true
+! URxvt.scrollColor: #40ffff
+URxvt.termName: rxvt-256color
+URxvt.saveLines: 2048
 
 ! urxvt cursor
 URxvt.cursorBlink: true
-URxvt.cursorColor: #d8d8d8
+! URxvt.cursorColor: #d8d8d8
 
 ! extensions
 URxvt.perl-ext-common:default,clipboard,matcher,keyboard-select

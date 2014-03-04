@@ -112,8 +112,8 @@ NeoBundle 'vim-jp/vimdoc-ja'
 " 2}}}
 " Others(fetch only)  " {{{2
 NeoBundleFetch 'chriskempson/base16-shell'
-NeoBundleFetch 'chriskempson/base16-xresources'
 NeoBundleFetch 'chriskempson/base16-iterm2'
+NeoBundleFetch 'chriskempson/base16-xresources'
 NeoBundleFetch 'Lokaltog/powerline'
 " 2}}}"
 
@@ -238,6 +238,9 @@ function! s:my_tabline()
 endfunction
 let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
 " 3}}}
+
+set background=dark
+syntax enable
 " 2}}}
 " Other  " {{{2
 " disable bell
@@ -385,12 +388,6 @@ vmap <Leader>cc <Plug>(caw:i:toggle)
 nmap <Leader>ca <Plug>(caw:a:toggle)
 nmap <Leader>cw <Plug>(caw:wrap:toggle)
 " 2}}}
-" colorsceme  " {{{2
-set background=dark
-syntax enable
-"colorscheme base16-ocean
-colorscheme iceberg
-" }}}"
 " easy-align  " {{{2
 map <Leader>a <Plug>(EasyAlign)
 " 2}}}
