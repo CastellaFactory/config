@@ -2,34 +2,34 @@
 -- XMonad config
 ----------------------------------------------------------------------
 
-import qualified Data.Map as M
-import qualified XMonad.StackSet as W
+-- import System.IO
+-- import XMonad.Hooks.ManageHelpers
+-- import XMonad.Hooks.UrgencyHook
+-- import XMonad.Layout
+-- import XMonad.Util.Run
+import Control.Arrow (first)
+import Control.Monad (liftM2)
+import Data.Char (isSpace)
 import Data.Monoid
 import System.Exit
 import XMonad
 import XMonad.Actions.WindowGo
--- import XMonad.Prompt
--- import XMonad.Prompt.Shell
-import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
--- import XMonad.Hooks.FadeWindows
--- import XMonad.Hooks.FadeInactive
+import XMonad.Hooks.FadeWindows
+import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.SetWMName
--- import XMonad.Hooks.ICCCMFocus
--- import XMonad.Hooks.UrgencyHook
--- import XMonad.Hooks.ManageHelpers
--- import XMonad.Layout
 import XMonad.Layout.LayoutHints
-import XMonad.Layout.NoBorders
-import qualified XMonad.Layout.Fullscreen as F
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
-import qualified XMonad.Layout.Magnifier as Mag
+import XMonad.Layout.NoBorders
+import XMonad.Prompt
+import XMonad.Prompt.Shell
 import XMonad.Util.EZConfig
--- import XMonad.Util.Run
--- import System.IO
-import Control.Monad (liftM2)
+import qualified Data.Map as M
+import qualified XMonad.Layout.Fullscreen as F
+import qualified XMonad.Layout.Magnifier as Mag
+import qualified XMonad.StackSet as W
 
 -- mySetting
 myTerminal          :: String
@@ -48,7 +48,57 @@ myNormalBorderColor = "#99ccff"
 myFocuseBorderColor :: String
 myFocuseBorderColor = "#0033dd"
 
+myXPConfig :: XPConfig
+myXPConfig = defaultXPConfig {
+                font      = "xft:Menlo:size=12:bold:antialial=true"
+                , height  = 24
+                , bgColor = "black"
+                , fgColor = "white"
+                , promptKeymap = myXPKeymap
+             }
 
+myXPKeymap :: M.Map (KeyMask,KeySym) (XP ())
+myXPKeymap = myXPKeymap' isSpace
+
+myXPKeymap' :: (Char -> Bool) -> M.Map (KeyMask,KeySym) (XP ())
+myXPKeymap' p = M.fromList $
+                map (first $ (,) controlMask) -- control + <key>
+                [ (xK_u, killBefore)          --kill line backwards
+                , (xK_k, killAfter)           -- kill line fowards
+                , (xK_a, startOfLine)         --move to the beginning of the line
+                , (xK_e, endOfLine)           -- move to the end of the line
+                , (xK_d, deleteString Next)   -- delete a character foward
+                , (xK_h, deleteString Prev)   -- delete a character backward
+                , (xK_b, moveCursor Prev)     -- move cursor forward
+                , (xK_f, moveCursor Next)     -- move cursor backward
+                , (xK_w, killWord' p Prev)    -- kill the previous word
+                , (xK_y, pasteString)
+                , (xK_g, quit)
+                , (xK_c, quit)
+                ] 
+                ++
+                map (first $ (,) mod1Mask) -- meta key + <key>
+                [ (xK_BackSpace, killWord' p Prev)
+                , (xK_f, moveWord' p Next) -- move a word forward
+                , (xK_b, moveWord' p Prev) -- move a word backward
+                , (xK_d, killWord' p Next) -- kill the next word
+                , (xK_n, moveHistory W.focusUp')
+                , (xK_p, moveHistory W.focusDown')
+                ]
+                ++
+                map (first $ (,) 0) -- <key>
+                [ (xK_Return, setSuccess True >> setDone True)
+                , (xK_KP_Enter, setSuccess True >> setDone True)
+                , (xK_BackSpace, deleteString Prev)
+                , (xK_Delete, deleteString Next)
+                , (xK_Left, moveCursor Prev)
+                , (xK_Right, moveCursor Next)
+                , (xK_Home, startOfLine)
+                , (xK_End, endOfLine)
+                , (xK_Down, moveHistory W.focusUp')
+                , (xK_Up, moveHistory W.focusDown')
+                , (xK_Escape, quit)
+                ]
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -56,69 +106,73 @@ myFocuseBorderColor = "#0033dd"
 myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
-  -- ターミナル起動(Win+Shift+RET)
-  [((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
+  [
+    -- ターミナル起動(Win+Shift+RET)
+    ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
-  -- dmenu起動(Win+p)
-  , ((modm,               xK_p     ), spawn "dmenu_run -fn 'CodeM-11'")
+    -- shellprompt起動(Win+p)
+    , ((modm,               xK_p     ), shellPrompt myXPConfig)
 
     -- gmrun起動(Win+Shift+p)
-  , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
+    , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
+
+    -- dmenu起動(Win+Ctrl+p)
+    , ((modm .|. controlMask, xK_p   ), spawn "dmenu_run -fn 'CodeM-11:bold'")
 
     -- フォーカスしているウィンドウを閉じる(Win+Shift+c)
-  , ((modm .|. shiftMask, xK_c     ), kill)
+    , ((modm .|. shiftMask, xK_c     ), kill)
 
     -- レイアウト切り替える(Win+Space)
-  , ((modm,               xK_space ), sendMessage NextLayout)
+    , ((modm,               xK_space ), sendMessage NextLayout)
 
     --  レイアウトをリセット(Win+Shift+Space)
-  , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
+    , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
 
     -- ウィンドウをリフレッシュ(Win+n)
-  , ((modm,               xK_n     ), refresh)
+    , ((modm,               xK_n     ), refresh)
 
     -- 次のウィンドウにフォーカスを移す(Win+Tab)
-  , ((modm,               xK_Tab   ), windows W.focusDown)
+    , ((modm,               xK_Tab   ), windows W.focusDown)
 
     -- 次のウィンドウにフォーカスを移す(Win+j)
-  , ((modm,               xK_j     ), windows W.focusDown)
+    , ((modm,               xK_j     ), windows W.focusDown)
 
     -- 前のウィンドウにフォーカスを移す(Win+k)
-  , ((modm,               xK_k     ), windows W.focusUp  )
+    , ((modm,               xK_k     ), windows W.focusUp  )
 
     -- マスターウィンドウにフォーカスを移す(Win+m)
-  , ((modm,               xK_m     ), windows W.focusMaster  )
+    , ((modm,               xK_m     ), windows W.focusMaster  )
 
     -- マスターウィンドウとフォーカスウィンドウを入れ替える(Win+RET)
-  , ((modm,               xK_Return), windows W.swapMaster)
+    , ((modm,               xK_Return), windows W.swapMaster)
 
     -- Swap the focused window with the next window(Win+Shift+j)
-  , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
+    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
 
     -- Swap the focused window with the previous window(Win+Shift+k)
-  , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
+    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
 
     -- マスターエリアを縮める(Win+h)
-  , ((modm,               xK_h     ), sendMessage Shrink)
+    , ((modm,               xK_h     ), sendMessage Shrink)
 
     --マスターエリアを広げる(Win+l)
-  , ((modm,               xK_l     ), sendMessage Expand)
+    , ((modm,               xK_l     ), sendMessage Expand)
 
     -- Push window back into tiling(Win+t)
-  , ((modm,               xK_t     ), withFocused $ windows . W.sink)
+    , ((modm,               xK_t     ), withFocused $ windows . W.sink)
 
     -- Increment the number of windows in the master area(Win+,)
-  , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
+    , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
 
     -- Deincrement the number of windows in the master area(Win+.)
-  , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
+    , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
 
     -- XMonadを終了(Win+Shift+q)
-  , ((modm .|. shiftMask, xK_q     ), io exitSuccess)
+    , ((modm .|. shiftMask, xK_q     ), io exitSuccess)
 
     -- XMonadを再起動(Win+q)
-  , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")]
-
+    , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
+  ]
 
   ++
 
@@ -126,18 +180,23 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 -- mod-[1..9], Switch to workspace N
 -- mod-shift-[1..9], Move client to workspace N
 --
-  [((m .|. modm, k), windows $ f i)
-  | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
-  , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+  [
+    ((m .|. modm, k), windows $ f i)
+    | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
+    , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
+  ]
+ 
   ++
 
 --
 -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
 -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
 --
-  [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
-  | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
-  , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+  [
+    ((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
+    | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+    , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
+  ]
 
 
 ------------------------------------------------------------------------
@@ -178,16 +237,16 @@ myLayout = layoutHints
 -- ウィンドウ作成時のデフォルトワークスペース，フローティングの設定
 myManageHook :: Query (Endo WindowSet)
 myManageHook = manageDocks <+> F.fullscreenManageHook 
-               <+> composeAll
-               [ className =? "MPlayer"                               --> doFloat
+               <+> composeAll [
+               className =? "MPlayer"                               --> doFloat
                , className =? "Smplayer"                              --> doFloat
                , className =? "Kmix"                                  --> doFloat
                , className =? "Firefox"                               --> viewShift "2:Web"
                , className =? "Thunderbird"                           --> viewShift "2:Web"
                , className =? "Mikutter.rb"                           --> viewShift "5:Mikutter"
                , className =? "Chromium-browser"                      --> viewShift "2:Web"
-                 --             , className =? "Gvim"                 --> viewShift "3:Code"
-                 --             , className =? "Emacs"                --> viewShift "3:Code"
+               --             , className =? "Gvim"                 --> viewShift "3:Code"
+               --             , className =? "Emacs"                --> viewShift "3:Code"
                , className =? "Skype"                                 --> doShift "4:Skype"
                , className =? "Skype"                                 --> doFloat
                , className =? "Calibre-gui"                           --> viewShift "6:Reading"
@@ -201,19 +260,23 @@ myManageHook = manageDocks <+> F.fullscreenManageHook
                , resource  =? "kdesktop"                              --> doIgnore
                ]
   where viewShift = doF . liftM2 (.) W.view W.shift
--- viewShift...起動してワークスペースを切り替える
 
 
 ----------------------------------------------------------------------
 -- Event handling
 myEventHook :: Event -> X All
-myEventHook = F.fullscreenEventHook <+> hintsEventHook
+myEventHook = F.fullscreenEventHook <+> hintsEventHook <+> fadeWindowsEventHook
 
 
 ------------------------------------------------------------------------
 -- Status bars and logging
 myLogHook :: X ()
-myLogHook  = ewmhDesktopsLogHook
+myLogHook  = ewmhDesktopsLogHook <+> fadeWindowsLogHook myFadeHook
+  where myFadeHook = composeAll [
+                        className =? "Gvim"   --> transparency 0.25
+                        , isUnfocused         --> transparency 0.55
+                        , isFloating          --> opaque
+                     ]
 
 
 ------------------------------------------------------------------------
@@ -227,10 +290,11 @@ myStartupHook = setWMName "LG3D"
 myBar :: String
 myBar = "xmobar"
 myPP :: PP
--- Hintedは非表示にする length "Hinted " --> 7
-myPP = xmobarPP { ppCurrent = xmobarColor "#429942" "" . wrap "[" "]",
-                  ppSep = " : ",
-                  ppLayout = drop 7
+-- Hintedは非表示にする length "Hinted " == 7
+myPP = xmobarPP {
+          ppCurrent   = xmobarColor "#429942" "" . wrap "[" "]"
+          , ppSep     = " : "
+          , ppLayout  = drop 7
        }
 toggleStrutsKey XConfig {XMonad.modMask = modm} = (modm, xK_b)
 
@@ -241,44 +305,44 @@ main = xmonad =<< statusBar myBar myPP toggleStrutsKey defaults
 
 defaults = defaultConfig {
                          -- simple stuff
-                         terminal           = myTerminal,
-                         focusFollowsMouse  = myFocusFollowsMouse,
-                         clickJustFocuses   = myClickJustFocuses,
-                         borderWidth        = myBorderWidth,
-                         modMask            = myModMask,
-                         workspaces         = myWorkspaces,
-                         normalBorderColor  = myNormalBorderColor,
-                         focusedBorderColor = myFocuseBorderColor,
+                         terminal             = myTerminal
+                         , focusFollowsMouse  = myFocusFollowsMouse
+                         , clickJustFocuses   = myClickJustFocuses
+                         , borderWidth        = myBorderWidth
+                         , modMask            = myModMask
+                         , workspaces         = myWorkspaces
+                         , normalBorderColor  = myNormalBorderColor
+                         , focusedBorderColor = myFocuseBorderColor
 
                          -- key bindings
-                         keys               = myKeys,
-                         mouseBindings      = myMouseBindings,
+                         , keys               = myKeys
+                         , mouseBindings      = myMouseBindings
 
                          -- hooks, layouts
-                         layoutHook         = myLayout,
-                         manageHook         = myManageHook ,
-                         handleEventHook    = myEventHook,
-                         logHook            = myLogHook,
-                         startupHook        = myStartupHook
+                         , layoutHook         = myLayout
+                         , manageHook         = myManageHook
+                         , handleEventHook    = myEventHook
+                         , logHook            = myLogHook
+                         , startupHook        = myStartupHook
                          }
 
 
            `additionalKeys`
            [
-             ((myModMask, xK_f), sendMessage $ Toggle FULL)
+              ((myModMask, xK_f), sendMessage $ Toggle FULL)
 
-             -- アプリケーションを起動
-           , ((myModMask, xK_o), runOrRaise "firefox" (className =? "Firefox"))
-           , ((myModMask .|. shiftMask, xK_o), runOrRaise "thunderbird" (className =? "Thunderbird"))
+              -- アプリケーションを起動
+              , ((myModMask, xK_o), runOrRaise "firefox" (className =? "Firefox"))
+              , ((myModMask .|. shiftMask, xK_o), runOrRaise "thunderbird" (className =? "Thunderbird"))
 
-           , ((myModMask, xK_a), runOrRaise "dolphin" (className =? "Dolphin"))
-           , ((myModMask .|. shiftMask, xK_a), runOrRaise "emacs" (className =? "Emacs"))
+              , ((myModMask, xK_a), runOrRaise "dolphin" (className =? "Dolphin"))
+              , ((myModMask .|. shiftMask, xK_a), runOrRaise "emacs" (className =? "Emacs"))
 
-           , ((myModMask, xK_e), spawn "gvim")
-           , ((myModMask .|. shiftMask, xK_e), spawn "gvim -u ~/.vim/vimrc_practice -N")
+              , ((myModMask, xK_e), spawn "gvim")
+              , ((myModMask .|. shiftMask, xK_e), spawn "gvim -u ~/.vim/vimrc_practice -N")
 
-             -- Magnifier
-           , ((myModMask .|. controlMask , xK_semicolon), sendMessage Mag.MagnifyMore)
-           , ((myModMask .|. controlMask , xK_colon), sendMessage Mag.MagnifyLess)
-           , ((myModMask .|. controlMask , xK_z ), sendMessage Mag.Toggle )
+              -- Magnifier
+              , ((myModMask .|. controlMask , xK_semicolon), sendMessage Mag.MagnifyMore)
+              , ((myModMask .|. controlMask , xK_colon), sendMessage Mag.MagnifyLess)
+              , ((myModMask .|. controlMask , xK_z ), sendMessage Mag.Toggle )
            ]
