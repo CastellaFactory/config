@@ -20,9 +20,9 @@ NeoBundle 'kana/vim-operator-user'
 NeoBundle 'rhysd/vim-clang-format'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundleLazy 'vim-jp/cpp-vim', { 'autoload' : { 'filetypes' : ['cpp'] } }
-NeoBundle 'chriskempson/base16-vim'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'vim-jp/vimdoc-ja'
+NeoBundle 'mycolor', {'base' : '~/repo', 'type' : 'nosync'}
 
 filetype plugin indent on
 NeoBundleCheck
@@ -87,9 +87,6 @@ set splitbelow splitright
 
 set nrformats-=octal
 
-" cursorline
-set cursorline
-
 " show line number
 set number
 set ruler
@@ -142,13 +139,9 @@ let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
 " 3}}}
 
 " ColorScheme
-if !has('gui_running')
-    set t_Co=256
-    let g:base16colorspace=256
-endif
 set background=dark
 syntax enable
-colorscheme base16-ocean
+colorscheme mycolor
 " 2}}}
 " Other  " {{{2
 " disable bell
@@ -157,7 +150,11 @@ set t_vb=
 set noerrorbells
 
 " clipboard
-set clipboard=unnamed
+if has('unnamedplus')
+    set clipboard=unnamed,unnamedplus
+else
+    set clipboard=unnamed
+endif
 
 " completion
 set completeopt=menu,menuone
@@ -345,9 +342,6 @@ let g:clang_format#style_options = {
             \   'TabWidth' : 4,
             \   'UseTab' : 'ForIndentation',
             \ }
-" 2}}}
-" orerator-sort  " {{{2
-
 " 2}}}
 " 1}}}
 

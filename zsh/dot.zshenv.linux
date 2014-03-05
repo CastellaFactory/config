@@ -1,6 +1,3 @@
-export ZDOTDIR=$HOME/.zsh
-export ZPLUGINDIR=$ZDOTDIR/plugins
-
 export PATH=$PATH:/sbin:/usr/sbin:$HOME/.gem/ruby/2.0.0/bin:$HOME/Local/bin
 
 # for powerline

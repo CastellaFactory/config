@@ -8,4 +8,4 @@ fi
 
 export AUTOJUMP_IGNORE_CASE=1
 
-source ~/.zshenv
+# vim: ft=zsh

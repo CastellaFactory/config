@@ -27,7 +27,7 @@ def installed?(name)
   end
 end
 
-def make_symlink(src, dest) 
+def make_symlink(src, dest)
   ln_sf "#{$this_script_dir}/#{src}", dest
 end
 
@@ -51,7 +51,7 @@ namespace :common do
     make_symlink 'vim/dot.vimrc', "#{home}/.vim/vimrc"
     make_symlink 'vim/dot.gvimrc', "#{home}/.vim/gvimrc"
     make_symlink 'vim/dot.vimrc_practice', "#{home}/.vim/vimrc_practice"
-    
+
     next unless installed? 'git'
     unless File.directory? "#{home}/.vim/bundle"
       mkdir "#{home}/.vim/bundle"
@@ -61,20 +61,20 @@ namespace :common do
     end
   end
 
-
   task :zsh do
     unless File.directory? "#{home}/.zsh"
       mkdir "#{home}/.zsh"
       mkdir "#{home}/.zsh/plugins"
     end
 
+    make_symlink 'zsh/dot.zshenv', "#{home}/.zshenv"
     make_symlink 'zsh/dot.zshrc', "#{home}/.zsh/.zshrc"
 
     next unless installed? 'git'
     chdir "#{home}/.zsh/plugins" do
-		unless File.directory? "#{home}/.zsh/plugins/zaw"
-			sh "git clone git://github.com/zsh-users/zaw.git"
-		end
+    unless File.directory? "#{home}/.zsh/plugins/zaw"
+      sh "git clone git://github.com/zsh-users/zaw.git"
+    end
     end
   end
 
@@ -100,7 +100,7 @@ namespace :linux do
   end
 
   task :zsh do
-    make_symlink 'zsh/dot.zshenv.linux', "#{home}/.zshenv"
+    make_symlink 'zsh/dot.zshenv.linux', "#{home}/.zsh/.zshenv"
     make_symlink 'zsh/dot.zprofile.linux', "#{home}/.zsh/.zprofile"
     make_symlink 'zsh/dot.zshrc.linux', "#{home}/.zsh/.zshrc.linux"
   end
@@ -142,7 +142,7 @@ namespace :mac do
   task :setup => ['common:all', :zsh, :tmux]
 
   task :zsh do
-    make_symlink 'zsh/dot.zshenv.mac', "#{home}/.zshenv"
+    make_symlink 'zsh/dot.zshenv.mac', "#{home}/.zsh/.zshenv"
     make_symlink 'zsh/dot.zprofile.mac', "#{home}/.zsh/.zprofile"
     make_symlink 'zsh/dot.zshrc.mac', "#{home}/.zsh/.zshrc.mac"
   end

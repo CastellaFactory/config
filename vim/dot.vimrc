@@ -101,8 +101,9 @@ NeoBundleLazy 'scrooloose/syntastic', {
 " 2}}}
 " UI  " {{{2
 NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'chriskempson/base16-vim'
-NeoBundle 'cocopon/iceberg.vim'
+NeoBundle 'tomasr/molokai'
+NeoBundle 'sjl/badwolf'
+NeoBundle 'mycolor', {'base' : '~/repo', 'type' : 'nosync'}
 " 2}}}
 " Vcs  " {{{2
 NeoBundle 'tpope/vim-fugitive'
@@ -111,9 +112,6 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'vim-jp/vimdoc-ja'
 " 2}}}
 " Others(fetch only)  " {{{2
-NeoBundleFetch 'chriskempson/base16-shell'
-NeoBundleFetch 'chriskempson/base16-iterm2'
-NeoBundleFetch 'chriskempson/base16-xresources'
 NeoBundleFetch 'Lokaltog/powerline'
 " 2}}}"
 
@@ -238,6 +236,7 @@ let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
 
 set background=dark
 syntax enable
+colorscheme mycolor
 " 2}}}
 " Other  " {{{2
 " disable bell

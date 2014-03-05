@@ -20,7 +20,6 @@ if g:is_darwin_p
     set guioptions+=i
     set guioptions+=M
 
-    " set guifont=RictyForPowerline-Bold:h18
     set guifont=Menlo-Bold:h16
     set transparency=10
 
@@ -36,10 +35,6 @@ elseif g:is_linux_p
     set guioptions-=T
     set guioptions+=M
 
-    " set guifont=Ricty\ for\ Powerline\ Bold\ 14
-    set guifont=Menlo\ bold\ 13
-    set guifontwide=Hiragino\ Kaku\ Gothic\ Pro\ Bold\ 12
-
+    set guifont=Meslo\ LGM\ bold\ 13
+    set guifontwide=Hiragino\ Kaku\ Gothic\ StdN\ W8\ 12
 endif
-colorscheme iceberg
-

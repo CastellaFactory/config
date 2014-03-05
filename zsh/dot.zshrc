@@ -2,25 +2,15 @@
 # $TERM
 #
 
-if [ -n "$TMUX" ]; then
-	export TERM=screen-256color
-else
-	export TERM=xterm-256color
-fi
-
-
-#
-# base16-colorsheme
-#
-BASE16_SCHEME="ocean"
-BASE16_SHELL="$HOME/.vim/bundle/base16-shell/base16-$BASE16_SCHEME.dark.sh"
-[[ -s $BASE16_SHELL ]] && . $BASE16_SHELL
+export TERM=xterm-256color
 
 #
 # prompt
 #
+autoload colors && colors
 setopt prompt_subst
-PROMPT='%F{magenta}${USER}@${HOST}%f %~%F{green}%(!.#.$)%f '
+local LEFTC=$'%{\e[0;33m%}'
+PROMPT='$LEFTC${USER}@${HOST} %F{White}%~%(!.#.$)%f '
 
 #
 # aliases
@@ -65,8 +55,6 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'		# 補完時に大文字小�
 zstyle ':completion:*' list-separator '-->'
 zstyle ':completion:*:manuals' separate-sections true
 
-# 名前で色を付ける
-autoload colors && colors
 # LS_COLORSを設定
 export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 # ファイル補完候補に色を付ける
@@ -150,3 +138,5 @@ case "${OSTYPE}" in
 		source $ZDOTDIR/.zshrc.linux
 		;;
 esac
+
+# vim: ft=zsh

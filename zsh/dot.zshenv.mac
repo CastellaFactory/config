@@ -1,6 +1,3 @@
-export ZDOTDIR=$HOME/.zsh
-export ZPLUGINDIR=$ZDOTDIR/plugins
-
 export PATH=/usr/local/bin:$HOME/.rbenv/shims:$HOME/.cabal/bin:$PATH
 
 # for powerline

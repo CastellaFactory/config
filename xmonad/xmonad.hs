@@ -224,7 +224,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList
 
 ------------------------------------------------------------------------
 -- Layouts:
--- フルスクリーンにするにはWin+F
+-- フルスクリーンにするにはWin+F(see additionalkeys)
 
 myLayout = layoutHints
            $ smartBorders $ Mag.magnifiercz 1.2
@@ -274,9 +274,10 @@ myLogHook :: X ()
 myLogHook  = ewmhDesktopsLogHook <+> fadeWindowsLogHook myFadeHook
   where myFadeHook = composeAll [
                         opaque
-                        , isFloating          --> opaque
-                        , className =? "Gvim"   --> transparency 0.25
-                        , isUnfocused         --> transparency 0.55
+                        , isFloating              --> opaque
+                        , className =? "Gvim"     --> transparency 0.25
+                        , className =? "URxvt"    --> transparency 0.25
+                        , isUnfocused             --> transparency 0.55
                      ]
 
 
@@ -339,7 +340,7 @@ defaults = defaultConfig {
               , ((myModMask, xK_a), runOrRaise "dolphin" (className =? "Dolphin"))
               , ((myModMask .|. shiftMask, xK_a), runOrRaise "emacs" (className =? "Emacs"))
 
-              , ((myModMask, xK_e), spawn "gvim")
+              , ((myModMask, xK_e), spawn "gvim -u ~/.vim/vimrc -N")
               , ((myModMask .|. shiftMask, xK_e), spawn "gvim -u ~/.vim/vimrc_practice -N")
 
               -- Magnifier

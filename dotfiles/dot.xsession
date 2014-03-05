@@ -13,7 +13,6 @@ stalonetray &
 dropbox &
 xset -b
 
-xrdb -merge ~/.vim/bundle/base16-xresources/base16-ocean.dark.xresources
 xrdb -merge ~/.Xresources
 
 if [[ -e "$HOME/.xsession_local" ]]; then

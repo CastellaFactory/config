@@ -1,7 +1,9 @@
-alias ls='ls -GF' 
+alias ls='ls -GF'
 alias vim='/Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 alias emacs='/usr/local/bin/emacs'
 alias vi='/Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 alias cabal='$HOME/.cabal/bin/cabal'
 alias vv='/Applications/MacVim.app/Contents/MacOS/Vim -u ~/vim/vimrc_practice -N'
 alias gvv='/usr/local/bin/mvim -u ~/.vim/vimrc_practice -N'
+
+# vim: ft=zsh
