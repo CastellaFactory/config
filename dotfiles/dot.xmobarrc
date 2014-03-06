@@ -1,18 +1,18 @@
-Config {
-	font = "xft:CodeM:bold:size=11:antialias=true,hinting=true,autohint=true"
-
-		, bgColor = "black"
-		, fgColor = "white"
-		, position = Top
-		, lowerOnStart = True
-		, commands = [ Run Network "enp4s0" ["-L","0","-H","32","--normal","green","--high","red"] 10
-		, Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
-		, Run Memory ["-t","Mem: <usedratio>%"] 10
-		, Run Com "uname" ["-s","-r"] "" 36000
-		, Run Date "%Y/%m/%d %a %H:%M" "date" 10
-		, Run StdinReader
-		]
-		, sepChar = "%"
-		, alignSep = "}{"
-		, template = "%cpu% | %memory% | %enp4s0% } %StdinReader% { <fc=#ee9a00>%date%</fc> | %uname%"
+Config {font = "xft:CodeM:bold:size=11:antialias=true,hinting=true,autohint=true"
+        , bgColor = "black"
+        , fgColor = "white"
+        , position = Top
+        , lowerOnStart = True
+        , commands = [Run DynNetwork ["-L","0","-H","32","--normal","green","--high","red"] 10
+                      , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
+                      , Run Memory ["-t","Mem: <usedratio>%"] 10
+                      , Run Com "uname" ["-s","-r"] "" 36000
+                      , Run Date "%Y/%m/%d %a %H:%M" "date" 10
+                      , Run StdinReader
+                      ]
+        , sepChar = "%"
+        , alignSep = "}{"
+        , template = "%cpu% | %memory% | %dynnetwork% } %StdinReader% { <fc=#ee9a00>%date%</fc> | %uname%"
 }
+
+-- vim: ft=haskell
