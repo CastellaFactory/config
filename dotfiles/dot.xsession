@@ -9,8 +9,7 @@ ibus-daemon -dx &
 SpiderOak &
 dropbox &
 stalonetray &
-(sleep 3; xmodmap ~/.Xmodmap) &
-dropbox &
+(sleep 3; dropbox) &
 xset -b
 
 xrdb -merge ~/.Xresources
