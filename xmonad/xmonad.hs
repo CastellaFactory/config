@@ -75,7 +75,7 @@ myXPKeymap' p = M.fromList $
                 , (xK_y, pasteString)
                 , (xK_g, quit)
                 , (xK_c, quit)
-                ] 
+                ]
                 ++
                 map (first $ (,) mod1Mask) -- meta key + <key>
                 [ (xK_BackSpace, killWord' p Prev)
@@ -185,7 +185,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
     , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
   ]
- 
+
   ++
 
 --
@@ -236,7 +236,7 @@ myLayout = layoutHints
 -- Window rules:
 -- ウィンドウ作成時のデフォルトワークスペース，フローティングの設定
 myManageHook :: Query (Endo WindowSet)
-myManageHook = manageDocks <+> F.fullscreenManageHook 
+myManageHook = manageDocks <+> F.fullscreenManageHook
                <+> composeAll [
                className =? "MPlayer"                               --> doFloat
                , className =? "Smplayer"                              --> doFloat
