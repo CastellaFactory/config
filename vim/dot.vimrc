@@ -531,8 +531,8 @@ unlet s:bundle
 " unite  " {{{2
 nnoremap <Space>ub  :<C-u>Unite buffer_tab<CR>
 nnoremap <Space>ut  :<C-u>Unite tab<CR>
-nnoremap <Space>ufm :<C-u>Unite file_mru<CR>
-nnoremap <Space>udm :<C-u>Unite directory_mru<CR>
+nnoremap <Space>ufr :<C-u>Unite file_mru<CR>
+nnoremap <Space>udr :<C-u>Unite directory_mru<CR>
 nnoremap <Space>urm :<C-u>UniteResume<CR>
 nnoremap <Space>uff :<C-u>Unite file<CR>
 nnoremap <Space>uol :<C-u>Unite outline<CR>
