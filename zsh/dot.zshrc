@@ -116,7 +116,7 @@ bindkey '^@' zaw-cdr							# <C-@>
 function zsh-plugin-update() {
 	local cwd
 	cwd=$PWD
-	for plugin in `ls $ZPLUGINDIR`; do
+	for plugin in `ls --color=never $ZPLUGINDIR`; do
 		cd $ZPLUGINDIR/$plugin
 		git pull
 		cd ..
