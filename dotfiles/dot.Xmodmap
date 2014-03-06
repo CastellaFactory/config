@@ -9,5 +9,5 @@ add Control = Control_L
 keycode 135 = Super_R
 add mod4 = Super_R
 keycode 132 = grave asciitilde
-keycode 97 = colon semicolon
+keycode 97 = Escape
 keycode 49 = Escape
