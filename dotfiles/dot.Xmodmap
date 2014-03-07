@@ -8,6 +8,6 @@ add Control = Control_L
 
 keycode 135 = Super_R
 add mod4 = Super_R
-keycode 132 = grave asciitilde
+keycode 132 = BackSpace
 keycode 97 = Escape
-keycode 49 = Escape
+

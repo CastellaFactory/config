@@ -55,6 +55,7 @@ myXPConfig = defaultXPConfig {
                 , bgColor = "black"
                 , fgColor = "white"
                 , promptKeymap = myXPKeymap
+                , historyFilter = deleteConsecutive
              }
 
 myXPKeymap :: M.Map (KeyMask,KeySym) (XP ())
