@@ -2,7 +2,12 @@
 # $TERM
 #
 
-export TERM=xterm-256color
+if [ -n "$TMUX" ]; then
+	# for vim background color isuue in tmux?
+	export TERM=screen-256color
+else
+	export TERM=xterm-256color
+fi
 
 #
 # prompt
