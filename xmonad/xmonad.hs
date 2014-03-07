@@ -56,6 +56,7 @@ myXPConfig = defaultXPConfig {
                 , fgColor = "white"
                 , promptKeymap = myXPKeymap
                 , historyFilter = deleteAllDuplicates
+                , alwaysHighlight = True
              }
 
 myXPKeymap :: M.Map (KeyMask,KeySym) (XP ())
@@ -109,7 +110,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
   [
     -- ターミナル起動(Win+Shift+RET)
-    ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
+    ((modm .|. shiftMask, xK_Return  ), spawn $ XMonad.terminal conf)
 
     -- shellprompt起動(Win+p)
     , ((modm,               xK_p     ), shellPrompt myXPConfig)
