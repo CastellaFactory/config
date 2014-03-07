@@ -50,12 +50,12 @@ myFocuseBorderColor = "#0033dd"
 
 myXPConfig :: XPConfig
 myXPConfig = defaultXPConfig {
-                font      = "xft:Menlo:size=12:bold:antialial=true"
+                font      = "xft:Meslo LGM:size=12:bold:antialial=true"
                 , height  = 24
                 , bgColor = "black"
                 , fgColor = "white"
                 , promptKeymap = myXPKeymap
-                , historyFilter = deleteConsecutive
+                , historyFilter = deleteAllDuplicates
              }
 
 myXPKeymap :: M.Map (KeyMask,KeySym) (XP ())
