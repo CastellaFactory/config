@@ -20,7 +20,7 @@ if g:is_darwin_p
     set guioptions+=i
     set guioptions+=M
 
-    set guifont=Menlo:h16
+    set guifont=Meslo\ LG\ M:h16
     set transparency=10
 
 elseif g:is_linux_p
