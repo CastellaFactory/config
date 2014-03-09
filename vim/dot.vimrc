@@ -74,7 +74,7 @@ NeoBundle 'kana/vim-operator-user'
 NeoBundleLazy 'rhysd/vim-clang-format', {
             \   'autoload' : {'mappings' : ['<Plug>(operator-clang-format)']} }
 NeoBundleLazy 'rhysd/vim-operator-surround', {
-            \   'autoload' : {'mappings' : ['<Plug>(operator-surround)']} }
+            \   'autoload' : {'mappings' : ['<Plug>(operator-surround-']} }
 " 2}}}
 " Editing  " {{{2
 NeoBundleLazy 'tyru/caw.vim', {
