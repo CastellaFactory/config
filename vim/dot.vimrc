@@ -29,6 +29,7 @@ NeoBundleLazy 'kana/vim-altr', {
             \   'autoload' : {'mappings' : ['<Plug>(altr-']} }
 NeoBundle 'kana/vim-submode'
 NeoBundleLazy 'kana/vim-fakeclip', { 'autoload' : {'terminal' : 1} }
+NeoBundle 'tpope/vim-repeat'
 " 2}}}
 " Filer  " {{{2
 NeoBundleLazy 'Shougo/vimfiler.vim', {
@@ -72,6 +73,8 @@ NeoBundleLazy 'kana/vim-textobj-indent', {
 NeoBundle 'kana/vim-operator-user'
 NeoBundleLazy 'rhysd/vim-clang-format', {
             \   'autoload' : {'mappings' : ['<Plug>(operator-clang-format)']} }
+NeoBundleLazy 'rhysd/vim-operator-surround', {
+            \   'autoload' : {'mappings' : ['<Plug>(operator-surround)']} }
 " 2}}}
 " Editing  " {{{2
 NeoBundleLazy 'tyru/caw.vim', {
@@ -444,6 +447,11 @@ function! s:bundle.hooks.on_source(bundle)
                 \ }
 endfunction
 unlet s:bundle
+" 3}}}
+" operator-surround  {{{3
+map <silent>sa <Plug>(operator-surround-append)
+map <silent>sd <Plug>(operator-surround-delete)
+map <silent>sr <Plug>(operator-surround-replace)
 " 3}}}
 " 2}}}
 "  submode  "{{{2
