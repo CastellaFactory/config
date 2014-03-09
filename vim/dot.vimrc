@@ -329,11 +329,9 @@ nnoremap ZQ <Nop>
 nnoremap Q q
 nnoremap q <Nop>
 
-" linux only
-if g:is_linux_p
-    nnoremap ; :
-    nnoremap : ;
-endif
+" swap
+nnoremap ; :
+nnoremap : ;
 
 " edit vimrc and reload (don't use $MYVIMRC)
 nnoremap <Space>.   :<C-u>edit ~/repo/config/vim/dot.vimrc<CR>
