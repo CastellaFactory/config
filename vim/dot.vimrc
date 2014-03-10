@@ -104,7 +104,6 @@ NeoBundleLazy 'scrooloose/syntastic', {
 " 2}}}
 " UI  " {{{2
 NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'tomasr/molokai'
 NeoBundle 'mycolor', {'base' : '~/repo', 'type' : 'nosync'}
 " 2}}}
 " Vcs  " {{{2
