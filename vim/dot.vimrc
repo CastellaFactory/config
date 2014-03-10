@@ -523,6 +523,7 @@ let g:UltiSnipsListSnippets = '<M-Tab>'
 let g:snips_author = 'Castella'
 " とりあえず様子見
 augroup UltiSnipsWorkaround
+    autocmd!
     if !neobundle#is_sourced('ultisnips')
         autocmd FileType * call UltiSnips#FileTypeChanged()
     endif
