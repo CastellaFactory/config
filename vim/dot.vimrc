@@ -67,7 +67,9 @@ NeoBundleLazy 'kana/vim-textobj-line', {
 NeoBundleLazy 'kana/vim-textobj-function', {
             \   'autoload' : {'mappings' : [ ['xo', 'af'], ['xo', 'if'] ]} }
 NeoBundleLazy 'kana/vim-textobj-indent', {
-            \   'autoload' : {'mappings' : [ ['xo', 'ii'], ['xo', 'ai'], ['xo', 'iI'], ['xo', 'aI'] ]} }
+            \   'autoload' : {'mappings' : [ ['xo', 'ai'], ['xo', 'ii'], ['xo', 'aI'], ['xo', 'iI'] ]} }
+NeoBundleLazy 'kana/vim-textobj-syntax', {
+            \   'autoload' : {'mappings' : [ ['xo', 'ay'], ['xo', 'iy'] ]} }
 " 2}}}
 " Operator  " {{{2
 NeoBundle 'kana/vim-operator-user'
