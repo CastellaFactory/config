@@ -238,6 +238,7 @@ let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
 
 set background=dark
 syntax enable
+let g:mycolor_termtrans = 1
 colorscheme mycolor
 " 2}}}
 " Other  " {{{2
