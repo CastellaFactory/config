@@ -329,8 +329,8 @@ nnoremap Q q
 nnoremap q <Nop>
 
 " swap
-nnoremap ; :
-nnoremap : ;
+noremap ; :
+noremap : ;
 
 " edit vimrc and reload (don't use $MYVIMRC)
 nnoremap <Space>.   :<C-u>edit ~/repo/config/vim/dot.vimrc<CR>
