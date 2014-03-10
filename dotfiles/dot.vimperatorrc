@@ -1,5 +1,5 @@
 " {{{ option settings
-set titlestring=Mozilla\ Firefox
+set titlestring=Firefox
 set ignorecase
 set hintchars=aoeuidhtns
 set wildmode=longest,list:full
