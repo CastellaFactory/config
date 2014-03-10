@@ -1,0 +1,24 @@
+" {{{ option settings
+set titlestring=Mozilla\ Firefox
+set ignorecase
+set hintchars=aoeuidhtns
+set wildmode=longest,list:full
+
+" }}}
+
+" {{{ firefox settings
+set! security.dialog_enable_delay=0
+set! browser.tabs.closeWindowWithLastTab=false
+
+" }}}
+
+" {{{ key mappings
+noremap ; :
+noremap : ;
+
+map <BS> <A-Left>
+
+vmap <silent> <C-g> y<Esc><Esc>P
+
+" }}}
+
