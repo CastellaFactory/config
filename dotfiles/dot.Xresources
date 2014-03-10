@@ -10,8 +10,8 @@ Emacs*.FontBackend: xft
 URxvt.depth: 32
 URxvt.font: xft:Meslo\ LGM:size=13:bold:antialias=true,xft:Hiragino\ Kaku\ Gothic\ StdN\ W8:antialias=true
 URxvt.transparent: true
-URxvt.shading: 45
-URxvt.fading: 30
+URxvt.shading: 80
+URxvt.fading: 40
 URxvt.scrollBar: false
 URxvt.termName: rxvt-256color
 URxvt.saveLines: 2048
