@@ -9,4 +9,3 @@ fi
 export AUTOJUMP_IGNORE_CASE=1
 
 # vim: ft=zsh
-export PATH=$PATH:/sbin:/usr/sbin:$HOME/.gem/ruby/2.0.0/bin:$HOME/Local/bin
