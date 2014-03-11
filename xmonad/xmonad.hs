@@ -340,8 +340,8 @@ defaults = defaultConfig {
               , ((myModMask, xK_a), runOrRaise "dolphin" (className =? "Dolphin"))
               , ((myModMask .|. shiftMask, xK_a), runOrRaise "emacs" (className =? "Emacs"))
 
-              , ((myModMask, xK_e), spawn "gvim -u ~/.vim/vimrc -N")
-              , ((myModMask .|. shiftMask, xK_e), spawn "gvim -u ~/.vim/vimrc_practice -N")
+              , ((myModMask, xK_e), spawn "gvim -u ~/.vim/vimrc -U ~/.vim/gvimrc -N --cmd 'set guioptions+=M'")
+              , ((myModMask .|. shiftMask, xK_e), spawn "gvim -u ~/.vim/vimrc_practice -U ~/.vim/gvimrc -N --cmd 'set guioptions+=M'")
 
               -- Magnifier
               , ((myModMask .|. controlMask , xK_semicolon), sendMessage Mag.MagnifyMore)

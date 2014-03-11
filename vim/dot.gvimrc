@@ -17,8 +17,8 @@ if g:is_darwin_p
     set guioptions-=m
     set guioptions-=r
     set guioptions-=L
-    set guioptions+=i
-    set guioptions+=M
+    " this flag must be added in vimrc
+    " set guioptions+=M
 
     set guifont=Meslo\ LG\ M:h16
     set transparency=10
@@ -28,12 +28,13 @@ elseif g:is_linux_p
     set guioptions-=a
     set guioptions-=e
     set guioptions-=g
+    set guioptions-=i
     set guioptions-=m
     set guioptions-=r
     set guioptions-=L
     set guioptions-=t
     set guioptions-=T
-    set guioptions+=M
+    " set guioptions+=M
 
     set guifont=Meslo\ LGM\ 13
 endif

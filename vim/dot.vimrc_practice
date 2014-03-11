@@ -16,8 +16,10 @@ NeoBundle 'kana/vim-textobj-entire'
 NeoBundle 'kana/vim-textobj-line'
 NeoBundle 'kana/vim-textobj-function'
 NeoBundle 'kana/vim-textobj-indent'
+NeoBundle 'kana/vim-textobj-syntax'
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'rhysd/vim-clang-format'
+NeoBundle 'rhysd/vim-operator-surround'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundleLazy 'vim-jp/cpp-vim', { 'autoload' : { 'filetypes' : ['cpp'] } }
 NeoBundle 'tpope/vim-fugitive'
@@ -343,6 +345,11 @@ let g:clang_format#style_options = {
             \   'TabWidth' : 4,
             \   'UseTab' : 'ForIndentation',
             \ }
+" 2}}}
+" operator-surround  {{{2
+map <silent>sa <Plug>(operator-surround-append)
+map <silent>sd <Plug>(operator-surround-delete)
+map <silent>sr <Plug>(operator-surround-replace)
 " 2}}}
 " 1}}}
 

@@ -4,8 +4,9 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 alias ls='ls --color -F'
 alias skype='PULSE_LATENCY_MSEC=60 skype'
 alias vim='vim -u ~/.vim/vimrc -N'
-alias vv='vim -u ~/.vim/vimrc_practice -N'
-alias gvv='gvim -u ~/.vim/vimrc_practice -N'
+alias gvim='gvim -u ~/.vim/vimrc -U ~/.vim/gvimrc -N --cmd "set guioptions+=M"'
+alias vv='vim -u ~/.vim/vimrc -N'
+alias gvv='gvim -u ~/.vim/vimrc_practice -U ~/.vim/gvimrc -N --cmd "set guioptions+=M"'
 
 # vim: ft=zsh
 
