@@ -20,6 +20,7 @@ NeoBundle 'kana/vim-textobj-syntax'
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'rhysd/vim-clang-format'
 NeoBundle 'rhysd/vim-operator-surround'
+NeoBundle 'tpope/vim-repeat'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundleLazy 'vim-jp/cpp-vim', { 'autoload' : { 'filetypes' : ['cpp'] } }
 NeoBundle 'tpope/vim-fugitive'
