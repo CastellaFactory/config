@@ -6,6 +6,9 @@ if [ -e /etc/profile.d/autojump.zsh ]; then
 	source /etc/profile.d/autojump.zsh
 fi
 
+# /etc/zsh/zprofile overwrites .zshenv PATH setting
+source $ZDOTDIR/.zshenv
+
 export AUTOJUMP_IGNORE_CASE=1
 
 # vim: ft=zsh
