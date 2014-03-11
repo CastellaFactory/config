@@ -6,6 +6,8 @@ if [ -e /usr/local/etc/autojump.zsh ]; then
 	source /usr/local/etc/autojump.zsh
 fi
 
+source $ZDOTDIR/.zshenv
+
 export AUTOJUMP_IGNORE_CASE=1
 
 # vim: ft=zsh
