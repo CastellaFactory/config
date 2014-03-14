@@ -113,7 +113,6 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'tpope/vim-fugitive'
 " 2}}}
 " Doc  " {{{2
-NeoBundle 'vim-jp/vimdoc-ja'
 " 2}}}
 " Others(fetch only)  " {{{2
 NeoBundleFetch 'Lokaltog/powerline'
@@ -132,9 +131,6 @@ augroup END
 
 language message C
 language time C
-
-" help language
-set helplang=en,ja
 
 let g:is_darwin_p = has('mac') || has('macunix')
 let g:is_linux_p = !g:is_darwin_p && has('unix')

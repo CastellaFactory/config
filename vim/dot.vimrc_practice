@@ -25,7 +25,6 @@ NeoBundle 'tpope/vim-repeat'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundleLazy 'vim-jp/cpp-vim', { 'autoload' : { 'filetypes' : ['cpp'] } }
 NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'mycolor', {'base' : '~/repo', 'type' : 'nosync'}
 
 filetype plugin indent on
@@ -40,9 +39,6 @@ augroup END
 
 language message C
 language time C
-
-" help language
-set helplang=en,ja
 
 let g:is_darwin_p = has('mac') || has('macunix')
 let g:is_linux_p = !g:is_darwin_p && has('unix')
