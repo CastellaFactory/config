@@ -282,7 +282,7 @@ NeoBundleLazy 'rhysd/vim-operator-surround', {
 NeoBundleLazy 'scrooloose/syntastic', {
             \   'autoload' : {'commands' : ['SyntasticCheck']} }
 NeoBundleLazy 'Shougo/unite.vim', {
-            \   'autoload' : {'commands' : [{'name' : 'Unite', 'complete' : 'customlist,unite#complete_sources'}]}}
+            \   'autoload' : {'commands' : [{'name' : 'Unite', 'complete' : 'customlist,unite#complete_source'}]}}
 NeoBundleLazy 'Shougo/unite-outline', {
             \   'autoload' : {'unite_sources' : 'outline'} }
 NeoBundleLazy 'Shougo/vimfiler.vim', {
