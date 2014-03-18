@@ -31,7 +31,7 @@ endif
 
 syntax enable
 if !exists('g:color_names')
-    let g:mycolor_termtrans = (g:is_linux_p && !g:is_darwin_p) ? 1 : 0
+    let g:mycolor_termtrans = g:is_linux_p
     colorscheme mycolor
     set background=dark
 endif
@@ -151,13 +151,13 @@ function! s:set_short_indent()  " {{{2
 endfunction  " 2}}}
 function! s:toggle_fullscreen()  " {{{2
     if g:is_darwin_p
-        setlocal fullscreen! fullscreen?
+        setlocal fullscreen!
     elseif g:is_linux_p
-        " FIXME: echo fullscreen or nofullscreen
         if executable('xdotool')
+            " use super+ctrl+l instead of super+f.
             call system('xdotool key super+ctrl+l')
         else
-            echo 'xdotool is not installed.'
+            echohl ErrorMsg | echomsg 'xdotool is not installed.' | echohl none
         endif
     endif
 endfunction  " 2}}}
