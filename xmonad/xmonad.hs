@@ -8,25 +8,26 @@
 import Control.Arrow (first)
 import Control.Monad (liftM2)
 import Data.Char (isSpace)
-import Data.Monoid
-import System.Exit
+import Data.List (isInfixOf)
+import Data.Monoid (All, Endo)
+import System.Exit (exitSuccess)
 import XMonad
-import XMonad.Actions.WindowGo
+import XMonad.Actions.WindowGo (runOrRaise)
 import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.EwmhDesktops (ewmhDesktopsLogHook)
 import XMonad.Hooks.FadeWindows
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.ManageHelpers (isDialog, doCenterFloat)
 import XMonad.Hooks.SetWMName
-import XMonad.Layout.LayoutHints
+import XMonad.Layout.LayoutHints (layoutHints, hintsEventHook)
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.NoBorders
 import XMonad.Prompt
 import XMonad.Prompt.Shell
-import XMonad.Util.EZConfig
-import qualified Data.Map as M
-import qualified XMonad.Layout.Fullscreen as F
+import XMonad.Util.EZConfig (additionalKeys)
+import qualified Data.Map as M (Map, fromList)
+import qualified XMonad.Layout.Fullscreen as F (fullscreenEventHook, fullscreenManageHook)
 import qualified XMonad.Layout.Magnifier as Mag
 import qualified XMonad.StackSet as W
 
@@ -227,6 +228,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList
 -- フルスクリーンにするにはWin+F(see additionalkeys)
 
 myLayout = layoutHints
+           $ avoidStruts
            $ smartBorders $ Mag.magnifiercz 1.2
            $ mkToggle (NOBORDERS ?? FULL ?? EOT)
            $ Tall 1 (3/100) (1/2) ||| Mirror (Tall 1 (3/100) (1/2))
@@ -263,7 +265,7 @@ myManageHook = manageDocks <+> F.fullscreenManageHook
 ----------------------------------------------------------------------
 -- Event handling
 myEventHook :: Event -> X All
-myEventHook = F.fullscreenEventHook <+> hintsEventHook <+> fadeWindowsEventHook
+myEventHook = F.fullscreenEventHook <+> hintsEventHook <+> docksEventHook <+> fadeWindowsEventHook
 
 
 ------------------------------------------------------------------------
@@ -293,11 +295,9 @@ myPP :: PP
 -- Hintedは非表示にする length "Hinted " == 7
 myPP = xmobarPP {
           ppCurrent   = xmobarColor "#429942" "" . wrap "[" "]"
-          , ppSep     = " : "
           , ppLayout  = drop 7
        }
-toggleStrutsKey XConfig {XMonad.modMask = modm} = (modm, xK_b)
-
+toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
 ------------------------------------------------------------------------
 main :: IO ()
