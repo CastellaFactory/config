@@ -7,122 +7,6 @@
 "
 "
 
-" NeoBundle  " {{{1
-" Base  " {{{2
-if has('vim_starting')
-    set runtimepath+=~/.vim/bundle/neobundle.vim/
-endif
-
-let g:neobundle#install_process_timeout = 2000
-
-call neobundle#rc(expand('~/.vim/bundle/'))
-
-" Let NeoBundle manage NeoBundle
-NeoBundleFetch 'Shougo/neobundle.vim'
-" 2}}}
-" Utilities  " {{{2
-NeoBundle 'Shougo/vimproc.vim', {
-            \   'build' : {
-            \       'mac' : 'make -f make_mac.mak',
-            \       'unix' : 'make -f make_unix.mak'} }
-NeoBundleLazy 'kana/vim-altr', {
-            \   'autoload' : {'mappings' : ['<Plug>(altr-']} }
-NeoBundle 'kana/vim-submode'
-NeoBundleLazy 'kana/vim-fakeclip', { 'autoload' : {'terminal' : 1} }
-NeoBundle 'tpope/vim-repeat'
-" 2}}}
-" Filer  " {{{2
-NeoBundleLazy 'Shougo/vimfiler.vim', {
-            \   'autoload' : {'commands' : ['VimFiler', 'VimFilerCurrentDir', 'VimFilerBufferDir',
-            \                               'VimFilerSplit', 'VimFilerExplorer', 'VimFilerDouble']} }
-" 2}}}
-" Completion  " {{{2
-NeoBundleLazy 'Valloric/YouCompleteMe', {
-            \   'build' : {
-            \       'unix' : 'git submodule update --init --recursive && ./install.sh --clang-completer --system-libclang',
-            \       'mac' : 'git submodule update --init --recursive && ./install.sh --clang-completer'},
-            \   'autoload' : {'insert' : 1, 'commands' : ['YcmCompleter']},
-            \   'augroup' : 'youcompletemeStart'}
-NeoBundleLazy 'SirVer/ultisnips', {'autoload' : {'functions' : ['UltiSnips#FileTypeChanged']}}
-NeoBundleLazy 'eagletmt/neco-ghc', {
-            \   'autoload' : {'filetypes' : ['haskell']} }
-" 2}}}
-" Unite  " {{{2
-NeoBundleLazy 'Shougo/unite.vim', {
-            \   'autoload' : {'commands' : [{'name' : 'Unite', 'complete' : 'customlist,unite#complete_sources'}]}}
-NeoBundle 'Shougo/neomru.vim'
-NeoBundleLazy 'Shougo/unite-outline', {
-            \   'autoload' : {'unite_sources' : 'outline'} }
-NeoBundleLazy 'eagletmt/unite-haddock', {
-            \   'autoload' : {'unite_sources' : 'haddock'} }
-NeoBundleLazy 'ujihisa/unite-haskellimport', {
-            \   'autoload' : {'unite_sources' : 'haskellimport'} }
-" 2}}}
-" Textobj  " {{{2
-NeoBundle 'kana/vim-textobj-user'
-NeoBundleLazy 'kana/vim-textobj-entire', {
-            \   'autoload' : {'mappings' : [ ['xo', 'ae'], ['xo', 'ie'] ]} }
-NeoBundleLazy 'kana/vim-textobj-line', {
-            \   'autoload' : {'mappings' : [ ['xo', 'al'], ['xo', 'il'] ]} }
-NeoBundleLazy 'kana/vim-textobj-function', {
-            \   'autoload' : {'mappings' : [ ['xo', 'af'], ['xo', 'if'] ]} }
-NeoBundleLazy 'kana/vim-textobj-indent', {
-            \   'autoload' : {'mappings' : [ ['xo', 'ai'], ['xo', 'ii'], ['xo', 'aI'], ['xo', 'iI'] ]} }
-NeoBundleLazy 'kana/vim-textobj-syntax', {
-            \   'autoload' : {'mappings' : [ ['xo', 'ay'], ['xo', 'iy'] ]} }
-NeoBundleLazy 'kana/vim-textobj-lastpat', {
-            \   'autoload' : {'mappings' : [ ['xo', 'a/'], ['xo', 'i/'], ['xo', 'a?'], ['xo', 'i?'] ]} }
-" 2}}}
-" Operator  " {{{2
-NeoBundle 'kana/vim-operator-user'
-NeoBundleLazy 'rhysd/vim-clang-format', {
-            \   'autoload' : {'mappings' : ['<Plug>(operator-clang-format)']} }
-NeoBundleLazy 'rhysd/vim-operator-surround', {
-            \   'autoload' : {'mappings' : ['<Plug>(operator-surround-']} }
-" 2}}}
-" Editing  " {{{2
-NeoBundleLazy 'tyru/caw.vim', {
-            \   'autoload' : {'mappings' : ['<Plug>(caw:']} }
-NeoBundleLazy 'kana/vim-smartinput', { 'autoload' : {'insert' : 1} }
-NeoBundleLazy 'junegunn/vim-easy-align', {
-            \   'autoload' : {'mappings' : ['<Plug>(EasyAlign)']} }
-" 2}}}
-" Quickrun  " {{{2
-NeoBundle 'thinca/vim-quickrun'
-" 2}}}
-" Filetype  " {{{2
-" C/C++
-NeoBundleLazy 'vim-jp/cpp-vim', {
-            \   'autoload' : {'filetypes' : ['cpp']} }
-" Haskell
-NeoBundleLazy 'kana/vim-filetype-haskell', {
-            \   'autoload' : {'filetypes' : ['haskell']} }
-NeoBundleLazy 'eagletmt/ghcmod-vim', {
-            \   'autoload' : {'filetypes' : ['haskell']} }
-NeoBundleLazy 'dag/vim2hs', {
-            \   'autoload' : {'filetypes' : ['haskell']} }
-" 2}}}
-" Syntax Check  " {{{2
-NeoBundleLazy 'scrooloose/syntastic', {
-            \   'autoload' : {'commands' : ['SyntasticCheck']} }
-" 2}}}
-" UI  " {{{2
-NeoBundle 'itchyny/lightline.vim'
-" 2}}}
-" Vcs  " {{{2
-NeoBundle 'tpope/vim-fugitive'
-" 2}}}
-" Doc  " {{{2
-" 2}}}
-" Others(fetch only)  " {{{2
-NeoBundleFetch 'Lokaltog/powerline'
-" 2}}}"
-
-filetype plugin indent on
-" Installation Check.
-NeoBundleCheck
-" 1}}}
-
 " Basic Settings  " {{{1
 " Base  " {{{2
 augroup MyAutoCmd
@@ -135,81 +19,83 @@ language time C
 let g:is_darwin_p = has('mac') || has('macunix')
 let g:is_linux_p = !g:is_darwin_p && has('unix')
 
-" 2}}}
-" Edit  " {{{2
-" encoding
-set termencoding=utf-8
-set encoding=utf-8
-set fileencoding=utf-8
-set fileencodings=utf-8,cp932
-
-" tab settings
-set softtabstop=4
-set shiftwidth=4
-set tabstop=4
-set autoindent
-set smarttab
-set shiftround
-set noexpandtab
-
-" comment
-autocmd MyAutoCmd Filetype * setlocal formatoptions-=ro
-
-" move bol<->eol
-set whichwrap=b,s,h,l,[,],<,>,~
-
-" autoreload
-set autoread
-
-" enable backspace delete indent eol newline
-set backspace=indent,eol,start
-" 2}}}
-" Search & Replace  " {{{2
-set incsearch
-set ignorecase
-set smartcase
-set wrapscan
-set hlsearch
-nohlsearch
-" 2}}}
-" Appearance  " {{{2
-" disable startup message
-set shortmess=aoOIt
-" show match paren
-set showmatch
-" open new window into bottom
-set splitbelow splitright
-
-set nrformats-=octal
-
-" show line number
-set number
-set ruler
-
-set wrap
-
-set ambiwidth=double
-
-" always show statusline
-set laststatus=2
-set cmdheight=2
-set showcmd
-
-" always show tabline
-set showtabline=2
-
-" command line
-set wildmenu
-set wildchar=<TAB>
-set wildmode=longest:full,full
-
-set list
-set listchars=tab:»\ ,trail:_
-
-" set tabline  " {{{3
 function! s:SID_PREFIX()
     return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
 endfunction
+" 2}}}
+" Options " {{{2
+if has('gui_running')
+    " this flag must be added before 'syntax enable' or 'filetype on' in vimrc
+    set guioptions+=M
+endif
+
+syntax enable
+if !exists('g:color_names')
+    let g:mycolor_termtrans = (g:is_linux_p && !g:is_darwin_p) ? 1 : 0
+    colorscheme mycolor
+    set background=dark
+endif
+
+set ambiwidth=double
+set autoindent
+set autoread
+set backspace=indent,eol,start
+set backupdir=~/.vim/backups
+if has('unnamedplus')
+    set clipboard=unnamed,unnamedplus
+else
+    set clipboard=unnamed
+endif
+set cmdheight=2
+set completeopt=menuone
+set directory=~/.vim/backups
+set encoding=utf-8
+scriptencoding utf-8
+set fileencoding=utf-8
+set fileencodings=utf-8,cp932
+set foldenable
+set foldmethod=marker
+set history=100
+set hlsearch
+nohlsearch
+set ignorecase
+set incsearch
+set laststatus=2
+set list
+set listchars=tab:»\ ,trail:_
+if g:is_darwin_p
+    set macmeta
+endif
+set mouse=a
+set noerrorbells
+set nrformats-=octal
+set number
+set ruler
+set scrolloff=3
+set shiftround
+set shortmess=aoOIt
+set showcmd
+set showmatch
+set showtabline=2
+set sidescroll=1
+set sidescrolloff=5
+set smartcase
+set smarttab
+set splitbelow splitright
+set ttimeoutlen=50
+set t_vb=
+set termencoding=utf-8
+set ttyfast
+set undodir=~/.vim/undo
+set undofile
+set visualbell
+set whichwrap=b,s,h,l,[,],<,>,~
+set wildchar=<TAB>
+set wildmenu
+set wildmode=longest:full,full
+set wrap
+set wrapscan
+
 function! s:my_tabline()
     let s = ''
     for i in range(1, tabpagenr('$'))
@@ -232,102 +118,50 @@ function! s:my_tabline()
     return s
 endfunction
 let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
-" 3}}}
-
-set background=dark
-syntax enable
-let g:mycolor_termtrans = 1
-colorscheme mycolor
-" 2}}}
-" Other  " {{{2
-" disable bell
-set visualbell
-set t_vb=
-set noerrorbells
-
-if g:is_darwin_p
-    set macmeta
-endif
-
-" clipboard
-if has('unnamedplus')
-    set clipboard=unnamed,unnamedplus
-else
-    set clipboard=unnamed
-endif
-
-" completion
-set completeopt=menuone
-
-set history=100
-
-" enable mouse
-set mouse=a
-
-set scrolloff=3
-set sidescrolloff=5
-set sidescroll=1
-
-set ttyfast
-
-" enable folding
-set foldenable
-set foldmethod=marker
-
-" backup directory
-set directory=~/.vim/backups
-set backupdir=~/.vim/backups
-
-" undo
-set undofile
-set undodir=~/.vim/undo
-
-" goto last changed place
-autocmd MyAutoCmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-
-" とりあえず作ってみたので試験運用
-function! CD_test()
-    execute 'lcd ' . fnameescape(expand('%:p:h'))
-    if (system('git rev-parse --is-inside-work-tree') ==# 'true\n')
-        execute 'lcd ' . fnameescape(system('git rev-parse --show-toplevel'))
-    endif
-    pwd
-endfunction
-nnoremap <silent> <Space>cd  :<C-u>call CD_test()<CR>
 " 2}}}
 " 1}}}
 
-" Mappings  " {{{1
-" show list of all mappnig
-" :Allmaps
-" :verbose Allmaps <buffer>
-command!
-            \   -nargs=* -complete=mapping
-            \   AllMaps
+" Utils  " {{{1
+" AllMaps - :map in all modes " {{{2
+command! -nargs=* -complete=mapping AllMaps
             \   map <args> | map! <args> | lmap <args>
-" Normal-mode keymapping " {{{2
+" 2}}}
+" Objmap - wrapper for textobj mapping  " {{{2
+command! -nargs=+ Objmap execute 'omap' <q-args> | execute 'vmap' <q-args>
 
-" quick help
-nnoremap <C-h>  :<C-u>help<Space>
-nnoremap ,h :<C-u>help<Space><C-r><C-w><CR>
-" to avoid gobaku
-nnoremap <F1> <Nop>
+command! -nargs=+ Objnoremap execute 'onoremap' <q-args> | execute 'vnoremap' <q-args>
 
-" toggle wrap
-nnoremap <Space>ow
-            \  :<C-u>setlocal wrap!
-            \ \|     setlocal wrap?<CR>
+command! -nargs=+ Objunmap execute 'ounmap' <q-args> | execute 'vunmap' <q-args>
+" 2}}}
+function! s:cd_to_current_buffer_dir()  " {{{2
+    lcd %:p:h
+    pwd
+endfunction  " 2}}}
+function! s:cd_to_git_root_dir()  " {{{2
+    if (system('git rev-parse --is-inside-work-tree') =~# '\<true')
+        execute 'lcd ' . system('git rev-parse --show-toplevel')
+    endif
+    pwd
+endfunction  " 2}}}
+function! s:set_indent()  " {{{2
+    setlocal tabstop=4 shiftwidth=4 softtabstop=4
+endfunction  " 2}}}
+function! s:set_short_indent()  " {{{2
+    setlocal tabstop=2 shiftwidth=2 softtabstop=2
+endfunction  " 2}}}
+function! s:toggle_fullscreen()  " {{{2
+    if g:is_darwin_p
+        setlocal fullscreen! fullscreen?
+    elseif g:is_linux_p
+        " TODO
+        " in xmonad, in others(using xdotool?)
+    endif
+endfunction  " 2}}}
+" 1}}}
 
-" disable dangerous command
-nnoremap ZZ <Nop>
-nnoremap ZQ <Nop>
-
-" macro
-" disable EX-mode
-nnoremap Q q
-nnoremap q <Nop>
-
-" swap
+" Mappings  " {{{1
+" absolute  " {{{2
+" swap colon and semicolon
 noremap ; :
 noremap : ;
 
@@ -336,16 +170,27 @@ nnoremap <Space>.   :<C-u>edit ~/repo/config/vim/dot.vimrc<CR>
 nnoremap <Space>t.  :<C-u>tabnew ~/repo/config/vim/dot.vimrc<CR>
 nnoremap <Space>s.  :<C-u>source ~/repo/config/vim/dot.vimrc<CR>
 " 2}}}
-" Insert-mode keymapping  " {{{2
-inoremap <C-p> <Up>
-inoremap <C-n> <Down>
-inoremap <C-f> <Right>
-inoremap <C-b> <Left>
-inoremap <C-a> <Home>
-inoremap <C-e> <End>
-inoremap <C-d> <Del>
+" help  " {{{2
+nnoremap <C-h>  :<C-u>help<Space>
+nnoremap ,h :<C-u>help<Space><C-r><C-w><CR>
+
+" disable F1
+noremap <F1> <Nop>
+inoremap <F1> <Nop>
 " 2}}}
-" Command-mode keymapping  " {{{2
+" <Space> stuffs  " {{{2
+nnoremap <Space>ow  :<C-u>setlocal wrap! wrap?<CR>
+nnoremap <Space>of  :<C-u>call <SID>toggle_fullscreen()<CR>
+nnoremap <Space>r   :<C-u>registers<CR>
+nnoremap <Space>/   :<C-u>nohlsearch<CR>
+nnoremap <Space>v   zMzv
+" 2}}}
+" movement in Insert mode  " {{{2
+inoremap <C-a>  <Home>
+inoremap <expr> <C-e> pumvisible() ? "\<C-e>" : "\<End>"
+inoremap <C-d>  <Del>
+" 2}}}
+" Command-line mode  " {{{2
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 cnoremap <C-a> <Home>
@@ -353,12 +198,128 @@ cnoremap <C-e> <End>
 cnoremap <M-b> <S-Left>
 cnoremap <M-f> <S-Right>
 
-" escape /
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
+" 2}}}
+" misc  " {{{2
+" select last changed text (like gv p.146)
+nnoremap gc `[v`]
+Objnoremap gc :<C-u>normal gc<CR>
+
+" disable dangerous command
+nnoremap ZZ <Nop>
+nnoremap ZQ <Nop>
+
+" disable EX-mode
+nnoremap Q q
+nnoremap q <Nop>
 " 2}}}
 " 1}}}
 
-" Plugin Settings " {{{1
+" NeoBundle  " {{{1
+" Basic  " {{{2
+if has('vim_starting')
+    set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+
+let g:neobundle#install_process_timeout = 2000
+
+call neobundle#rc(expand('~/.vim/bundle/'))
+
+NeoBundleFetch 'Shougo/neobundle.vim'
+" 2}}}
+" Bundles  " {{{2
+NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'kana/vim-operator-user'
+NeoBundle 'kana/vim-submode'
+NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'Shougo/vimproc.vim', {
+            \   'build' : {
+            \       'mac' : 'make -f make_mac.mak',
+            \       'unix' : 'make -f make_unix.mak'} }
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'tpope/vim-repeat'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundleLazy 'dag/vim2hs', {
+            \   'autoload' : {'filetypes' : ['haskell']} }
+NeoBundleLazy 'eagletmt/ghcmod-vim', {
+            \   'autoload' : {'filetypes' : ['haskell']} }
+NeoBundleLazy 'eagletmt/neco-ghc', {
+            \   'autoload' : {'filetypes' : ['haskell']} }
+NeoBundleLazy 'eagletmt/unite-haddock', {
+            \   'autoload' : {'unite_sources' : 'haddock'} }
+NeoBundleLazy 'junegunn/vim-easy-align', {
+            \   'autoload' : {'mappings' : ['<Plug>(EasyAlign)']} }
+NeoBundleLazy 'kana/vim-altr', {
+            \   'autoload' : {'mappings' : ['<Plug>(altr-']} }
+NeoBundleLazy 'kana/vim-filetype-haskell', {
+            \   'autoload' : {'filetypes' : ['haskell']} }
+NeoBundleLazy 'kana/vim-smartinput', { 'autoload' : {'insert' : 1} }
+NeoBundleLazy 'kana/vim-textobj-entire', {
+            \   'autoload' : {'mappings' : [ ['xo', 'ae'], ['xo', 'ie'] ]} }
+NeoBundleLazy 'kana/vim-textobj-function', {
+            \   'autoload' : {'mappings' : [ ['xo', 'af'], ['xo', 'if'] ]} }
+NeoBundleLazy 'kana/vim-textobj-indent', {
+            \   'autoload' : {'mappings' : [ ['xo', 'ai'], ['xo', 'ii'], ['xo', 'aI'], ['xo', 'iI'] ]} }
+NeoBundleLazy 'kana/vim-textobj-lastpat', {
+            \   'autoload' : {'mappings' : [ ['xo', 'a/'], ['xo', 'i/'], ['xo', 'a?'], ['xo', 'i?'] ]} }
+NeoBundleLazy 'kana/vim-textobj-line', {
+            \   'autoload' : {'mappings' : [ ['xo', 'al'], ['xo', 'il'] ]} }
+NeoBundleLazy 'kana/vim-textobj-syntax', {
+            \   'autoload' : {'mappings' : [ ['xo', 'ay'], ['xo', 'iy'] ]} }
+NeoBundleLazy 'kana/vim-fakeclip', { 'autoload' : {'terminal' : 1} }
+NeoBundleLazy 'rhysd/vim-clang-format', {
+            \   'autoload' : {'mappings' : ['<Plug>(operator-clang-format)']} }
+NeoBundleLazy 'rhysd/vim-operator-surround', {
+            \   'autoload' : {'mappings' : ['<Plug>(operator-surround-']} }
+NeoBundleLazy 'scrooloose/syntastic', {
+            \   'autoload' : {'commands' : ['SyntasticCheck']} }
+NeoBundleLazy 'Shougo/unite.vim', {
+            \   'autoload' : {'commands' : [{'name' : 'Unite', 'complete' : 'customlist,unite#complete_sources'}]}}
+NeoBundleLazy 'Shougo/unite-outline', {
+            \   'autoload' : {'unite_sources' : 'outline'} }
+NeoBundleLazy 'Shougo/vimfiler.vim', {
+            \   'autoload' : {'commands' : ['VimFiler', 'VimFilerCurrentDir', 'VimFilerBufferDir',
+            \                               'VimFilerSplit', 'VimFilerExplorer', 'VimFilerDouble']} }
+NeoBundleLazy 'SirVer/ultisnips', {'autoload' : {'functions' : ['UltiSnips#FileTypeChanged']}}
+NeoBundleLazy 'tyru/caw.vim', {
+            \   'autoload' : {'mappings' : ['<Plug>(caw:']} }
+NeoBundleLazy 'ujihisa/unite-haskellimport', {
+            \   'autoload' : {'unite_sources' : 'haskellimport'} }
+NeoBundleLazy 'Valloric/YouCompleteMe', {
+            \   'build' : {
+            \       'unix' : 'git submodule update --init --recursive && ./install.sh --clang-completer --system-libclang',
+            \       'mac' : 'git submodule update --init --recursive && ./install.sh --clang-completer'},
+            \   'autoload' : {'insert' : 1, 'commands' : ['YcmCompleter']},
+            \   'augroup' : 'youcompletemeStart'}
+NeoBundleLazy 'vim-jp/cpp-vim', {
+            \   'autoload' : {'filetypes' : ['cpp']} }
+NeoBundleFetch 'Lokaltog/powerline'
+
+filetype plugin indent on
+NeoBundleCheck
+" 2}}}
+" 1}}}
+
+" FileTypes  "{{{1
+" additional settings(e.g. expandtab,omnifunc) are in ~/.vim/after/ftplugin
+" All filetypes  " {{{2
+set formatoptions-=ro    " this flag shoud be set after 'filetype on'
+autocmd MyAutoCmd FileType * call s:on_Filetype_Any()
+function! s:on_Filetype_Any()
+    setlocal formatoptions-=ro
+    if &l:omnifunc == ''
+        setlocal omnifunc=syntaxcomplete#Complete
+    endif
+endfunction
+
+autocmd MyAutoCmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+" 2}}}
+autocmd MyAutoCmd FileType c,cpp,python,vim call s:set_indent()
+autocmd MyAutoCmd FileType ruby,haskell call s:set_short_indent()
+" 1}}}
+
+" Plugins {{{1
 " altr  " {{{2
 nmap <F3> <Plug>(altr-forward)
 nmap <F2> <Plug>(altr-back)
@@ -374,10 +335,10 @@ unlet s:bundle
 let g:caw_no_default_keymappings = 1
 let g:caw_i_sp_blank = ' '
 
-nmap gci <Plug>(caw:i:comment)
-nmap gca <Plug>(caw:a:comment)
-nmap gco <Plug>(caw:jump:comment-next)
-nmap gcO <Plug>(caw:jump:comment-prev)
+nmap cci <Plug>(caw:i:comment)
+nmap cca <Plug>(caw:a:comment)
+nmap cco <Plug>(caw:jump:comment-next)
+nmap ccO <Plug>(caw:jump:comment-prev)
 nmap <Leader>cc <Plug>(caw:i:toggle)
 vmap <Leader>cc <Plug>(caw:i:toggle)
 nmap <Leader>ca <Plug>(caw:a:toggle)
@@ -493,25 +454,23 @@ unlet s:bundle
 " Syntastic  " {{{2
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_enable_highlighting = 0
+let g:syntastic_check_on_wq = 0
 let g:syntastic_cppcheck_config_file = '~/.vim/syntastic_config/cppcheck'
 let g:syntastic_mode_map = {'mode': 'passive'}
-" C  " {{{3
+
 let g:syntastic_c_checkers = ['gcc', 'cppcheck']
 let g:syntastic_c_compier = 'clang'
 let g:syntastic_c_compiler_options = '-std=c11 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-missing-prototypes -fno-caret-diagnostics'
 let g:syntastic_c_no_default_include_dirs = 1
 let g:syntastic_c_no_include_search = 1
-" 3}}}
-" C++  " {{{3
+
 let g:syntastic_cpp_checkers = ['gcc', 'cppcheck']
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = '-std=c++11 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-c++98-compat -Wno-missing-prototypes -fno-caret-diagnostics'
 let g:syntastic_cpp_no_default_include_dirs = 1
 let g:syntastic_cpp_no_include_search = 1
-" 3}}}
-"  Haskell  " {{{3
+
 let g:syntastic_haskell_checkers = ['ghc_mod', 'hlint']
-" 3}}}
 " 2}}}
 " UltiSnips  "{{{2
 let g:UltiSnipsSnippetDirectories = ['ultisnips-snippets']
@@ -637,5 +596,7 @@ autocmd MyAutoCmd FileType haskell nnoremap <buffer> <Leader>R :<C-u>QuickRun ha
 " 2}}}
 " 1}}}
 
-" vim: set ft=vim fdm=marker :
+set secure
+
+" vim: ft=vim fdm=marker
 
