@@ -153,10 +153,11 @@ function! s:toggle_fullscreen()  " {{{2
     if g:is_darwin_p
         setlocal fullscreen! fullscreen?
     elseif g:is_linux_p
+        " FIXME: echo fullscreen or nofullscreen
         if executable('xdotool')
             call system('xdotool key super+ctrl+l')
         else
-            echo 'xdotool is not installed. you can togle fullscreen by super+f if in xmonad.'
+            echo 'xdotool is not installed.'
         endif
     endif
 endfunction  " 2}}}
