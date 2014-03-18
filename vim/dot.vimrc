@@ -153,8 +153,11 @@ function! s:toggle_fullscreen()  " {{{2
     if g:is_darwin_p
         setlocal fullscreen! fullscreen?
     elseif g:is_linux_p
-        " TODO
-        " in xmonad, in others(using xdotool?)
+        if executable('xdotool')
+            call system('xdotool key super+ctrl+l')
+        else
+            echo 'xdotool is not installed. you can togle fullscreen by super+f if in xmonad.'
+        endif
     endif
 endfunction  " 2}}}
 " 1}}}
@@ -179,10 +182,10 @@ noremap <F1> <Nop>
 inoremap <F1> <Nop>
 " 2}}}
 " <Space> stuffs  " {{{2
-nnoremap <Space>ow  :<C-u>setlocal wrap! wrap?<CR>
-nnoremap <Space>of  :<C-u>call <SID>toggle_fullscreen()<CR>
+nnoremap <silent> <Space>ow  :<C-u>setlocal wrap! wrap?<CR>
+nnoremap <silent> <Space>of  :<C-u>call <SID>toggle_fullscreen()<CR>
 nnoremap <Space>r   :<C-u>registers<CR>
-nnoremap <Space>/   :<C-u>nohlsearch<CR>
+nnoremap <silent> <Space>/   :<C-u>nohlsearch<CR>
 nnoremap <Space>v   zMzv
 " 2}}}
 " movement in Insert mode  " {{{2
@@ -204,6 +207,9 @@ cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 " select last changed text (like gv p.146)
 nnoremap gc `[v`]
 Objnoremap gc :<C-u>normal gc<CR>
+
+nnoremap <silent> <Space>cd     :<C-u>call <SID>cd_to_current_buffer_dir()<CR>
+nnoremap <silent> <Space>cgd    :<C-u>call <SID>cd_to_git_root_dir()<CR>
 
 " disable dangerous command
 nnoremap ZZ <Nop>

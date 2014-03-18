@@ -3,8 +3,6 @@
 ----------------------------------------------------------------------
 
 -- import System.IO
--- import XMonad.Hooks.ManageHelpers
--- import XMonad.Hooks.UrgencyHook
 -- import XMonad.Layout
 -- import XMonad.Util.Run
 import Control.Arrow (first)
@@ -18,6 +16,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FadeWindows
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
 import XMonad.Layout.LayoutHints
 import XMonad.Layout.MultiToggle
@@ -42,7 +41,7 @@ myBorderWidth       = 1
 myModMask           :: KeyMask
 myModMask           = mod4Mask
 myWorkspaces        :: [String]
-myWorkspaces        = ["1:General","2:Web","3:Code","4:Skype","5:Mikutter","6:Reading","7:Media","8:Office","9"]
+myWorkspaces        = ["1:General","2:Web","3:Code","4:Skype","5:Reading","6:Media","7:Office","8","9"]
 myNormalBorderColor :: String
 myNormalBorderColor = "#99ccff"
 myFocuseBorderColor :: String
@@ -244,21 +243,19 @@ myManageHook = manageDocks <+> F.fullscreenManageHook
                , className =? "Kmix"                                  --> doFloat
                , className =? "Firefox"                               --> viewShift "2:Web"
                , className =? "Thunderbird"                           --> viewShift "2:Web"
-               , className =? "Mikutter.rb"                           --> viewShift "5:Mikutter"
                , className =? "Chromium-browser"                      --> viewShift "2:Web"
                --             , className =? "Gvim"                 --> viewShift "3:Code"
                --             , className =? "Emacs"                --> viewShift "3:Code"
                , className =? "Skype"                                 --> doShift "4:Skype"
                , className =? "Skype"                                 --> doFloat
-               , className =? "Calibre-gui"                           --> viewShift "6:Reading"
-               , className =? "Calibre-ebook-viewer"                  --> viewShift "6:Reading"
+               , className =? "Calibre-gui"                           --> viewShift "5:Reading"
+               , className =? "Calibre-ebook-viewer"                  --> viewShift "5:Reading"
                , className =? "Calibre-ebook-viewer"                  --> doFloat
-               , className =? "Audacious"                             --> doShift "7:Media"
+               , className =? "Audacious"                             --> doShift "6:Media"
                , className =? "Audacious"                             --> doFloat
-               , (className =? "Firefox" <&&> resource =? "Download") --> doFloat
-               , title =? "Minecraft 1.6.4"                           --> doFloat
                , resource  =? "desktop_window"                        --> doIgnore
                , resource  =? "kdesktop"                              --> doIgnore
+               , isDialog                                             --> doCenterFloat
                ]
   where viewShift = doF . liftM2 (.) W.view W.shift
 
@@ -276,6 +273,7 @@ myLogHook  = ewmhDesktopsLogHook <+> fadeWindowsLogHook myFadeHook
   where myFadeHook = composeAll [
                         opaque
                         , isFloating              --> opaque
+                        , className =? "URxvt"    --> opaque
                         , className =? "Gvim"     --> transparency 0.20
                         , isUnfocused             --> transparency 0.50
                      ]
@@ -332,6 +330,7 @@ defaults = defaultConfig {
            `additionalKeys`
            [
               ((myModMask, xK_f), sendMessage $ Toggle FULL)
+              , ((myModMask .|. controlMask,  xK_l), sendMessage $ Toggle FULL)
 
               -- アプリケーションを起動
               , ((myModMask, xK_o), runOrRaise "firefox" (className =? "Firefox"))
