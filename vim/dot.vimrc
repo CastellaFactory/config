@@ -22,6 +22,10 @@ let g:is_linux_p = !g:is_darwin_p && has('unix')
 function! s:SID_PREFIX()
     return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
 endfunction
+
+" $MYVIMRC is not set when vim is launched 'vim -u vimrc'?
+let $MYVIMRC = "~/.vim/vimrc"
+
 " 2}}}
 " Options " {{{2
 if has('gui_running')
@@ -31,7 +35,7 @@ endif
 
 syntax enable
 if !exists('g:color_names')
-    let g:mycolor_termtrans = g:is_linux_p
+    let g:mycolor_termtrans = 1
     colorscheme mycolor
     set background=dark
 endif
@@ -139,9 +143,11 @@ function! s:cd_to_current_buffer_dir()  " {{{2
 endfunction  " 2}}}
 function! s:cd_to_git_root_dir()  " {{{2
     if (system('git rev-parse --is-inside-work-tree') =~# '\<true')
-        execute 'lcd ' . system('git rev-parse --show-toplevel')
+        lcd `=fnamemodify(system('git rev-parse --show-toplevel'), ':p')`
+        pwd
+    else
+        echohl ErrorMsg | echomsg 'This file is not inside git tree.' | echohl none
     endif
-    pwd
 endfunction  " 2}}}
 function! s:set_indent()  " {{{2
     setlocal tabstop=4 shiftwidth=4 softtabstop=4
@@ -151,10 +157,18 @@ function! s:set_short_indent()  " {{{2
 endfunction  " 2}}}
 function! s:toggle_fullscreen()  " {{{2
     if g:is_darwin_p
-        setlocal fullscreen!
+        if has('gui_running')
+            setlocal fullscreen!
+        else
+            if executable('cliclick')
+                call system('cliclick kd:cmd kp:return ku:cmd')
+            else
+                echohl ErrorMsg | echomsg 'cliclick is not installed.' | echohl none
+            endif
+        endif
     elseif g:is_linux_p
         if executable('xdotool')
-            " use super+ctrl+l instead of super+f.
+            " use super+ctrl+l instead of super+f. (see xmonad.hs)
             call system('xdotool key super+ctrl+l')
         else
             echohl ErrorMsg | echomsg 'xdotool is not installed.' | echohl none
@@ -169,10 +183,10 @@ endfunction  " 2}}}
 noremap ; :
 noremap : ;
 
-" edit vimrc and reload (don't use $MYVIMRC)
-nnoremap <Space>.   :<C-u>edit ~/repo/config/vim/dot.vimrc<CR>
-nnoremap <Space>t.  :<C-u>tabnew ~/repo/config/vim/dot.vimrc<CR>
-nnoremap <Space>s.  :<C-u>source ~/repo/config/vim/dot.vimrc<CR>
+" follow symbolic link
+nnoremap <Space>.   :<C-u>edit `=fnamemodify(resolve("$MYVIMRC"), ':p')`<CR>
+nnoremap <Space>t.  :<C-u>tabnew `=fnamemodify(resolve("$MYVIMRC"), ':p')`<CR>
+nnoremap <Space>s.  :<C-u>source `=fnamemodify(resolve("$MYVIMRC"), ':p')`<CR>
 " 2}}}
 " help  " {{{2
 nnoremap <C-h>  :<C-u>help<Space>
@@ -311,7 +325,7 @@ NeoBundleCheck
 " FileTypes  "{{{1
 " additional settings(e.g. expandtab,omnifunc) are in ~/.vim/after/ftplugin
 " All filetypes  " {{{2
-set formatoptions-=ro    " this flag shoud be set after 'filetype on'
+set formatoptions-=ro       " this flag shoud be set after 'filetype on'?
 autocmd MyAutoCmd FileType * call s:on_Filetype_Any()
 function! s:on_Filetype_Any()
     setlocal formatoptions-=ro
@@ -320,7 +334,7 @@ function! s:on_Filetype_Any()
     endif
 endfunction
 
-autocmd MyAutoCmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+autocmd MyAutoCmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif
 " 2}}}
 autocmd MyAutoCmd FileType c,cpp,python,vim call s:set_indent()
 autocmd MyAutoCmd FileType ruby,haskell call s:set_short_indent()
@@ -606,4 +620,3 @@ autocmd MyAutoCmd FileType haskell nnoremap <buffer> <Leader>R :<C-u>QuickRun ha
 set secure
 
 " vim: ft=vim fdm=marker
-
