@@ -229,8 +229,8 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList
 
 myLayout = layoutHints
            $ avoidStruts
-           $ smartBorders $ Mag.magnifiercz 1.2
-           $ mkToggle (NOBORDERS ?? FULL ?? EOT)
+           $ smartBorders . mkToggle (FULL ?? EOT)
+           $ Mag.magnifiercz 1.2
            $ Tall 1 (3/100) (1/2) ||| Mirror (Tall 1 (3/100) (1/2))
 
 
@@ -340,7 +340,7 @@ defaults = defaultConfig {
               , ((myModMask .|. shiftMask, xK_a), runOrRaise "emacs" (className =? "Emacs"))
 
               , ((myModMask, xK_e), spawn "gvim -u ~/.vim/vimrc -U ~/.vim/gvimrc -N")
-              , ((myModMask .|. shiftMask, xK_e), spawn "gvim")
+              -- , ((myModMask .|. shiftMask, xK_e), spawn "gvim -u NONE -N")
 
               -- Magnifier
               , ((myModMask .|. controlMask , xK_semicolon), sendMessage Mag.MagnifyMore)

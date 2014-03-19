@@ -1,4 +1,4 @@
-export PATH=$PATH:/sbin:/usr/sbin:$HOME/.gem/ruby/2.0.0/bin:$HOME/Local/bin
+export PATH=$PATH:/sbin:/usr/sbin:$HOME/.gem/ruby/2.0.0/bin:$HOME/local/bin
 
 # for powerline
 export PATH=:$PATH:$HOME/.vim/bundle/powerline/scripts

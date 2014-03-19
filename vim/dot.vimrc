@@ -23,7 +23,7 @@ function! s:SID_PREFIX()
     return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
 endfunction
 
-" $MYVIMRC is not set when vim is launched 'vim -u vimrc'?
+" $MYVIMRC is not set when vim is launched with 'vim -u vimrc'?
 let $MYVIMRC = "~/.vim/vimrc"
 
 " 2}}}
@@ -184,9 +184,9 @@ noremap ; :
 noremap : ;
 
 " follow symbolic link
-nnoremap <Space>.   :<C-u>edit `=fnamemodify(resolve("$MYVIMRC"), ':p')`<CR>
-nnoremap <Space>t.  :<C-u>tabnew `=fnamemodify(resolve("$MYVIMRC"), ':p')`<CR>
-nnoremap <Space>s.  :<C-u>source `=fnamemodify(resolve("$MYVIMRC"), ':p')`<CR>
+nnoremap <Space>.   :<C-u>edit `=resolve(fnamemodify("$MYVIMRC", ':p'))`<CR>
+nnoremap <Space>t.  :<C-u>tabnew `=resolve(fnamemodify("$MYVIMRC", ':p'))`<CR>
+nnoremap <Space>s.  :<C-u>source `=resolve(fnamemodify("$MYVIMRC", ':p'))`<CR>
 " 2}}}
 " help  " {{{2
 nnoremap <C-h>  :<C-u>help<Space>
