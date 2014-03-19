@@ -149,11 +149,13 @@ function! s:cd_to_git_root_dir()  " {{{2
         echohl ErrorMsg | echomsg 'This file is not inside git tree.' | echohl none
     endif
 endfunction  " 2}}}
-function! s:set_indent()  " {{{2
+function! s:set_indent(et_or_noet)  " {{{2
     setlocal tabstop=4 shiftwidth=4 softtabstop=4
+    execute 'setlocal' a:et_or_noet
 endfunction  " 2}}}
-function! s:set_short_indent()  " {{{2
+function! s:set_short_indent(et_or_noet)  " {{{2
     setlocal tabstop=2 shiftwidth=2 softtabstop=2
+    execute 'setlocal' a:et_or_noet
 endfunction  " 2}}}
 function! s:toggle_fullscreen()  " {{{2
     if g:is_darwin_p
@@ -323,11 +325,10 @@ NeoBundleCheck
 " 1}}}
 
 " FileTypes  "{{{1
-" additional settings(e.g. expandtab,omnifunc) are in ~/.vim/after/ftplugin
 " All filetypes  " {{{2
 set formatoptions-=ro       " this flag shoud be set after 'filetype on'?
-autocmd MyAutoCmd FileType * call s:on_Filetype_Any()
-function! s:on_Filetype_Any()
+autocmd MyAutoCmd FileType * call s:on_FileType_all()
+function! s:on_FileType_all()
     setlocal formatoptions-=ro
     if &l:omnifunc == ''
         setlocal omnifunc=syntaxcomplete#Complete
@@ -336,8 +337,53 @@ endfunction
 
 autocmd MyAutoCmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif
 " 2}}}
-autocmd MyAutoCmd FileType c,cpp,python,vim call s:set_indent()
-autocmd MyAutoCmd FileType ruby,haskell call s:set_short_indent()
+" c  " {{{2
+autocmd MyAutoCmd FileType c call s:on_FileType_c()
+function! s:on_FileType_c()
+    call s:set_indent('noexpandtab')
+endfunction
+" 2}}}
+" cpp  " {{{2
+autocmd MyAutoCmd FileType cpp call s:on_FileType_cpp()
+function! s:on_FileType_cpp()
+    call s:set_indent('noexpandtab')
+    setlocal cinoptions+=g0
+    setlocal matchpairs+=<:>
+endfunction
+" 2}}}
+" haskell  " {{{2
+autocmd MyAutoCmd FileType haskell call s:on_FileType_haskell()
+function! s:on_FileType_haskell()
+    call s:set_short_indent('expandtab')
+    setlocal omnifunc=necoghc#omnifunc
+endfunction
+" 2}}}
+" python  " {{{2
+autocmd MyAutoCmd FileType python call s:on_FileType_python()
+function! s:on_FileType_python()
+    call s:set_indent('expandtab')
+endfunction
+" 2}}}
+" ruby  " {{{2
+autocmd MyAutoCmd FileType ruby call s:on_FileType_ruby()
+function! s:on_FileType_ruby()
+    call s:set_short_indent('expandtab')
+endfunction
+" 2}}}
+" scheme  " {{{2
+autocmd MyAutoCmd FileType scheme call s:on_FileType_scheme()
+function! s:on_FileType_scheme()
+    call s:set_short_indent('expandtab')
+    setlocal lisp
+    let b:is_gauche = 1
+endfunction
+" 2}}}
+" vim  " {{{2
+autocmd MyAutoCmd FileType vim call s:on_FileType_vim()
+function! s:on_FileType_vim()
+    call s:set_indent('expandtab')
+endfunction
+" 2}}}
 " 1}}}
 
 " Plugins {{{1
@@ -620,3 +666,4 @@ autocmd MyAutoCmd FileType haskell nnoremap <buffer> <Leader>R :<C-u>QuickRun ha
 set secure
 
 " vim: ft=vim fdm=marker
+
