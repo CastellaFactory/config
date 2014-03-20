@@ -467,9 +467,8 @@ function! s:bundle.hooks.on_source(bundle)
     let g:clang_format#command = 'clang-format-3.5'
     let g:clang_format#style_options = {
                 \   'AccessModifierOffset' : -4,
-                \   'AllowShortLoopStatementsOnASingleLine' : 'false',
                 \   'BreakBeforeBraces' : 'Stroustrup',
-                \   'IndentFunctionDeclarationAfterType' : 'false'
+                \   'IndentFunctionDeclarationAfterType' : 'false',
                 \   'IndentWidth' : 4,
                 \   'Standard' : 'Cpp11',
                 \   'TabWidth' : 4,
