@@ -149,13 +149,17 @@ function! s:cd_to_git_root_dir()  " {{{2
         echohl ErrorMsg | echomsg 'This file is not inside git tree.' | echohl none
     endif
 endfunction  " 2}}}
-function! s:set_indent(et_or_noet)  " {{{2
-    setlocal tabstop=4 shiftwidth=4 softtabstop=4
-    execute 'setlocal' a:et_or_noet
+function! s:set_indent(...)  " {{{2
+    setlocal tabstop=4 shiftwidth=4 softtabstop=0
+    for tab_opt in a:000
+        execute 'setlocal' tab_opt
+    endfor
 endfunction  " 2}}}
-function! s:set_short_indent(et_or_noet)  " {{{2
-    setlocal tabstop=2 shiftwidth=2 softtabstop=2
-    execute 'setlocal' a:et_or_noet
+function! s:set_short_indent(...)  " {{{2
+    setlocal tabstop=2 shiftwidth=2 softtabstop=0
+    for tab_opt in a:000
+        execute 'setlocal' tab_opt
+    endfor
 endfunction  " 2}}}
 function! s:toggle_fullscreen()  " {{{2
     if g:is_darwin_p
@@ -340,13 +344,13 @@ autocmd MyAutoCmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") |
 " c  " {{{2
 autocmd MyAutoCmd FileType c call s:on_FileType_c()
 function! s:on_FileType_c()
-    call s:set_indent('noexpandtab')
+    call s:set_indent('expandtab', 'cindent')
 endfunction
 " 2}}}
 " cpp  " {{{2
 autocmd MyAutoCmd FileType cpp call s:on_FileType_cpp()
 function! s:on_FileType_cpp()
-    call s:set_indent('noexpandtab')
+    call s:set_indent('expandtab', 'cindent')
     setlocal cinoptions+=g0
     setlocal matchpairs+=<:>
 endfunction
@@ -358,6 +362,9 @@ function! s:on_FileType_haskell()
     setlocal omnifunc=necoghc#omnifunc
 endfunction
 " 2}}}
+" makefile  " {{{2
+autocmd MyAutoCmd FileType make call s:set_indent('noexpandtab')
+" 2}}}
 " python  " {{{2
 autocmd MyAutoCmd FileType python call s:on_FileType_python()
 function! s:on_FileType_python()
@@ -367,7 +374,7 @@ endfunction
 " ruby  " {{{2
 autocmd MyAutoCmd FileType ruby call s:on_FileType_ruby()
 function! s:on_FileType_ruby()
-    call s:set_short_indent('expandtab')
+    call s:set_short_indent('expandtab', 'smartindent')
 endfunction
 " 2}}}
 " scheme  " {{{2
@@ -456,18 +463,15 @@ function! s:bundle.hooks.on_source(bundle)
     " Mac: homebrew
     " Linux: build from source and make symbolic link
     let g:clang_format#command = 'clang-format-3.5'
-    let g:clang_format#code_style = 'LLVM'
     let g:clang_format#style_options = {
                 \   'AccessModifierOffset' : -4,
-                \   'AllowShortIfStatementsOnASingleLine' : 'true',
-                \   'AllowShortFunctionsOnASingleLine' : 'true',
-                \   'AlwaysBreakTemplateDeclarations' : 'true',
-                \   'Standard' : 'Cpp11',
-                \   'PointerBindsToType' : 'true',
+                \   'AllowShortLoopStatementsOnASingleLine' : 'false',
                 \   'BreakBeforeBraces' : 'Stroustrup',
+                \   'IndentFunctionDeclarationAfterType' : 'false'
                 \   'IndentWidth' : 4,
+                \   'Standard' : 'Cpp11',
                 \   'TabWidth' : 4,
-                \   'UseTab' : 'ForIndentation',
+                \   'UseTab' : 'Never',
                 \ }
 endfunction
 unlet s:bundle
