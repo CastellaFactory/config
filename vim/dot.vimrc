@@ -24,7 +24,7 @@ function! s:SID_PREFIX()
 endfunction
 
 " $MYVIMRC is not set when vim is launched with 'vim -u vimrc'?
-let $MYVIMRC = "~/.vim/vimrc"
+let $MYVIMRC = '~/.vim/vimrc'
 
 " 2}}}
 " Options " {{{2
@@ -149,17 +149,13 @@ function! s:cd_to_git_root_dir()  " {{{2
         echohl ErrorMsg | echomsg 'This file is not inside git tree.' | echohl none
     endif
 endfunction  " 2}}}
-function! s:set_indent(...)  " {{{2
+function! s:set_indent(expandtab_or_noexpandtab)  " {{{2
     setlocal tabstop=4 shiftwidth=4 softtabstop=0
-    for tab_opt in a:000
-        execute 'setlocal' tab_opt
-    endfor
+    execute 'setlocal' a:expandtab_or_noexpandtab
 endfunction  " 2}}}
-function! s:set_short_indent(...)  " {{{2
+function! s:set_short_indent(expandtab_or_noexpandtab)  " {{{2
     setlocal tabstop=2 shiftwidth=2 softtabstop=0
-    for tab_opt in a:000
-        execute 'setlocal' tab_opt
-    endfor
+    execute 'setlocal' a:expandtab_or_noexpandtab
 endfunction  " 2}}}
 function! s:toggle_fullscreen()  " {{{2
     if g:is_darwin_p
@@ -186,59 +182,59 @@ endfunction  " 2}}}
 " Mappings  " {{{1
 " absolute  " {{{2
 " swap colon and semicolon
-noremap ; :
-noremap : ;
+noremap ;  :
+noremap :  ;
 
 " follow symbolic link
-nnoremap <Space>.   :<C-u>edit `=resolve(fnamemodify("$MYVIMRC", ':p'))`<CR>
+nnoremap <Space>.  :<C-u>edit `=resolve(fnamemodify("$MYVIMRC", ':p'))`<CR>
 nnoremap <Space>t.  :<C-u>tabnew `=resolve(fnamemodify("$MYVIMRC", ':p'))`<CR>
-nnoremap <Space>s.  :<C-u>source `=resolve(fnamemodify("$MYVIMRC", ':p'))`<CR>
+nnoremap <silent> <Space>s.  :<C-u>source `=resolve(fnamemodify("$MYVIMRC", ':p'))`<CR>
 " 2}}}
 " help  " {{{2
 nnoremap <C-h>  :<C-u>help<Space>
-nnoremap ,h :<C-u>help<Space><C-r><C-w><CR>
+nnoremap ,h  :<C-u>help<Space><C-r><C-w><CR>
 
 " disable F1
-noremap <F1> <Nop>
-inoremap <F1> <Nop>
+noremap <F1>  <Nop>
+inoremap <F1>  <Nop>
 " 2}}}
 " <Space> stuffs  " {{{2
 nnoremap <silent> <Space>ow  :<C-u>setlocal wrap! wrap?<CR>
 nnoremap <silent> <Space>of  :<C-u>call <SID>toggle_fullscreen()<CR>
-nnoremap <Space>r   :<C-u>registers<CR>
-nnoremap <silent> <Space>/   :<C-u>nohlsearch<CR>
-nnoremap <Space>v   zMzv
+nnoremap <silent> <Space>r  :<C-u>registers<CR>
+nnoremap <silent> <Space>/  :<C-u>nohlsearch<CR>
+nnoremap <silent> <Space>v  zMzv
 " 2}}}
 " movement in Insert mode  " {{{2
 inoremap <C-a>  <Home>
-inoremap <expr> <C-e> pumvisible() ? "\<C-e>" : "\<End>"
+inoremap <expr> <C-e>  pumvisible() ? "\<C-e>" : "\<End>"
 inoremap <C-d>  <Del>
 " 2}}}
 " Command-line mode  " {{{2
-cnoremap <C-p> <Up>
-cnoremap <C-n> <Down>
-cnoremap <C-a> <Home>
-cnoremap <C-e> <End>
-cnoremap <M-b> <S-Left>
-cnoremap <M-f> <S-Right>
+cnoremap <C-p>  <Up>
+cnoremap <C-n>  <Down>
+cnoremap <C-a>  <Home>
+cnoremap <C-e>  <End>
+cnoremap <M-b>  <S-Left>
+cnoremap <M-f>  <S-Right>
 
-cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
+cnoremap <expr> /  getcmdtype() == '/' ? '\/' : '/'
 " 2}}}
 " misc  " {{{2
 " select last changed text (like gv p.146)
-nnoremap gc `[v`]
-Objnoremap gc :<C-u>normal gc<CR>
+nnoremap gc  `[v`]
+Objnoremap gc  :<C-u>normal gc<CR>
 
-nnoremap <silent> <Space>cd     :<C-u>call <SID>cd_to_current_buffer_dir()<CR>
-nnoremap <silent> <Space>cgd    :<C-u>call <SID>cd_to_git_root_dir()<CR>
+nnoremap <silent> <Space>cd  :<C-u>call <SID>cd_to_current_buffer_dir()<CR>
+nnoremap <silent> <Space>cgd  :<C-u>call <SID>cd_to_git_root_dir()<CR>
 
 " disable dangerous command
-nnoremap ZZ <Nop>
-nnoremap ZQ <Nop>
+nnoremap ZZ  <Nop>
+nnoremap ZQ  <Nop>
 
 " disable EX-mode
-nnoremap Q q
-nnoremap q <Nop>
+nnoremap Q  q
+nnoremap q  <Nop>
 " 2}}}
 " 1}}}
 
@@ -344,13 +340,15 @@ autocmd MyAutoCmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") |
 " c  " {{{2
 autocmd MyAutoCmd FileType c call s:on_FileType_c()
 function! s:on_FileType_c()
-    call s:set_indent('expandtab', 'cindent')
+    call s:set_indent('expandtab')
+    setlocal cindent
 endfunction
 " 2}}}
 " cpp  " {{{2
 autocmd MyAutoCmd FileType cpp call s:on_FileType_cpp()
 function! s:on_FileType_cpp()
-    call s:set_indent('expandtab', 'cindent')
+    call s:set_indent('expandtab')
+    setlocal cindent
     setlocal cinoptions+=g0
     setlocal matchpairs+=<:>
 endfunction
@@ -374,7 +372,8 @@ endfunction
 " ruby  " {{{2
 autocmd MyAutoCmd FileType ruby call s:on_FileType_ruby()
 function! s:on_FileType_ruby()
-    call s:set_short_indent('expandtab', 'smartindent')
+    call s:set_short_indent('expandtab')
+    setlocal smartindent
 endfunction
 " 2}}}
 " scheme  " {{{2
@@ -395,13 +394,13 @@ endfunction
 
 " Plugins {{{1
 " altr  " {{{2
-nmap <F3> <Plug>(altr-forward)
-nmap <F2> <Plug>(altr-back)
+nmap <F3>  <Plug>(altr-forward)
+nmap <F2>  <Plug>(altr-back)
 
 let s:bundle = neobundle#get('vim-altr')
 function! s:bundle.hooks.on_source(bundle)
     " vimrc and gvimrc
-    call altr#define('vimrc', 'gvimrc', 'vimrc_practice')
+    call altr#define('vimrc', 'gvimrc')
 endfunction
 unlet s:bundle
 " 2}}}
@@ -409,27 +408,27 @@ unlet s:bundle
 let g:caw_no_default_keymappings = 1
 let g:caw_i_sp_blank = ' '
 
-nmap cci <Plug>(caw:i:comment)
-nmap cca <Plug>(caw:a:comment)
-nmap cco <Plug>(caw:jump:comment-next)
-nmap ccO <Plug>(caw:jump:comment-prev)
-nmap <Leader>cc <Plug>(caw:i:toggle)
-vmap <Leader>cc <Plug>(caw:i:toggle)
-nmap <Leader>ca <Plug>(caw:a:toggle)
-nmap <Leader>cw <Plug>(caw:wrap:toggle)
+nmap cci  <Plug>(caw:i:comment)
+nmap cca  <Plug>(caw:a:comment)
+nmap cco  <Plug>(caw:jump:comment-next)
+nmap ccO  <Plug>(caw:jump:comment-prev)
+nmap <Leader>cc  <Plug>(caw:i:toggle)
+vmap <Leader>cc  <Plug>(caw:i:toggle)
+nmap <Leader>ca  <Plug>(caw:a:toggle)
+nmap <Leader>cw  <Plug>(caw:wrap:toggle)
 " 2}}}
 " easy-align  " {{{2
-map <Leader>a <Plug>(EasyAlign)
+map <Leader>a  <Plug>(EasyAlign)
 " 2}}}
 " fugitive  " {{{2
-nnoremap <Leader>gs :<C-u>Gstatus<CR>
-nnoremap <Leader>gc :<C-u>Gcommit -v<CR>
-nnoremap <Leader>gC :<C-u>Gcommit<CR>
-nnoremap <Leader>ga :<C-u>Gwrite<CR>
-nnoremap <Leader>gd :<C-u>Gdiff<CR>
-nnoremap <Leader>gb :<C-u>Gblame<CR>
-nnoremap <Leader>gp :<C-u>Git push<CR>
-nnoremap <Leader>gP :<C-u>Git pull<CR>
+nnoremap <Leader>gs  :<C-u>Gstatus<CR>
+nnoremap <Leader>gc  :<C-u>Gcommit -v<CR>
+nnoremap <Leader>gC  :<C-u>Gcommit<CR>
+nnoremap <Leader>ga  :<C-u>Gwrite<CR>
+nnoremap <Leader>gd  :<C-u>Gdiff<CR>
+nnoremap <Leader>gb  :<C-u>Gblame<CR>
+nnoremap <Leader>gp  :<C-u>Git push<CR>
+nnoremap <Leader>gP  :<C-u>Git pull<CR>
 " 2}}}"
 "  ghcmod-vim  " {{{2
 autocmd MyAutoCmd FileType haskell nnoremap <buffer> <Leader>t  :<C-u>GhcModType<CR>
@@ -456,7 +455,7 @@ endfunction
 " 2}}}
 "  operator  " {{{2
 " clang-format  " {{{3
-autocmd MyAutoCmd FileType cpp map <buffer> <Leader>x <Plug>(operator-clang-format)
+autocmd MyAutoCmd FileType cpp map <buffer> <Leader>x  <Plug>(operator-clang-format)
 
 let s:bundle = neobundle#get('vim-clang-format')
 function! s:bundle.hooks.on_source(bundle)
@@ -478,9 +477,9 @@ endfunction
 unlet s:bundle
 " 3}}}
 " operator-surround  {{{3
-map <silent>sa <Plug>(operator-surround-append)
-map <silent>sd <Plug>(operator-surround-delete)
-map <silent>sr <Plug>(operator-surround-replace)
+map <silent>sa  <Plug>(operator-surround-append)
+map <silent>sd  <Plug>(operator-surround-delete)
+map <silent>sr  <Plug>(operator-surround-replace)
 " 3}}}
 " 2}}}
 "  submode  "{{{2
@@ -565,23 +564,23 @@ endfunction
 unlet s:bundle
 " 2}}}
 " unite  " {{{2
-nnoremap <Space>ub  :<C-u>Unite buffer_tab<CR>
+nnoremap <Space>ub  :<C-u>Unite buffer<CR>
 nnoremap <Space>ut  :<C-u>Unite tab<CR>
-nnoremap <Space>ufr :<C-u>Unite file_mru<CR>
-nnoremap <Space>udr :<C-u>Unite directory_mru<CR>
-nnoremap <Space>urm :<C-u>UniteResume<CR>
-nnoremap <Space>uff :<C-u>Unite file<CR>
-nnoremap <Space>uol :<C-u>Unite outline<CR>
-nnoremap <Space>unnb    :<C-u>Unite neobundle<CR>
+nnoremap <Space>ufr  :<C-u>Unite file_mru<CR>
+nnoremap <Space>udr  :<C-u>Unite directory_mru<CR>
+nnoremap <Space>urm  :<C-u>UniteResume<CR>
+nnoremap <Space>uff  :<C-u>Unite file<CR>
+nnoremap <Space>uol  :<C-u>Unite outline<CR>
+nnoremap <Space>unnb  :<C-u>Unite neobundle<CR>
 " grep
-nnoremap <Space>ug  :<C-u>Unite grep:. <CR>
-nnoremap ,g :<C-u>Unite grep:. <CR><C-r><C-w><CR>
+nnoremap <Space>ug   :<C-u>Unite grep:. <CR>
+nnoremap ,g  :<C-u>Unite grep:. <CR><C-r><C-w><CR>
 
-nnoremap  <Space>up :<C-u>Unite buffer file_rec/async:!<CR>
+nnoremap  <Space>up  :<C-u>Unite buffer file_rec/async:!<CR>
 
 " close unite buffer
-autocmd MyAutoCmd FileType unite imap <buffer><C-g> <Plug>(unite_exit)
-autocmd MyAutoCmd FileType unite nmap <buffer><C-g> <Plug>(unite_exit)
+autocmd MyAutoCmd FileType unite imap <buffer> <C-g>  <Plug>(unite_exit)
+autocmd MyAutoCmd FileType unite nmap <buffer> <C-g>  <Plug>(unite_exit)
 
 let g:unite_enable_start_insert = 1
 let g:unite_force_overwrite_statusline = 0
@@ -618,9 +617,9 @@ function! s:bundle.hooks.on_source(bundle)
 endfunction
 unlet s:bundle
 
-autocmd MyAutoCmd FileType c,cpp nnoremap <buffer> <Leader>pg :<C-u>YcmCompleter GoToDefinitionElseDeclaration<CR>
-autocmd MyAutoCmd FileType c,cpp nnoremap <buffer> <Leader>pd :<C-u>YcmCompleter GoToDefinition<CR>
-autocmd MyAutoCmd FileType c,cpp nnoremap <buffer> <Leader>pc :<C-u>YcmCompleter GoToDeclaration<CR>
+autocmd MyAutoCmd FileType c,cpp nnoremap <buffer> <Leader>pg  :<C-u>YcmCompleter GoToDefinitionElseDeclaration<CR>
+autocmd MyAutoCmd FileType c,cpp nnoremap <buffer> <Leader>pd  :<C-u>YcmCompleter GoToDefinition<CR>
+autocmd MyAutoCmd FileType c,cpp nnoremap <buffer> <Leader>pc  :<C-u>YcmCompleter GoToDeclaration<CR>
 " 2}}}
 " quickrun  " {{{2
 " default setting
@@ -662,9 +661,9 @@ let g:quickrun_config.haskell_compile = {
             \   'outputter' : 'quickfix',
             \ }
 
-autocmd MyAutoCmd FileType c nnoremap <buffer> <Leader>R :<C-u>QuickRun c_compile<CR>
-autocmd MyAutoCmd FileType cpp nnoremap <buffer> <Leader>R :<C-u>QuickRun cpp_compile<CR>
-autocmd MyAutoCmd FileType haskell nnoremap <buffer> <Leader>R :<C-u>QuickRun haskell_compile<CR>
+autocmd MyAutoCmd FileType c nnoremap <buffer> <Leader>R  :<C-u>QuickRun c_compile<CR>
+autocmd MyAutoCmd FileType cpp nnoremap <buffer> <Leader>R  :<C-u>QuickRun cpp_compile<CR>
+autocmd MyAutoCmd FileType haskell nnoremap <buffer> <Leader>R  :<C-u>QuickRun haskell_compile<CR>
 " 2}}}
 " 1}}}
 
