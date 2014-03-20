@@ -19,3 +19,4 @@ if [[ -e "$HOME/.xsession_local" ]]; then
 fi
 
 exec /usr/bin/xmonad
+

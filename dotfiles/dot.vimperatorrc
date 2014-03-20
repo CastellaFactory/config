@@ -22,3 +22,4 @@ vmap <silent> <C-g> y<Esc><Esc>P
 
 " }}}
 
+" vim: ft=vim

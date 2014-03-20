@@ -38,9 +38,9 @@ geometry 6x1-390+3
 
 # grow_gravity <gravity>     # one of N, S, E, W, NW, NE, SW, SE; tray will grow
                              # in the direction opposite to one specified by
-							 # grow_gravity; if horizontal or vertical
-							 # direction is not specified, tray will not grow in
-							 # that direction
+                             # grow_gravity; if horizontal or vertical
+                             # direction is not specified, tray will not grow in
+                             # that direction
 grow_gravity NW
 
 # icon_gravity <gravity>     # icon placement gravity, one of NW, NE, SW, SE
