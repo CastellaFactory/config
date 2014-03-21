@@ -24,12 +24,10 @@ endfunction
 
 " $MYVIMRC is not set when vim is launched with 'vim -u vimrc'?
 let $MYVIMRC = '~/.vim/vimrc'
-
 " 2}}}
 " Options " {{{2
 if has('gui_running')
-    " this flag must be added before 'syntax enable' or 'filetype on' in vimrc
-    set guioptions+=M
+    set guioptions+=M    " this flag must be added before 'syntax enable' or 'filetype on'
 endif
 
 syntax enable
@@ -52,7 +50,6 @@ endif
 set cmdheight=2
 set directory=~/.vim/backups
 set encoding=utf-8
-scriptencoding utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8,cp932
 set foldenable
@@ -63,7 +60,7 @@ nohlsearch
 set ignorecase
 set incsearch
 set laststatus=2
-if g:is_darwin_p
+if has('gui_macvim')
     set macmeta
 endif
 set mouse=a
@@ -133,6 +130,12 @@ command! -nargs=+ Objnoremap execute 'onoremap' <q-args> | execute 'vnoremap' <q
 
 command! -nargs=+ Objunmap execute 'ounmap' <q-args> | execute 'vunmap' <q-args>
 " 2}}}
+function! s:delete_trailing_spaces()  " {{{2
+    let saved_cursor = getpos(".")
+    %s/\s\+$//ge
+    call setpos(".", saved_cursor)
+    unlet saved_cursor
+endfunction  " 2}}}
 function! s:cd_to_current_buffer_dir()  " {{{2
     lcd %:p:h
     pwd
@@ -197,6 +200,7 @@ inoremap <F1>  <Nop>
 " <Space> stuffs  " {{{2
 nnoremap <silent> <Space>ow  :<C-u>setlocal wrap! wrap?<CR>
 nnoremap <silent> <Space>of  :<C-u>call <SID>toggle_fullscreen()<CR>
+nnoremap <Space>sp  :<C-u>call <SID>delete_trailing_spaces()<CR>
 nnoremap <silent> <Space>r  :<C-u>registers<CR>
 nnoremap <silent> <Space>/  :<C-u>nohlsearch<CR>
 nnoremap <silent> <Space>v  zMzv
@@ -251,14 +255,14 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'kana/vim-submode'
 NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vimproc.vim', {
             \   'build' : {
             \       'mac' : 'make -f make_mac.mak',
             \       'unix' : 'make -f make_unix.mak'} }
-NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'tpope/vim-repeat'
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-repeat'
 NeoBundleLazy 'dag/vim2hs', {
             \   'autoload' : {'filetypes' : ['haskell']} }
 NeoBundleLazy 'eagletmt/ghcmod-vim', {
@@ -271,8 +275,11 @@ NeoBundleLazy 'junegunn/vim-easy-align', {
             \   'autoload' : {'mappings' : ['<Plug>(EasyAlign)']} }
 NeoBundleLazy 'kana/vim-altr', {
             \   'autoload' : {'mappings' : ['<Plug>(altr-forward', '<Plug>(altr-back)']} }
+NeoBundleLazy 'kana/vim-fakeclip', { 'autoload' : {'terminal' : 1} }
 NeoBundleLazy 'kana/vim-filetype-haskell', {
             \   'autoload' : {'filetypes' : ['haskell']} }
+NeoBundleLazy 'kana/vim-operator-replace', {
+            \   'autoload' : {'mappings' : ['<Plug>(vim-operator-replace)']} }
 NeoBundleLazy 'kana/vim-smartinput', { 'autoload' : {'insert' : 1} }
 NeoBundleLazy 'kana/vim-textobj-entire', {
             \   'autoload' : {'mappings' : [ ['xo', 'ae'], ['xo', 'ie'] ]} }
@@ -286,7 +293,6 @@ NeoBundleLazy 'kana/vim-textobj-line', {
             \   'autoload' : {'mappings' : [ ['xo', 'al'], ['xo', 'il'] ]} }
 NeoBundleLazy 'kana/vim-textobj-syntax', {
             \   'autoload' : {'mappings' : [ ['xo', 'ay'], ['xo', 'iy'] ]} }
-NeoBundleLazy 'kana/vim-fakeclip', { 'autoload' : {'terminal' : 1} }
 NeoBundleLazy 'rhysd/vim-clang-format', {
             \   'autoload' : {'mappings' : ['<Plug>(operator-clang-format)']} }
 NeoBundleLazy 'rhysd/vim-operator-surround', {
@@ -308,7 +314,7 @@ NeoBundleLazy 'Valloric/YouCompleteMe', {
             \       'unix' : 'git submodule update --init --recursive && ./install.sh --clang-completer --system-libclang',
             \       'mac' : 'git submodule update --init --recursive && ./install.sh --clang-completer'},
             \   'autoload' : {'insert' : 1, 'commands' : ['YcmCompleter']},
-            \   'augroup' : 'youcompletemeStart'}
+            \   'augroup' : 'youcompletemeStart' }
 NeoBundleLazy 'vim-jp/cpp-vim', {
             \   'autoload' : {'filetypes' : ['cpp']} }
 NeoBundleFetch 'Lokaltog/powerline'
@@ -320,7 +326,7 @@ NeoBundleCheck
 
 " FileTypes  "{{{1
 " All filetypes  " {{{2
-set formatoptions-=ro       " this flag shoud be set after 'filetype on'?
+set formatoptions-=ro       " for reloading $MYVIMRC
 autocmd MyAutoCmd FileType * call s:on_FileType_all()
 function! s:on_FileType_all()
     setlocal formatoptions-=ro
@@ -332,18 +338,12 @@ endfunction
 autocmd MyAutoCmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif
 " 2}}}
 " c  " {{{2
-autocmd MyAutoCmd FileType c call s:on_FileType_c()
-function! s:on_FileType_c()
-    call s:set_indent('expandtab')
-    setlocal cindent
-endfunction
+autocmd MyAutoCmd FileType c call s:set_indent('expandtab')
 " 2}}}
 " cpp  " {{{2
 autocmd MyAutoCmd FileType cpp call s:on_FileType_cpp()
 function! s:on_FileType_cpp()
     call s:set_indent('expandtab')
-    setlocal cindent
-    setlocal cinoptions+=g0
     setlocal matchpairs+=<:>
 endfunction
 " 2}}}
@@ -358,17 +358,10 @@ endfunction
 autocmd MyAutoCmd FileType make call s:set_indent('noexpandtab')
 " 2}}}
 " python  " {{{2
-autocmd MyAutoCmd FileType python call s:on_FileType_python()
-function! s:on_FileType_python()
-    call s:set_indent('expandtab')
-endfunction
+autocmd MyAutoCmd FileType python call s:set_indent('expandtab')
 " 2}}}
 " ruby  " {{{2
-autocmd MyAutoCmd FileType ruby call s:on_FileType_ruby()
-function! s:on_FileType_ruby()
-    call s:set_short_indent('expandtab')
-    setlocal smartindent
-endfunction
+autocmd MyAutoCmd FileType ruby call s:set_short_indent('expandtab')
 " 2}}}
 " scheme  " {{{2
 autocmd MyAutoCmd FileType scheme call s:on_FileType_scheme()
@@ -379,11 +372,11 @@ function! s:on_FileType_scheme()
 endfunction
 " 2}}}
 " vim  " {{{2
-autocmd MyAutoCmd FileType vim call s:on_FileType_vim()
-function! s:on_FileType_vim()
-    call s:set_indent('expandtab')
-endfunction
+autocmd MyAutoCmd FileType vim call s:set_indent('expandtab')
 " 2}}}
+" zsh,sh  " {{{2
+autocmd MyAutoCmd FileType zsh,sh call s:set_indent('expandtab')
+" 2}}}"
 " 1}}}
 
 " Plugins {{{1
@@ -444,18 +437,16 @@ function! MyFugitive()
     endtry
     return ''
 endfunction
-
 " 2}}}
 "  operator  " {{{2
-" clang-format  " {{{3
+" operator-clang-format  " {{{3
 autocmd MyAutoCmd FileType cpp map <buffer> <Leader>x  <Plug>(operator-clang-format)
 
 let s:bundle = neobundle#get('vim-clang-format')
 function! s:bundle.hooks.on_source(bundle)
-    " Mac: homebrew 
-    " Linux: build from source and make symbolic link
-    " based on Google style
-    " see 'clang-format-3.5 -dump-config -style='{BasedOnStyle: Google}'
+    " Mac: homebrew
+    " Linux: build from sources and make symbolic link
+    " based on Google style. see 'clang-format-3.5 -dump-config -style='{BasedOnStyle: Google}'
     let g:clang_format#command = 'clang-format-3.5'
     let g:clang_format#style_options = {
                 \   'AccessModifierOffset' : -4,
@@ -469,6 +460,9 @@ function! s:bundle.hooks.on_source(bundle)
 endfunction
 unlet s:bundle
 " 3}}}
+" operator-replace  " {{{3
+map _  <Plug>(operator_replace)
+" 3}}}"
 " operator-surround  {{{3
 map <silent>sa  <Plug>(operator-surround-append)
 map <silent>sd  <Plug>(operator-surround-delete)
@@ -500,12 +494,7 @@ function! s:bundle.hooks.on_source(bundle)
     call smartinput#map_to_trigger('i', '<BS>', '<BS>', '<BS>')
     call smartinput#map_to_trigger('i', '<CR>', '<CR>', '<CR>')
 
-    " delete trailing spaces
-    call smartinput#define_rule({
-                \   'at' : '\s\+\%#',
-                \   'char' : '<CR>',
-                \   'input' : "<C-o>:call setline('.', substitute(getline('.'), '\\s\\+$', '', '')) <Bar> echo 'delete trailing spaces'<CR><CR>",
-                \ })
+    call smartinput#define_rule({ 'at' : '\s\+\%#', 'char' : '<CR>', 'input' : "<C-o>:call setline('.', substitute(getline('.'), '\\s\\+$', '', '')) <Bar> echo 'delete trailing spaces'<CR><CR>" })
     call smartinput#define_rule({ 'at' : '(\%#)', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
     call smartinput#define_rule({ 'at' : '{\%#}', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
     call smartinput#define_rule({ 'at' : '\[\%#\]', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
@@ -537,6 +526,8 @@ function! s:bundle.hooks.on_source(bundle)
     let g:syntastic_cpp_no_include_search = 1
 
     let g:syntastic_haskell_checkers = ['ghc_mod', 'hlint']
+    let g:syntastic_python_checkers = ['python', 'flake8']
+    let g:syntastic_ruby_checkers = ['mri', 'rubocop']
 endfunction
 unlet s:bundle
 " 2}}}
