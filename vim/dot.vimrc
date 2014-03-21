@@ -132,7 +132,7 @@ command! -nargs=+ Objunmap execute 'ounmap' <q-args> | execute 'vunmap' <q-args>
 " 2}}}
 function! s:delete_trailing_spaces()  " {{{2
     let saved_cursor = getpos(".")
-    %s/\s\+$//ge
+    %s/\s\+$//gce
     call setpos(".", saved_cursor)
     unlet saved_cursor
 endfunction  " 2}}}
