@@ -14,7 +14,6 @@ augroup MyAutoCmd
 augroup END
 
 language message C
-language time C
 
 let g:is_darwin_p = has('mac') || has('macunix')
 let g:is_linux_p = !g:is_darwin_p && has('unix')
@@ -51,7 +50,6 @@ else
     set clipboard=unnamed
 endif
 set cmdheight=2
-set completeopt=menuone
 set directory=~/.vim/backups
 set encoding=utf-8
 scriptencoding utf-8
@@ -65,8 +63,6 @@ nohlsearch
 set ignorecase
 set incsearch
 set laststatus=2
-set list
-set listchars=tab:»\ ,trail:_
 if g:is_darwin_p
     set macmeta
 endif
@@ -274,7 +270,7 @@ NeoBundleLazy 'eagletmt/unite-haddock', {
 NeoBundleLazy 'junegunn/vim-easy-align', {
             \   'autoload' : {'mappings' : ['<Plug>(EasyAlign)']} }
 NeoBundleLazy 'kana/vim-altr', {
-            \   'autoload' : {'mappings' : ['<Plug>(altr-']} }
+            \   'autoload' : {'mappings' : ['<Plug>(altr-forward', '<Plug>(altr-back)']} }
 NeoBundleLazy 'kana/vim-filetype-haskell', {
             \   'autoload' : {'filetypes' : ['haskell']} }
 NeoBundleLazy 'kana/vim-smartinput', { 'autoload' : {'insert' : 1} }
@@ -303,12 +299,10 @@ NeoBundleLazy 'Shougo/unite-outline', {
             \   'autoload' : {'unite_sources' : 'outline'} }
 NeoBundleLazy 'Shougo/vimfiler.vim', {
             \   'autoload' : {'commands' : ['VimFiler', 'VimFilerCurrentDir', 'VimFilerBufferDir',
-            \                               'VimFilerSplit', 'VimFilerExplorer', 'VimFilerDouble']} }
-NeoBundleLazy 'SirVer/ultisnips', {'autoload' : {'functions' : ['UltiSnips#FileTypeChanged']}}
+            \                               'VimFilerSplit', 'VimFilerExplorer', 'VimFilerDouble']}, 'explorer' : 1 }
+NeoBundleLazy 'SirVer/ultisnips'
 NeoBundleLazy 'tyru/caw.vim', {
             \   'autoload' : {'mappings' : ['<Plug>(caw:']} }
-NeoBundleLazy 'ujihisa/unite-haskellimport', {
-            \   'autoload' : {'unite_sources' : 'haskellimport'} }
 NeoBundleLazy 'Valloric/YouCompleteMe', {
             \   'build' : {
             \       'unix' : 'git submodule update --init --recursive && ./install.sh --clang-completer --system-libclang',
@@ -399,7 +393,6 @@ nmap <F2>  <Plug>(altr-back)
 
 let s:bundle = neobundle#get('vim-altr')
 function! s:bundle.hooks.on_source(bundle)
-    " vimrc and gvimrc
     call altr#define('vimrc', 'gvimrc')
 endfunction
 unlet s:bundle
@@ -523,45 +516,48 @@ endfunction
 unlet s:bundle
 " 2}}}
 " Syntastic  " {{{2
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_enable_highlighting = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_cppcheck_config_file = '~/.vim/syntastic_config/cppcheck'
-let g:syntastic_mode_map = {'mode': 'passive'}
+let s:bundle = neobundle#get('syntastic')
+function! s:bundle.hooks.on_source(bundle)
+    let g:syntastic_always_populate_loc_list = 1
+    let g:syntastic_enable_highlighting = 0
+    let g:syntastic_check_on_wq = 0
+    let g:syntastic_cppcheck_config_file = '~/.vim/syntastic_config/cppcheck'
+    let g:syntastic_mode_map = {'mode': 'passive'}
 
-let g:syntastic_c_checkers = ['gcc', 'cppcheck']
-let g:syntastic_c_compier = 'clang'
-let g:syntastic_c_compiler_options = '-std=c11 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-missing-prototypes -fno-caret-diagnostics'
-let g:syntastic_c_no_default_include_dirs = 1
-let g:syntastic_c_no_include_search = 1
+    let g:syntastic_c_checkers = ['gcc', 'cppcheck']
+    let g:syntastic_c_compier = 'clang'
+    let g:syntastic_c_compiler_options = '-std=c11 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-missing-prototypes -fno-caret-diagnostics'
+    let g:syntastic_c_no_default_include_dirs = 1
+    let g:syntastic_c_no_include_search = 1
 
-let g:syntastic_cpp_checkers = ['gcc', 'cppcheck']
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_compiler_options = '-std=c++11 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-c++98-compat -Wno-missing-prototypes -fno-caret-diagnostics'
-let g:syntastic_cpp_no_default_include_dirs = 1
-let g:syntastic_cpp_no_include_search = 1
+    let g:syntastic_cpp_checkers = ['gcc', 'cppcheck']
+    let g:syntastic_cpp_compiler = 'clang++'
+    let g:syntastic_cpp_compiler_options = '-std=c++11 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-c++98-compat -Wno-missing-prototypes -fno-caret-diagnostics'
+    let g:syntastic_cpp_no_default_include_dirs = 1
+    let g:syntastic_cpp_no_include_search = 1
 
-let g:syntastic_haskell_checkers = ['ghc_mod', 'hlint']
-" 2}}}
-" UltiSnips  "{{{2
-let g:UltiSnipsSnippetDirectories = ['ultisnips-snippets']
-let g:UltiSnipsExpandTrigger = '<C-k>'
-let g:UltiSnipsJumpForwardTrigger = '<C-k>'
-let g:UltiSnipsJumpBackwardTrigger = '<M-k>'
-let g:UltiSnipsListSnippets = '<M-Tab>'
-let g:snips_author = 'Castella'
-" とりあえず様子見
-augroup UltiSnipsWorkaround
-    autocmd!
-    if !neobundle#is_sourced('ultisnips')
-        autocmd FileType * call UltiSnips#FileTypeChanged()
-    endif
-augroup END
-let s:bundle = neobundle#get('ultisnips')
-function! s:bundle.hooks.on_post_source(bundle)
-    autocmd! UltiSnipsWorkaround
+    let g:syntastic_haskell_checkers = ['ghc_mod', 'hlint']
 endfunction
 unlet s:bundle
+" 2}}}
+" UltiSnips  "{{{2
+augroup LoadUltiSnips
+    autocmd!
+    if !neobundle#is_sourced('ultisnips')
+        autocmd FileType * call neobundle#source('ultisnips')
+    endif
+augroup END
+
+let s:bundle = neobundle#get('ultisnips')
+function! s:bundle.hooks.on_source(bundle)
+    autocmd! LoadUltiSnips
+    let g:UltiSnipsSnippetDirectories = ['ultisnips-snippets']
+    let g:UltiSnipsExpandTrigger = '<C-k>'
+    let g:UltiSnipsJumpForwardTrigger = '<C-k>'
+    let g:UltiSnipsJumpBackwardTrigger = '<M-k>'
+    let g:UltiSnipsListSnippets = '<M-Tab>'
+    let g:snips_author = 'Castella'
+endfunction
 " 2}}}
 " unite  " {{{2
 nnoremap <Space>ub  :<C-u>Unite buffer<CR>
@@ -572,37 +568,50 @@ nnoremap <Space>urm  :<C-u>UniteResume<CR>
 nnoremap <Space>uff  :<C-u>Unite file<CR>
 nnoremap <Space>uol  :<C-u>Unite outline<CR>
 nnoremap <Space>unnb  :<C-u>Unite neobundle<CR>
-" grep
 nnoremap <Space>ug   :<C-u>Unite grep:. <CR>
 nnoremap ,g  :<C-u>Unite grep:. <CR><C-r><C-w><CR>
-
 nnoremap  <Space>up  :<C-u>Unite buffer file_rec/async:!<CR>
 
-" close unite buffer
-autocmd MyAutoCmd FileType unite imap <buffer> <C-g>  <Plug>(unite_exit)
-autocmd MyAutoCmd FileType unite nmap <buffer> <C-g>  <Plug>(unite_exit)
+let s:bundle = neobundle#get('unite.vim')
+function! s:bundle.hooks.on_source(bundle)
+    let g:unite_enable_start_insert = 1
+    let g:unite_force_overwrite_statusline = 0
 
-let g:unite_enable_start_insert = 1
-let g:unite_force_overwrite_statusline = 0
+    let g:unite_source_grep_command = 'ag'
+    let g:unite_source_grep_default_opts = '--nocolor --nogroup'
+    let g:unite_source_grep_recursive_opt = ''
 
-" unite-grep(the_silver_searcher)
-let g:unite_source_grep_command = 'ag'
-let g:unite_source_grep_default_opts = '--nocolor --nogroup'
-let g:unite_source_grep_recursive_opt = ''
+    autocmd MyAutoCmd FileType unite imap <buffer> <C-g>  <Plug>(unite_exit)
+    autocmd MyAutoCmd FileType unite nmap <buffer> <C-g>  <Plug>(unite_exit)
+endfunction
+unlet s:bundle
 " 2}}}
 " vim2hs  "{{{2
-let g:haskell_conceal = 0
-let g:haskell_conceal_enumerations = 0
+let s:bundle = neobundle#get('vim2hs')
+function! s:bundle.hooks.on_source(bundle)
+    let g:haskell_conceal = 0
+    let g:haskell_conceal_enumerations = 0
+endfunction
+unlet s:bundle
 " 2}}}
 " vimfiler  " {{{2
-let g:vimfiler_as_default_explorer = 1
-let g:vimfiler_safe_mode_by_default = 0
-let g:vimfiler_force_overwrite_statusline = 0
-
 nnoremap <Space>fc  :<C-u>VimFilerCurrentDir<CR>
 nnoremap <Space>fb  :<C-u>VimFilerBufferDir<CR>
+let g:loaded_netrwPlugin = 1
+
+let s:bundle = neobundle#get('vimfiler.vim')
+function! s:bundle.hooks.on_source(bundle)
+    let g:vimfiler_as_default_explorer = 1
+    let g:vimfiler_safe_mode_by_default = 0
+    let g:vimfiler_force_overwrite_statusline = 0
+endfunction
+unlet s:bundle
 " 2}}}
 " YouCompleteMe  "{{{2
+autocmd MyAutoCmd FileType c,cpp nnoremap <buffer> <Leader>pg  :<C-u>YcmCompleter GoToDefinitionElseDeclaration<CR>
+autocmd MyAutoCmd FileType c,cpp nnoremap <buffer> <Leader>pd  :<C-u>YcmCompleter GoToDefinition<CR>
+autocmd MyAutoCmd FileType c,cpp nnoremap <buffer> <Leader>pc  :<C-u>YcmCompleter GoToDeclaration<CR>
+
 let s:bundle = neobundle#get('YouCompleteMe')
 function! s:bundle.hooks.on_source(bundle)
     let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_default/ycm_extra_conf.py'
@@ -616,10 +625,6 @@ function! s:bundle.hooks.on_source(bundle)
                 \ }
 endfunction
 unlet s:bundle
-
-autocmd MyAutoCmd FileType c,cpp nnoremap <buffer> <Leader>pg  :<C-u>YcmCompleter GoToDefinitionElseDeclaration<CR>
-autocmd MyAutoCmd FileType c,cpp nnoremap <buffer> <Leader>pd  :<C-u>YcmCompleter GoToDefinition<CR>
-autocmd MyAutoCmd FileType c,cpp nnoremap <buffer> <Leader>pc  :<C-u>YcmCompleter GoToDeclaration<CR>
 " 2}}}
 " quickrun  " {{{2
 " default setting
