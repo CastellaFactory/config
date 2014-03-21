@@ -240,7 +240,8 @@ myLayout = layoutHints
 myManageHook :: Query (Endo WindowSet)
 myManageHook = manageDocks <+> F.fullscreenManageHook
                <+> composeAll [
-               className =? "MPlayer"                               --> doFloat
+               isDialog                                               --> doCenterFloat
+               , className =? "MPlayer"                               --> doFloat
                , className =? "Smplayer"                              --> doFloat
                , className =? "Kmix"                                  --> doFloat
                , className =? "Firefox"                               --> viewShift "2:Web"
@@ -257,7 +258,6 @@ myManageHook = manageDocks <+> F.fullscreenManageHook
                , className =? "Audacious"                             --> doFloat
                , resource  =? "desktop_window"                        --> doIgnore
                , resource  =? "kdesktop"                              --> doIgnore
-               , isDialog                                             --> doCenterFloat
                ]
   where viewShift = doF . liftM2 (.) W.view W.shift
 
