@@ -446,16 +446,16 @@ let s:bundle = neobundle#get('vim-clang-format')
 function! s:bundle.hooks.on_source(bundle)
     " Mac: homebrew
     " Linux: build from sources and make symbolic link
-    " based on Google style. see 'clang-format-3.5 -dump-config -style='{BasedOnStyle: Google}'
+    " based on Google style. see clang-format-3.5 -dump-config -style='{BasedOnStyle: Google}'
     let g:clang_format#command = 'clang-format-3.5'
     let g:clang_format#style_options = {
                 \   'AccessModifierOffset' : -4,
+                \   'AllowShortIfStatementsOnASingleLine' : 'false',
+                \   'AllowShortLoopsOnASingleLine' : 'false',
                 \   'BreakBeforeBraces' : 'Stroustrup',
-                \   'IndentFunctionDeclarationAfterType' : 'false',
                 \   'IndentWidth' : 4,
                 \   'Standard' : 'Cpp11',
-                \   'TabWidth' : 4,
-                \   'UseTab' : 'Never',
+                \   'TabWidth' : 4
                 \ }
 endfunction
 unlet s:bundle
