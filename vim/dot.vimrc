@@ -130,9 +130,33 @@ command! -nargs=+ Objnoremap execute 'onoremap' <q-args> | execute 'vnoremap' <q
 
 command! -nargs=+ Objunmap execute 'ounmap' <q-args> | execute 'vunmap' <q-args>
 " 2}}}
-function! s:delete_trailing_spaces()  " {{{2
+" SuspendWithAutomaticCD -   " {{{2 
+" 
+command! -bar -nargs=0 SuspendWithAutomticCD call s:cmd_SuspendWithAutomticCD()
+function! s:cmd_SuspendWithAutomticCD()
+    let shell = split(&shell, '/')[-1]
+    if has('gui_macvim')
+        call system('open -a iTerm ' . getcwd())
+    elseif has('gui_running') && g:is_linux_p
+        call system('urxvt -cd ' . getcwd() . ' &')
+    elseif exists('$TMUX')    " this vim is running in tmux
+        let windows = split(system('tmux list-windows'), '\n')
+        call map(windows, 'split(v:val, "^\\d\\+\\zs:\\s")')
+        call filter(windows, 'matchstr(v:val[1], "\\w\\+") ==# shell')
+        let select_command = empty(windows)
+                    \ ? 'new-window'
+                    \ : 'select-window -t ' . windows[0][0]
+        silent execute '!tmux'
+                    \ select_command '\;'
+                    \ 'send-keys C-u cd' getcwd() 'C-m'
+        redraw!
+    else
+        suspend
+    endif
+endfunction  " 2}}}
+function! s:delete_trailing_spaces() range  " {{{2
     let saved_cursor = getpos(".")
-    %s/\s\+$//gce
+    %s/\s\+$//ceg
     call setpos(".", saved_cursor)
     unlet saved_cursor
 endfunction  " 2}}}
@@ -224,6 +248,8 @@ cnoremap <expr> /  getcmdtype() == '/' ? '\/' : '/'
 " select last changed text (like gv p.146)
 nnoremap gc  `[v`]
 Objnoremap gc  :<C-u>normal gc<CR>
+
+nnoremap <C-z>  :<C-u>SuspendWithAutomticCD<CR>
 
 nnoremap <silent> <Space>cd  :<C-u>call <SID>cd_to_current_buffer_dir()<CR>
 nnoremap <silent> <Space>cgd  :<C-u>call <SID>cd_to_git_root_dir()<CR>
@@ -318,10 +344,9 @@ NeoBundleLazy 'Valloric/YouCompleteMe', {
 NeoBundleLazy 'vim-jp/cpp-vim', {
             \   'autoload' : {'filetypes' : ['cpp']} }
 NeoBundleFetch 'Lokaltog/powerline'
-
+" 2}}}
 filetype plugin indent on
 NeoBundleCheck
-" 2}}}
 " 1}}}
 
 " FileTypes  "{{{1
