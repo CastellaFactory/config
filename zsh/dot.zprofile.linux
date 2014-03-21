@@ -3,7 +3,7 @@ export VISUAL="vim"
 export ALTERNATE_EDITOR=""
 
 if [ -e /etc/profile.d/autojump.zsh ]; then
-	source /etc/profile.d/autojump.zsh
+    source /etc/profile.d/autojump.zsh
 fi
 
 # /etc/zsh/zprofile overwrites PATH setting

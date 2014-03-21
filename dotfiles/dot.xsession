@@ -15,7 +15,7 @@ xset -b
 xrdb -merge ~/.Xresources
 
 if [[ -e "$HOME/.xsession_local" ]]; then
-        source $HOME/.xsession_local
+    source $HOME/.xsession_local
 fi
 
 exec /usr/bin/xmonad
