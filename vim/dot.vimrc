@@ -132,23 +132,19 @@ command! -nargs=+ Objunmap execute 'ounmap' <q-args> | execute 'vunmap' <q-args>
 " 2}}}
 " SuspendWithAutomaticCD -   " {{{2 
 " 
-command! -bar -nargs=0 SuspendWithAutomticCD call s:cmd_SuspendWithAutomticCD()
-function! s:cmd_SuspendWithAutomticCD()
-    let shell = split(&shell, '/')[-1]
+command! -bar -nargs=0 SuspendWithAutomaticCD call s:cmd_SuspendWithAutomaticCD()
+function! s:cmd_SuspendWithAutomaticCD()
     if has('gui_macvim')
-        call system('open -a iTerm ' . getcwd())
+        call system('open -a iTerm ' . shellescape(getcwd()))
     elseif has('gui_running') && g:is_linux_p
-        call system('urxvt -cd ' . getcwd() . ' &')
+        call system('urxvt -cd ' . shellescape(getcwd()) . ' &')
     elseif exists('$TMUX')    " this vim is running in tmux
+        let shell_name = split(&shell, '/')[-1]    " zsh, bash, etc...
         let windows = split(system('tmux list-windows'), '\n')
         call map(windows, 'split(v:val, "^\\d\\+\\zs:\\s")')
-        call filter(windows, 'matchstr(v:val[1], "\\w\\+") ==# shell')
-        let select_command = empty(windows)
-                    \ ? 'new-window'
-                    \ : 'select-window -t ' . windows[0][0]
-        silent execute '!tmux'
-                    \ select_command '\;'
-                    \ 'send-keys C-u cd' getcwd() 'C-m'
+        call filter(windows, 'matchstr(v:val[1], "\\w\\+") ==# shell_name')    " looking for shell_name runnnig windows
+        let select_command = empty(windows) ? 'new-window' : 'select-window -t ' . windows[0][0]
+        call system('tmux ' . select_command . '&&' . 'tmux send-keys C-u cd\ ' . shellescape(getcwd()) . ' C-m C-l')
         redraw!
     else
         suspend
@@ -249,16 +245,15 @@ cnoremap <expr> /  getcmdtype() == '/' ? '\/' : '/'
 nnoremap gc  `[v`]
 Objnoremap gc  :<C-u>normal gc<CR>
 
-nnoremap <C-z>  :<C-u>SuspendWithAutomticCD<CR>
 
 nnoremap <silent> <Space>cd  :<C-u>call <SID>cd_to_current_buffer_dir()<CR>
 nnoremap <silent> <Space>cgd  :<C-u>call <SID>cd_to_git_root_dir()<CR>
 
-" disable dangerous command
-nnoremap ZZ  <Nop>
+nnoremap ZZ  :<C-u>SuspendWithAutomaticCD<CR>
+" disable ZQ(same as :q!)
 nnoremap ZQ  <Nop>
 
-" disable EX-mode
+" EX-mode, macro
 nnoremap Q  q
 nnoremap q  <Nop>
 " 2}}}
