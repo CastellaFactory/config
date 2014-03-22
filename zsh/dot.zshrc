@@ -5,6 +5,7 @@ alias et='emacsclient -t'
 alias ec='emacsclient -c -n'
 alias ke="emacsclient -e '(kill-emacs)'"
 alias se='emacs --daemon'
+alias gosh='rlwrap gosh'
 # 1}}}
 
 # Options  # {{{1
@@ -19,7 +20,9 @@ setopt correct
 setopt globdots
 setopt hist_ignore_all_dups
 setopt hist_ignore_dups
+setopt hist_ignore_space
 setopt hist_reduce_blanks
+setopt inc_append_history
 setopt list_packed
 setopt list_types
 setopt magic_equal_subst
@@ -31,7 +34,14 @@ setopt share_history
 # History  # {{{1
 HISTFILE=~/.zsh_history
 HISTSIZE=1000
-SAVEHIST=1000
+SAVEHIST=5000
+# don't add 'rm' and 'rmdir'
+zshaddhistory() {
+    local line=${1%%$'\n'}
+    local cmd=${line%% *}
+
+    [[ $cmd != rm(|dir) ]]
+}
 autoload history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
