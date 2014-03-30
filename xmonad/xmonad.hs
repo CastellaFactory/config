@@ -8,7 +8,6 @@
 import Control.Arrow (first)
 import Control.Monad (liftM2)
 import Data.Char (isSpace)
-import Data.List (isInfixOf)
 import Data.Monoid (All, Endo)
 import System.Exit (exitSuccess)
 import XMonad
@@ -274,8 +273,7 @@ myLogHook :: X ()
 myLogHook  = ewmhDesktopsLogHook <+> fadeWindowsLogHook myFadeHook
   where myFadeHook = composeAll [
                         opaque
-                        , isFloating              --> opaque
-                        , className =? "URxvt"    --> opaque
+                        , className =? "Emacs"    --> transparency 0.20
                         , className =? "Gvim"     --> transparency 0.20
                         , isUnfocused             --> transparency 0.50
                      ]
@@ -298,6 +296,7 @@ myPP = xmobarPP {
           , ppLayout  = drop 7
        }
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
+
 
 ------------------------------------------------------------------------
 main :: IO ()
@@ -340,7 +339,8 @@ defaults = defaultConfig {
               , ((myModMask .|. shiftMask, xK_a), runOrRaise "emacs" (className =? "Emacs"))
 
               , ((myModMask, xK_e), spawn "gvim -u ~/.vim/vimrc -U ~/.vim/gvimrc -N")
-              -- , ((myModMask .|. shiftMask, xK_e), spawn "gvim -u NONE -N")
+              -- system gvim
+              , ((myModMask .|. shiftMask, xK_e), spawn "/usr/bin/gvim -u ~/.vim/vimrc -U ~/.vim/gvimrc -N")
 
               -- Magnifier
               , ((myModMask .|. controlMask , xK_semicolon), sendMessage Mag.MagnifyMore)

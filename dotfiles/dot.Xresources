@@ -5,6 +5,7 @@
 !! Emacs
 Emacs*.useXIM: false
 Emacs*.FontBackend: xft
+Emacs*.toolBar: false
 
 !! urxvt
 URxvt.depth: 32

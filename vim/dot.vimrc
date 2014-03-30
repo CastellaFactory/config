@@ -13,7 +13,7 @@ augroup MyAutoCmd
     autocmd!
 augroup END
 
-language message C
+language messages C
 
 let g:is_darwin_p = has('mac') || has('macunix')
 let g:is_linux_p = !g:is_darwin_p && has('unix')
@@ -21,13 +21,10 @@ let g:is_linux_p = !g:is_darwin_p && has('unix')
 function! s:SID_PREFIX()
     return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
 endfunction
-
-" $MYVIMRC is not set when vim is launched with 'vim -u vimrc'?
-let $MYVIMRC = '~/.vim/vimrc'
 " 2}}}
 " Options " {{{2
-if has('gui_running')
-    set guioptions+=M    " this flag must be added before 'syntax enable' or 'filetype on'
+if has('+guioptions')
+    set guioptions+=M    " this flag must be added before 'syntax enable' and 'filetype on'
 endif
 
 syntax enable
@@ -48,6 +45,7 @@ else
     set clipboard=unnamed
 endif
 set cmdheight=2
+set completeopt=menuone
 set directory=~/.vim/backups
 set encoding=utf-8
 set fileencoding=utf-8
@@ -60,13 +58,14 @@ nohlsearch
 set ignorecase
 set incsearch
 set laststatus=2
-if has('gui_macvim')
+if has('+macmeta')
     set macmeta
 endif
 set mouse=a
 set noerrorbells
 set nrformats-=octal
 set number
+set pumheight=25
 set ruler
 set scrolloff=3
 set shiftround
@@ -79,12 +78,13 @@ set sidescrolloff=5
 set smartcase
 set smarttab
 set splitbelow splitright
-set ttimeoutlen=50
 set t_vb=
 set termencoding=utf-8
+set ttimeoutlen=50
 set ttyfast
 set undodir=~/.vim/undo
 set undofile
+set virtualedit=block
 set visualbell
 set whichwrap=b,s,h,l,[,],<,>,~
 set wildchar=<TAB>
@@ -123,38 +123,65 @@ let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
 command! -nargs=* -complete=mapping AllMaps
             \   map <args> | map! <args> | lmap <args>
 " 2}}}
+ " CloseTemporaryWindows  " {{{2
+command! -bar -nargs=0 CloseTemporaryWindows  call s:cmd_CloseTemporaryWindows()
+function! s:cmd_CloseTemporaryWindows()
+    let win = range(1, winnr('$'))
+    let buftype_pattern = 'nofile\|quickfix\|help'
+    call filter(win, '!buflisted(winbufnr(v:val)) && getbufvar(winbufnr(v:val), "&buftype") =~# buftype_pattern')
+
+    let current_winnr = winnr()
+    if len(win) == winnr('$')
+        call filter(win, 'current_winnr != v:val')
+    endif
+
+    for winnr in win
+        execute winnr 'wincmd w'
+        wincmd c
+    endfor
+    execute (current_winnr - len(filter(win, 'v:val < current_winnr')))
+                \   'wincmd w'
+endfunction
+" 2}}}
+" DeleteTrailingSpaces  " {{{2
+command! -bar -nargs=0 -range=% DeleteTrailingSpaces
+            \   let s:save_cursor = getpos('.')
+            \ | <line1>,<line2>call s:cmd_DeleteTrailingSpaces()
+            \ | call setpos('.', s:save_cursor) | unlet s:save_cursor
+
+function! s:cmd_DeleteTrailingSpaces() range
+    execute a:firstline . ',' . a:lastline . 's/\s\+$//ceg'
+endfunction  " 2}}}
 " Objmap - wrapper for textobj mapping  " {{{2
 command! -nargs=+ Objmap execute 'omap' <q-args> | execute 'vmap' <q-args>
-
 command! -nargs=+ Objnoremap execute 'onoremap' <q-args> | execute 'vnoremap' <q-args>
-
 command! -nargs=+ Objunmap execute 'ounmap' <q-args> | execute 'vunmap' <q-args>
 " 2}}}
-" SuspendWithAutomaticCD -   " {{{2 
-" 
-command! -bar -nargs=0 SuspendWithAutomaticCD call s:cmd_SuspendWithAutomaticCD()
+" Operatormap - wrapper for operator mapping  " {{{2
+command! -nargs=+ Operatormap  execute 'nmap' <q-args> | execute 'vmap' <q-args>
+command! -nargs=+ Operatornoremap  execute 'nnoremap' <q-args> | execute 'vnoremap' <q-args>
+command! -nargs=+ Operatorunmap execute 'nunmap' <q-args> | execute 'vunmap' <q-args>
+" 2}}}
+" SuspendWithAutomaticCD  " {{{2
+command! -bar -nargs=0 SuspendWithAutomaticCD  call s:cmd_SuspendWithAutomaticCD()
 function! s:cmd_SuspendWithAutomaticCD()
-    if has('gui_macvim')
+    if has('gui_running') && g:is_darwin_p
         call system('open -a iTerm ' . shellescape(getcwd()))
     elseif has('gui_running') && g:is_linux_p
         call system('urxvt -cd ' . shellescape(getcwd()) . ' &')
     elseif exists('$TMUX')    " this vim is running in tmux
-        let shell_name = split(&shell, '/')[-1]    " zsh, bash, etc...
-        let windows = split(system('tmux list-windows'), '\n')
+        let l:shell_name = split(&shell, '/')[-1]    " zsh, bash, etc...
+        let l:windows = split(system('tmux list-windows'), '\n')
         call map(windows, 'split(v:val, "^\\d\\+\\zs:\\s")')
         call filter(windows, 'matchstr(v:val[1], "\\w\\+") ==# shell_name')    " looking for shell_name runnnig windows
-        let select_command = empty(windows) ? 'new-window' : 'select-window -t ' . windows[0][0]
-        call system('tmux ' . select_command . '&&' . 'tmux send-keys C-u cd\ ' . shellescape(getcwd()) . ' C-m C-l')
+        let l:select_command = empty(windows) ? 'new-window' : 'select-window -t ' . windows[0][0]
+        " to avoid adding cd to cmdline history, add 'setopt hist_ignore_space' to zshrc and
+        " add spaces before 'cd'
+        call system('tmux ' . select_command . '&&' . 'tmux send-keys C-u \ cd\ ' . shellescape(getcwd()) . ' C-m C-l')
         redraw!
     else
         suspend
     endif
-endfunction  " 2}}}
-function! s:delete_trailing_spaces() range  " {{{2
-    let saved_cursor = getpos(".")
-    %s/\s\+$//ceg
-    call setpos(".", saved_cursor)
-    unlet saved_cursor
 endfunction  " 2}}}
 function! s:cd_to_current_buffer_dir()  " {{{2
     lcd %:p:h
@@ -168,13 +195,27 @@ function! s:cd_to_git_root_dir()  " {{{2
         echohl ErrorMsg | echomsg 'This file is not inside git tree.' | echohl none
     endif
 endfunction  " 2}}}
-function! s:set_indent(expandtab_or_noexpandtab)  " {{{2
-    setlocal tabstop=4 shiftwidth=4 softtabstop=0
-    execute 'setlocal' a:expandtab_or_noexpandtab
+function! s:keys_to_complete()  " {{{2
+    if &l:filetype ==# 'vim'
+        return "\<C-x>\<C-v>"      " vim command completion
+    elseif &l:omnifunc != ''
+        return "\<C-x>\<C-o>"
+    else
+        return "\<C-n>"
+    endif
 endfunction  " 2}}}
-function! s:set_short_indent(expandtab_or_noexpandtab)  " {{{2
-    setlocal tabstop=2 shiftwidth=2 softtabstop=0
-    execute 'setlocal' a:expandtab_or_noexpandtab
+function! s:set_indent(expandtab_or_noexpandtab)  " {{{2
+    if a:expandtab_or_noexpandtab ==# 'expandtab'
+        setlocal expandtab
+        setlocal tabstop< shiftwidth=4 softtabstop=4
+    else
+        setlocal noexpandtab
+        setlocal tabstop=4 shiftwidth=4 softtabstop<
+    endif
+endfunction  " 2}}}
+function! s:set_short_indent()  " {{{2
+    setlocal expandtab
+    setlocal tabstop< shiftwidth=2 softtabstop=2
 endfunction  " 2}}}
 function! s:toggle_fullscreen()  " {{{2
     if g:is_darwin_p
@@ -204,14 +245,15 @@ endfunction  " 2}}}
 noremap ;  :
 noremap :  ;
 
-" follow symbolic link
-nnoremap <Space>.  :<C-u>edit `=resolve(fnamemodify("$MYVIMRC", ':p'))`<CR>
-nnoremap <Space>t.  :<C-u>tabnew `=resolve(fnamemodify("$MYVIMRC", ':p'))`<CR>
-nnoremap <silent> <Space>s.  :<C-u>source `=resolve(fnamemodify("$MYVIMRC", ':p'))`<CR>
+" follow symbolic link (don't use $MYVIMRC)
+nnoremap <Space>.  :<C-u>edit `=resolve(fnamemodify("~/.vim/vimrc", ':p'))`<CR>
+nnoremap <Space>t.  :<C-u>tabnew `=resolve(fnamemodify("~/.vim/vimrc", ':p'))`<CR>
+nnoremap <Space>s.  :<C-u>source `=resolve(fnamemodify("~/.vim/vimrc", ':p'))`<CR>
 " 2}}}
 " help  " {{{2
 nnoremap <C-h>  :<C-u>help<Space>
 nnoremap ,h  :<C-u>help<Space><C-r><C-w><CR>
+nnoremap <Space>q  :<C-u>help quickref<CR>
 
 " disable F1
 noremap <F1>  <Nop>
@@ -220,7 +262,7 @@ inoremap <F1>  <Nop>
 " <Space> stuffs  " {{{2
 nnoremap <silent> <Space>ow  :<C-u>setlocal wrap! wrap?<CR>
 nnoremap <silent> <Space>of  :<C-u>call <SID>toggle_fullscreen()<CR>
-nnoremap <Space>sp  :<C-u>call <SID>delete_trailing_spaces()<CR>
+nnoremap <Space>sp  :DeleteTrailingSpaces<CR>
 nnoremap <silent> <Space>r  :<C-u>registers<CR>
 nnoremap <silent> <Space>/  :<C-u>nohlsearch<CR>
 nnoremap <silent> <Space>v  zMzv
@@ -229,6 +271,8 @@ nnoremap <silent> <Space>v  zMzv
 inoremap <C-a>  <Home>
 inoremap <expr> <C-e>  pumvisible() ? "\<C-e>" : "\<End>"
 inoremap <C-d>  <Del>
+inoremap <expr> <Up>  pumvisible()? "\<C-p>" : "\<Up>"
+inoremap <expr> <Down>  pumvisible()? "\<C-n>" : "\<Down>"
 " 2}}}
 " Command-line mode  " {{{2
 cnoremap <C-p>  <Up>
@@ -245,17 +289,24 @@ cnoremap <expr> /  getcmdtype() == '/' ? '\/' : '/'
 nnoremap gc  `[v`]
 Objnoremap gc  :<C-u>normal gc<CR>
 
+onoremap gv  :<C-u>normal! gv<CR>
 
 nnoremap <silent> <Space>cd  :<C-u>call <SID>cd_to_current_buffer_dir()<CR>
 nnoremap <silent> <Space>cgd  :<C-u>call <SID>cd_to_git_root_dir()<CR>
 
 nnoremap ZZ  :<C-u>SuspendWithAutomaticCD<CR>
+
+" prefix-key for tmux
+noremap <C-z>  <Nop>
+
 " disable ZQ(same as :q!)
 nnoremap ZQ  <Nop>
 
 " EX-mode, macro
 nnoremap Q  q
 nnoremap q  <Nop>
+
+inoremap <expr> <C-x><C-x>  <SID>keys_to_complete()
 " 2}}}
 " 1}}}
 
@@ -284,8 +335,6 @@ NeoBundle 'Shougo/vimproc.vim', {
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-repeat'
-NeoBundleLazy 'dag/vim2hs', {
-            \   'autoload' : {'filetypes' : ['haskell']} }
 NeoBundleLazy 'eagletmt/ghcmod-vim', {
             \   'autoload' : {'filetypes' : ['haskell']} }
 NeoBundleLazy 'eagletmt/neco-ghc', {
@@ -327,7 +376,8 @@ NeoBundleLazy 'Shougo/unite-outline', {
 NeoBundleLazy 'Shougo/vimfiler.vim', {
             \   'autoload' : {'commands' : ['VimFiler', 'VimFilerCurrentDir', 'VimFilerBufferDir',
             \                               'VimFilerSplit', 'VimFilerExplorer', 'VimFilerDouble']}, 'explorer' : 1 }
-NeoBundleLazy 'SirVer/ultisnips'
+NeoBundleLazy 'SirVer/ultisnips', {
+            \   'autoload' : {'functions' : ['UltiSnips#FileTypeChanged']} }
 NeoBundleLazy 'tyru/caw.vim', {
             \   'autoload' : {'mappings' : ['<Plug>(caw:']} }
 NeoBundleLazy 'Valloric/YouCompleteMe', {
@@ -365,12 +415,13 @@ autocmd MyAutoCmd FileType cpp call s:on_FileType_cpp()
 function! s:on_FileType_cpp()
     call s:set_indent('expandtab')
     setlocal matchpairs+=<:>
+    " add cpp header files dir to path
 endfunction
 " 2}}}
 " haskell  " {{{2
 autocmd MyAutoCmd FileType haskell call s:on_FileType_haskell()
 function! s:on_FileType_haskell()
-    call s:set_short_indent('expandtab')
+    call s:set_indent('expandtab')
     setlocal omnifunc=necoghc#omnifunc
 endfunction
 " 2}}}
@@ -381,12 +432,12 @@ autocmd MyAutoCmd FileType make call s:set_indent('noexpandtab')
 autocmd MyAutoCmd FileType python call s:set_indent('expandtab')
 " 2}}}
 " ruby  " {{{2
-autocmd MyAutoCmd FileType ruby call s:set_short_indent('expandtab')
+autocmd MyAutoCmd FileType ruby call s:set_short_indent()
 " 2}}}
 " scheme  " {{{2
 autocmd MyAutoCmd FileType scheme call s:on_FileType_scheme()
 function! s:on_FileType_scheme()
-    call s:set_short_indent('expandtab')
+    call s:set_short_indent()
     setlocal lisp
     let b:is_gauche = 1
 endfunction
@@ -529,7 +580,6 @@ let s:bundle = neobundle#get('syntastic')
 function! s:bundle.hooks.on_source(bundle)
     let g:syntastic_always_populate_loc_list = 1
     let g:syntastic_enable_highlighting = 0
-    let g:syntastic_check_on_wq = 0
     let g:syntastic_cppcheck_config_file = '~/.vim/syntastic_config/cppcheck'
     let g:syntastic_mode_map = {'mode': 'passive'}
 
@@ -547,28 +597,20 @@ function! s:bundle.hooks.on_source(bundle)
 
     let g:syntastic_haskell_checkers = ['ghc_mod', 'hlint']
     let g:syntastic_python_checkers = ['python', 'flake8']
-    let g:syntastic_ruby_checkers = ['mri', 'rubocop']
+    let g:syntastic_ruby_checkers = ['mri', 'rubylint', 'rubocop']
 endfunction
 unlet s:bundle
 " 2}}}
 " UltiSnips  "{{{2
-augroup LoadUltiSnips
-    autocmd!
-    if !neobundle#is_sourced('ultisnips')
-        autocmd FileType * call neobundle#source('ultisnips')
-    endif
-augroup END
-
 let s:bundle = neobundle#get('ultisnips')
 function! s:bundle.hooks.on_source(bundle)
-    autocmd! LoadUltiSnips
     let g:UltiSnipsSnippetDirectories = ['ultisnips-snippets']
     let g:UltiSnipsExpandTrigger = '<C-k>'
     let g:UltiSnipsJumpForwardTrigger = '<C-k>'
     let g:UltiSnipsJumpBackwardTrigger = '<M-k>'
-    let g:UltiSnipsListSnippets = '<M-Tab>'
     let g:snips_author = 'Castella'
 endfunction
+unlet s:bundle
 " 2}}}
 " unite  " {{{2
 nnoremap <Space>ub  :<C-u>Unite buffer<CR>
@@ -593,15 +635,7 @@ function! s:bundle.hooks.on_source(bundle)
     let g:unite_source_grep_recursive_opt = ''
 
     autocmd MyAutoCmd FileType unite imap <buffer> <C-g>  <Plug>(unite_exit)
-    autocmd MyAutoCmd FileType unite nmap <buffer> <C-g>  <Plug>(unite_exit)
-endfunction
-unlet s:bundle
-" 2}}}
-" vim2hs  "{{{2
-let s:bundle = neobundle#get('vim2hs')
-function! s:bundle.hooks.on_source(bundle)
-    let g:haskell_conceal = 0
-    let g:haskell_conceal_enumerations = 0
+                \ | nmap <buffer> <C-g>  <Plug>(unite_exit)
 endfunction
 unlet s:bundle
 " 2}}}
@@ -619,17 +653,19 @@ endfunction
 unlet s:bundle
 " 2}}}
 " YouCompleteMe  "{{{2
-autocmd MyAutoCmd FileType c,cpp nnoremap <buffer> <Leader>pg  :<C-u>YcmCompleter GoToDefinitionElseDeclaration<CR>
-autocmd MyAutoCmd FileType c,cpp nnoremap <buffer> <Leader>pd  :<C-u>YcmCompleter GoToDefinition<CR>
-autocmd MyAutoCmd FileType c,cpp nnoremap <buffer> <Leader>pc  :<C-u>YcmCompleter GoToDeclaration<CR>
+autocmd MyAutoCmd FileType c,cpp,python nnoremap <buffer> <Leader>pg  :<C-u>YcmCompleter GoToDefinitionElseDeclaration<CR>
+            \ | nnoremap <buffer> <Leader>pd  :<C-u>YcmCompleter GoToDefinition<CR>
+            \ | nnoremap <buffer> <Leader>pc  :<C-u>YcmCompleter GoToDeclaration<CR>
 
 let s:bundle = neobundle#get('YouCompleteMe')
 function! s:bundle.hooks.on_source(bundle)
     let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_default/ycm_extra_conf.py'
     let g:ycm_show_diagnostics_ui = 0
-    let g:ycm_autoclose_preview_window_after_completion = 1
     let g:ycm_min_num_identifier_candidate_chars = 4
     let g:ycm_seed_identifiers_with_syntax = 1
+    let g:ycm_filetype_specific_completion_to_disable = {'vim' : 1}
+    let g:ycm_key_list_select_completion = ['<C-n>']
+    let g:ycm_key_list_previous_completion = ['<C-p>']
     " add semantic triggers
     let g:ycm_semantic_triggers = {
                 \   'haskell' : ['.']
