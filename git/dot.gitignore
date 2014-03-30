@@ -3,6 +3,9 @@
 .*.sw?
 .sw?
 
+# Elisp
+*.elc
+
 # C and C++
 *.o
 *.a
