@@ -78,7 +78,7 @@ zstyle ':completion:*:options' description 'yes'
 function zsh-plugin-update() {
     local cwd
     cwd=$PWD
-    for plugin in `ls --color=never $ZPLUGINDIR`; do
+    for plugin in `\ls $ZPLUGINDIR`; do
         cd $ZPLUGINDIR/$plugin
         git pull
         cd ..
@@ -108,7 +108,8 @@ add-zsh-hook chpwd chpwd_recent_dirs
 zstyle ':chpwd:*' recent-dirs-max 1000
 zstyle ':chpwd:*' recent-dirs-default yes
 zstyle ':completion:*' recent-dirs-insert both
-
+# for zsh-plugin-update()
+zstyle ':chpwd:*' recent-dirs-prune pattern:\.zsh\/plugins
 source $ZPLUGINDIR/zaw/zaw.zsh
 zstyle ':filter-select' case-insensitive yes    # case-insensitive
 bindkey '^@' zaw-cdr                            # <C-@>
