@@ -123,7 +123,7 @@ let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
 command! -nargs=* -complete=mapping AllMaps
             \   map <args> | map! <args> | lmap <args>
 " 2}}}
- " CloseTemporaryWindows  " {{{2
+" CloseTemporaryWindows  " {{{2
 command! -bar -nargs=0 CloseTemporaryWindows  call s:cmd_CloseTemporaryWindows()
 function! s:cmd_CloseTemporaryWindows()
     let win = range(1, winnr('$'))
@@ -396,10 +396,12 @@ NeoBundleCheck
 
 " FileTypes  "{{{1
 " All filetypes  " {{{2
-set formatoptions-=ro       " for reloading $MYVIMRC
+set formatoptions-=r       " for reloading $MYVIMRC
+set formatoptions-=o
 autocmd MyAutoCmd FileType * call s:on_FileType_all()
 function! s:on_FileType_all()
-    setlocal formatoptions-=ro
+    setlocal formatoptions-=r
+    setlocal formatoptions-=o
     if &l:omnifunc == ''
         setlocal omnifunc=syntaxcomplete#Complete
     endif
