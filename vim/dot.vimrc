@@ -519,7 +519,7 @@ let s:bundle = neobundle#get('vim-clang-format')
 function! s:bundle.hooks.on_source(bundle)
     " Mac: homebrew
     " Linux: build from sources and make symbolic link
-    " based on Google style. see clang-format-3.5 -dump-config -style='{BasedOnStyle: Google}'
+    " based on Google style. see clang-format-HEAD -dump-config -style='{BasedOnStyle: Google}'
     let g:clang_format#command = 'clang-format-HEAD'
     let g:clang_format#style_options = {
                 \   'AccessModifierOffset' : -4,
