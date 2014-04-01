@@ -28,7 +28,7 @@ if has('+guioptions')
 endif
 
 syntax enable
-if !exists('g:color_names')
+if !exists('g:colors_name')
     let g:mycolor_termtrans = 1
     colorscheme mycolor
     set background=dark
