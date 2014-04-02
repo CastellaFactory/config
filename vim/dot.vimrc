@@ -308,7 +308,7 @@ nnoremap q  <Nop>
 
 inoremap <expr> <C-x><C-x>  <SID>keys_to_complete()
 
-cnoremap w!! w !sudo tee % >/dev/null
+cnoremap w!! w !sudo tee % > /dev/null
 " 2}}}
 " 1}}}
 
@@ -460,7 +460,7 @@ nmap <F3>  <Plug>(altr-forward)
 nmap <F2>  <Plug>(altr-back)
 
 let s:bundle = neobundle#get('vim-altr')
-function! s:bundle.hooks.on_source(bundle)
+function! s:bundle.hooks.on_post_source(bundle)
     call altr#define('vimrc', 'gvimrc')
 endfunction
 unlet s:bundle
@@ -564,7 +564,7 @@ call submode#map('undo/redo', 'n', '', '+', 'g+')
 " 2}}}
 " smartinput "{{{2
 let s:bundle = neobundle#get('vim-smartinput')
-function! s:bundle.hooks.on_source(bundle)
+function! s:bundle.hooks.on_post_source(bundle)
     call smartinput#map_to_trigger('i', '<Space>', '<Space>', '<Space>')
     call smartinput#map_to_trigger('i', '<BS>', '<BS>', '<BS>')
     call smartinput#map_to_trigger('i', '<CR>', '<CR>', '<CR>')
