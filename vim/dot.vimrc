@@ -620,8 +620,8 @@ unlet s:bundle
 " unite  " {{{2
 nnoremap <Space>ub  :<C-u>Unite buffer<CR>
 nnoremap <Space>ut  :<C-u>Unite tab<CR>
-nnoremap <Space>ufr  :<C-u>Unite file_mru<CR>
-nnoremap <Space>udr  :<C-u>Unite directory_mru<CR>
+nnoremap <Space>ufr  :<C-u>Unite neomru/file<CR>
+nnoremap <Space>udr  :<C-u>Unite neomru/directory<CR>
 nnoremap <Space>urm  :<C-u>UniteResume<CR>
 nnoremap <Space>uff  :<C-u>Unite file<CR>
 nnoremap <Space>uol  :<C-u>Unite outline<CR>
@@ -629,6 +629,11 @@ nnoremap <Space>unnb  :<C-u>Unite neobundle<CR>
 nnoremap <Space>ug   :<C-u>Unite grep:. <CR>
 nnoremap ,g  :<C-u>Unite grep:. <CR><C-r><C-w><CR>
 nnoremap  <Space>up  :<C-u>Unite buffer file_rec/async:!<CR>
+
+" neomru
+let g:neomru#file_mru_limit = 100
+let g:neomru#file_mru_ignore_pattern = 'COMMIT_EDITMSG\|\/doc\/.\+\.\(txt\|jax\)$'
+let g:neomru#directory_mru_limit = 100
 
 let s:bundle = neobundle#get('unite.vim')
 function! s:bundle.hooks.on_source(bundle)
