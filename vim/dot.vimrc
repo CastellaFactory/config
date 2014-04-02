@@ -500,18 +500,20 @@ autocmd MyAutoCmd FileType haskell nnoremap <buffer><silent> <C-n>  :<C-u>GhcMod
 let g:lightline = {
             \   'colorscheme' : 'wombat',
             \   'active' : {'left' : [['mode', 'paste'], ['fugitive', 'readonly', 'filename', 'modified']]},
-            \   'component_function' : {'fugitive' : 'MyFugitive'},
+            \   'component_function' : {'fugitive' : 'MyFugitive', 'filename' : 'MyFilename'},
             \   'enable' : {'statusline' : 1, 'tabline' : 0}
             \ }
 
 function! MyFugitive()
-    try
-        if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
-            return fugitive#head()
-        endif
-    catch
-    endtry
-    return ''
+    return &l:ft !=# 'vimfiler' && exists('*fugitive#head') ? fugitive#head() : ''
+endfunction
+
+function! MyFilename()
+    if &l:ft =~# 'unite\|vimfiler'
+        execute 'return'  &l:ft . '#get_status_string()'
+    else
+        return expand('%:t')
+    endif
 endfunction
 " 2}}}
 "  operator  " {{{2
