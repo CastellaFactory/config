@@ -27,13 +27,6 @@ if has('+guioptions')
     set guioptions+=M    " this flag must be added before 'syntax enable' and 'filetype on'
 endif
 
-syntax enable
-if !exists('g:colors_name')
-    let g:mycolor_termtrans = 1
-    colorscheme mycolor
-    set background=dark
-endif
-
 set ambiwidth=double
 set autoindent
 set autoread
@@ -394,6 +387,15 @@ NeoBundleFetch 'Lokaltog/powerline'
 " 2}}}
 filetype plugin indent on
 NeoBundleCheck
+" 1}}}
+
+" Colorscheme, Highlight  " {{{1
+syntax enable
+if !exists('g:colors_name')
+    let g:mycolor_termtrans = 1
+    colorscheme mycolor
+    set background=dark
+endif
 " 1}}}
 
 " FileTypes  "{{{1
