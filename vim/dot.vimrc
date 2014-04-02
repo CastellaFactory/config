@@ -180,7 +180,7 @@ function! s:cd_to_current_buffer_dir()  " {{{2
     pwd
 endfunction  " 2}}}
 function! s:cd_to_git_root_dir()  " {{{2
-    if (system('git rev-parse --is-inside-work-tree') =~# '\<true')
+    if (system('git rev-parse --is-inside-work-tree') =~# '^\<true')
         lcd `=fnamemodify(system('git rev-parse --show-toplevel'), ':p')`
         pwd
     else
