@@ -307,6 +307,8 @@ nnoremap Q  q
 nnoremap q  <Nop>
 
 inoremap <expr> <C-x><C-x>  <SID>keys_to_complete()
+
+cnoremap w!! w !sudo tee % >/dev/null
 " 2}}}
 " 1}}}
 
@@ -609,7 +611,7 @@ function! s:bundle.hooks.on_source(bundle)
     let g:UltiSnipsSnippetDirectories = ['ultisnips-snippets']
     let g:UltiSnipsExpandTrigger = '<C-k>'
     let g:UltiSnipsJumpForwardTrigger = '<C-k>'
-    let g:UltiSnipsJumpBackwardTrigger = '<M-k>'
+    let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
     let g:snips_author = 'Castella'
 endfunction
 unlet s:bundle
