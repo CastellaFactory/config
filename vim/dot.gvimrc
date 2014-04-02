@@ -12,6 +12,7 @@ set t_vb=
 
 if g:is_darwin_p
     " default: egmrL
+    set guioptions+=a
     set guioptions-=e
     set guioptions-=g
     set guioptions-=m
@@ -23,7 +24,6 @@ if g:is_darwin_p
 
 elseif g:is_linux_p
     " default: aegimrLtT
-    set guioptions-=a
     set guioptions-=e
     set guioptions-=g
     set guioptions-=i

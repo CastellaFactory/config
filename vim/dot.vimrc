@@ -23,9 +23,6 @@ function! s:SID_PREFIX()
 endfunction
 " 2}}}
 " Options " {{{2
-if has('+guioptions')
-    set guioptions+=M    " this flag must be added before 'syntax enable' and 'filetype on'
-endif
 
 set ambiwidth=double
 set autoindent
@@ -33,9 +30,9 @@ set autoread
 set backspace=indent,eol,start
 set backupdir=~/.vim/backups
 if has('unnamedplus')
-    set clipboard=unnamed,unnamedplus
+    set clipboard+=unnamed,unnamedplus
 else
-    set clipboard=unnamed
+    set clipboard+=autoselect,unnamed
 endif
 set cmdheight=2
 set completeopt=menuone
@@ -45,13 +42,14 @@ set fileencoding=utf-8
 set fileencodings=utf-8,cp932
 set foldenable
 set foldmethod=marker
+set guioptions+=M    " this flag must be added before 'syntax enable' and 'filetype on'
 set history=100
 set hlsearch
 nohlsearch
 set ignorecase
 set incsearch
 set laststatus=2
-if has('+macmeta')
+if exists('+macmeta')
     set macmeta
 endif
 set mouse=a
