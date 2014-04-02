@@ -29,10 +29,11 @@ set autoindent
 set autoread
 set backspace=indent,eol,start
 set backupdir=~/.vim/backups
-if has('unnamedplus')
-    set clipboard+=unnamed,unnamedplus
+if has('unnamedplus')    " only available with the +X11
+    set clipboard^=unnamed,unnamedplus    " exclude must be the last entry
+    set clipboard-=autoselect
 else
-    set clipboard+=autoselect,unnamed
+    set clipboard+=unnamed
 endif
 set cmdheight=2
 set completeopt=menuone
