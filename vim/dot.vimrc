@@ -380,6 +380,8 @@ NeoBundleLazy 'SirVer/ultisnips', {
             \   'autoload' : {'functions' : ['UltiSnips#FileTypeChanged']} }
 NeoBundleLazy 'tyru/caw.vim', {
             \   'autoload' : {'mappings' : ['<Plug>(caw:']} }
+NeoBundleLazy 'ujihisa/unite-haskellimport', {
+            \   'autoload' : {'unite_sources' : 'haskellimport'} }
 NeoBundleLazy 'Valloric/YouCompleteMe', {
             \   'build' : {
             \       'unix' : 'git submodule update --init --recursive && ./install.sh --clang-completer --system-libclang',
@@ -404,8 +406,9 @@ endif
 " 1}}}
 
 " FileTypes  "{{{1
+" should be in after/ftplugin or after/indent?
 " All filetypes  " {{{2
-set formatoptions-=r       " for reloading $MYVIMRC
+set formatoptions-=r
 set formatoptions-=o
 autocmd MyAutoCmd FileType * call s:on_FileType_all()
 function! s:on_FileType_all()
@@ -589,7 +592,7 @@ endfunction
 unlet s:bundle
 " 2}}}
 " sonictemplate  " {{{2
-let g:sonictemplate_vim_template_dir = ['~/.vim/template'] 
+let g:sonictemplate_vim_template_dir = ['~/.vim/template']
 " 2}}}
 " Syntastic  " {{{2
 let s:bundle = neobundle#get('syntastic')
