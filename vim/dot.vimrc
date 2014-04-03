@@ -518,7 +518,7 @@ endfunction
 " 2}}}
 "  operator  " {{{2
 " operator-clang-format  " {{{3
-autocmd MyAutoCmd FileType cpp map <buffer> <Leader>x  <Plug>(operator-clang-format)
+autocmd MyAutoCmd FileType c,cpp map <buffer> <Leader>x  <Plug>(operator-clang-format)
 
 let s:bundle = neobundle#get('vim-clang-format')
 function! s:bundle.hooks.on_source(bundle)
