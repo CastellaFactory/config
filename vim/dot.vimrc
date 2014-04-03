@@ -270,8 +270,6 @@ cnoremap <C-p>  <Up>
 cnoremap <C-n>  <Down>
 cnoremap <C-a>  <Home>
 cnoremap <C-e>  <End>
-cnoremap <M-b>  <S-Left>
-cnoremap <M-f>  <S-Right>
 
 cnoremap <expr> /  getcmdtype() == '/' ? '\/' : '/'
 " 2}}}
