@@ -29,7 +29,7 @@ set autoindent
 set autoread
 set backspace=indent,eol,start
 set backupdir=~/.vim/backups
-if has('unnamedplus')                     
+if has('unnamedplus')
     set clipboard=unnamed,unnamedplus
 else
     set clipboard=unnamed
@@ -302,7 +302,13 @@ inoremap <expr> <C-x><C-x>  <SID>keys_to_complete()
 " 1}}}
 
 " Abbreviations  " {{{1
-cnoreabbrev <expr> w!!  (getcmdtype() == ':' && getcmdline() ==# 'w!!') ? 'w !sudo tee % > /dev/null' : 'w!!'
+function! s:command_abbrev(lhs, rhs)  " {{{2
+    execute 'cnoreabbrev <expr>' a:lhs
+                \   '(getcmdtype() == ":" && getcmdline() ==#' '"' . a:lhs . '") ?'
+                \   '"' . a:rhs . '" : ' . '"' . a:lhs . '"'
+endfunction  " 2}}}
+call s:command_abbrev('w!!', 'w !sudo tee % > /dev/null')
+call s:command_abbrev('t', 'tabedit')
 " 1}}}
 
 " NeoBundle  " {{{1
