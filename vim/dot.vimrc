@@ -406,16 +406,25 @@ endif
 " 1}}}
 
 " FileTypes  "{{{1
-function! s:set_undo_ftplugin(...)  " {{{2
+" undo_ftplugin utils  " {{{2
+function! s:check_undo_ftplugin()  " {{{3
     if exists('b:undo_ftplugin')
-        " trailing spaces cause problem
-        " :unmap qq | setlocal...
+        " trailing spaces cause problem when :unmap.  :unmap qq_| setlocal...
         let b:undo_ftplugin .= '|'
     else
         let b:undo_ftplugin = ''
     endif
-    let b:undo_ftplugin .= 'setlocal ' . join(a:000, '< ') . '<'
-endfunction  " 2}}}
+endfunction  " 3}}}
+function! s:undo_ftplugin_helper(...)  " {{{3
+    call s:check_undo_ftplugin()
+    if len(a:1) > 0
+        let b:undo_ftplugin .= 'setlocal ' . join(a:1, '< ') . '<'
+    endif
+    if a:0 == 2
+        let b:undo_ftplugin .= len(a:1) > 0 ? '|unlet' : 'unlet' . join(a:2)
+    endif
+endfunction  " 3}}}
+" 2}}}
 " All filetypes  " {{{2
 set formatoptions-=r
 set formatoptions-=o
@@ -452,7 +461,7 @@ function! s:on_FileType_all()
                 \   softtabstop<
                 \   tabstop<
                 \   '
-    call s:set_undo_ftplugin('omnifunc')
+    call s:undo_ftplugin_helper(['omnifunc'])
 endfunction
 
 autocmd MyAutoCmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif
@@ -467,7 +476,7 @@ function! s:on_FileType_cpp()
     setlocal matchpairs+=<:>
     " TODO: add cpp header dir to path
 
-    call s:set_undo_ftplugin('matchpairs')
+    call s:undo_ftplugin_helper(['matchpairs'])
 endfunction
 " 2}}}
 " haskell  " {{{2
@@ -478,7 +487,7 @@ function! s:on_FileType_haskell()
     setlocal foldlevel=1
     setlocal omnifunc=necoghc#omnifunc
 
-    call s:set_undo_ftplugin('foldcolumn', 'foldlevel')
+    call s:undo_ftplugin_helper(['foldcolumn', 'foldlevel'])
 endfunction
 " 2}}}
 " makefile  " {{{2
@@ -496,6 +505,8 @@ function! s:on_FileType_scheme()
     call s:set_short_indent()
     setlocal lisp
     let b:is_gauche = 1
+
+    call s:undo_ftplugin_helper([], ['b:is_gauche'])
 endfunction
 " 2}}}
 " vim  " {{{2
@@ -504,7 +515,7 @@ function! s:on_FileType_vim()
     call s:set_indent('expandtab')
     setlocal foldcolumn=3
 
-    call s:set_undo_ftplugin('foldcolumn')
+    call s:undo_ftplugin_helper(['foldcolumn'])
 endfunction
 " 2}}}
 " zsh,sh  " {{{2
@@ -551,7 +562,9 @@ nnoremap <Leader>gP  :<C-u>Git pull<CR>
 " 2}}}"
 "  ghcmod-vim  " {{{2
 autocmd MyAutoCmd FileType haskell nnoremap <buffer> <Leader>t  :<C-u>GhcModType<CR>
-autocmd MyAutoCmd FileType haskell nnoremap <buffer><silent> <C-n>  :<C-u>GhcModTypeClear<CR>:nohlsearch<CR>
+            \ | nnoremap <buffer><silent> <C-n>  :<C-u>GhcModTypeClear<CR>:nohlsearch<CR>
+            \ | call s:check_undo_ftplugin()
+            \ | let b:undo_ftplugin .= 'nunmap <buffer> <Leader>t|nunmap <buffer> <C-n>'
 " 2}}}
 " lightline  " {{{2
 let g:lightline = {
@@ -575,7 +588,10 @@ endfunction
 " 2}}}
 "  operator  " {{{2
 " operator-clang-format  " {{{3
-autocmd MyAutoCmd FileType c,cpp map <buffer> <Leader>x  <Plug>(operator-clang-format)
+autocmd MyAutoCmd FileType c,cpp
+            \ | map <buffer> <Leader>x  <Plug>(operator-clang-format)
+            \ | call s:check_undo_ftplugin()
+            \ | let b:undo_ftplugin .= 'unmap <buffer> <Leader>x'
 
 let s:bundle = neobundle#get('vim-clang-format')
 function! s:bundle.hooks.on_source(bundle)
@@ -652,7 +668,7 @@ function! s:bundle.hooks.on_source(bundle)
 
     let g:syntastic_c_checkers = ['gcc', 'cppcheck']
     let g:syntastic_c_compier = 'clang'
-    let g:syntastic_c_compiler_options = '-std=c11 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-missing-prototypes -fno-caret-diagnostics'
+    let g:syntastic_c_compiler_options = '-std=gnu99 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-missing-prototypes -fno-caret-diagnostics'
     let g:syntastic_c_no_default_include_dirs = 1
     let g:syntastic_c_no_include_search = 1
 
@@ -728,6 +744,8 @@ unlet s:bundle
 autocmd MyAutoCmd FileType c,cpp,python nnoremap <buffer> <Leader>pg  :<C-u>YcmCompleter GoToDefinitionElseDeclaration<CR>
             \ | nnoremap <buffer> <Leader>pd  :<C-u>YcmCompleter GoToDefinition<CR>
             \ | nnoremap <buffer> <Leader>pc  :<C-u>YcmCompleter GoToDeclaration<CR>
+            \ | call s:check_undo_ftplugin()
+            \ | let b:undo_ftplugin .= 'nunmap <buffer> <Leader>pg|nunmap <buffer> <Leader>pd|nunmap <buffer> <Leader>pc'
 
 let s:bundle = neobundle#get('YouCompleteMe')
 function! s:bundle.hooks.on_source(bundle)
@@ -774,7 +792,7 @@ let g:quickrun_config.cpp_compile = {
             \ }
 let g:quickrun_config.c_compile = {
             \   'command' : 'clang',
-            \   'cmdopt' : '-std=c11 -Wall -Wextra',
+            \   'cmdopt' : '-std=gnu99 -Wall -Wextra',
             \   'exec' : '%c %o -o %s:r %s:p',
             \   'outputter' : 'quickfix',
             \ }
@@ -785,9 +803,12 @@ let g:quickrun_config.haskell_compile = {
             \   'outputter' : 'quickfix',
             \ }
 
-autocmd MyAutoCmd FileType c nnoremap <buffer> <Leader>R  :<C-u>QuickRun c_compile<CR>
-autocmd MyAutoCmd FileType cpp nnoremap <buffer> <Leader>R  :<C-u>QuickRun cpp_compile<CR>
-autocmd MyAutoCmd FileType haskell nnoremap <buffer> <Leader>R  :<C-u>QuickRun haskell_compile<CR>
+for ift in ['c', 'cpp', 'haskell']
+    execute 'autocmd MyAutoCmd FileType' ift 'nnoremap <buffer> <Leader>R :<C-u>QuickRun' ift . '_complie<CR>'
+                \ | call s:check_undo_ftplugin()
+                \ | let b:undo_ftplugin .= 'nunmap <buffer> <Leader>R'
+endfor
+unlet ift
 " 2}}}
 " 1}}}
 
