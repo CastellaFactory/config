@@ -416,12 +416,13 @@ function! s:check_undo_ftplugin()  " {{{3
     endif
 endfunction  " 3}}}
 function! s:undo_ftplugin_helper(...)  " {{{3
-    call s:check_undo_ftplugin()
     if len(a:1) > 0
+        call s:check_undo_ftplugin()
         let b:undo_ftplugin .= 'setlocal ' . join(a:1, '< ') . '<'
     endif
-    if a:0 == 2
-        let b:undo_ftplugin .= len(a:1) > 0 ? '|unlet' : 'unlet' . join(a:2)
+    if a:0 == 2 && len(a:2) > 0
+        call s:check_undo_ftplugin()
+        let b:undo_ftplugin .= 'unlet ' . join(a:2)
     endif
 endfunction  " 3}}}
 " 2}}}
@@ -464,7 +465,10 @@ function! s:on_FileType_all()
     call s:undo_ftplugin_helper(['omnifunc'])
 endfunction
 
-autocmd MyAutoCmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif
+autocmd MyAutoCmd BufReadPost * 
+            \   if line("'\"") > 1 && line("'\"") <= line("$") 
+            \ |     execute "normal! g`\"" 
+            \ | endif
 " 2}}}
 " c  " {{{2
 autocmd MyAutoCmd FileType c call s:set_indent('expandtab')
@@ -561,7 +565,8 @@ nnoremap <Leader>gp  :<C-u>Git push<CR>
 nnoremap <Leader>gP  :<C-u>Git pull<CR>
 " 2}}}"
 "  ghcmod-vim  " {{{2
-autocmd MyAutoCmd FileType haskell nnoremap <buffer> <Leader>t  :<C-u>GhcModType<CR>
+autocmd MyAutoCmd FileType haskell 
+            \   nnoremap <buffer> <Leader>t  :<C-u>GhcModType<CR>
             \ | nnoremap <buffer><silent> <Space>/  :<C-u>GhcModTypeClear<CR>:nohlsearch<CR>
             \ | call s:check_undo_ftplugin()
             \ | let b:undo_ftplugin .= 'nunmap <buffer> <Leader>t|nunmap <buffer> <Space>/'
@@ -588,9 +593,10 @@ endfunction
 " 2}}}
 "  operator  " {{{2
 " operator-clang-format  " {{{3
-autocmd MyAutoCmd FileType c,cpp map <buffer> <Leader>x  <Plug>(operator-clang-format)
-            \ | call s:check_undo_ftplugin()
-            \ | let b:undo_ftplugin .= 'unmap <buffer> <Leader>x'
+autocmd MyAutoCmd FileType c,cpp 
+            \   map <buffer> <Leader>x  <Plug>(operator-clang-format)
+autocmd MyAutoCmd FileType c,cpp 
+            \   call s:check_undo_ftplugin() | let b:undo_ftplugin .= 'unmap <buffer> <Leader>x'
 
 let s:bundle = neobundle#get('vim-clang-format')
 function! s:bundle.hooks.on_source(bundle)
@@ -740,11 +746,14 @@ endfunction
 unlet s:bundle
 " 2}}}
 " YouCompleteMe  "{{{2
-autocmd MyAutoCmd FileType c,cpp,python nnoremap <buffer> <Leader>pg  :<C-u>YcmCompleter GoToDefinitionElseDeclaration<CR>
+autocmd MyAutoCmd FileType c,cpp,python 
+            \   nnoremap <buffer> <Leader>pg  :<C-u>YcmCompleter GoToDefinitionElseDeclaration<CR>
             \ | nnoremap <buffer> <Leader>pd  :<C-u>YcmCompleter GoToDefinition<CR>
             \ | nnoremap <buffer> <Leader>pc  :<C-u>YcmCompleter GoToDeclaration<CR>
-            \ | call s:check_undo_ftplugin()
-            \ | let b:undo_ftplugin .= 'nunmap <buffer> <Leader>pg|nunmap <buffer> <Leader>pd|nunmap <buffer> <Leader>pc'
+autocmd MyAutoCmd FileType c,cpp,python
+            \   call s:check_undo_ftplugin()
+            \ | let b:undo_ftplugin .= 
+            \   'nunmap <buffer> <Leader>pg|nunmap <buffer> <Leader>pd|nunmap <buffer> <Leader>pc'
 
 let s:bundle = neobundle#get('YouCompleteMe')
 function! s:bundle.hooks.on_source(bundle)
@@ -802,12 +811,15 @@ let g:quickrun_config.haskell_compile = {
             \   'outputter' : 'quickfix',
             \ }
 
-for ift in ['c', 'cpp', 'haskell']
-    execute 'autocmd MyAutoCmd FileType' ift 'nnoremap <buffer> <Leader>R :<C-u>QuickRun' ift . '_compile<CR>
-                \ | call s:check_undo_ftplugin()
-                \ | let b:undo_ftplugin .= "nunmap <buffer> <Leader>R"'
-endfor
-unlet ift
+autocmd MyAutoCmd FileType c 
+            \   nnoremap <buffer> <Leader>R :<C-u>QuickRun c_compile<CR>
+            \ | call s:check_undo_ftplugin() | let b:undo_ftplugin .= 'nunmap <buffer> <Leader>R'
+autocmd MyAutoCmd FileType cpp 
+            \   nnoremap <buffer> <Leader>R :<C-u>QuickRun cpp_compile<CR>
+            \ | call s:check_undo_ftplugin() | let b:undo_ftplugin .= 'nunmap <buffer> <Leader>R'
+autocmd MyAutoCmd FileType haskell 
+            \   nnoremap <buffer> <Leader>R :<C-u>QuickRun haskell_compile<CR>
+            \ | call s:check_undo_ftplugin() | let b:undo_ftplugin .= 'nunmap <buffer> <Leader>R'
 " 2}}}
 " 1}}}
 
