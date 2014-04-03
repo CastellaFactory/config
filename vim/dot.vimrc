@@ -406,7 +406,16 @@ endif
 " 1}}}
 
 " FileTypes  "{{{1
-" should be in after/ftplugin or after/indent?
+function! s:set_undo_ftplugin(...)  " {{{2
+    if exists('b:undo_ftplugin')
+        " trailing spaces cause problem
+        " :unmap qq | setlocal...
+        let b:undo_ftplugin .= '|'
+    else
+        let b:undo_ftplugin = ''
+    endif
+    let b:undo_ftplugin .= 'setlocal ' . join(a:000, '< ') . '<'
+endfunction  " 2}}}
 " All filetypes  " {{{2
 set formatoptions-=r
 set formatoptions-=o
@@ -417,6 +426,33 @@ function! s:on_FileType_all()
     if &l:omnifunc == ''
         setlocal omnifunc=syntaxcomplete#Complete
     endif
+
+    if exists('b:undo_indent')
+        let b:undo_indent .= '|'
+    else
+        let b:undo_indent = ''
+    endif
+    let b:undo_indent .= 'setlocal
+                \   autoindent<
+                \   cindent<
+                \   cinkeys<
+                \   cinoptions<
+                \   cinwords<
+                \   copyindent<
+                \   expandtab<
+                \   indentexpr<
+                \   indentkeys<
+                \   lisp<
+                \   lispwords<
+                \   preserveindent<
+                \   shiftround<
+                \   shiftwidth<
+                \   smartindent<
+                \   smarttab<
+                \   softtabstop<
+                \   tabstop<
+                \   '
+    call s:set_undo_ftplugin('omnifunc')
 endfunction
 
 autocmd MyAutoCmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g`\"" | endif
@@ -429,14 +465,20 @@ autocmd MyAutoCmd FileType cpp call s:on_FileType_cpp()
 function! s:on_FileType_cpp()
     call s:set_indent('expandtab')
     setlocal matchpairs+=<:>
-    " add cpp header files dir to path
+    " TODO: add cpp header dir to path
+
+    call s:set_undo_ftplugin('matchpairs')
 endfunction
 " 2}}}
 " haskell  " {{{2
 autocmd MyAutoCmd FileType haskell call s:on_FileType_haskell()
 function! s:on_FileType_haskell()
     call s:set_indent('expandtab')
+    setlocal foldcolumn=2
+    setlocal foldlevel=1
     setlocal omnifunc=necoghc#omnifunc
+
+    call s:set_undo_ftplugin('foldcolumn', 'foldlevel')
 endfunction
 " 2}}}
 " makefile  " {{{2
@@ -457,7 +499,13 @@ function! s:on_FileType_scheme()
 endfunction
 " 2}}}
 " vim  " {{{2
-autocmd MyAutoCmd FileType vim call s:set_indent('expandtab')
+autocmd MyAutoCmd FileType vim call s:on_FileType_vim()
+function! s:on_FileType_vim()
+    call s:set_indent('expandtab')
+    setlocal foldcolumn=3
+
+    call s:set_undo_ftplugin('foldcolumn')
+endfunction
 " 2}}}
 " zsh,sh  " {{{2
 autocmd MyAutoCmd FileType zsh,sh call s:set_indent('expandtab')
