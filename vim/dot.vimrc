@@ -477,6 +477,7 @@ autocmd MyAutoCmd FileType c call s:set_indent('expandtab')
 autocmd MyAutoCmd FileType cpp call s:on_FileType_cpp()
 function! s:on_FileType_cpp()
     call s:set_indent('expandtab')
+    setlocal cinoptions+=g0
     setlocal matchpairs+=<:>
     " TODO: add cpp header dir to path
 
