@@ -562,9 +562,9 @@ nnoremap <Leader>gP  :<C-u>Git pull<CR>
 " 2}}}"
 "  ghcmod-vim  " {{{2
 autocmd MyAutoCmd FileType haskell nnoremap <buffer> <Leader>t  :<C-u>GhcModType<CR>
-            \ | nnoremap <buffer><silent> <C-n>  :<C-u>GhcModTypeClear<CR>:nohlsearch<CR>
+            \ | nnoremap <buffer><silent> <Space>/  :<C-u>GhcModTypeClear<CR>:nohlsearch<CR>
             \ | call s:check_undo_ftplugin()
-            \ | let b:undo_ftplugin .= 'nunmap <buffer> <Leader>t|nunmap <buffer> <C-n>'
+            \ | let b:undo_ftplugin .= 'nunmap <buffer> <Leader>t|nunmap <buffer> <Space>/'
 " 2}}}
 " lightline  " {{{2
 let g:lightline = {
@@ -588,8 +588,7 @@ endfunction
 " 2}}}
 "  operator  " {{{2
 " operator-clang-format  " {{{3
-autocmd MyAutoCmd FileType c,cpp
-            \ | map <buffer> <Leader>x  <Plug>(operator-clang-format)
+autocmd MyAutoCmd FileType c,cpp map <buffer> <Leader>x  <Plug>(operator-clang-format)
             \ | call s:check_undo_ftplugin()
             \ | let b:undo_ftplugin .= 'unmap <buffer> <Leader>x'
 
@@ -674,7 +673,7 @@ function! s:bundle.hooks.on_source(bundle)
 
     let g:syntastic_cpp_checkers = ['gcc', 'cppcheck']
     let g:syntastic_cpp_compiler = 'clang++'
-    let g:syntastic_cpp_compiler_options = '-std=c++11 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-c++98-compat -Wno-missing-prototypes -fno-caret-diagnostics'
+    let g:syntastic_cpp_compiler_options = '-std=gnu++11 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-c++98-compat -Wno-missing-prototypes -fno-caret-diagnostics'
     let g:syntastic_cpp_no_default_include_dirs = 1
     let g:syntastic_cpp_no_include_search = 1
 
@@ -804,9 +803,9 @@ let g:quickrun_config.haskell_compile = {
             \ }
 
 for ift in ['c', 'cpp', 'haskell']
-    execute 'autocmd MyAutoCmd FileType' ift 'nnoremap <buffer> <Leader>R :<C-u>QuickRun' ift . '_complie<CR>'
+    execute 'autocmd MyAutoCmd FileType' ift 'nnoremap <buffer> <Leader>R :<C-u>QuickRun' ift . '_compile<CR>
                 \ | call s:check_undo_ftplugin()
-                \ | let b:undo_ftplugin .= 'nunmap <buffer> <Leader>R'
+                \ | let b:undo_ftplugin .= "nunmap <buffer> <Leader>R"'
 endfor
 unlet ift
 " 2}}}
