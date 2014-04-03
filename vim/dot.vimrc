@@ -326,6 +326,7 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'kana/vim-submode'
 NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'mattn/sonictemplate-vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vimproc.vim', {
             \   'build' : {
@@ -369,7 +370,7 @@ NeoBundleLazy 'rhysd/vim-operator-surround', {
 NeoBundleLazy 'scrooloose/syntastic', {
             \   'autoload' : {'commands' : ['SyntasticCheck']} }
 NeoBundleLazy 'Shougo/unite.vim', {
-            \   'autoload' : {'commands' : [{'name' : 'Unite', 'complete' : 'customlist,unite#complete_source'}]}}
+            \   'autoload' : {'commands' : [{'name' : 'Unite', 'complete' : 'customlist,unite#complete#source'}]} }
 NeoBundleLazy 'Shougo/unite-outline', {
             \   'autoload' : {'unite_sources' : 'outline'} }
 NeoBundleLazy 'Shougo/vimfiler.vim', {
@@ -586,6 +587,9 @@ function! s:bundle.hooks.on_post_source(bundle)
     call smartinput#define_rule({ 'at' : '\[ \%# \]', 'char' : '<BS>', 'input' : '<Del><BS>' })
 endfunction
 unlet s:bundle
+" 2}}}
+" sonictemplate  " {{{2
+let g:sonictemplate_vim_template_dir = ['~/.vim/template'] 
 " 2}}}
 " Syntastic  " {{{2
 let s:bundle = neobundle#get('syntastic')
