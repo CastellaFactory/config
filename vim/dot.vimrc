@@ -344,7 +344,7 @@ NeoBundleLazy 'eagletmt/unite-haddock', {
 NeoBundleLazy 'junegunn/vim-easy-align', {
             \   'autoload' : {'mappings' : ['<Plug>(EasyAlign)']} }
 NeoBundleLazy 'kana/vim-altr', {
-            \   'autoload' : {'mappings' : ['<Plug>(altr-forward', '<Plug>(altr-back)']} }
+            \   'autoload' : {'mappings' : ['<Plug>(altr-forward)', '<Plug>(altr-back)']} }
 NeoBundleLazy 'kana/vim-fakeclip', { 'autoload' : {'terminal' : 1} }
 NeoBundleLazy 'kana/vim-filetype-haskell', {
             \   'autoload' : {'filetypes' : ['haskell']} }
@@ -408,7 +408,7 @@ endif
 " FileTypes  "{{{1
 " should be in after/indent, after/ftplugin?
 " undo_ftplugin utils  " {{{2
-" take responsible for setting b:undo_ftplugin to what I have set
+" take responsible for setting b:undo_ftplugin to what I have set...
 function! s:check_undo_ftplugin()  " {{{3
     if exists('b:undo_ftplugin')
         " trailing spaces cause problem when :unmap.  :unmap qq_| setlocal...
