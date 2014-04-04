@@ -406,7 +406,9 @@ endif
 " 1}}}
 
 " FileTypes  "{{{1
+" should be in after/indent, after/ftplugin?
 " undo_ftplugin utils  " {{{2
+" take responsible for setting b:undo_ftplugin to what I have set
 function! s:check_undo_ftplugin()  " {{{3
     if exists('b:undo_ftplugin')
         " trailing spaces cause problem when :unmap.  :unmap qq_| setlocal...
