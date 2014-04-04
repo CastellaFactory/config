@@ -102,48 +102,49 @@ myXPKeymap' p = M.fromList $
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
+-- see also `additionalKeys` at bottom of this file.
 --
 myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
   [
-    -- ターミナル起動(Win+Shift+RET)
+    -- Launch a terminal(Win+Shift+RET)
     ((modm .|. shiftMask, xK_Return  ), spawn $ XMonad.terminal conf)
 
-    -- shellprompt起動(Win+p)
+    -- Launch shellprompt(Win+p)
     , ((modm,               xK_p     ), shellPrompt myXPConfig)
 
-    -- gmrun起動(Win+Shift+p)
+    -- Launch gmrun(Win+Shift+p)
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
 
-    -- dmenu起動(Win+Ctrl+p)
+    -- Launch dmenu(Win+Ctrl+p)
     , ((modm .|. controlMask, xK_p   ), spawn "dmenu_run -fn 'CodeM-11:bold'")
 
-    -- フォーカスしているウィンドウを閉じる(Win+Shift+c)
+    -- Close focused window(Win+Shift+c)
     , ((modm .|. shiftMask, xK_c     ), kill)
 
-    -- レイアウト切り替える(Win+Space)
+    -- Rotate through the awailable layout algorithms(Win+Space)
     , ((modm,               xK_space ), sendMessage NextLayout)
 
-    --  レイアウトをリセット(Win+Shift+Space)
+    -- Reset the layouts on the current workspace to default(Win+Shift+Space)
     , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
 
-    -- ウィンドウをリフレッシュ(Win+n)
+    -- Resize viewed windows to the correct size(Win+n)
     , ((modm,               xK_n     ), refresh)
 
-    -- 次のウィンドウにフォーカスを移す(Win+Tab)
+    -- Move focus to the next window(Win+Tab)
     , ((modm,               xK_Tab   ), windows W.focusDown)
 
-    -- 次のウィンドウにフォーカスを移す(Win+j)
+    -- Move focus to the next window(Win+j)
     , ((modm,               xK_j     ), windows W.focusDown)
 
-    -- 前のウィンドウにフォーカスを移す(Win+k)
+    -- Move focus to the previous window(Win+k)
     , ((modm,               xK_k     ), windows W.focusUp  )
 
-    -- マスターウィンドウにフォーカスを移す(Win+m)
+    -- Move focus to the master window(Win+m)
     , ((modm,               xK_m     ), windows W.focusMaster  )
 
-    -- マスターウィンドウとフォーカスウィンドウを入れ替える(Win+RET)
+    -- Swap the focused window and the master window(Win+RET)
     , ((modm,               xK_Return), windows W.swapMaster)
 
     -- Swap the focused window with the next window(Win+Shift+j)
@@ -152,10 +153,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Swap the focused window with the previous window(Win+Shift+k)
     , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
 
-    -- マスターエリアを縮める(Win+h)
+    -- Shrink the master area(Win+h)
     , ((modm,               xK_h     ), sendMessage Shrink)
 
-    --マスターエリアを広げる(Win+l)
+    -- Expand the master area(Win+l)
     , ((modm,               xK_l     ), sendMessage Expand)
 
     -- Push window back into tiling(Win+t)
@@ -167,10 +168,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Deincrement the number of windows in the master area(Win+.)
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
 
-    -- XMonadを終了(Win+Shift+q)
+    -- Quit xmonad(Win+Shift+q)
     , ((modm .|. shiftMask, xK_q     ), io exitSuccess)
 
-    -- XMonadを再起動(Win+q)
+    -- Restart xmonad(Win+q)
     , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
   ]
 
@@ -224,8 +225,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList
 
 ------------------------------------------------------------------------
 -- Layouts:
--- フルスクリーンにするにはWin+F(see additionalkeys)
-
+--
 myLayout = layoutHints
            $ avoidStruts
            $ smartBorders . mkToggle (FULL ?? EOT)
@@ -235,7 +235,7 @@ myLayout = layoutHints
 
 ------------------------------------------------------------------------
 -- Window rules:
--- ウィンドウ作成時のデフォルトワークスペース，フローティングの設定
+--
 myManageHook :: Query (Endo WindowSet)
 myManageHook = manageDocks <+> F.fullscreenManageHook
                <+> composeAll [
@@ -263,12 +263,14 @@ myManageHook = manageDocks <+> F.fullscreenManageHook
 
 ----------------------------------------------------------------------
 -- Event handling
+--
 myEventHook :: Event -> X All
 myEventHook = F.fullscreenEventHook <+> hintsEventHook <+> docksEventHook <+> fadeWindowsEventHook
 
 
 ------------------------------------------------------------------------
 -- Status bars and logging
+--
 myLogHook :: X ()
 myLogHook  = ewmhDesktopsLogHook <+> fadeWindowsLogHook myFadeHook
   where myFadeHook = composeAll [
@@ -281,16 +283,18 @@ myLogHook  = ewmhDesktopsLogHook <+> fadeWindowsLogHook myFadeHook
 
 ------------------------------------------------------------------------
 -- Startup hook
+--
 myStartupHook :: X ()
 myStartupHook = setWMName "LG3D"
 
 
 ------------------------------------------------------------------------
 -- xmobar
+--
 myBar :: String
 myBar = "xmobar"
 myPP :: PP
--- Hintedは非表示にする length "Hinted " == 7
+-- hide "Hinted ", length "Hinted " == 7
 myPP = xmobarPP {
           ppCurrent   = xmobarColor "#429942" "" . wrap "[" "]"
           , ppLayout  = drop 7
@@ -331,7 +335,6 @@ defaults = defaultConfig {
               ((myModMask, xK_f), sendMessage $ Toggle FULL)
               , ((myModMask .|. controlMask,  xK_l), sendMessage $ Toggle FULL)
 
-              -- アプリケーションを起動
               , ((myModMask, xK_o), runOrRaise "firefox" (className =? "Firefox"))
               , ((myModMask .|. shiftMask, xK_o), runOrRaise "thunderbird" (className =? "Thunderbird"))
 
