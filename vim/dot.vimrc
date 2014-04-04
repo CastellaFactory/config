@@ -772,23 +772,23 @@ let g:quickrun_config._ = {
             \   'outputter' : 'error',
             \   'outputter/error/success' : 'buffer',
             \   'outputter/error/error' : 'quickfix',
-            \   'outputter/buffer/split' : ':botright 8sp',
+            \   'outputter/buffer/split' : ':botright',
             \   'outputter/buffer/close_on_empty' : 1,
             \   'runner' : 'vimproc',
             \   'runner/vimproc/updatetime' : 60,
             \ }
 let g:quickrun_config.c = {
             \   'type' : 'c/clang',
-            \   'cmdopt' : '-fno-caret-diagnostics',
+            \   'cmdopt' : '-std=gnu99 -fno-caret-diagnostics',
             \ }
 let g:quickrun_config.cpp = {
             \   'type' : 'cpp/clang++',
-            \   'cmdopt' : '-std=c++11 -fno-caret-diagnostics',
+            \   'cmdopt' : '-std=gnu++11 -fno-caret-diagnostics',
             \ }
 " for compile
 let g:quickrun_config.cpp_compile = {
             \   'command' : 'clang++',
-            \   'cmdopt' : '-std=c++11 -Wall -Wextra',
+            \   'cmdopt' : '-std=gnu++11 -Wall -Wextra',
             \   'exec' : '%c %o -o %s:r %s:p',
             \   'outputter' : 'quickfix',
             \ }
