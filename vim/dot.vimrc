@@ -406,31 +406,17 @@ endif
 " 1}}}
 
 " FileTypes  "{{{1
-" should be in after/indent, after/ftplugin?
-" undo_ftplugin utils  " {{{2
-" take responsible for setting b:undo_ftplugin to what I have set...
-function! s:check_undo_ftplugin()  " {{{3
+" mainly indent settings, see also after/ftplugin
+function! s:check_undo_ftplugin()  " {{{2
     if exists('b:undo_ftplugin')
         " trailing spaces cause problem when :unmap.  :unmap qq_| setlocal...
         let b:undo_ftplugin .= '|'
     else
         let b:undo_ftplugin = ''
     endif
-endfunction  " 3}}}
-function! s:undo_ftplugin_helper(...)  " {{{3
-    if len(a:1) > 0
-        call s:check_undo_ftplugin()
-        let b:undo_ftplugin .= 'setlocal ' . join(a:1, '< ') . '<'
-    endif
-    if a:0 == 2 && len(a:2) > 0
-        call s:check_undo_ftplugin()
-        let b:undo_ftplugin .= 'unlet ' . join(a:2)
-    endif
-endfunction  " 3}}}
-" 2}}}
+endfunction  " 2}}}
 "  undo_indent  " {{{2
 " see 'http://whileimautomaton.net/2011/11/06013517'
-" undoing is not performed at correct timing?
 function! s:universal_undo_indent()
     if exists('b:undo_indent')
         let b:undo_indent .= '|'
@@ -455,7 +441,6 @@ function! s:on_FileType_all()
     endif
 
     call s:universal_undo_indent()
-    call s:undo_ftplugin_helper(['omnifunc'])
 endfunction
 
 autocmd MyAutoCmd BufReadPost *
@@ -471,22 +456,10 @@ autocmd MyAutoCmd FileType cpp call s:on_FileType_cpp()
 function! s:on_FileType_cpp()
     call s:set_indent('expandtab')
     setlocal cinoptions+=g0
-    setlocal matchpairs+=<:>
-    " TODO: add cpp header dir to path
-
-    call s:undo_ftplugin_helper(['matchpairs'])
 endfunction
 " 2}}}
 " haskell  " {{{2
-autocmd MyAutoCmd FileType haskell call s:on_FileType_haskell()
-function! s:on_FileType_haskell()
-    call s:set_indent('expandtab')
-    setlocal foldcolumn=2
-    setlocal foldlevel=1
-    setlocal omnifunc=necoghc#omnifunc
-
-    call s:undo_ftplugin_helper(['foldcolumn', 'foldlevel'])
-endfunction
+autocmd MyAutoCmd FileType haskell call s:set_indent('expandtab')
 " 2}}}
 " makefile  " {{{2
 autocmd MyAutoCmd FileType make call s:set_indent('noexpandtab')
@@ -502,19 +475,10 @@ autocmd MyAutoCmd FileType scheme call s:on_FileType_scheme()
 function! s:on_FileType_scheme()
     call s:set_short_indent()
     setlocal lisp
-    let b:is_gauche = 1
-
-    call s:undo_ftplugin_helper([], ['b:is_gauche'])
 endfunction
 " 2}}}
 " vim  " {{{2
-autocmd MyAutoCmd FileType vim call s:on_FileType_vim()
-function! s:on_FileType_vim()
-    call s:set_indent('expandtab')
-    setlocal foldcolumn=3
-
-    call s:undo_ftplugin_helper(['foldcolumn'])
-endfunction
+autocmd MyAutoCmd FileType vim call s:set_indent('expandtab')
 " 2}}}
 " zsh,sh  " {{{2
 autocmd MyAutoCmd FileType zsh,sh call s:set_indent('expandtab')
