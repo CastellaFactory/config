@@ -753,6 +753,7 @@ let s:bundle = neobundle#get('YouCompleteMe')
 function! s:bundle.hooks.on_source(bundle)
     let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_default/ycm_extra_conf.py'
     let g:ycm_show_diagnostics_ui = 0
+    let g:ycm_confirm_extra_conf = 0
     let g:ycm_min_num_identifier_candidate_chars = 4
     let g:ycm_seed_identifiers_with_syntax = 1
     let g:ycm_filetype_specific_completion_to_disable = {'vim' : 1}
@@ -806,16 +807,20 @@ let g:quickrun_config.haskell_compile = {
             \ }
 
 autocmd MyAutoCmd FileType c
-            \   nnoremap <buffer> <Leader>R :<C-u>QuickRun c_compile<CR>
+            \   nnoremap <buffer> <Leader>R  :<C-u>QuickRun c_compile<CR>
             \ | call s:check_undo_ftplugin() | let b:undo_ftplugin .= 'nunmap <buffer> <Leader>R'
 autocmd MyAutoCmd FileType cpp
-            \   nnoremap <buffer> <Leader>R :<C-u>QuickRun cpp_compile<CR>
+            \   nnoremap <buffer> <Leader>R  :<C-u>QuickRun cpp_compile<CR>
             \ | call s:check_undo_ftplugin() | let b:undo_ftplugin .= 'nunmap <buffer> <Leader>R'
 autocmd MyAutoCmd FileType haskell
-            \   nnoremap <buffer> <Leader>R :<C-u>QuickRun haskell_compile<CR>
+            \   nnoremap <buffer> <Leader>R  :<C-u>QuickRun haskell_compile<CR>
             \ | call s:check_undo_ftplugin() | let b:undo_ftplugin .= 'nunmap <buffer> <Leader>R'
 " 2}}}
 " 1}}}
+
+if filereadable(expand('~/.vim/local.vimrc'))
+    source ~/.vim/local.vimrc
+endif
 
 set secure
 
