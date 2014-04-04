@@ -1,4 +1,4 @@
-! this settnigs used in only laptop
+! this settnigs is used only in laptop
 remove Lock = Caps_Lock
 remove Control = Control_L
 keysym Control_L = Caps_Lock
