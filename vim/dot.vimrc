@@ -426,6 +426,21 @@ function! s:undo_ftplugin_helper(...)  " {{{3
     endif
 endfunction  " 3}}}
 " 2}}}
+"  undo_indent  " {{{2
+" see 'http://whileimautomaton.net/2011/11/06013517'
+" undoing is not performed at correct timing?
+function! s:universal_undo_indent()
+    if exists('b:undo_indent')
+        let b:undo_indent .= '|'
+    else
+        let b:undo_indent = ''
+    endif
+    let b:undo_indent .= 'setlocal
+                \   autoindent< cindent< cinkeys< cinoptions< cinwords< copyindent<
+                \   expandtab< indentexpr< indentkeys< lisp< lispwords< preserveindent<
+                \   shiftround< shiftwidth< smartindent< smarttab< softtabstop< tabstop<'
+endfunction
+" 2}}}
 " All filetypes  " {{{2
 set formatoptions-=r
 set formatoptions-=o
@@ -437,31 +452,7 @@ function! s:on_FileType_all()
         setlocal omnifunc=syntaxcomplete#Complete
     endif
 
-    if exists('b:undo_indent')
-        let b:undo_indent .= '|'
-    else
-        let b:undo_indent = ''
-    endif
-    let b:undo_indent .= 'setlocal
-                \   autoindent<
-                \   cindent<
-                \   cinkeys<
-                \   cinoptions<
-                \   cinwords<
-                \   copyindent<
-                \   expandtab<
-                \   indentexpr<
-                \   indentkeys<
-                \   lisp<
-                \   lispwords<
-                \   preserveindent<
-                \   shiftround<
-                \   shiftwidth<
-                \   smartindent<
-                \   smarttab<
-                \   softtabstop<
-                \   tabstop<
-                \   '
+    call s:universal_undo_indent()
     call s:undo_ftplugin_helper(['omnifunc'])
 endfunction
 
