@@ -1,12 +1,17 @@
-# Editor's backup file
-.\#*
-.*.sw?
-.sw?
+# vim
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
 
-# Elisp
+# emacs
+.\#*
+\#*\#
 *.elc
 
-# C and C++
+# C, C++
 *.o
 *.a
 *.lib
@@ -19,8 +24,15 @@ a.out
 # Haskell
 *.hi
 
-# Platform
+# OSX
 .DS_Store
+.Spotlight-V100
+.Trashes
+
+# Linux
 .directory
+
+# Windows
 Thumbs.db
+Desktop.ini
 
