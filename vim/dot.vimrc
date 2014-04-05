@@ -278,7 +278,10 @@ cnoremap <expr> /  getcmdtype() == '/' ? '\/' : '/'
 nnoremap gc  `[v`]
 Objnoremap gc  :<C-u>normal gc<CR>
 
-onoremap gv  :<C-u>normal! gv<CR>
+Objnoremap gv  :<C-u>normal! gv<CR>
+
+Objnoremap ir  i<
+Objnoremap ar  a<
 
 nnoremap <silent> <Space>cd  :<C-u>call <SID>cd_to_current_buffer_dir()<CR>
 nnoremap <silent> <Space>cgd  :<C-u>call <SID>cd_to_git_root_dir()<CR>
