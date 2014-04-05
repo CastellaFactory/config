@@ -342,7 +342,7 @@ NeoBundleLazy 'eagletmt/neco-ghc', {
 NeoBundleLazy 'eagletmt/unite-haddock', {
             \   'autoload' : {'unite_sources' : 'haddock'} }
 NeoBundleLazy 'junegunn/vim-easy-align', {
-            \   'autoload' : {'mappings' : ['<Plug>(EasyAlign)']} }
+            \   'autoload' : {'mappings' : ['<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)']} }
 NeoBundleLazy 'kana/vim-altr', {
             \   'autoload' : {'mappings' : ['<Plug>(altr-forward)', '<Plug>(altr-back)']} }
 NeoBundleLazy 'kana/vim-fakeclip', { 'autoload' : {'terminal' : 1} }
@@ -511,7 +511,8 @@ nmap <Leader>ca  <Plug>(caw:a:toggle)
 nmap <Leader>cw  <Plug>(caw:wrap:toggle)
 " 2}}}
 " easy-align  " {{{2
-map <Leader>a  <Plug>(EasyAlign)
+Operatormap <Leader>ea  <Plug>(EasyAlign)
+Operatormap <Leader>lea  <Plug>(LiveEasyAlign)
 " 2}}}
 " fugitive  " {{{2
 nnoremap <Leader>gs  :<C-u>Gstatus<CR>
@@ -717,12 +718,7 @@ function! s:bundle.hooks.on_source(bundle)
     let g:ycm_min_num_identifier_candidate_chars = 4
     let g:ycm_seed_identifiers_with_syntax = 1
     let g:ycm_filetype_specific_completion_to_disable = {'vim' : 1}
-    let g:ycm_key_list_select_completion = ['<C-n>']
-    let g:ycm_key_list_previous_completion = ['<C-p>']
-    " add semantic triggers
-    let g:ycm_semantic_triggers = {
-                \   'haskell' : ['.']
-                \ }
+    let g:ycm_semantic_triggers = {'haskell' : ['.']}
 endfunction
 unlet s:bundle
 " 2}}}
