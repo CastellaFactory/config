@@ -253,7 +253,7 @@ inoremap <F1>  <Nop>
 " <Space> stuffs  " {{{2
 nnoremap <silent> <Space>ow  :<C-u>setlocal wrap! wrap?<CR>
 nnoremap <silent> <Space>of  :<C-u>call <SID>toggle_fullscreen()<CR>
-nnoremap <Space>sp  :DeleteTrailingSpaces<CR>
+Operatornoremap <Space>sp  :DeleteTrailingSpaces<CR>
 nnoremap <silent> <Space>r  :<C-u>registers<CR>
 nnoremap <silent> <Space>/  :<C-u>nohlsearch<CR>
 nnoremap <silent> <Space>v  zMzv
@@ -556,7 +556,7 @@ endfunction
 "  operator  " {{{2
 " operator-clang-format  " {{{3
 autocmd MyAutoCmd FileType c,cpp
-            \   map <buffer> <Leader>x  <Plug>(operator-clang-format)
+            \   execute 'map <buffer> <Leader>x  <Plug>(operator-clang-format)'
             \ | call s:undo_ftplugin_helper('unmap <buffer> <Leader>x')
 
 let s:bundle = neobundle#get('vim-clang-format')
