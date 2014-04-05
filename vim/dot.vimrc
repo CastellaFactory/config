@@ -407,13 +407,14 @@ endif
 
 " FileTypes  "{{{1
 " mainly indent settings, see also after/ftplugin
-function! s:check_undo_ftplugin()  " {{{2
+function! s:undo_ftplugin_helper(...)  " {{{2
     if exists('b:undo_ftplugin')
-        " trailing spaces cause problem when :unmap.  :unmap qq_| setlocal...
+        " trailing spaces cause problem when :unmap.  :unmap <buffer> qq_| setlocal...
         let b:undo_ftplugin .= '|'
     else
         let b:undo_ftplugin = ''
     endif
+    let b:undo_ftplugin .= join(a:000, '|')
 endfunction  " 2}}}
 "  undo_indent  " {{{2
 " see 'http://whileimautomaton.net/2011/11/06013517'
@@ -526,8 +527,7 @@ nnoremap <Leader>gP  :<C-u>Git pull<CR>
 autocmd MyAutoCmd FileType haskell
             \   nnoremap <buffer> <Leader>t  :<C-u>GhcModType<CR>
             \ | nnoremap <buffer><silent> <Space>/  :<C-u>GhcModTypeClear<CR>:nohlsearch<CR>
-            \ | call s:check_undo_ftplugin()
-            \ | let b:undo_ftplugin .= 'nunmap <buffer> <Leader>t|nunmap <buffer> <Space>/'
+            \ | call s:undo_ftplugin_helper('nunmap <buffer> <Leader>t', 'nunmap <buffer> <Space>/')
 " 2}}}
 " lightline  " {{{2
 let g:lightline = {
@@ -553,8 +553,7 @@ endfunction
 " operator-clang-format  " {{{3
 autocmd MyAutoCmd FileType c,cpp
             \   map <buffer> <Leader>x  <Plug>(operator-clang-format)
-autocmd MyAutoCmd FileType c,cpp
-            \   call s:check_undo_ftplugin() | let b:undo_ftplugin .= 'unmap <buffer> <Leader>x'
+            \ | call s:undo_ftplugin_helper('unmap <buffer> <Leader>x')
 
 let s:bundle = neobundle#get('vim-clang-format')
 function! s:bundle.hooks.on_source(bundle)
@@ -631,13 +630,13 @@ function! s:bundle.hooks.on_source(bundle)
 
     let g:syntastic_c_checkers = ['gcc', 'cppcheck']
     let g:syntastic_c_compier = 'clang'
-    let g:syntastic_c_compiler_options = '-std=gnu99 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-missing-prototypes -fno-caret-diagnostics'
+    let g:syntastic_c_compiler_options = '-std=c99 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-missing-prototypes -fno-caret-diagnostics'
     let g:syntastic_c_no_default_include_dirs = 1
     let g:syntastic_c_no_include_search = 1
 
     let g:syntastic_cpp_checkers = ['gcc', 'cppcheck']
     let g:syntastic_cpp_compiler = 'clang++'
-    let g:syntastic_cpp_compiler_options = '-std=gnu++11 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-c++98-compat -Wno-missing-prototypes -fno-caret-diagnostics'
+    let g:syntastic_cpp_compiler_options = '-std=c++11 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-c++98-compat -Wno-missing-prototypes -fno-caret-diagnostics'
     let g:syntastic_cpp_no_default_include_dirs = 1
     let g:syntastic_cpp_no_include_search = 1
 
@@ -708,10 +707,7 @@ autocmd MyAutoCmd FileType c,cpp,python
             \   nnoremap <buffer> <Leader>pg  :<C-u>YcmCompleter GoToDefinitionElseDeclaration<CR>
             \ | nnoremap <buffer> <Leader>pd  :<C-u>YcmCompleter GoToDefinition<CR>
             \ | nnoremap <buffer> <Leader>pc  :<C-u>YcmCompleter GoToDeclaration<CR>
-autocmd MyAutoCmd FileType c,cpp,python
-            \   call s:check_undo_ftplugin()
-            \ | let b:undo_ftplugin .=
-            \   'nunmap <buffer> <Leader>pg|nunmap <buffer> <Leader>pd|nunmap <buffer> <Leader>pc'
+            \ | call s:undo_ftplugin_helper('nunmap <buffer> <Leader>pg', 'nunmap <buffer> <Leader>pd', 'nunmap <buffer> <Leader>pc')
 
 let s:bundle = neobundle#get('YouCompleteMe')
 function! s:bundle.hooks.on_source(bundle)
@@ -737,29 +733,29 @@ let g:quickrun_config._ = {
             \   'outputter' : 'error',
             \   'outputter/error/success' : 'buffer',
             \   'outputter/error/error' : 'quickfix',
-            \   'outputter/buffer/split' : ':botright',
+            \   'outputter/buffer/split' : ':botright 10sp',
             \   'outputter/buffer/close_on_empty' : 1,
             \   'runner' : 'vimproc',
             \   'runner/vimproc/updatetime' : 60,
             \ }
 let g:quickrun_config.c = {
             \   'type' : 'c/clang',
-            \   'cmdopt' : '-std=gnu99 -fno-caret-diagnostics',
+            \   'cmdopt' : '-std=c99 -fno-caret-diagnostics',
             \ }
 let g:quickrun_config.cpp = {
             \   'type' : 'cpp/clang++',
-            \   'cmdopt' : '-std=gnu++11 -fno-caret-diagnostics',
+            \   'cmdopt' : '-std=c++11 -fno-caret-diagnostics',
             \ }
 " for compile
-let g:quickrun_config.cpp_compile = {
-            \   'command' : 'clang++',
-            \   'cmdopt' : '-std=gnu++11 -Wall -Wextra',
+let g:quickrun_config.c_compile = {
+            \   'command' : 'clang',
+            \   'cmdopt' : '-std=c99 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-missing-prototypes -fno-caret-diagnostics',
             \   'exec' : '%c %o -o %s:r %s:p',
             \   'outputter' : 'quickfix',
             \ }
-let g:quickrun_config.c_compile = {
-            \   'command' : 'clang',
-            \   'cmdopt' : '-std=gnu99 -Wall -Wextra',
+let g:quickrun_config.cpp_compile = {
+            \   'command' : 'clang++',
+            \   'cmdopt' : '-std=c++11 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-c++98-compat -Wno-missing-prototypes -fno-caret-diagnostics',
             \   'exec' : '%c %o -o %s:r %s:p',
             \   'outputter' : 'quickfix',
             \ }
@@ -772,13 +768,13 @@ let g:quickrun_config.haskell_compile = {
 
 autocmd MyAutoCmd FileType c
             \   nnoremap <buffer> <Leader>R  :<C-u>QuickRun c_compile<CR>
-            \ | call s:check_undo_ftplugin() | let b:undo_ftplugin .= 'nunmap <buffer> <Leader>R'
+            \ | call s:undo_ftplugin_helper('nunmap <buffer> <Leader>R')
 autocmd MyAutoCmd FileType cpp
             \   nnoremap <buffer> <Leader>R  :<C-u>QuickRun cpp_compile<CR>
-            \ | call s:check_undo_ftplugin() | let b:undo_ftplugin .= 'nunmap <buffer> <Leader>R'
+            \ | call s:undo_ftplugin_helper('nunmap <buffer> <Leader>R')
 autocmd MyAutoCmd FileType haskell
             \   nnoremap <buffer> <Leader>R  :<C-u>QuickRun haskell_compile<CR>
-            \ | call s:check_undo_ftplugin() | let b:undo_ftplugin .= 'nunmap <buffer> <Leader>R'
+            \ | call s:undo_ftplugin_helper('nunmap <buffer> <Leader>R')
 " 2}}}
 " 1}}}
 
