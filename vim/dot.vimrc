@@ -253,7 +253,8 @@ inoremap <F1>  <Nop>
 " <Space> stuffs  " {{{2
 nnoremap <silent> <Space>ow  :<C-u>setlocal wrap! wrap?<CR>
 nnoremap <silent> <Space>of  :<C-u>call <SID>toggle_fullscreen()<CR>
-Operatornoremap <Space>sp  :DeleteTrailingSpaces<CR>
+nnoremap <Space>sp  :<C-u>DeleteTrailingSpaces<CR>
+vnoremap <Space>sp  :DeleteTrailingSpaces<CR>
 nnoremap <silent> <Space>r  :<C-u>registers<CR>
 nnoremap <silent> <Space>/  :<C-u>nohlsearch<CR>
 nnoremap <silent> <Space>v  zMzv
