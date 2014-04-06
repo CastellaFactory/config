@@ -728,7 +728,7 @@ unlet s:bundle
 " 2}}}
 " quickrun  " {{{2
 " default setting
-let g:quickrun_config = {}
+let g:quickrun_config = get(g:, 'quickrun_config', {})
 let g:quickrun_config._ = {
             \   'outputter' : 'error',
             \   'outputter/error/success' : 'buffer',
