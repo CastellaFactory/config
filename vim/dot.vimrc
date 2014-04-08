@@ -609,9 +609,8 @@ call submode#map('undo/redo', 'n', '', '+', 'g+')
 let s:bundle = neobundle#get('vim-smartinput')
 function! s:bundle.hooks.on_post_source(bundle)
     call smartinput#map_to_trigger('i', '<Space>', '<Space>', '<Space>')
-    call smartinput#map_to_trigger('i', '<BS>', '<BS>', '<BS>')
-    call smartinput#map_to_trigger('i', '<CR>', '<CR>', '<CR>')
-
+    call smartinput#map_to_trigger('i', '<C-h>', '<C-h>', '<C-h>')
+    
     call smartinput#define_rule({ 'at' : '\s\+\%#', 'char' : '<CR>', 'input' : "<C-o>:call setline('.', substitute(getline('.'), '\\s\\+$', '', '')) <Bar> echo 'delete trailing spaces'<CR><CR>" })
     call smartinput#define_rule({ 'at' : '(\%#)', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
     call smartinput#define_rule({ 'at' : '{\%#}', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
