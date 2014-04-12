@@ -135,14 +135,19 @@ function! s:cmd_CloseTemporaryWindows()
 endfunction
 " 2}}}
 " DeleteTrailingSpaces  " {{{2
-command! -bar -nargs=0 -range=% DeleteTrailingSpaces
-            \   let s:save_cursor = getpos('.')
-            \ | <line1>,<line2>call s:cmd_DeleteTrailingSpaces()
-            \ | call setpos('.', s:save_cursor) | unlet s:save_cursor
+command! -bar -nargs=0 -range=% DeleteTrailingSpaces call s:preserve('<line1>,<line2>s/\s\+$//ceg')
 
-function! s:cmd_DeleteTrailingSpaces() range
-    execute a:firstline . ',' . a:lastline . 's/\s\+$//ceg'
-endfunction  " 2}}}
+function! s:preserve(command)
+    let l:save_cursor = getpos('.')
+    let l:save_win = winsaveview()
+    try
+        execute a:command
+    finally
+        call setpos('.', l:save_cursor)
+        call winrestview(l:save_win)
+    endtry
+endfunction
+" 2}}}
 " Objmap - wrapper for textobj mapping  " {{{2
 command! -nargs=+ Objmap execute 'omap' <q-args> | execute 'vmap' <q-args>
 command! -nargs=+ Objnoremap execute 'onoremap' <q-args> | execute 'vnoremap' <q-args>
@@ -398,6 +403,7 @@ NeoBundleLazy 'ocamlmerlin', {
             \   'base' : '~/.opam/system/share/ocamlmerlin', 'directory' : 'vim',
             \   'type' : 'nosync', 'autoload' : {'filetypes' : ['ocaml']} }
 NeoBundleFetch 'Lokaltog/powerline'
+NeoBundle 'jpalardy/vim-slime'
 " 2}}}
 filetype plugin indent on
 NeoBundleCheck
@@ -472,6 +478,9 @@ autocmd MyAutoCmd FileType haskell call s:set_indent('expandtab')
 " makefile  " {{{2
 autocmd MyAutoCmd FileType make call s:set_indent('noexpandtab')
 " 2}}}
+" ocaml  " {{{2
+autocmd MyAutoCmd FileType ocaml call s:set_indent('expandtab')
+" 2}}}
 " python  " {{{2
 autocmd MyAutoCmd FileType python call s:set_indent('expandtab')
 " 2}}}
@@ -484,6 +493,9 @@ function! s:on_FileType_scheme()
     call s:set_short_indent()
     setlocal lisp
 endfunction
+" 2}}}
+" sml  " {{{2
+autocmd MyAutoCmd FileType sml call s:set_indent('expandtab')
 " 2}}}
 " vim  " {{{2
 autocmd MyAutoCmd FileType vim call s:set_indent('expandtab')
@@ -613,7 +625,7 @@ let s:bundle = neobundle#get('vim-smartinput')
 function! s:bundle.hooks.on_post_source(bundle)
     call smartinput#map_to_trigger('i', '<Space>', '<Space>', '<Space>')
     call smartinput#map_to_trigger('i', '<C-h>', '<C-h>', '<C-h>')
-    
+
     call smartinput#define_rule({ 'at' : '\s\+\%#', 'char' : '<CR>', 'input' : "<C-o>:call setline('.', substitute(getline('.'), '\\s\\+$', '', '')) <Bar> echo 'delete trailing spaces'<CR><CR>" })
     call smartinput#define_rule({ 'at' : '(\%#)', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
     call smartinput#define_rule({ 'at' : '{\%#}', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
@@ -780,6 +792,7 @@ autocmd MyAutoCmd FileType haskell
 " 2}}}
 " 1}}}
 
+let g:slime_target = "tmux"
 if filereadable(expand('~/.vim/local.vimrc'))
     source ~/.vim/local.vimrc
 endif
