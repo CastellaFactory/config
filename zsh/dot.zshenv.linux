@@ -3,4 +3,7 @@ export PATH=$PATH:/sbin:/usr/sbin:$HOME/.gem/ruby/2.0.0/bin:$HOME/local/bin
 # for powerline
 export PATH=:$PATH:$HOME/.vim/bundle/powerline/scripts
 
+# OPAM
+. $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
 # vim: ft=zsh
