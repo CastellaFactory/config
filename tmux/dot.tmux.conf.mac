@@ -1,7 +1,7 @@
 ##+----- general settings -----+##
 # shell settings (zsh)
 set -g default-shell /usr/local/bin/zsh
-set -g default-command /usr/local/bin/zsh
+set -g default-command "reattach-to-user-namespace -l /usr/local/bin/zsh"
 
 # 256 colors
 set -g default-terminal "screen-256color"
@@ -24,9 +24,6 @@ set -s escape-time 1
 
 # window title (left,centre,right)
 set -g status-justify "left"
-
-# clipboard support (brew install reattach-to-user-namespace)
-set -g default-command "reattach-to-user-namespace -l zsh"
 
 ##+----- key bindings -----+##
 # Prefix Key(C-z)
