@@ -6,6 +6,8 @@ alias ec='emacsclient -c -n'
 alias ke="emacsclient -e '(kill-emacs)'"
 alias se='emacs --daemon'
 alias gosh='rlwrap gosh'
+alias sml='rlwrap sml'
+alias ocaml='rlwrap ocaml'
 # 1}}}
 
 # Options  # {{{1
