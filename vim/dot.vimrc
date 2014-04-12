@@ -110,34 +110,7 @@ let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
 " 1}}}
 
 " Utils  " {{{1
-" AllMaps - :map in all modes " {{{2
-command! -nargs=* -complete=mapping AllMaps
-            \   map <args> | map! <args> | lmap <args>
-" 2}}}
-" CloseTemporaryWindows  " {{{2
-command! -bar -nargs=0 CloseTemporaryWindows  call s:cmd_CloseTemporaryWindows()
-function! s:cmd_CloseTemporaryWindows()
-    let win = range(1, winnr('$'))
-    let buftype_pattern = 'nofile\|quickfix\|help'
-    call filter(win, '!buflisted(winbufnr(v:val)) && getbufvar(winbufnr(v:val), "&buftype") =~# buftype_pattern')
-
-    let current_winnr = winnr()
-    if len(win) == winnr('$')
-        call filter(win, 'current_winnr != v:val')
-    endif
-
-    for winnr in win
-        execute winnr 'wincmd w'
-        wincmd c
-    endfor
-    execute (current_winnr - len(filter(win, 'v:val < current_winnr')))
-                \   'wincmd w'
-endfunction
-" 2}}}
-" DeleteTrailingSpaces  " {{{2
-command! -bar -nargs=0 -range=% DeleteTrailingSpaces call s:preserve('<line1>,<line2>s/\s\+$//ceg')
-
-function! s:preserve(command)
+function! s:preserve(command)  " {{{2
     let l:save_cursor = getpos('.')
     let l:save_win = winsaveview()
     try
@@ -146,38 +119,6 @@ function! s:preserve(command)
         call setpos('.', l:save_cursor)
         call winrestview(l:save_win)
     endtry
-endfunction
-" 2}}}
-" Objmap - wrapper for textobj mapping  " {{{2
-command! -nargs=+ Objmap execute 'omap' <q-args> | execute 'vmap' <q-args>
-command! -nargs=+ Objnoremap execute 'onoremap' <q-args> | execute 'vnoremap' <q-args>
-command! -nargs=+ Objunmap execute 'ounmap' <q-args> | execute 'vunmap' <q-args>
-" 2}}}
-" Operatormap - wrapper for operator mapping  " {{{2
-command! -nargs=+ Operatormap  execute 'nmap' <q-args> | execute 'vmap' <q-args>
-command! -nargs=+ Operatornoremap  execute 'nnoremap' <q-args> | execute 'vnoremap' <q-args>
-command! -nargs=+ Operatorunmap execute 'nunmap' <q-args> | execute 'vunmap' <q-args>
-" 2}}}
-" SuspendWithAutomaticCD  " {{{2
-command! -bar -nargs=0 SuspendWithAutomaticCD  call s:cmd_SuspendWithAutomaticCD()
-function! s:cmd_SuspendWithAutomaticCD()
-    if has('gui_running') && g:is_darwin_p
-        call system('open -a iTerm ' . shellescape(getcwd()))
-    elseif has('gui_running') && g:is_linux_p
-        call system('urxvt -cd ' . shellescape(getcwd()) . ' &')
-    elseif exists('$TMUX')    " this vim is running in tmux
-        let l:shell_name = split(&shell, '/')[-1]    " zsh, bash, etc...
-        let l:windows = split(system('tmux list-windows'), '\n')
-        call map(windows, 'split(v:val, "^\\d\\+\\zs:\\s")')
-        call filter(windows, 'matchstr(v:val[1], "\\w\\+") ==# shell_name')    " looking for shell_name runnnig windows
-        let l:select_command = empty(windows) ? 'new-window' : 'select-window -t ' . windows[0][0]
-        " to avoid adding cd to cmdline history, add 'setopt hist_ignore_space' to zshrc and
-        " add spaces before 'cd'
-        call system('tmux ' . select_command . '&&' . 'tmux send-keys C-u \ cd\ ' . shellescape(getcwd()) . ' C-m C-l')
-        redraw!
-    else
-        suspend
-    endif
 endfunction  " 2}}}
 function! s:cd_to_current_buffer_dir()  " {{{2
     lcd %:p:h
@@ -231,6 +172,65 @@ function! s:toggle_fullscreen()  " {{{2
         else
             echohl ErrorMsg | echomsg 'xdotool is not installed.' | echohl none
         endif
+    endif
+endfunction  " 2}}}
+" AllMaps - :map in all modes " {{{2
+command! -nargs=* -complete=mapping AllMaps
+            \   map <args> | map! <args> | lmap <args>
+" 2}}}
+" CloseTemporaryWindows  " {{{2
+command! -bar -nargs=0 CloseTemporaryWindows  call s:cmd_CloseTemporaryWindows()
+function! s:cmd_CloseTemporaryWindows()
+    let win = range(1, winnr('$'))
+    let buftype_pattern = 'nofile\|quickfix\|help'
+    call filter(win, '!buflisted(winbufnr(v:val)) && getbufvar(winbufnr(v:val), "&buftype") =~# buftype_pattern')
+
+    let current_winnr = winnr()
+    if len(win) == winnr('$')
+        call filter(win, 'current_winnr != v:val')
+    endif
+
+    for winnr in win
+        execute winnr 'wincmd w'
+        wincmd c
+    endfor
+    execute (current_winnr - len(filter(win, 'v:val < current_winnr')))
+                \   'wincmd w'
+endfunction
+" 2}}}
+" DeleteTrailingSpaces  " {{{2
+command! -bar -nargs=0 -range=% DeleteTrailingSpaces call s:preserve('<line1>,<line2>s/\s\+$//ceg')
+
+" 2}}}
+" Objmap - wrapper for textobj mapping  " {{{2
+command! -nargs=+ Objmap execute 'omap' <q-args> | execute 'vmap' <q-args>
+command! -nargs=+ Objnoremap execute 'onoremap' <q-args> | execute 'vnoremap' <q-args>
+command! -nargs=+ Objunmap execute 'ounmap' <q-args> | execute 'vunmap' <q-args>
+" 2}}}
+" Operatormap - wrapper for operator mapping  " {{{2
+command! -nargs=+ Operatormap  execute 'nmap' <q-args> | execute 'vmap' <q-args>
+command! -nargs=+ Operatornoremap  execute 'nnoremap' <q-args> | execute 'vnoremap' <q-args>
+command! -nargs=+ Operatorunmap execute 'nunmap' <q-args> | execute 'vunmap' <q-args>
+" 2}}}
+" SuspendWithAutomaticCD  " {{{2
+command! -bar -nargs=0 SuspendWithAutomaticCD  call s:cmd_SuspendWithAutomaticCD()
+function! s:cmd_SuspendWithAutomaticCD()
+    if has('gui_running') && g:is_darwin_p
+        call system('open -a iTerm ' . shellescape(getcwd()))
+    elseif has('gui_running') && g:is_linux_p
+        call system('urxvt -cd ' . shellescape(getcwd()) . ' &')
+    elseif exists('$TMUX')    " this vim is running in tmux
+        let l:shell_name = split(&shell, '/')[-1]    " zsh, bash, etc...
+        let l:windows = split(system('tmux list-windows'), '\n')
+        call map(windows, 'split(v:val, "^\\d\\+\\zs:\\s")')
+        call filter(windows, 'matchstr(v:val[1], "\\w\\+") ==# shell_name')    " looking for shell_name runnnig windows
+        let l:select_command = empty(windows) ? 'new-window' : 'select-window -t ' . windows[0][0]
+        " to avoid adding cd to cmdline history, add 'setopt hist_ignore_space' to zshrc and
+        " add spaces before 'cd'
+        call system('tmux ' . select_command . '&&' . 'tmux send-keys C-u \ cd\ ' . shellescape(getcwd()) . ' C-m C-l')
+        redraw!
+    else
+        suspend
     endif
 endfunction  " 2}}}
 " 1}}}
@@ -403,7 +403,6 @@ NeoBundleLazy 'ocamlmerlin', {
             \   'base' : '~/.opam/system/share/ocamlmerlin', 'directory' : 'vim',
             \   'type' : 'nosync', 'autoload' : {'filetypes' : ['ocaml']} }
 NeoBundleFetch 'Lokaltog/powerline'
-NeoBundle 'jpalardy/vim-slime'
 " 2}}}
 filetype plugin indent on
 NeoBundleCheck
@@ -792,7 +791,6 @@ autocmd MyAutoCmd FileType haskell
 " 2}}}
 " 1}}}
 
-let g:slime_target = "tmux"
 if filereadable(expand('~/.vim/local.vimrc'))
     source ~/.vim/local.vimrc
 endif
