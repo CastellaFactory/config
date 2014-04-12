@@ -394,6 +394,9 @@ NeoBundleLazy 'Valloric/YouCompleteMe', {
             \   'augroup' : 'youcompletemeStart' }
 NeoBundleLazy 'vim-jp/cpp-vim', {
             \   'autoload' : {'filetypes' : ['cpp']} }
+NeoBundleLazy 'ocamlmerlin', {
+            \   'base' : '~/.opam/system/share/ocamlmerlin', 'directory' : 'vim',
+            \   'type' : 'nosync', 'autoload' : {'filetypes' : ['ocaml']} }
 NeoBundleFetch 'Lokaltog/powerline'
 " 2}}}
 filetype plugin indent on
