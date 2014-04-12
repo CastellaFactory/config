@@ -757,31 +757,31 @@ let g:quickrun_config = {
             \       'cmdopt' : '-std=c99 -fno-caret-diagnostics'
             \   },
             \   'cpp' : {
-            \   'type' : 'cpp/clang++',
-            \   'cmdopt' : '-std=c++11 -fno-caret-diagnostics'
+            \       'type' : 'cpp/clang++',
+            \       'cmdopt' : '-std=c++11 -fno-caret-diagnostics'
             \   },
             \   'ocaml' : {
-            \   'runner' : 'system',
-            \   'cmdopt' : '-noprompt',
-            \   'exec' : '%c %o < %s'
+            \       'runner' : 'system',
+            \       'cmdopt' : '-noprompt',
+            \       'exec' : '%c %o < %s'
             \   },
             \   'c_compile' : {
-            \   'command' : 'clang',
-            \   'cmdopt' : '-std=c99 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-missing-prototypes -fno-caret-diagnostics',
-            \   'exec' : '%c %o -o %s:r %s:p',
-            \   'outputter' : 'quickfix'
+            \       'command' : 'clang',
+            \       'cmdopt' : '-std=c99 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-missing-prototypes -fno-caret-diagnostics',
+            \       'exec' : '%c %o -o %s:r %s:p',
+            \       'outputter' : 'quickfix'
             \   },
             \   'cpp_compile' : {
-            \   'command' : 'clang++',
-            \   'cmdopt' : '-std=c++11 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-c++98-compat -Wno-missing-prototypes -fno-caret-diagnostics',
-            \   'exec' : '%c %o -o %s:r %s:p',
-            \   'outputter' : 'quickfix'
+            \       'command' : 'clang++',
+            \       'cmdopt' : '-std=c++11 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-c++98-compat -Wno-missing-prototypes -fno-caret-diagnostics',
+            \       'exec' : '%c %o -o %s:r %s:p',
+            \       'outputter' : 'quickfix'
             \   },
             \   'haskell_compile' : {
-            \   'command' : 'ghc',
-            \   'cmdopt' : '-O --make',
-            \   'exec' : '%c %o -o %s:r %s:p',
-            \   'outputter' : 'quickfix'
+            \       'command' : 'ghc',
+            \       'cmdopt' : '-O --make',
+            \       'exec' : '%c %o -o %s:r %s:p',
+            \       'outputter' : 'quickfix'
             \   }
             \ }
 
