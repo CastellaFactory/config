@@ -742,41 +742,47 @@ unlet s:bundle
 " quickrun  " {{{2
 " default setting
 let g:quickrun_config = get(g:, 'quickrun_config', {})
-let g:quickrun_config._ = {
-            \   'outputter' : 'error',
-            \   'outputter/error/success' : 'buffer',
-            \   'outputter/error/error' : 'quickfix',
-            \   'outputter/buffer/split' : ':botright 10sp',
-            \   'outputter/buffer/close_on_empty' : 1,
-            \   'runner' : 'vimproc',
-            \   'runner/vimproc/updatetime' : 60,
-            \ }
-let g:quickrun_config.c = {
-            \   'type' : 'c/clang',
-            \   'cmdopt' : '-std=c99 -fno-caret-diagnostics',
-            \ }
-let g:quickrun_config.cpp = {
+let g:quickrun_config = {
+            \   '_' : {
+            \       'outputter' : 'error',
+            \       'outputter/error/success' : 'buffer',
+            \       'outputter/error/error' : 'quickfix',
+            \       'outputter/buffer/split' : ':botright 10sp',
+            \       'outputter/buffer/close_on_empty' : 1,
+            \       'runner' : 'vimproc',
+            \       'runner/vimproc/updatetime' : 60
+            \   },
+            \   'c' : {
+            \       'type' : 'c/clang',
+            \       'cmdopt' : '-std=c99 -fno-caret-diagnostics'
+            \   },
+            \   'cpp' : {
             \   'type' : 'cpp/clang++',
-            \   'cmdopt' : '-std=c++11 -fno-caret-diagnostics',
-            \ }
-" for compile
-let g:quickrun_config.c_compile = {
+            \   'cmdopt' : '-std=c++11 -fno-caret-diagnostics'
+            \   },
+            \   'ocaml' : {
+            \   'runner' : 'system',
+            \   'cmdopt' : '-noprompt',
+            \   'exec' : '%c %o < %s'
+            \   },
+            \   'c_compile' : {
             \   'command' : 'clang',
             \   'cmdopt' : '-std=c99 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-missing-prototypes -fno-caret-diagnostics',
             \   'exec' : '%c %o -o %s:r %s:p',
-            \   'outputter' : 'quickfix',
-            \ }
-let g:quickrun_config.cpp_compile = {
+            \   'outputter' : 'quickfix'
+            \   },
+            \   'cpp_compile' : {
             \   'command' : 'clang++',
             \   'cmdopt' : '-std=c++11 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-c++98-compat -Wno-missing-prototypes -fno-caret-diagnostics',
             \   'exec' : '%c %o -o %s:r %s:p',
-            \   'outputter' : 'quickfix',
-            \ }
-let g:quickrun_config.haskell_compile = {
+            \   'outputter' : 'quickfix'
+            \   },
+            \   'haskell_compile' : {
             \   'command' : 'ghc',
             \   'cmdopt' : '-O --make',
             \   'exec' : '%c %o -o %s:r %s:p',
-            \   'outputter' : 'quickfix',
+            \   'outputter' : 'quickfix'
+            \   }
             \ }
 
 autocmd MyAutoCmd FileType c
