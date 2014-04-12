@@ -763,7 +763,7 @@ let g:quickrun_config = {
             \   'ocaml' : {
             \       'runner' : 'system',
             \       'cmdopt' : '-noprompt',
-            \       'exec' : '%c %o < %s'
+            \       'exec' : 'TERM="" %c %o < %s'
             \   },
             \   'c_compile' : {
             \       'command' : 'clang',
