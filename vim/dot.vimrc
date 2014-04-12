@@ -110,16 +110,6 @@ let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
 " 1}}}
 
 " Utils  " {{{1
-function! s:preserve(command)  " {{{2
-    let l:save_cursor = getpos('.')
-    let l:save_win = winsaveview()
-    try
-        execute a:command
-    finally
-        call setpos('.', l:save_cursor)
-        call winrestview(l:save_win)
-    endtry
-endfunction  " 2}}}
 function! s:cd_to_current_buffer_dir()  " {{{2
     lcd %:p:h
     pwd
@@ -173,6 +163,16 @@ function! s:toggle_fullscreen()  " {{{2
             echohl ErrorMsg | echomsg 'xdotool is not installed.' | echohl none
         endif
     endif
+endfunction  " 2}}}
+function! Preserve(command)  " {{{2
+    let l:save_cursor = getpos('.')
+    let l:save_win = winsaveview()
+    try
+        execute a:command
+    finally
+        call setpos('.', l:save_cursor)
+        call winrestview(l:save_win)
+    endtry
 endfunction  " 2}}}
 " AllMaps - :map in all modes " {{{2
 command! -nargs=* -complete=mapping AllMaps
