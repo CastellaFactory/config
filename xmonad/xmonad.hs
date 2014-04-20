@@ -275,7 +275,8 @@ myLogHook :: X ()
 myLogHook  = ewmhDesktopsLogHook <+> fadeWindowsLogHook myFadeHook
   where myFadeHook = composeAll [
                         opaque
-                        , className =? "Gvim"     --> transparency 0.20
+                        , className =? "Gvim"     --> transparency 0.10
+                        , className =? "Emacs"    --> transparency 0.15
                         , isUnfocused             --> transparency 0.50
                      ]
 
