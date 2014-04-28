@@ -199,7 +199,7 @@ function! s:cmd_CloseTemporaryWindows()
 endfunction
 " 2}}}
 " DeleteTrailingSpaces  " {{{2
-command! -bar -nargs=0 -range=% DeleteTrailingSpaces call s:preserve('<line1>,<line2>s/\s\+$//ceg')
+command! -bar -nargs=0 -range=% DeleteTrailingSpaces call Preserve('<line1>,<line2>s/\s\+$//ceg')
 
 " 2}}}
 " Objmap - wrapper for textobj mapping  " {{{2
