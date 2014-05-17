@@ -585,6 +585,7 @@ function! s:bundle.hooks.on_source(bundle)
                 \   'AllowShortIfStatementsOnASingleLine' : 'false',
                 \   'AllowShortLoopsOnASingleLine' : 'false',
                 \   'BreakBeforeBraces' : 'Stroustrup',
+                \   'ColumnLimit' : 120,
                 \   'IndentWidth' : 4,
                 \   'Standard' : 'Cpp11',
                 \   'TabWidth' : 4
