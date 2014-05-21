@@ -277,7 +277,7 @@ myLogHook  = ewmhDesktopsLogHook <+> fadeWindowsLogHook myFadeHook
                         opaque
                         , className =? "Gvim"     --> transparency 0.15
                         , className =? "Emacs"    --> transparency 0.15
-                        , isUnfocused             --> transparency 0.50
+                        -- , isUnfocused             --> transparency 0.50
                      ]
 
 
