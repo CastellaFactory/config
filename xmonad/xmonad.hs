@@ -231,7 +231,7 @@ myLayout = layoutHints
            $ avoidStruts
            $ smartBorders . mkToggle (FULL ?? EOT)
            $ Mag.magnifiercz 1.2
-           $ Tall 1 (3/100) (1/2) ||| Grid ||| Mirror (Tall 1 (3/100) (1/2))
+           $ Tall 1 (3/100) (1/2) ||| Grid
 
 
 ------------------------------------------------------------------------
