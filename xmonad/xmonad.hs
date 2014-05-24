@@ -18,6 +18,7 @@ import XMonad.Hooks.FadeWindows
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers (isDialog, doCenterFloat)
 import XMonad.Hooks.SetWMName
+import XMonad.Layout.Grid
 import XMonad.Layout.LayoutHints (layoutHints, hintsEventHook)
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
@@ -230,7 +231,7 @@ myLayout = layoutHints
            $ avoidStruts
            $ smartBorders . mkToggle (FULL ?? EOT)
            $ Mag.magnifiercz 1.2
-           $ Tall 1 (3/100) (1/2) ||| Mirror (Tall 1 (3/100) (1/2))
+           $ Tall 1 (3/100) (1/2) ||| Grid ||| Mirror (Tall 1 (3/100) (1/2))
 
 
 ------------------------------------------------------------------------
