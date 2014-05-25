@@ -341,6 +341,7 @@ NeoBundle 'Shougo/vimproc.vim', {
             \   'build' : {
             \       'mac' : 'make -f make_mac.mak',
             \       'unix' : 'make -f make_unix.mak'} }
+NeoBundle 'Shougo/vimshell.vim'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-repeat'
@@ -720,6 +721,10 @@ function! s:bundle.hooks.on_source(bundle)
     let g:vimfiler_force_overwrite_statusline = 0
 endfunction
 unlet s:bundle
+" 2}}}
+" vimshell  " {{{2
+let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
+let g:vimshell_prompt =  '$ '
 " 2}}}
 " YouCompleteMe  "{{{2
 autocmd MyAutoCmd FileType c,cpp,python
