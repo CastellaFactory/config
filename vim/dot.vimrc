@@ -730,9 +730,12 @@ let g:vimshell_force_overwrite_statusline = 0
 " REPL
 " ocaml
 autocmd MyAutoCmd FileType ocaml nnoremap <buffer> <Space>sh  :<C-u>VimShellInteractive ocaml<CR>
+            \ | nnoremap <buffer> ,s  :<C-u>execute 'VimShellSendString #cd "' . expand('%:h') . '";;'<CR>:execute 'VimShellSendString #use "' . expand('%:p') . '";;'<CR>
 autocmd MyAutoCmd FileType sml nnoremap <buffer> <Space>sh  :<C-u>VimShellInteractive sml<CR>
+            \ | nnoremap <buffer> ,s  :<C-u>execute 'VimShellSendString OS.FileSys.chDir("' . expand('%:h') .'");'<CR>:execute 'VimShellSendString use "' . expand('%:p') . '";'<CR>
 autocmd MyAutoCmd Filetype haskell nnoremap <buffer> <Space>sh  :<C-u>VimShellInteractive ghci<CR>
-autocmd MyAutoCmd FileType ocmal sml haskell  call s:undo_ftplugin_helper('nunmap <buffer> <Space>sh')
+            \ | nnoremap <buffer> ,s  :<C-u>execute 'VimShellSendString :cd' expand('%:h')<CR>:execute 'VimShellSendString :load' expand('%:t')<CR>
+autocmd MyAutoCmd FileType ocmal sml haskell  call s:undo_ftplugin_helper('nunmap <buffer> <Space>sh', 'nummap <buffer> ,s')
 " 2}}}
 " YouCompleteMe  "{{{2
 autocmd MyAutoCmd FileType c,cpp,python
