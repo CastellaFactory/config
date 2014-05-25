@@ -341,8 +341,6 @@ NeoBundle 'Shougo/vimproc.vim', {
             \   'build' : {
             \       'mac' : 'make -f make_mac.mak',
             \       'unix' : 'make -f make_unix.mak'} }
-NeoBundleLazy 'Shougo/vimshell.vim', {
-            \   'autoload' : {'commands' : ['VimShellInteractive']} }
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-repeat'
@@ -387,6 +385,8 @@ NeoBundleLazy 'Shougo/unite-outline', {
 NeoBundleLazy 'Shougo/vimfiler.vim', {
             \   'autoload' : {'commands' : ['VimFiler', 'VimFilerCurrentDir', 'VimFilerBufferDir',
             \                               'VimFilerSplit', 'VimFilerExplorer', 'VimFilerDouble']}, 'explorer' : 1 }
+NeoBundleLazy 'Shougo/vimshell.vim', {
+            \   'autoload' : {'commands' : ['VimShellInteractive']} }
 NeoBundleLazy 'SirVer/ultisnips', {
             \   'autoload' : {'functions' : ['UltiSnips#FileTypeChanged']} }
 NeoBundleLazy 'tyru/caw.vim', {
