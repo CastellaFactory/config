@@ -341,7 +341,8 @@ NeoBundle 'Shougo/vimproc.vim', {
             \   'build' : {
             \       'mac' : 'make -f make_mac.mak',
             \       'unix' : 'make -f make_unix.mak'} }
-NeoBundle 'Shougo/vimshell.vim'
+NeoBundleLazy 'Shougo/vimshell.vim', {
+            \   'autoload' : {'commands' : ['VimShellInteractive']} }
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-repeat'
@@ -562,7 +563,7 @@ function! MyFugitive()
 endfunction
 
 function! MyFilename()
-    if &l:ft =~# 'unite\|vimfiler'
+    if &l:ft =~# 'unite\|vimfiler\|vimshell'
         execute 'return'  &l:ft . '#get_status_string()'
     else
         return expand('%:t')
@@ -723,8 +724,15 @@ endfunction
 unlet s:bundle
 " 2}}}
 " vimshell  " {{{2
-let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
-let g:vimshell_prompt =  '$ '
+let g:vimshell_prompt_expr = 'getcwd()." > "'
+let g:vimshell_prompt_pattern = '^\f\+ > '
+let g:vimshell_force_overwrite_statusline = 0
+" REPL
+" ocaml
+autocmd MyAutoCmd FileType ocaml nnoremap <buffer> <Space>sh  :<C-u>VimShellInteractive ocaml<CR>
+autocmd MyAutoCmd FileType sml nnoremap <buffer> <Space>sh  :<C-u>VimShellInteractive sml<CR>
+autocmd MyAutoCmd Filetype haskell nnoremap <buffer> <Space>sh  :<C-u>VimShellInteractive ghci<CR>
+autocmd MyAutoCmd FileType ocmal sml haskell  call s:undo_ftplugin_helper('nunmap <buffer> <Space>sh')
 " 2}}}
 " YouCompleteMe  "{{{2
 autocmd MyAutoCmd FileType c,cpp,python
