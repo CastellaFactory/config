@@ -474,13 +474,13 @@ function! s:on_FileType_cpp()
 endfunction
 " 2}}}
 " haskell  " {{{2
-autocmd MyAutoCmd FileType haskell call s:set_indent('expandtab')
+autocmd MyAutoCmd FileType haskell call s:set_short_indent()
 " 2}}}
 " makefile  " {{{2
 autocmd MyAutoCmd FileType make call s:set_indent('noexpandtab')
 " 2}}}
 " ocaml  " {{{2
-autocmd MyAutoCmd FileType ocaml call s:set_indent('expandtab')
+autocmd MyAutoCmd FileType ocaml call s:set_short_indent()
 " 2}}}
 " python  " {{{2
 autocmd MyAutoCmd FileType python call s:set_indent('expandtab')
@@ -496,7 +496,7 @@ function! s:on_FileType_scheme()
 endfunction
 " 2}}}
 " sml  " {{{2
-autocmd MyAutoCmd FileType sml call s:set_indent('expandtab')
+autocmd MyAutoCmd FileType sml call s:set_short_indent()
 " 2}}}
 " vim  " {{{2
 autocmd MyAutoCmd FileType vim call s:set_indent('expandtab')
