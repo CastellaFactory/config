@@ -9,6 +9,7 @@ set wildmode=longest,list:full
 " {{{ firefox settings
 set! security.dialog_enable_delay=0
 set! browser.tabs.closeWindowWithLastTab=false
+set! general.useragent.locale=ja
 
 " }}}
 
