@@ -113,7 +113,6 @@ namespace :linux do
   end
 
   task :awesome do
-    next unless installed? 'awesome'
     unless File.directory? "#{home}/.config/awesome"
       mkdir_p "#{home}/.config/awesome"
     end
@@ -121,7 +120,6 @@ namespace :linux do
   end
 
   task :xmonad do
-    next unless installed? 'xmonad'
     unless File.directory? "#{home}/.xmonad"
       mkdir "#{home}/.xmonad"
     end
