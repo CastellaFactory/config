@@ -124,7 +124,11 @@ namespace :linux do
       mkdir "#{home}/.xmonad"
     end
     make_symlink 'xmonad/xmonad.hs', "#{home}/.xmonad/xmonad.hs"
-    make_symlink 'dotfiles/dot.xmobarrc', "#{home}/.xmobarrc"
+    if File.directory? "/sys/class/power_supply/BAT0" then
+      make_symlink 'dotfiles/dot.xmobarrc_laptop', "#{home}/.xmobarrc"
+    else
+      make_symlink 'dotfiles/dot.xmobarrc_desktop', "#{home}/.xmobarrc"
+    end
     make_symlink 'dotfiles/dot.stalonetrayrc', "#{home}/.stalonetrayrc"
     make_symlink 'dotfiles/dot.fehbg', "#{home}/.fehbg"
   end
