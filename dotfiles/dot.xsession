@@ -7,7 +7,6 @@ compton -b -C -G --config ~/.compton.conf &
 
 ibus-daemon -dx &
 SpiderOak &
-dropbox &
 stalonetray &
 (sleep 3; dropbox) &
 xset -b
