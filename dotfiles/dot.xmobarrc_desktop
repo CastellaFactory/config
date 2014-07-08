@@ -12,7 +12,7 @@ Config {font = "xft:CodeM:bold:size=11:antialias=true,hinting=true,autohint=true
                       ]
         , sepChar = "%"
         , alignSep = "}{"
-        , template = "%cpu% | %memory%  | %dynnetwork% } %StdinReader% { <fc=#ee9a00>%date%</fc> | %uname%"
+        , template = "%cpu% | %memory% | %dynnetwork% } %StdinReader% { <fc=#ee9a00>%date%</fc> | %uname%"
 }
 
 -- vim: ft=haskell
