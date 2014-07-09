@@ -34,4 +34,7 @@ elseif g:is_linux_p
     set guioptions-=T
 
     set guifont=Meslo\ LGM\ 13
+    if filereadable(expand('~/.vim/local.vimrc'))
+        source ~/.vim/local.gvimrc
+    endif
 endif
