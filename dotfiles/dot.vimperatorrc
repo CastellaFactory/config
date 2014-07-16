@@ -19,16 +19,18 @@ noremap ; :
 noremap : ;
 
 " move amount
-noremap j  5j
-noremap k  5k
+nnoremap j  5j
+nnoremap k  5k
 
 " google
-noremap s  :open<Space>google<Space>
-noremap ,s  :tabopen<Space>google<Space>
+nnoremap s  :<C-u>open<Space>google<Space>
+nnoremap ,s  :<C-u>tabopen<Space>google<Space>
 
-map <BS> <A-Left>
+nnoremap q  <Nop>
 
-vmap <silent> <C-g> y<Esc><Esc>P
+nnoremap <BS>  <A-Left>
+
+vnoremap <C-g>  y<Esc><Esc>P
 
 " }}}
 
