@@ -1,6 +1,5 @@
 " {{{ option settings
 set titlestring=Firefox
-set focuscontent
 set ignorecase
 set hintchars=aoeuidhtns
 set wildmode=longest,list:full
