@@ -202,7 +202,6 @@ endfunction
 " 2}}}
 " DeleteTrailingSpaces  " {{{2
 command! -bar -range=% DeleteTrailingSpaces call Preserve('<line1>,<line2>s/\s\+$//ceg')
-
 " 2}}}
 " Objmap - wrapper for textobj mapping  " {{{2
 command! -nargs=+ Objmap execute 'omap' <q-args> | execute 'vmap' <q-args>
@@ -387,8 +386,6 @@ NeoBundleLazy 'Shougo/unite-outline', {
 NeoBundleLazy 'Shougo/vimfiler.vim', {
             \   'autoload' : {'commands' : ['VimFiler', 'VimFilerCurrentDir', 'VimFilerBufferDir',
             \                               'VimFilerSplit', 'VimFilerExplorer', 'VimFilerDouble']}, 'explorer' : 1 }
-NeoBundleLazy 'Shougo/vimshell.vim', {
-            \   'autoload' : {'commands' : ['VimShellInteractive']} }
 NeoBundleLazy 'SirVer/ultisnips', {
             \   'autoload' : {'functions' : ['UltiSnips#FileTypeChanged']} }
 NeoBundleLazy 'tyru/caw.vim', {
@@ -724,25 +721,6 @@ function! s:bundle.hooks.on_source(bundle)
     let g:vimfiler_force_overwrite_statusline = 0
 endfunction
 unlet s:bundle
-" 2}}}
-" vimshell  " {{{2
-let g:vimshell_prompt_expr = 'getcwd()." > "'
-let g:vimshell_prompt_pattern = '^\f\+ > '
-let g:vimshell_force_overwrite_statusline = 0
-" REPL  " {{{3
-" OCaml
-autocmd MyAutoCmd FileType ocaml nnoremap <buffer> <Space>sh  :<C-u>VimShellInteractive ocaml<CR>
-            \ | nnoremap <buffer> ,se  :<C-u>execute 'VimShellSendString #use "' . expand('%:p') . '";;'<CR>
-            \ | nnoremap <buffer> ,cd  :<C-u>execute 'VimShellSendString #cd "' . expand('%:h') . '";;'<CR>
-" Standard ML of NJ
-autocmd MyAutoCmd FileType sml nnoremap <buffer> <Space>sh  :<C-u>VimShellInteractive sml<CR>
-            \ | nnoremap <buffer> ,se  :<C-u>execute 'VimShellSendString use "' . expand('%:p') . '";'<CR>
-            \ | nnoremap <buffer> ,cd  :<C-u>execute 'VimShellSendString OS.FileSys.chDir("' . expand('%:h') .'");'<CR>
-" Haskell
-autocmd MyAutoCmd Filetype haskell nnoremap <buffer> <Space>sh  :<C-u>VimShellInteractive ghci<CR>
-            \ | nnoremap <buffer> ,se  :<C-u>execute 'VimShellSendString :cd' expand('%:h')<CR>:execute 'VimShellSendString :load' expand('%:t')<CR>
-autocmd MyAutoCmd FileType ocmal sml haskell  call s:undo_ftplugin_helper('nunmap <buffer> <Space>sh', 'nummap <buffer> ,se', 'nunmap <silent><buffer> ,cd')
-" 3}}}
 " 2}}}
 " YouCompleteMe  "{{{2
 autocmd MyAutoCmd FileType c,cpp,python
