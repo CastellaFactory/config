@@ -1,5 +1,6 @@
 " {{{ option settings
 set titlestring=Firefox
+set focuscontent
 set ignorecase
 set hintchars=aoeuidhtns
 set wildmode=longest,list:full
@@ -16,6 +17,14 @@ set! general.useragent.locale=ja
 " {{{ key mappings
 noremap ; :
 noremap : ;
+
+" move amount
+noremap j  5j
+noremap k  5k
+
+" google
+noremap s  :open<Space>google<Space>
+noremap ,s  :tabopen<Space>google<Space>
 
 map <BS> <A-Left>
 
