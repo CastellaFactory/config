@@ -24,8 +24,8 @@ nnoremap j  5j
 nnoremap k  5k
 
 " google
-nnoremap s  :<C-u>open<Space>google<Space>
-nnoremap ,s  :<C-u>tabopen<Space>google<Space>
+nnoremap s  :open<Space>google<Space>
+nnoremap ,s  :tabopen<Space>google<Space>
 
 nnoremap q  <Nop>
 
