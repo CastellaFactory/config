@@ -167,11 +167,13 @@ endfunction  " 2}}}
 function! Preserve(command)  " {{{2
     let l:save_cursor = getpos('.')
     let l:save_win = winsaveview()
+    let l:save_search = @/
     try
         execute a:command
     finally
         call setpos('.', l:save_cursor)
         call winrestview(l:save_win)
+        let @/ = l:save_search
     endtry
 endfunction  " 2}}}
 " AllMaps - :map in all modes " {{{2
@@ -179,7 +181,7 @@ command! -nargs=* -complete=mapping AllMaps
             \   map <args> | map! <args> | lmap <args>
 " 2}}}
 " CloseTemporaryWindows  " {{{2
-command! -bar -nargs=0 CloseTemporaryWindows  call s:cmd_CloseTemporaryWindows()
+command! -bar CloseTemporaryWindows  call s:cmd_CloseTemporaryWindows()
 function! s:cmd_CloseTemporaryWindows()
     let win = range(1, winnr('$'))
     let buftype_pattern = 'nofile\|quickfix\|help'
@@ -199,7 +201,7 @@ function! s:cmd_CloseTemporaryWindows()
 endfunction
 " 2}}}
 " DeleteTrailingSpaces  " {{{2
-command! -bar -nargs=0 -range=% DeleteTrailingSpaces call Preserve('<line1>,<line2>s/\s\+$//ceg')
+command! -bar -range=% DeleteTrailingSpaces call Preserve('<line1>,<line2>s/\s\+$//ceg')
 
 " 2}}}
 " Objmap - wrapper for textobj mapping  " {{{2
@@ -213,7 +215,7 @@ command! -nargs=+ Operatornoremap  execute 'nnoremap' <q-args> | execute 'vnorem
 command! -nargs=+ Operatorunmap execute 'nunmap' <q-args> | execute 'vunmap' <q-args>
 " 2}}}
 " SuspendWithAutomaticCD  " {{{2
-command! -bar -nargs=0 SuspendWithAutomaticCD  call s:cmd_SuspendWithAutomaticCD()
+command! -bar SuspendWithAutomaticCD  call s:cmd_SuspendWithAutomaticCD()
 function! s:cmd_SuspendWithAutomaticCD()
     if has('gui_running') && g:is_darwin_p
         call system('open -a iTerm ' . shellescape(getcwd()))
