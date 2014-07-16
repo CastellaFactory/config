@@ -35,4 +35,8 @@ vnoremap <C-g>  y<Esc><Esc>P
 
 " }}}
 
+" {{{ other
+highlight Bell display: none;
+" }}}
+
 " vim: ft=vim
