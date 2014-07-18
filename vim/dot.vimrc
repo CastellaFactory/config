@@ -180,26 +180,6 @@ endfunction  " 2}}}
 command! -nargs=* -complete=mapping AllMaps
             \   map <args> | map! <args> | lmap <args>
 " 2}}}
-" CloseTemporaryWindows  " {{{2
-command! -bar CloseTemporaryWindows  call s:cmd_CloseTemporaryWindows()
-function! s:cmd_CloseTemporaryWindows()
-    let win = range(1, winnr('$'))
-    let buftype_pattern = 'nofile\|quickfix\|help'
-    call filter(win, '!buflisted(winbufnr(v:val)) && getbufvar(winbufnr(v:val), "&buftype") =~# buftype_pattern')
-
-    let current_winnr = winnr()
-    if len(win) == winnr('$')
-        call filter(win, 'current_winnr != v:val')
-    endif
-
-    for winnr in win
-        execute winnr 'wincmd w'
-        wincmd c
-    endfor
-    execute (current_winnr - len(filter(win, 'v:val < current_winnr')))
-                \   'wincmd w'
-endfunction
-" 2}}}
 " DeleteTrailingSpaces  " {{{2
 command! -bar -range=% DeleteTrailingSpaces call Preserve('<line1>,<line2>s/\s\+$//ceg')
 " 2}}}
