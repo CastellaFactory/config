@@ -668,7 +668,6 @@ unlet s:bundle
 nnoremap <Space>ub  :<C-u>Unite buffer<CR>
 nnoremap <Space>ut  :<C-u>Unite tab<CR>
 nnoremap <Space>ufr  :<C-u>Unite neomru/file<CR>
-nnoremap <Space>udr  :<C-u>Unite neomru/directory<CR>
 nnoremap <Space>urm  :<C-u>UniteResume<CR>
 nnoremap <Space>uff  :<C-u>Unite file<CR>
 nnoremap <Space>uol  :<C-u>Unite outline<CR>
