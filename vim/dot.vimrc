@@ -382,7 +382,7 @@ NeoBundleLazy 'ujihisa/unite-haskellimport', {
 NeoBundleLazy 'Valloric/YouCompleteMe', {
             \   'build' : {
             \       'unix' : 'git submodule update --init --recursive && ./install.sh --clang-completer --system-libclang',
-            \       'mac' : 'git submodule update --init --recursive && ./install.sh --clang-completer'},
+            \       'mac' : 'git submodule update --init --recursive && ./install.sh --clang-completer --system-libclang'},
             \   'autoload' : {'insert' : 1, 'commands' : ['YcmCompleter']},
             \   'augroup' : 'youcompletemeStart' }
 NeoBundleLazy 'vim-jp/cpp-vim', {
@@ -457,6 +457,9 @@ autocmd MyAutoCmd FileType cpp call s:on_FileType_cpp()
 function! s:on_FileType_cpp()
     call s:set_indent('expandtab')
     setlocal cinoptions+=g0
+    if g:is_darwin_p
+        setlocal path+=/usr/local/include
+    endif
 endfunction
 " 2}}}
 " haskell  " {{{2
