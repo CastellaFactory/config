@@ -458,7 +458,7 @@ function! s:on_FileType_cpp()
     call s:set_indent('expandtab')
     setlocal cinoptions+=g0
     if g:is_darwin_p
-        setlocal path+=/usr/local/include
+        setlocal path+=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/c++/v1,/usr/local/include
     endif
 endfunction
 " 2}}}
