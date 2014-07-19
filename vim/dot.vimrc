@@ -460,7 +460,7 @@ function! s:on_FileType_cpp()
     if g:is_darwin_p
         setlocal path+=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/c++/v1,/usr/local/include
     elseif g:is_linux_p
-        setlocal path+=/usr/lib/gcc/x86_64-pc-linux-gnu/4.7.3/include/g++-v4
+        setlocal path+=/usr/lib/gcc/x86_64-pc-linux-gnu/*/include/g++-v4
     endif
 endfunction
 " 2}}}
