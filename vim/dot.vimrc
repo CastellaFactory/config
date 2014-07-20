@@ -314,7 +314,7 @@ endif
 
 let g:neobundle#install_process_timeout = 2000
 
-call neobundle#rc(expand('~/.vim/bundle/'))
+call neobundle#begin(expand('~/.vim/bundle/'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 " 2}}}
@@ -392,6 +392,7 @@ NeoBundleLazy 'ocamlmerlin', {
             \   'type' : 'nosync', 'autoload' : {'filetypes' : ['ocaml']} }
 NeoBundleFetch 'Lokaltog/powerline'
 " 2}}}
+call neobundle#end()
 filetype plugin indent on
 NeoBundleCheck
 " 1}}}
