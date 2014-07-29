@@ -225,9 +225,6 @@ noremap :  ;
 " move cursor by display lines
 nnoremap j  gj
 nnoremap k  gk
-" fallback
-nnoremap gj  j
-nnoremap gk  k
 
 " follow symbolic link (don't use $MYVIMRC)
 nnoremap <Space>.  :<C-u>edit `=resolve(fnamemodify("~/.vim/vimrc", ':p'))`<CR>
