@@ -14,4 +14,8 @@ fi
 # OPAM
 . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
+# golang
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+
 # vim: ft=zsh
