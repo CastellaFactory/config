@@ -30,8 +30,6 @@ nnoremap q  <Nop>
 
 nnoremap <BS>  <A-Left>
 
-vnoremap <C-g>  y<Esc><Esc>P
-
 " }}}
 
 " {{{ other
