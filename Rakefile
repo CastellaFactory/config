@@ -87,6 +87,7 @@ namespace :common do
 
   task :Vimperator do
     make_symlink 'dotfiles/dot.vimperatorrc', "#{home}/.vimperatorrc"
+    make_symlink 'dotfiles/dot.pentadactylrc', "#{home}/.pentadactylrc"
   end
 
 end
