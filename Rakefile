@@ -65,16 +65,13 @@ namespace :common do
       mkdir "#{home}/.zsh"
       mkdir "#{home}/.zsh/plugins"
     end
-
     make_symlink 'zsh/dot.zshenv', "#{home}/.zshenv"
     make_symlink 'zsh/dot.zshrc', "#{home}/.zsh/.zshrc"
 
-    next unless installed? 'git'
-    chdir "#{home}/.zsh/plugins" do
-    unless File.directory? "#{home}/.zsh/plugins/zaw"
-      sh "git clone git://github.com/zsh-users/zaw.git"
+    unless File.directory? "#{home}/.config/peco"
+      mkdir_p "#{home}/.config/peco"
     end
-    end
+    make_symlink 'peco/config.json', "#{home}/.config/peco/config.json"
   end
 
   task :tmux do

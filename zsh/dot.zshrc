@@ -44,11 +44,12 @@ zshaddhistory() {
 
     [[ $cmd != rm(|dir) ]]
 }
-autoload history-search-end
-zle -N history-beginning-search-backward-end history-search-end
-zle -N history-beginning-search-forward-end history-search-end
-bindkey "^P" history-beginning-search-backward-end
-bindkey "^N" history-beginning-search-forward-end
+# cdr
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+zstyle ':chpwd:*' recent-dirs-max 100
+zstyle ':chpwd:*' recent-dirs-default yes
+zstyle ':completion:*' recent-dirs-insert both
 # 1}}}
 
 # Prompt  # {{{1
@@ -104,18 +105,38 @@ fi
 # 1}}}
 
 # Plugins  # {{{1
-# zaw  # {{{2
-autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
-add-zsh-hook chpwd chpwd_recent_dirs
-zstyle ':chpwd:*' recent-dirs-max 1000
-zstyle ':chpwd:*' recent-dirs-default yes
-zstyle ':completion:*' recent-dirs-insert both
-# for zsh-plugin-update()
-zstyle ':chpwd:*' recent-dirs-prune pattern:\.zsh\/plugins
-source $ZPLUGINDIR/zaw/zaw.zsh
-zstyle ':filter-select' case-insensitive yes    # case-insensitive
-bindkey '^@' zaw-cdr                            # <C-@>
+# 1}}}
+
+# peco  # {{{1
+# select-history  # {{{2
+function peco-select-history() {
+    local tac
+    if which tac > /dev/null; then
+        tac="tac"
+    else
+        tac="tail -r"
+    fi
+    BUFFER=$(history -n 1 | \
+        eval $tac | \
+        peco --query "$LBUFFER")
+    CURSOR=$#BUFFER
+    zle clear-screen
+}
+zle -N peco-select-history
 # 2}}}
+# cdr  # {{{2
+function peco-cdr () {
+    local selected_dir=$(cdr -l | awk '{ print $2 }' | peco)
+    if [ -n "$selected_dir" ]; then
+        BUFFER="cd ${selected_dir}"
+        zle accept-line
+    fi
+    zle clear-screen
+}
+zle -N peco-cdr
+# 2}}}
+bindkey '^r' peco-select-history
+bindkey '^@' peco-cdr
 # 1}}}
 
 # OS specific settings  # {{{1

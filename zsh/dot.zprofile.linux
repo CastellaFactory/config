@@ -2,14 +2,8 @@ export EDITOR="vim"
 export VISUAL="vim"
 export ALTERNATE_EDITOR=""
 
-if [ -e /etc/profile.d/autojump.zsh ]; then
-    source /etc/profile.d/autojump.zsh
-fi
-
 # /etc/zsh/zprofile overwrites PATH setting
 # PATH setting must be sourced after /etc/zsh/zprofile
 source $ZDOTDIR/.zshenv
-
-export AUTOJUMP_IGNORE_CASE=1
 
 # vim: ft=zsh
