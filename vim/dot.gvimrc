@@ -9,6 +9,7 @@
 
 " see :help visualbell
 set t_vb=
+set winaltkeys=no
 
 if g:is_darwin_p
     " default: egmrL
@@ -17,6 +18,7 @@ if g:is_darwin_p
     set guioptions-=m
     set guioptions-=r
     set guioptions-=L
+    set guioptions+=c
 
     set guifont=Meslo\ LG\ M:h16
     set transparency=10
@@ -32,6 +34,7 @@ elseif g:is_linux_p
     set guioptions-=L
     set guioptions-=t
     set guioptions-=T
+    set guioptions+=c
 
     set guifont=Meslo\ LGM\ 13
     if filereadable(expand('~/.vim/local.gvimrc'))
