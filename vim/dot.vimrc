@@ -329,8 +329,6 @@ NeoBundleLazy 'kana/vim-textobj-function', {
             \   'autoload' : {'mappings' : [ ['xo', 'af'], ['xo', 'if'] ]} }
 NeoBundleLazy 'kana/vim-textobj-indent', {
             \   'autoload' : {'mappings' : [ ['xo', 'ai'], ['xo', 'ii'], ['xo', 'aI'], ['xo', 'iI'] ]} }
-NeoBundleLazy 'kana/vim-textobj-lastpat', {
-            \   'autoload' : {'mappings' : [ ['xo', 'a/'], ['xo', 'i/'], ['xo', 'a?'], ['xo', 'i?'] ]} }
 NeoBundleLazy 'kana/vim-textobj-line', {
             \   'autoload' : {'mappings' : [ ['xo', 'al'], ['xo', 'il'] ]} }
 NeoBundleLazy 'kana/vim-textobj-syntax', {
@@ -384,7 +382,11 @@ endif
 " FileTypes  "{{{1
 " see after/ftplugin
 function! s:undo_ftplugin_helper(...)  " {{{2
-    exists('b:undo_ftplugin') ? let b:undo_ftplugin .= '|' : let b:undo_ftplugin = ''
+    if exists('b:undo_ftplugin')
+        let b:undo_ftplugin .= '|'
+    else
+        let b:undo_ftplugin = ''
+    endif
     let b:undo_ftplugin .= join(a:000, '|')
 endfunction  " 2}}}
 " All filetypes  " {{{2
