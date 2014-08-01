@@ -513,10 +513,8 @@ unlet s:bundle
 let g:caw_no_default_keymappings = 1
 let g:caw_i_sp_blank = ' '
 
-nmap cci  <Plug>(caw:i:comment)
-nmap cca  <Plug>(caw:a:comment)
-nmap cco  <Plug>(caw:jump:comment-next)
-nmap ccO  <Plug>(caw:jump:comment-prev)
+nmap <Leader>co  <Plug>(caw:jump:comment-next)
+nmap <Leader>cO  <Plug>(caw:jump:comment-prev)
 nmap <Leader>cc  <Plug>(caw:i:toggle)
 vmap <Leader>cc  <Plug>(caw:i:toggle)
 nmap <Leader>ca  <Plug>(caw:a:toggle)
