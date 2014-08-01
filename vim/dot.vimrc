@@ -157,8 +157,7 @@ function! Preserve(command)  " {{{2
     endtry
 endfunction  " 2}}}
 " AllMaps - :map in all modes " {{{2
-command! -nargs=* -complete=mapping AllMaps
-            \   map <args> | map! <args> | lmap <args>
+command! -nargs=* -complete=mapping AllMaps map <args> | map! <args> | lmap <args>
 " 2}}}
 " DeleteTrailingSpaces  " {{{2
 command! -bar -range=% DeleteTrailingSpaces call Preserve('<line1>,<line2>s/\s\+$//ceg')
@@ -523,9 +522,11 @@ function! s:bundle.hooks.on_post_source(bundle)
     call smartinput#define_rule({ 'at' : '\s\+\%#', 'char' : '<CR>', 'input' : "<C-o>:call setline('.', substitute(getline('.'), '\\s\\+$', '', '')) <Bar> echo 'delete trailing spaces'<CR><CR>" })
     call smartinput#define_rule({ 'at' : '(\%#)', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
     call smartinput#define_rule({ 'at' : '{\%#}', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
+    call smartinput#define_rule({ 'at' : '<\%#>', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
     call smartinput#define_rule({ 'at' : '\[\%#\]', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
     call smartinput#define_rule({ 'at' : '( \%# )', 'char' : '<BS>', 'input' : '<Del><BS>' })
     call smartinput#define_rule({ 'at' : '{ \%# }', 'char' : '<BS>', 'input' : '<Del><BS>' })
+    call smartinput#define_rule({ 'at' : '< \%# >', 'char' : '<BS>', 'input' : '<Del><BS>' })
     call smartinput#define_rule({ 'at' : '\[ \%# \]', 'char' : '<BS>', 'input' : '<Del><BS>' })
 endfunction
 unlet s:bundle
@@ -666,7 +667,7 @@ let g:quickrun_config = {
             \   },
             \   'haskell_compile' : {
             \       'command' : 'ghc',
-            \       'cmdopt' : '-O --make',
+            \       'cmdopt' : '-O',
             \       'exec' : '%c %o -o %s:r %s:p',
             \       'outputter' : 'quickfix'
             \   }
