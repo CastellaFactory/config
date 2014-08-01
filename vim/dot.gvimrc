@@ -9,7 +9,6 @@
 
 " see :help visualbell
 set t_vb=
-set winaltkeys=no
 
 if g:is_darwin_p
     " default: egmrL
