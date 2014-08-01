@@ -384,28 +384,9 @@ endif
 " FileTypes  "{{{1
 " see after/ftplugin
 function! s:undo_ftplugin_helper(...)  " {{{2
-    if exists('b:undo_ftplugin')
-        " trailing spaces cause problem when :unmap.  :unmap <buffer> qq_| setlocal...
-        let b:undo_ftplugin .= '|'
-    else
-        let b:undo_ftplugin = ''
-    endif
+    exists('b:undo_ftplugin') ? let b:undo_ftplugin .= '|' : let b:undo_ftplugin = ''
     let b:undo_ftplugin .= join(a:000, '|')
 endfunction  " 2}}}
-"  undo_indent  " {{{2
-" see 'http://whileimautomaton.net/2011/11/06013517'
-function! s:universal_undo_indent()
-    if exists('b:undo_indent')
-        let b:undo_indent .= '|'
-    else
-        let b:undo_indent = ''
-    endif
-    let b:undo_indent .= 'setlocal
-                \   autoindent< cindent< cinkeys< cinoptions< cinwords< copyindent<
-                \   expandtab< indentexpr< indentkeys< lisp< lispwords< preserveindent<
-                \   shiftround< shiftwidth< smartindent< smarttab< softtabstop< tabstop<'
-endfunction
-" 2}}}
 " All filetypes  " {{{2
 set formatoptions-=r
 set formatoptions-=o
@@ -416,8 +397,6 @@ function! s:on_FileType_all()
     if &l:omnifunc == ''
         setlocal omnifunc=syntaxcomplete#Complete
     endif
-
-    call s:universal_undo_indent()
 endfunction
 
 autocmd MyAutoCmd BufReadPost *
@@ -461,7 +440,6 @@ nnoremap <Leader>ga  :<C-u>Gwrite<CR>
 nnoremap <Leader>gd  :<C-u>Gdiff<CR>
 nnoremap <Leader>gb  :<C-u>Gblame<CR>
 nnoremap <Leader>gp  :<C-u>Git push<CR>
-nnoremap <Leader>gP  :<C-u>Git pull<CR>
 " 2}}}"
 "  ghcmod-vim  " {{{2
 autocmd MyAutoCmd FileType haskell
@@ -482,11 +460,7 @@ function! MyFugitive()
 endfunction
 
 function! MyFilename()
-    if &l:ft =~# 'unite\|vimfiler'
-        execute 'return'  &l:ft . '#get_status_string()'
-    else
-        return expand('%:t')
-    endif
+    return &l:ft =~# 'unite\|vimfiler' ? &l:ft . '#get_statun_string()' : expand('%:t')
 endfunction
 " 2}}}
 "  operator  " {{{2
@@ -497,8 +471,6 @@ autocmd MyAutoCmd FileType c,cpp
 
 let s:bundle = neobundle#get('vim-clang-format')
 function! s:bundle.hooks.on_source(bundle)
-    " Mac: homebrew
-    " Linux: build from sources and make symbolic link
     " based on Google style. see clang-format-HEAD -dump-config -style='{BasedOnStyle: Google}'
     let g:clang_format#command = 'clang-format-HEAD'
     let g:clang_format#style_options = {
@@ -610,7 +582,7 @@ nnoremap ,g  :<C-u>Unite grep:. <CR><C-r><C-w><CR>
 nnoremap  <Space>up  :<C-u>Unite buffer file_rec/async:!<CR>
 
 " neomru
-let g:neomru#file_mru_limit = 100
+let g:neomru#file_mru_limit = 300
 let g:neomru#file_mru_ignore_pattern = 'COMMIT_EDITMSG\|\/doc\/.\+\.\(txt\|jax\)$'
 let g:neomru#directory_mru_limit = 100
 
