@@ -35,7 +35,7 @@ else
     set clipboard=unnamed
 endif
 set cmdheight=2
-set completeopt=menuone
+set completeopt=menuone,preview
 set directory=~/.vim/backups
 set encoding=utf-8
 set fileencoding=utf-8
@@ -721,6 +721,7 @@ autocmd MyAutoCmd FileType c,cpp,python
 let s:bundle = neobundle#get('YouCompleteMe')
 function! s:bundle.hooks.on_source(bundle)
     let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_default/ycm_extra_conf.py'
+    let g:ycm_autoclose_preview_window_after_completion = 1
     let g:ycm_show_diagnostics_ui = 0
     let g:ycm_confirm_extra_conf = 0
     let g:ycm_min_num_identifier_candidate_chars = 4
