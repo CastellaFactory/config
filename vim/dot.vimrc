@@ -29,6 +29,9 @@ set autoindent
 set autoread
 set backspace=indent,eol,start
 set backupdir=~/.vim/backups
+if exists('+breakindent')
+    set breakindent
+endif
 if has('unnamedplus')
     set clipboard=unnamed,unnamedplus
 else
