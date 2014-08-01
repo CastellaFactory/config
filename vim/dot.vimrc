@@ -23,7 +23,6 @@ function! s:SID_PREFIX()
 endfunction
 " 2}}}
 " Options " {{{2
-
 set ambiwidth=double
 set autoindent
 set autoread
@@ -124,28 +123,6 @@ function! s:cd_to_git_root_dir()  " {{{2
     else
         echohl ErrorMsg | echomsg 'This file is not inside git tree.' | echohl none
     endif
-endfunction  " 2}}}
-function! s:keys_to_complete()  " {{{2
-    if &l:filetype ==# 'vim'
-        return "\<C-x>\<C-v>"      " vim command completion
-    elseif &l:omnifunc != ''
-        return "\<C-x>\<C-o>"
-    else
-        return "\<C-n>"
-    endif
-endfunction  " 2}}}
-function! s:set_indent(expandtab_or_noexpandtab)  " {{{2
-    if a:expandtab_or_noexpandtab ==# 'expandtab'
-        setlocal expandtab
-        setlocal tabstop< shiftwidth=4 softtabstop=4
-    else
-        setlocal noexpandtab
-        setlocal tabstop=4 shiftwidth=4 softtabstop<
-    endif
-endfunction  " 2}}}
-function! s:set_short_indent()  " {{{2
-    setlocal expandtab
-    setlocal tabstop< shiftwidth=2 softtabstop=2
 endfunction  " 2}}}
 function! s:toggle_fullscreen()  " {{{2
     if g:is_darwin_p
@@ -291,8 +268,6 @@ nnoremap ZQ  <Nop>
 " EX-mode, macro
 nnoremap Q  q
 nnoremap q  <Nop>
-
-inoremap <expr> <C-x><C-x>  <SID>keys_to_complete()
 " 2}}}
 " 1}}}
 
@@ -407,7 +382,7 @@ endif
 " 1}}}
 
 " FileTypes  "{{{1
-" mainly indent settings, see also after/ftplugin
+" see after/ftplugin
 function! s:undo_ftplugin_helper(...)  " {{{2
     if exists('b:undo_ftplugin')
         " trailing spaces cause problem when :unmap.  :unmap <buffer> qq_| setlocal...
@@ -450,52 +425,6 @@ autocmd MyAutoCmd BufReadPost *
             \ |     execute "normal! g`\""
             \ | endif
 " 2}}}
-" c  " {{{2
-autocmd MyAutoCmd FileType c call s:set_indent('expandtab')
-" 2}}}
-" cpp  " {{{2
-autocmd MyAutoCmd FileType cpp call s:on_FileType_cpp()
-function! s:on_FileType_cpp()
-    call s:set_indent('expandtab')
-    setlocal cinoptions+=g0
-    if g:is_darwin_p
-        setlocal path+=/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/c++/v1,/usr/local/include
-    elseif g:is_linux_p
-        setlocal path+=/usr/lib/gcc/x86_64-pc-linux-gnu/*/include/g++-v4
-    endif
-endfunction
-" 2}}}
-" haskell  " {{{2
-autocmd MyAutoCmd FileType haskell call s:set_short_indent()
-" 2}}}
-" makefile  " {{{2
-autocmd MyAutoCmd FileType make call s:set_indent('noexpandtab')
-" 2}}}
-" ocaml  " {{{2
-autocmd MyAutoCmd FileType ocaml call s:set_short_indent()
-" 2}}}
-" python  " {{{2
-autocmd MyAutoCmd FileType python call s:set_indent('expandtab')
-" 2}}}
-" ruby  " {{{2
-autocmd MyAutoCmd FileType ruby call s:set_short_indent()
-" 2}}}
-" scheme  " {{{2
-autocmd MyAutoCmd FileType scheme call s:on_FileType_scheme()
-function! s:on_FileType_scheme()
-    call s:set_short_indent()
-    setlocal lisp
-endfunction
-" 2}}}
-" sml  " {{{2
-autocmd MyAutoCmd FileType sml call s:set_short_indent()
-" 2}}}
-" vim  " {{{2
-autocmd MyAutoCmd FileType vim call s:set_indent('expandtab')
-" 2}}}
-" zsh,sh  " {{{2
-autocmd MyAutoCmd FileType zsh,sh call s:set_indent('expandtab')
-" 2}}}"
 " 1}}}
 
 " Plugins {{{1
@@ -553,7 +482,7 @@ function! MyFugitive()
 endfunction
 
 function! MyFilename()
-    if &l:ft =~# 'unite\|vimfiler\|vimshell'
+    if &l:ft =~# 'unite\|vimfiler'
         execute 'return'  &l:ft . '#get_status_string()'
     else
         return expand('%:t')
@@ -713,11 +642,9 @@ endfunction
 unlet s:bundle
 " 2}}}
 " YouCompleteMe  "{{{2
-autocmd MyAutoCmd FileType c,cpp,python
+autocmd MyAutoCmd FileType c,cpp
             \   nnoremap <buffer> <Leader>pg  :<C-u>YcmCompleter GoToDefinitionElseDeclaration<CR>
-            \ | nnoremap <buffer> <Leader>pd  :<C-u>YcmCompleter GoToDefinition<CR>
-            \ | nnoremap <buffer> <Leader>pc  :<C-u>YcmCompleter GoToDeclaration<CR>
-            \ | call s:undo_ftplugin_helper('nunmap <buffer> <Leader>pg', 'nunmap <buffer> <Leader>pd', 'nunmap <buffer> <Leader>pc')
+            \ | call s:undo_ftplugin_helper('nunmap <buffer> <Leader>pg')
 
 let s:bundle = neobundle#get('YouCompleteMe')
 function! s:bundle.hooks.on_source(bundle)
@@ -758,12 +685,6 @@ let g:quickrun_config = {
             \       'cmdopt' : '-noprompt',
             \       'exec' : 'TERM="" %c %o < %s'
             \   },
-            \   'c_compile' : {
-            \       'command' : 'clang',
-            \       'cmdopt' : '-std=c99 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-missing-prototypes -fno-caret-diagnostics',
-            \       'exec' : '%c %o -o %s:r %s:p',
-            \       'outputter' : 'quickfix'
-            \   },
             \   'cpp_compile' : {
             \       'command' : 'clang++',
             \       'cmdopt' : '-std=c++11 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-c++98-compat -Wno-missing-prototypes -fno-caret-diagnostics',
@@ -778,9 +699,6 @@ let g:quickrun_config = {
             \   }
             \ }
 
-autocmd MyAutoCmd FileType c
-            \   nnoremap <buffer> <Leader>R  :<C-u>QuickRun c_compile<CR>
-            \ | call s:undo_ftplugin_helper('nunmap <buffer> <Leader>R')
 autocmd MyAutoCmd FileType cpp
             \   nnoremap <buffer> <Leader>R  :<C-u>QuickRun cpp_compile<CR>
             \ | call s:undo_ftplugin_helper('nunmap <buffer> <Leader>R')
