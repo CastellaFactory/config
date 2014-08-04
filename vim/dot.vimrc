@@ -481,8 +481,7 @@ function! s:bundle.hooks.on_source(bundle)
                 \   'BreakBeforeBraces' : 'Stroustrup',
                 \   'ColumnLimit' : 120,
                 \   'IndentWidth' : 4,
-                \   'Standard' : 'Cpp11',
-                \   'TabWidth' : 4
+                \   'Standard' : 'Cpp11'
                 \ }
 endfunction
 unlet s:bundle
