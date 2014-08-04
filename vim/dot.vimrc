@@ -436,7 +436,6 @@ Operatormap <Leader>lea  <Plug>(LiveEasyAlign)
 " fugitive  " {{{2
 nnoremap <Leader>gs  :<C-u>Gstatus<CR>
 nnoremap <Leader>gc  :<C-u>Gcommit -v<CR>
-nnoremap <Leader>gC  :<C-u>Gcommit<CR>
 nnoremap <Leader>ga  :<C-u>Gwrite<CR>
 nnoremap <Leader>gd  :<C-u>Gdiff<CR>
 nnoremap <Leader>gb  :<C-u>Gblame<CR>
