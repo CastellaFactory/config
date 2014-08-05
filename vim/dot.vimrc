@@ -569,7 +569,7 @@ unlet s:bundle
 " 2}}}
 " unite  " {{{2
 nnoremap <Space>ub  :<C-u>Unite buffer<CR>
-nnoremap <Space>uf  :<C-u>Unite neomru/file<CR>
+nnoremap <Space>um  :<C-u>Unite neomru/file<CR>
 nnoremap <Space>urm  :<C-u>UniteResume<CR>
 nnoremap <Space>uol  :<C-u>Unite outline<CR>
 nnoremap <Space>unnb  :<C-u>Unite neobundle<CR>
