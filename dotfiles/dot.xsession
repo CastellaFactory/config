@@ -8,7 +8,7 @@ compton -b -C -G --config ~/.compton.conf &
 ibus-daemon -dx &
 SpiderOak &
 stalonetray &
-(sleep 3; dropbox) &
+(sleep 4; dropbox) &
 xset -b
 
 xrdb -merge ~/.Xresources
