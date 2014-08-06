@@ -342,9 +342,6 @@ NeoBundleLazy 'Shougo/unite.vim', {
             \   'autoload' : {'commands' : [{'name' : 'Unite', 'complete' : 'customlist,unite#complete#source'}]} }
 NeoBundleLazy 'Shougo/unite-outline', {
             \   'autoload' : {'unite_sources' : 'outline'} }
-NeoBundleLazy 'Shougo/vimfiler.vim', {
-            \   'autoload' : {'commands' : ['VimFiler', 'VimFilerCurrentDir', 'VimFilerBufferDir',
-            \                               'VimFilerSplit', 'VimFilerExplorer', 'VimFilerDouble']}, 'explorer' : 1 }
 NeoBundleLazy 'SirVer/ultisnips', {
             \   'autoload' : {'functions' : ['UltiSnips#FileTypeChanged']} }
 NeoBundleLazy 'tyru/caw.vim', {
@@ -570,6 +567,7 @@ unlet s:bundle
 " unite  " {{{2
 nnoremap <Space>ub  :<C-u>Unite buffer<CR>
 nnoremap <Space>um  :<C-u>Unite neomru/file<CR>
+nnoremap <Space>uf  :<C-u>Unite file<CR>
 nnoremap <Space>urm  :<C-u>UniteResume<CR>
 nnoremap <Space>uol  :<C-u>Unite outline<CR>
 nnoremap <Space>unnb  :<C-u>Unite neobundle<CR>
@@ -593,19 +591,6 @@ function! s:bundle.hooks.on_source(bundle)
 
     autocmd MyAutoCmd FileType unite imap <buffer> <C-g>  <Plug>(unite_exit)
                 \ | nmap <buffer> <C-g>  <Plug>(unite_exit)
-endfunction
-unlet s:bundle
-" 2}}}
-" vimfiler  " {{{2
-nnoremap <Space>fc  :<C-u>VimFilerCurrentDir<CR>
-nnoremap <Space>fb  :<C-u>VimFilerBufferDir<CR>
-let g:loaded_netrwPlugin = 1
-
-let s:bundle = neobundle#get('vimfiler.vim')
-function! s:bundle.hooks.on_source(bundle)
-    let g:vimfiler_as_default_explorer = 1
-    let g:vimfiler_safe_mode_by_default = 0
-    let g:vimfiler_force_overwrite_statusline = 0
 endfunction
 unlet s:bundle
 " 2}}}
