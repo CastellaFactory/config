@@ -386,8 +386,6 @@ function! s:undo_ftplugin_helper(...)  " {{{2
     let b:undo_ftplugin .= join(a:000, '|')
 endfunction  " 2}}}
 " All filetypes  " {{{2
-set formatoptions-=r
-set formatoptions-=o
 autocmd MyAutoCmd FileType * call s:on_FileType_all()
 function! s:on_FileType_all()
     setlocal formatoptions-=r
