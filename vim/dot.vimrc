@@ -205,6 +205,9 @@ noremap :  ;
 nnoremap j  gj
 nnoremap k  gk
 
+" hard to hit <Esc> and <C-[> for me
+inoremap <C-c>  <Esc>
+
 " follow symbolic link (don't use $MYVIMRC)
 nnoremap <Space>.  :<C-u>edit `=resolve(fnamemodify("~/.vim/vimrc", ':p'))`<CR>
 nnoremap <Space>t.  :<C-u>tabnew `=resolve(fnamemodify("~/.vim/vimrc", ':p'))`<CR>
