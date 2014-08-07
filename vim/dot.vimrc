@@ -233,7 +233,7 @@ inoremap <C-a>  <Home>
 inoremap <expr> <C-e>  pumvisible() ? "\<C-e>" : "\<End>"
 inoremap <C-d>  <Del>
 inoremap <expr> <Up>  pumvisible()? "\<C-p>" : "\<Up>"
-inoremap <expr> <Down>  pumvisible()? "\<C-n>" : "\<Down>"Command
+inoremap <expr> <Down>  pumvisible()? "\<C-n>" : "\<Down>"
 " 2}}}
 " Command-line mode  " {{{2
 cnoremap <C-p>  <Up>
