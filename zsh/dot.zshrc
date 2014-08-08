@@ -147,7 +147,6 @@ function peco-dir_find() {
     zle clear-screen
 }
 zle -N peco-dir_find
-bindkey '^x^f' peco-dir_find
 # 2}}}
 bindkey '^r' peco-select-history
 bindkey '^@' peco-cdr
