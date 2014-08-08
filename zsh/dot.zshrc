@@ -135,7 +135,7 @@ function peco-cdr () {
 }
 zle -N peco-cdr
 # 2}}}
-# dfind  # {{{2
+# dir_find  # {{{2
 function peco-dir_find() {
     local current_buffer=$BUFFER
     local selected_dir="$(find . -maxdepth 5 -type d ! -path "*/.*"| peco)"
