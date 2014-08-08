@@ -135,8 +135,23 @@ function peco-cdr () {
 }
 zle -N peco-cdr
 # 2}}}
+# dfind  # {{{2
+function peco-dir_find() {
+    local current_buffer=$BUFFER
+    local selected_dir="$(find . -maxdepth 5 -type d ! -path "*/.*"| peco)"
+    if [ -d "$selected_dir" ]; then
+        BUFFER="${current_buffer} \"${selected_dir}\""
+        CURSOR=$#BUFFER
+        # zle accept-line
+    fi
+    zle clear-screen
+}
+zle -N peco-dir_find
+bindkey '^x^f' peco-dir_find
+# 2}}}
 bindkey '^r' peco-select-history
 bindkey '^@' peco-cdr
+bindkey '^x^f' peco-dir_find
 # 1}}}
 
 # OS specific settings  # {{{1
