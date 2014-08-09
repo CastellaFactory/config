@@ -3,6 +3,9 @@ export PATH=/usr/local/bin:$HOME/.rbenv/shims:$HOME/.cabal/bin:$HOME/local/bin:$
 # for powerline
 export PATH=$PATH:$HOME/.vim/bundle/powerline/scripts
 
+# for mactex
+export PATH=$PATH:/usr/texbin
+
 # fpath
 fpath=(/usr/local/share/zsh-completions $fpath)
 
