@@ -492,7 +492,7 @@ map <silent>sd  <Plug>(operator-surround-delete)
 map <silent>sr  <Plug>(operator-surround-replace)
 " 3}}}
 " 2}}}
-"  submode  "{{{2
+" submode  "{{{2
 call submode#enter_with('changetab', 'n', '', 'gt', 'gt')
 call submode#enter_with('changetab', 'n', '', 'gT', 'gT')
 call submode#map('changetab', 'n', '', 't', 'gt')
@@ -509,6 +509,14 @@ call submode#enter_with('undo/redo', 'n', '', 'g-', 'g-')
 call submode#enter_with('undo/redo', 'n', '', 'g+', 'g+')
 call submode#map('undo/redo', 'n', '', '-', 'g-')
 call submode#map('undo/redo', 'n', '', '+', 'g+')
+call submode#enter_with('change-list', 'n', '', 'g;', 'g;')
+call submode#enter_with('change-list', 'n', '', 'g,', 'g,')
+call submode#map('change-list', 'n', '', ';', 'g;')
+call submode#map('change-list', 'n', '', ',', 'g,')
+call submode#enter_with('move-to-fold', 'n', '', 'zj', 'zj')
+call submode#enter_with('move-to-fold', 'n', '', 'zk', 'zk')
+call submode#map('move-to-fold', 'n', '', 'j', 'zj')
+call submode#map('move-to-fold', 'n', '', 'k', 'zk')
 " 2}}}
 " smartinput "{{{2
 let s:bundle = neobundle#get('vim-smartinput')
