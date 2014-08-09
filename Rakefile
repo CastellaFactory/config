@@ -33,7 +33,7 @@ end
 
 
 namespace :common do
-  task :all => [:git, :vim, :zsh, :tmux, :OCaml, :Vimperator]
+  task :all => [:git, :vim, :zsh, :tmux, :OCaml, :Vimperator, :Tex]
 
   task :git do
     make_symlink 'git/dot.gitconfig', "#{home}/.gitconfig"
@@ -88,6 +88,10 @@ namespace :common do
   task :Vimperator do
     make_symlink 'dotfiles/dot.vimperatorrc', "#{home}/.vimperatorrc"
     make_symlink 'dotfiles/dot.pentadactylrc', "#{home}/.pentadactylrc"
+  end
+
+  task :Tex do
+    make_symlink 'dotfiles/dot.latexmkrc', "#{home}/.latexmkrc"
   end
 
 end
