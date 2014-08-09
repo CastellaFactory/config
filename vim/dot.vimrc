@@ -639,6 +639,12 @@ let g:quickrun_config = {
             \       'cmdopt' : '-noprompt',
             \       'exec' : 'TERM="" %c %o < %s'
             \   },
+            \   'tex' : {
+            \       'command' : 'latexmk',
+            \       'cmdopt' : '-pv',
+            \       'exec' : '%c %o %s',
+            \       'outputter' : 'quickfix'
+            \   },
             \   'cpp_compile' : {
             \       'command' : 'clang++',
             \       'cmdopt' : '-std=c++11 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-c++98-compat -Wno-missing-prototypes -fno-caret-diagnostics',
