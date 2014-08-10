@@ -456,11 +456,11 @@ let g:lightline = {
             \ }
 
 function! MyFugitive()
-    return &l:ft !=# 'vimfiler' && exists('*fugitive#head') ? fugitive#head() : ''
+    return exists('*fugitive#head') ? fugitive#head() : ''
 endfunction
 
 function! MyFilename()
-    return &l:ft =~# 'unite\|vimfiler' ? &l:ft . '#get_statun_string()' : expand('%:t')
+    return &l:ft =~# 'unite' ? unite#get_status_string() : expand('%:t')
 endfunction
 " 2}}}
 "  operator  " {{{2
