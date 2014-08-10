@@ -327,6 +327,8 @@ NeoBundleLazy 'kana/vim-operator-replace', {
 NeoBundleLazy 'kana/vim-smartinput', { 'autoload' : {'insert' : 1} }
 NeoBundleLazy 'kana/vim-textobj-entire', {
             \   'autoload' : {'mappings' : [ ['xo', 'ae'], ['xo', 'ie'] ]} }
+NeoBundleLazy 'kana/vim-textobj-fold', {
+            \   'autoload' : {'mappings' : [ ['xo', 'az'], ['xo', 'iz'] ]} }
 NeoBundleLazy 'kana/vim-textobj-function', {
             \   'autoload' : {'mappings' : [ ['xo', 'af'], ['xo', 'if'] ]} }
 NeoBundleLazy 'kana/vim-textobj-indent', {
