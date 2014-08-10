@@ -477,6 +477,7 @@ function! s:bundle.hooks.on_source(bundle)
                 \   'AllowShortLoopsOnASingleLine' : 'false',
                 \   'BreakBeforeBraces' : 'Stroustrup',
                 \   'ColumnLimit' : 120,
+                \   'IndentCaseLabels' : 'false',
                 \   'IndentWidth' : 4,
                 \   'Standard' : 'Cpp11'
                 \ }
