@@ -472,7 +472,7 @@ autocmd MyAutoCmd FileType c,cpp
 let s:bundle = neobundle#get('vim-clang-format')
 function! s:bundle.hooks.on_source(bundle)
     " based on Google style. see clang-format-HEAD -dump-config -style='{BasedOnStyle: Google}'
-    let g:clang_format#command = 'clang-format-HEAD'
+    let g:clang_format#command = executable('clang-format-3.5') ? 'clang-format-3.5' : 'clang-format'
     let g:clang_format#style_options = {
                 \   'AccessModifierOffset' : -4,
                 \   'AllowShortIfStatementsOnASingleLine' : 'false',

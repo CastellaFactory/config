@@ -1,6 +1,7 @@
 {
-    "Keymap": {
-        "C-g": "peco.Cancel",
-        "C-v": "peco.SelectNextPage"
-    }
+    "Keymap" : {
+        "C-g" : "peco.Cancel",
+        "C-v" : "peco.SelectNextPage"
+    },
+    "InitialMatcher" : "SmartCase"
 }
