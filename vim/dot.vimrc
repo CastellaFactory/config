@@ -206,7 +206,8 @@ nnoremap j  gj
 nnoremap k  gk
 
 " hard to hit <Esc> and <C-[> for me
-inoremap <C-c>  <Esc>
+" use imap for remap
+imap <silent> <C-c>  <Esc>
 
 " follow symbolic link (don't use $MYVIMRC)
 nnoremap <Space>.  :<C-u>edit `=resolve(fnamemodify("~/.vim/vimrc", ':p'))`<CR>
@@ -362,7 +363,7 @@ NeoBundleLazy 'Valloric/YouCompleteMe', {
 NeoBundleLazy 'vim-jp/cpp-vim', {
             \   'autoload' : {'filetypes' : ['cpp']} }
 NeoBundleLazy 'ocamlmerlin', {
-            \   'base' : '~/.opam/system/share/ocamlmerlin', 'directory' : 'vim',
+            \   'base' : '~/.opam/system/share/merlin', 'directory' : 'vim',
             \   'type' : 'nosync', 'autoload' : {'filetypes' : ['ocaml']} }
 NeoBundleFetch 'Lokaltog/powerline'
 " 2}}}
@@ -391,6 +392,9 @@ function! s:undo_ftplugin_helper(...)  " {{{2
     let b:undo_ftplugin .= join(a:000, '|')
 endfunction  " 2}}}
 " All filetypes  " {{{2
+" for source $MYVIMRC
+set formatoptions-=r
+set formatoptions-=o
 autocmd MyAutoCmd FileType * call s:on_FileType_all()
 function! s:on_FileType_all()
     setlocal formatoptions-=r
