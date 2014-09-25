@@ -664,13 +664,13 @@ let g:quickrun_config = {
             \       'command' : 'clang++',
             \       'cmdopt' : '-std=c++11 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-c++98-compat -Wno-missing-prototypes -fno-caret-diagnostics',
             \       'exec' : '%c %o -o %s:r %s',
-            \       'outputter' : 'quickfix'
+            \       'outputter/error/success' : 'null'
             \   },
             \   'haskell_compile' : {
             \       'command' : 'ghc',
             \       'cmdopt' : '-O',
             \       'exec' : '%c %o -o %s:r %s',
-            \       'outputter' : 'quickfix'
+            \       'outputter/error/success' : 'null'
             \   }
             \ }
 
