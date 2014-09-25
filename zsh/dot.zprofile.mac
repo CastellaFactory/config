@@ -1,6 +1,6 @@
-export EDITOR="vim"
-export VISUAL="vim"
-export ALTERNATE_EDITOR=""
+# export EDITOR="vim"
+# export VISUAL="vim"
+# export ALTERNATE_EDITOR=""
 
 source $ZDOTDIR/.zshenv
 

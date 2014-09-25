@@ -1,6 +1,6 @@
-export EDITOR="vim"
-export VISUAL="vim"
-export ALTERNATE_EDITOR=""
+# export EDITOR="vim"
+# export VISUAL="vim"
+# export ALTERNATE_EDITOR=""
 
 # /etc/zsh/zprofile overwrites PATH setting
 # PATH setting must be sourced after /etc/zsh/zprofile
