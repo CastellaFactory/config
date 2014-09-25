@@ -660,6 +660,13 @@ let g:quickrun_config = {
             \       'exec' : '%c %o %s',
             \       'outputter/error/success' : 'null'
             \   },
+            \   'markdown' : {
+            \       'command' : 'open',
+            \       'cmdopt' : '-a',
+            \       'args' : 'Marked\ 2',
+            \       'exec' : '%c %o %a %s',
+            \       'outputter/error/success' : 'null'
+            \ },
             \   'cpp_compile' : {
             \       'command' : 'clang++',
             \       'cmdopt' : '-std=c++11 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-c++98-compat -Wno-missing-prototypes -fno-caret-diagnostics',
