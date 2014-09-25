@@ -658,7 +658,7 @@ let g:quickrun_config = {
             \       'command' : 'latexmk',
             \       'cmdopt' : '-pv',
             \       'exec' : '%c %o %s',
-            \       'outputter' : 'quickfix'
+            \       'outputter/error/success' : 'null'
             \   },
             \   'cpp_compile' : {
             \       'command' : 'clang++',
