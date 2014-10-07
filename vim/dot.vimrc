@@ -309,7 +309,6 @@ NeoBundle 'Shougo/vimproc.vim', {
             \       'unix' : 'make -f make_unix.mak'} }
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'tpope/vim-repeat'
 NeoBundleLazy 'eagletmt/ghcmod-vim', {
             \   'autoload' : {'filetypes' : ['haskell']} }
 NeoBundleLazy 'eagletmt/neco-ghc', {
