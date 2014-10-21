@@ -345,8 +345,6 @@ NeoBundleLazy 'scrooloose/syntastic', {
             \   'autoload' : {'commands' : ['SyntasticCheck']} }
 NeoBundleLazy 'Shougo/unite.vim', {
             \   'autoload' : {'commands' : [{'name' : 'Unite', 'complete' : 'customlist,unite#complete#source'}]} }
-NeoBundleLazy 'Shougo/unite-outline', {
-            \   'autoload' : {'unite_sources' : 'outline'} }
 NeoBundleLazy 'SirVer/ultisnips', {
             \   'autoload' : {'functions' : ['UltiSnips#FileTypeChanged']} }
 NeoBundleLazy 'tyru/caw.vim', {
@@ -584,7 +582,6 @@ nnoremap <Space>ub  :<C-u>Unite buffer<CR>
 nnoremap <Space>um  :<C-u>Unite neomru/file<CR>
 nnoremap <Space>uf  :<C-u>Unite file<CR>
 nnoremap <Space>urm  :<C-u>UniteResume<CR>
-nnoremap <Space>uol  :<C-u>Unite outline<CR>
 nnoremap <Space>unnb  :<C-u>Unite neobundle<CR>
 nnoremap <Space>ug   :<C-u>Unite grep:. <CR>
 nnoremap ,g  :<C-u>Unite grep:. <CR><C-r><C-w><CR>
