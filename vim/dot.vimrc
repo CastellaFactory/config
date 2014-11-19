@@ -480,7 +480,6 @@ function! s:bundle.hooks.on_source(bundle)
                 \   'AllowShortIfStatementsOnASingleLine' : 'false',
                 \   'AllowShortLoopsOnASingleLine' : 'false',
                 \   'BreakBeforeBraces' : 'Stroustrup',
-                \   'BreakConstructorInitializersBeforeComma' : 'true',
                 \   'ColumnLimit' : 120,
                 \   'IndentCaseLabels' : 'false',
                 \   'IndentWidth' : 4,
