@@ -76,7 +76,6 @@ set termencoding=utf-8
 set ttimeoutlen=50
 set ttyfast
 set undodir=~/.vim/undo
-set undofile
 set virtualedit=block
 set visualbell
 set whichwrap=b,s,h,l,[,],<,>,~
