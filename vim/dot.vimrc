@@ -380,14 +380,6 @@ endif
 
 " FileTypes  "{{{1
 " see after/ftplugin
-function! s:undo_ftplugin_helper(...)  " {{{2
-    if exists('b:undo_ftplugin')
-        let b:undo_ftplugin .= '|'
-    else
-        let b:undo_ftplugin = ''
-    endif
-    let b:undo_ftplugin .= join(a:000, '|')
-endfunction  " 2}}}
 " All filetypes  " {{{2
 " for source $MYVIMRC
 set formatoptions-=r
@@ -446,7 +438,6 @@ nnoremap <Leader>gp  :<C-u>Git push<CR>
 autocmd MyAutoCmd FileType haskell
             \   nnoremap <buffer> <Leader>t  :<C-u>GhcModType<CR>
             \ | nnoremap <buffer><silent> <Space>/  :<C-u>GhcModTypeClear<CR>:nohlsearch<CR>
-            \ | call s:undo_ftplugin_helper('nunmap <buffer> <Leader>t', 'nunmap <buffer> <Space>/')
 " 2}}}
 " lightline  " {{{2
 let g:lightline = {
@@ -468,7 +459,6 @@ endfunction
 " operator-clang-format  " {{{3
 autocmd MyAutoCmd FileType c,cpp
             \   execute 'map <buffer> <Leader>x  <Plug>(operator-clang-format)'
-            \ | call s:undo_ftplugin_helper('unmap <buffer> <Leader>x')
 
 let s:bundle = neobundle#get('vim-clang-format')
 function! s:bundle.hooks.on_source(bundle)
@@ -610,7 +600,6 @@ unlet s:bundle
 " YouCompleteMe  "{{{2
 autocmd MyAutoCmd FileType c,cpp
             \   nnoremap <buffer> <Leader>pg  :<C-u>YcmCompleter GoToDefinitionElseDeclaration<CR>
-            \ | call s:undo_ftplugin_helper('nunmap <buffer> <Leader>pg')
 
 let s:bundle = neobundle#get('YouCompleteMe')
 function! s:bundle.hooks.on_source(bundle)
@@ -680,10 +669,8 @@ let g:quickrun_config = {
 
 autocmd MyAutoCmd FileType cpp
             \   nnoremap <buffer> <Leader>R  :<C-u>QuickRun cpp_compile<CR>
-            \ | call s:undo_ftplugin_helper('nunmap <buffer> <Leader>R')
 autocmd MyAutoCmd FileType haskell
             \   nnoremap <buffer> <Leader>R  :<C-u>QuickRun haskell_compile<CR>
-            \ | call s:undo_ftplugin_helper('nunmap <buffer> <Leader>R')
 " 2}}}
 " 1}}}
 
