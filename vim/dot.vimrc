@@ -361,7 +361,7 @@ NeoBundleLazy 'vim-jp/cpp-vim', {
 NeoBundleLazy 'ocamlmerlin', {
             \   'base' : '~/.opam/system/share/merlin', 'directory' : 'vim',
             \   'type' : 'nosync', 'autoload' : {'filetypes' : ['ocaml']} }
-NeoBundleFetch 'Lokaltog/powerline'
+NeoBundleFetch 'powerline/powerline'
 " 2}}}
 call neobundle#end()
 filetype plugin indent on
