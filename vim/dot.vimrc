@@ -202,8 +202,12 @@ nnoremap j  gj
 nnoremap k  gk
 
 " hard to hit <Esc> and <C-[> for me
-" use imap for remap
 imap <silent> <C-c>  <Esc>
+
+" for fcitx
+if g:is_linux_p && executable('fcitx-remote')
+    autocmd InsertLeave * call system('fcitx-remote -c')
+endif
 
 " follow symbolic link (don't use $MYVIMRC)
 nnoremap <Space>.  :<C-u>edit `=resolve(fnamemodify("~/.vim/vimrc", ':p'))`<CR>
