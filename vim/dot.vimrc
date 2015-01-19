@@ -93,10 +93,7 @@ function! s:my_tabline()
         let no = i  " display 0-origin tabpagenr.
         let mod = getbufvar(bufnr, '&modified') ? '!' : ' '
         let title = fnamemodify(bufname(bufnr), ':t')
-        if title == ''
-            let title = 'No Name'
-        endif
-        let title = '[' . title . ']'
+        let title = '[' . (title == '' ? 'No Name' : title) . ']'
         let s .= '%'.i.'T'
         let s .= '%#' . (i == tabpagenr() ? 'TabLineSel' : 'TabLine') . '#'
         let s .= no . ':' . title
@@ -296,7 +293,6 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 " 2}}}
 " Bundles  " {{{2
-NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'kana/vim-submode'
 NeoBundle 'kana/vim-textobj-user'
@@ -437,22 +433,6 @@ nnoremap <Leader>gp  :<C-u>Git push<CR>
 autocmd MyAutoCmd FileType haskell
             \   nnoremap <buffer> <Leader>t  :<C-u>GhcModType<CR>
             \ | nnoremap <buffer><silent> <Space>/  :<C-u>GhcModTypeClear<CR>:nohlsearch<CR>
-" 2}}}
-" lightline  " {{{2
-let g:lightline = {
-            \   'colorscheme' : 'wombat',
-            \   'active' : {'left' : [['mode', 'paste'], ['fugitive', 'readonly', 'filename', 'modified']]},
-            \   'component_function' : {'fugitive' : 'MyFugitive', 'filename' : 'MyFilename'},
-            \   'enable' : {'statusline' : 1, 'tabline' : 0}
-            \ }
-
-function! MyFugitive()
-    return exists('*fugitive#head') ? fugitive#head() : ''
-endfunction
-
-function! MyFilename()
-    return &l:ft =~# 'unite' ? unite#get_status_string() : expand('%:t')
-endfunction
 " 2}}}
 "  operator  " {{{2
 " operator-clang-format  " {{{3
