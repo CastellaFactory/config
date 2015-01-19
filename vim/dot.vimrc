@@ -201,12 +201,12 @@ noremap :  ;
 nnoremap j  gj
 nnoremap k  gk
 
-" hard to hit <Esc> and <C-[> for me
+" hard to hit <Esc> and <C-[> for me, and to cause InsertLeave.
 imap <silent> <C-c>  <Esc>
 
 " for fcitx
 if g:is_linux_p && executable('fcitx-remote')
-    autocmd InsertLeave * call system('fcitx-remote -c')
+    autocmd MyAutoCmd InsertLeave * call system('fcitx-remote -c')
 endif
 
 " follow symbolic link (don't use $MYVIMRC)
@@ -592,7 +592,6 @@ function! s:bundle.hooks.on_source(bundle)
     let g:ycm_confirm_extra_conf = 0
     let g:ycm_min_num_identifier_candidate_chars = 4
     let g:ycm_seed_identifiers_with_syntax = 1
-    let g:ycm_filetype_specific_completion_to_disable = {'vim' : 1}
     let g:ycm_semantic_triggers = {'haskell' : ['.']}
 endfunction
 unlet s:bundle
