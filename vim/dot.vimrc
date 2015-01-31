@@ -93,7 +93,7 @@ function! s:my_tabline()
         let no = i  " display 0-origin tabpagenr.
         let mod = getbufvar(bufnr, '&modified') ? '!' : ' '
         let title = fnamemodify(bufname(bufnr), ':t')
-        let title = '[' . (title == '' ? 'No Name' : title) . ']'
+        let title = '[' . (empty(title) ? 'No Name' : title) . ']'
         let s .= '%'.i.'T'
         let s .= '%#' . (i == tabpagenr() ? 'TabLineSel' : 'TabLine') . '#'
         let s .= no . ':' . title
@@ -387,7 +387,7 @@ autocmd MyAutoCmd FileType * call s:on_FileType_all()
 function! s:on_FileType_all()
     setlocal formatoptions-=r
     setlocal formatoptions-=o
-    if &l:omnifunc == ''
+    if empty(&l:omnifunc)
         setlocal omnifunc=syntaxcomplete#Complete
     endif
 endfunction
