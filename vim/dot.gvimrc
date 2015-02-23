@@ -10,30 +10,24 @@
 " see :help visualbell
 set t_vb=
 
-if g:is_darwin_p
-    " default: egmrL
-    set guioptions-=e
-    set guioptions-=g
-    set guioptions-=m
-    set guioptions-=r
-    set guioptions-=L
-    set guioptions+=c
+set guioptions-=e
+set guioptions-=g
+set guioptions-=m
+set guioptions-=r
+set guioptions-=L
+set guioptions+=c
 
+if g:is_darwin_p
+    " default guioptions: egmrL
     set guifont=Meslo\ LG\ M\ bold:h16
     set transparency=10
 
 elseif g:is_linux_p
-    " default: aegimrLtT
+    " default guioptions: aegimrLtT
     set guioptions-=a
-    set guioptions-=e
-    set guioptions-=g
     set guioptions-=i
-    set guioptions-=m
-    set guioptions-=r
-    set guioptions-=L
     set guioptions-=t
     set guioptions-=T
-    set guioptions+=c
 
     set guifont=Meslo\ LGM\ bold\ 14
     if filereadable(expand('~/.vim/local.gvimrc'))
