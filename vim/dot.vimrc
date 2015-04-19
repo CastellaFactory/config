@@ -140,6 +140,13 @@ function! s:toggle_fullscreen()  " {{{2
         endif
     endif
 endfunction  " 2}}}
+function! s:toggle_background_color()  " {{{2
+    if &background ==# 'light'
+        set background=dark
+    else
+        set background=light
+    endif
+endfunction  " 2}}}
 function! Preserve(command)  " {{{2
     let l:save_cursor = getpos('.')
     let l:save_win = winsaveview()
@@ -226,6 +233,7 @@ inoremap <F1>  <Nop>
 " <Space> stuffs  " {{{2
 nnoremap <silent> <Space>ow  :<C-u>setlocal wrap! wrap?<CR>
 nnoremap <silent> <Space>of  :<C-u>call <SID>toggle_fullscreen()<CR>
+nnoremap <silent> <Space>ob  :<C-u>call <SID>toggle_background_color()<CR>
 nnoremap <Space>sp  :<C-u>DeleteTrailingSpaces<CR>
 vnoremap <Space>sp  :DeleteTrailingSpaces<CR>
 nnoremap <silent> <Space>r  :<C-u>registers<CR>
