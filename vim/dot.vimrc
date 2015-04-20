@@ -71,6 +71,7 @@ set sidescrolloff=5
 set smartcase
 set smarttab
 set splitbelow splitright
+set statusline=%f\ %m%=%{(&fenc!=''?&fenc:&enc).':'.&ff}\|%l:%v\|%p%%
 set t_vb=
 set termencoding=utf-8
 set ttimeoutlen=50
