@@ -326,7 +326,6 @@ NeoBundleLazy 'junegunn/vim-easy-align', {
             \   'autoload' : {'mappings' : ['<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)']} }
 NeoBundleLazy 'kana/vim-altr', {
             \   'autoload' : {'mappings' : ['<Plug>(altr-forward)', '<Plug>(altr-back)']} }
-NeoBundleLazy 'kana/vim-fakeclip', { 'autoload' : {'terminal' : 1} }
 NeoBundleLazy 'kana/vim-filetype-haskell', {
             \   'autoload' : {'filetypes' : ['haskell']} }
 NeoBundleLazy 'kana/vim-operator-replace', {
