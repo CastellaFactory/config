@@ -538,7 +538,7 @@ function! s:bundle.hooks.on_source(bundle)
 
     let g:syntastic_cpp_checkers = ['gcc', 'cppcheck']
     let g:syntastic_cpp_compiler = 'clang++'
-    let g:syntastic_cpp_compiler_options = '-std=c++11 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-c++98-compat -Wno-missing-prototypes -fno-caret-diagnostics'
+    let g:syntastic_cpp_compiler_options = '-std=c++14 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-c++98-compat -Wno-missing-prototypes -fno-caret-diagnostics'
     let g:syntastic_cpp_no_default_include_dirs = 1
     let g:syntastic_cpp_no_include_search = 1
 
@@ -623,7 +623,7 @@ let g:quickrun_config = {
             \   },
             \   'cpp' : {
             \       'type' : 'cpp/clang++',
-            \       'cmdopt' : '-std=c++11 -fno-caret-diagnostics'
+            \       'cmdopt' : '-std=c++14 -fno-caret-diagnostics'
             \   },
             \   'ocaml' : {
             \       'runner' : 'system',
@@ -645,7 +645,7 @@ let g:quickrun_config = {
             \ },
             \   'cpp_compile' : {
             \       'command' : 'clang++',
-            \       'cmdopt' : '-std=c++11 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-c++98-compat -Wno-missing-prototypes -fno-caret-diagnostics',
+            \       'cmdopt' : '-std=c++14 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-c++98-compat -Wno-missing-prototypes -fno-caret-diagnostics',
             \       'exec' : '%c %o -o %s:r %s',
             \       'outputter/error/success' : 'null'
             \   },
