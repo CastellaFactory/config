@@ -3,5 +3,6 @@
         "C-g" : "peco.Cancel",
         "C-v" : "peco.SelectNextPage"
     },
+    "Prompt" : ">>",
     "InitialFilter" : "SmartCase"
 }
