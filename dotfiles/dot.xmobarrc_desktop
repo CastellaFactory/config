@@ -1,4 +1,4 @@
-Config {font = "xft:CodeM:bold:size=11:antialias=true,hinting=true,autohint=true"
+Config {font = "xft:SourceHanCodeJP:bold:size=11:antialias=true,hinting=true,autohint=true"
         , bgColor = "black"
         , fgColor = "white"
         , position = Top

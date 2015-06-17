@@ -51,7 +51,7 @@ myFocuseBorderColor = "#0033dd"
 
 myXPConfig :: XPConfig
 myXPConfig = defaultXPConfig {
-                font      = "xft:Meslo LGM:size=12:bold:antialial=true"
+                font      = "xft:SourceHanCodeJP:size=11:bold:antialial=true"
                 , height  = 24
                 , bgColor = "black"
                 , fgColor = "white"
@@ -117,10 +117,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_p     ), shellPrompt myXPConfig)
 
     -- Launch gmrun(Win+Shift+p)
-    , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
+    --, ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
 
     -- Launch dmenu(Win+Ctrl+p)
-    , ((modm .|. controlMask, xK_p   ), spawn "dmenu_run -fn 'CodeM-11:bold'")
+    --, ((modm .|. controlMask, xK_p   ), spawn "dmenu_run -fn 'SourceHanCodeJP-11:bold'")
 
     -- Close focused window(Win+Shift+c)
     , ((modm .|. shiftMask, xK_c     ), kill)

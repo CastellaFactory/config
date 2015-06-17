@@ -3,7 +3,7 @@
 eval $(cat ~/.fehbg) &
 kmix --keepvisibility &
 compton -b -C -G --config ~/.compton.conf &
-/usr/lib64/kde4/libexec/polkit-kde-authentication-agent-1 &
+(sleep 3; /usr/lib64/kde4/libexec/polkit-kde-authentication-agent-1) &
 
 fcitx &
 SpiderOak &
