@@ -323,6 +323,8 @@ NeoBundleLazy 'eagletmt/neco-ghc', {
             \   'autoload' : {'filetypes' : ['haskell']} }
 NeoBundleLazy 'eagletmt/unite-haddock', {
             \   'autoload' : {'unite_sources' : 'haddock'} }
+NeoBundleLazy 'fatih/vim-go', {
+            \   'autoload' : {'filetypes' : ['go']} }
 NeoBundleLazy 'junegunn/vim-easy-align', {
             \   'autoload' : {'mappings' : ['<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)']} }
 NeoBundleLazy 'kana/vim-altr', {
@@ -364,7 +366,7 @@ NeoBundleLazy 'Valloric/YouCompleteMe', {
             \       'mac' : 'git submodule update --init --recursive && ./install.sh --clang-completer --system-libclang'},
             \   'autoload' : {'insert' : 1, 'commands' : ['YcmCompleter']},
             \   'augroup' : 'youcompletemeStart' }
-NeoBundleLazy 'vim-jp/cpp-vim', {
+NeoBundleLazy 'vim-jp/vim-cpp', {
             \   'autoload' : {'filetypes' : ['cpp']} }
 NeoBundleLazy 'ocamlmerlin', {
             \   'base' : '~/.opam/system/share/merlin', 'directory' : 'vim',
