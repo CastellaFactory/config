@@ -350,6 +350,8 @@ NeoBundleLazy 'rhysd/vim-clang-format', {
             \   'autoload' : {'mappings' : ['<Plug>(operator-clang-format)']} }
 NeoBundleLazy 'rhysd/vim-operator-surround', {
             \   'autoload' : {'mappings' : ['<Plug>(operator-surround-']} }
+NeoBundleLazy 'rust-lang/rust.vim', {
+            \   'autoload' : {'filetypes' : ['rust']} }
 NeoBundleLazy 'scrooloose/syntastic', {
             \   'autoload' : {'commands' : ['SyntasticCheck']} }
 NeoBundleLazy 'Shougo/unite.vim', {
