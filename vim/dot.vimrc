@@ -636,11 +636,6 @@ let g:quickrun_config = {
             \       'type' : 'cpp/clang++',
             \       'cmdopt' : '-std=c++14 -fno-caret-diagnostics'
             \   },
-            \   'ocaml' : {
-            \       'runner' : 'system',
-            \       'cmdopt' : '-noprompt',
-            \       'exec' : 'TERM="" %c %o < %s'
-            \   },
             \   'tex' : {
             \       'command' : 'latexmk',
             \       'cmdopt' : '-pv',
