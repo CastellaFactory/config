@@ -19,7 +19,7 @@ set guioptions+=c
 
 if g:is_darwin_p
     " default guioptions: egmrL
-    set guifont=Meslo\ LG\ M\ bold:h16
+    set guifont=源ノ角ゴシック\ Code\ JP\ Bold:h15
     set transparency=10
 
 elseif g:is_linux_p
