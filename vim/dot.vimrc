@@ -346,6 +346,11 @@ NeoBundleLazy 'kana/vim-textobj-line', {
             \   'autoload' : {'mappings' : [ ['xo', 'al'], ['xo', 'il'] ]} }
 NeoBundleLazy 'kana/vim-textobj-syntax', {
             \   'autoload' : {'mappings' : [ ['xo', 'ay'], ['xo', 'iy'] ]} }
+NeoBundleLazy 'phildawes/racer', {
+            \   'build' : {
+            \       'mac' : 'cargo build --release',
+            \       'unix' : 'cargo build --release'},
+            \   'autoload' : {'filetypes' : ['rust']} }
 NeoBundleLazy 'rhysd/vim-clang-format', {
             \   'autoload' : {'mappings' : ['<Plug>(operator-clang-format)']} }
 NeoBundleLazy 'rhysd/vim-operator-surround', {
@@ -364,8 +369,8 @@ NeoBundleLazy 'ujihisa/unite-haskellimport', {
             \   'autoload' : {'unite_sources' : 'haskellimport'} }
 NeoBundleLazy 'Valloric/YouCompleteMe', {
             \   'build' : {
-            \       'unix' : 'git submodule update --init --recursive && ./install.sh --clang-completer --system-libclang',
-            \       'mac' : 'git submodule update --init --recursive && ./install.sh --clang-completer --system-libclang'},
+            \       'unix' : 'git submodule update --init --recursive && ./install.sh --clang-completer --system-libclang --gocode-completer',
+            \       'mac' : 'git submodule update --init --recursive && ./install.sh --clang-completer --system-libclang --gocode-completer'},
             \   'autoload' : {'insert' : 1, 'commands' : ['YcmCompleter']},
             \   'augroup' : 'youcompletemeStart' }
 NeoBundleLazy 'vim-jp/vim-cpp', {
@@ -549,6 +554,8 @@ function! s:bundle.hooks.on_source(bundle)
     let g:syntastic_haskell_checkers = ['ghc_mod', 'hlint']
     let g:syntastic_python_checkers = ['python', 'flake8']
     let g:syntastic_ruby_checkers = ['mri', 'rubylint', 'rubocop']
+    let g:syntastic_go_checkers = ['go', 'golint']
+    let g:syntastic_rust_checkers = ['rustc']
 endfunction
 unlet s:bundle
 " 2}}}
