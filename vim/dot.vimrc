@@ -653,18 +653,6 @@ let g:quickrun_config = {
             \       'args' : 'Marked\ 2',
             \       'exec' : '%c %o %a %s',
             \       'outputter/error/success' : 'null'
-            \ },
-            \   'cpp_compile' : {
-            \       'command' : 'clang++',
-            \       'cmdopt' : '-std=c++14 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-c++98-compat -Wno-missing-prototypes -fno-caret-diagnostics',
-            \       'exec' : '%c %o -o %s:r %s',
-            \       'outputter/error/success' : 'null'
-            \   },
-            \   'haskell_compile' : {
-            \       'command' : 'ghc',
-            \       'cmdopt' : '-O',
-            \       'exec' : '%c %o -o %s:r %s',
-            \       'outputter/error/success' : 'null'
             \   }
             \ }
 
