@@ -33,7 +33,7 @@ end
 
 
 namespace :common do
-  task :all => [:git, :vim, :zsh, :tmux, :OCaml, :Vimperator, :Tex]
+  task :all => [:git, :vim, :zsh, :tmux, :ocaml, :vimperator, :tex]
 
   task :git do
     make_symlink 'git/dot.gitconfig', "#{home}/.gitconfig"
@@ -81,24 +81,23 @@ namespace :common do
     make_symlink 'tmux/powerline', "#{home}/.config"
   end
 
-  task :OCaml do
-    make_symlink 'dotfiles/dot.ocamlinit', "#{home}/.ocamlinit"
+  task :ocaml do
+    make_symlink 'ocaml/dot.ocamlinit', "#{home}/.ocamlinit"
   end
 
-  task :Vimperator do
-    make_symlink 'dotfiles/dot.vimperatorrc', "#{home}/.vimperatorrc"
-    make_symlink 'dotfiles/dot.pentadactylrc', "#{home}/.pentadactylrc"
+  task :vimperator do
+    make_symlink 'vimperator/dot.vimperatorrc', "#{home}/.vimperatorrc"
   end
 
-  task :Tex do
-    make_symlink 'dotfiles/dot.latexmkrc', "#{home}/.latexmkrc"
+  task :tex do
+    make_symlink 'tex/dot.latexmkrc', "#{home}/.latexmkrc"
   end
 
 end
 
 namespace :linux do
   desc 'set up dotfiles for Linux'
-  task :setup => ['common:all', :tmux, :vim, :zsh, :xmodmap, :awesome, :xmonad, :X]
+  task :setup => ['common:all', :tmux, :vim, :zsh, :awesome, :xmonad, :X]
 
   task :tmux do
     make_symlink 'tmux/dot.tmux.conf.linux', "#{home}/.tmux.conf"
@@ -108,10 +107,6 @@ namespace :linux do
     make_symlink 'zsh/dot.zshenv.linux', "#{home}/.zsh/.zshenv"
     make_symlink 'zsh/dot.zprofile.linux', "#{home}/.zsh/.zprofile"
     make_symlink 'zsh/dot.zshrc.linux', "#{home}/.zsh/.zshrc.linux"
-  end
-
-  task :xmodmap do
-    make_symlink 'dotfiles/dot.Xmodmap', "#{home}/.Xmodmap"
   end
 
   task :awesome do
@@ -127,19 +122,20 @@ namespace :linux do
     end
     make_symlink 'xmonad/xmonad.hs', "#{home}/.xmonad/xmonad.hs"
     if File.directory? "/sys/class/power_supply/BAT0" then
-      make_symlink 'dotfiles/dot.xmobarrc_laptop', "#{home}/.xmobarrc"
+      make_symlink 'xmonad/dot.xmobarrc_laptop', "#{home}/.xmobarrc"
     else
-      make_symlink 'dotfiles/dot.xmobarrc_desktop', "#{home}/.xmobarrc"
+      make_symlink 'xmonad/dot.xmobarrc_desktop', "#{home}/.xmobarrc"
     end
-    make_symlink 'dotfiles/dot.stalonetrayrc', "#{home}/.stalonetrayrc"
-    make_symlink 'dotfiles/dot.fehbg', "#{home}/.fehbg"
+    make_symlink 'xmonad/dot.stalonetrayrc', "#{home}/.stalonetrayrc"
+    make_symlink 'xmonad/dot.fehbg', "#{home}/.fehbg"
   end
 
   task :X do
-    make_symlink 'dotfiles/dot.xprofile', "#{home}/.xprofile"
-    make_symlink 'dotfiles/dot.Xresources', "#{home}/.Xresources"
-    make_symlink 'dotfiles/dot.xsession', "#{home}/.xsession"
-    make_symlink 'dotfiles/dot.compton.conf', "#{home}/.compton.conf"
+    make_symlink 'X/dot.xprofile', "#{home}/.xprofile"
+    make_symlink 'X/dot.Xresources', "#{home}/.Xresources"
+    make_symlink 'X/dot.xsession', "#{home}/.xsession"
+    make_symlink 'X/dot.compton.conf', "#{home}/.compton.conf"
+    make_symlink 'X/dot.Xmodmap', "#{home}/.Xmodmap"
   end
 
 end
