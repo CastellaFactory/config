@@ -4,6 +4,5 @@ alias gvim='/usr/local/bin/mvim -u ~/.vim/vimrc -U ~/.vim/gvimrc -N'
 alias mvim='/usr/local/bin/mvim -u ~/.vim/vimrc -U ~/.vim/gvimrc -N'
 alias emacs='/usr/local/bin/emacs'
 alias vi='/Applications/MacVim.app/Contents/MacOS/Vim "$@" -u ~/.vim/vimrc -N'
-alias cabal='$HOME/.cabal/bin/cabal'
 
 # vim: ft=zsh
