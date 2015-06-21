@@ -482,6 +482,21 @@ map <silent>sd  <Plug>(operator-surround-delete)
 map <silent>sr  <Plug>(operator-surround-replace)
 " 3}}}
 " 2}}}
+" smartinput "{{{2
+let s:bundle = neobundle#get('vim-smartinput')
+function! s:bundle.hooks.on_post_source(bundle)
+    call smartinput#map_to_trigger('i', '<Space>', '<Space>', '<Space>')
+
+    call smartinput#define_rule({ 'at' : '\s\+\%#', 'char' : '<CR>', 'input' : "<C-o>:call setline('.', substitute(getline('.'), '\\s\\+$', '', '')) <Bar> echo 'delete trailing spaces'<CR><CR>" })
+    call smartinput#define_rule({ 'at' : '(\%#)', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
+    call smartinput#define_rule({ 'at' : '{\%#}', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
+    call smartinput#define_rule({ 'at' : '\[\%#\]', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
+    call smartinput#define_rule({ 'at' : '( \%# )', 'char' : '<BS>', 'input' : '<Del><BS>' })
+    call smartinput#define_rule({ 'at' : '{ \%# }', 'char' : '<BS>', 'input' : '<Del><BS>' })
+    call smartinput#define_rule({ 'at' : '\[ \%# \]', 'char' : '<BS>', 'input' : '<Del><BS>' })
+endfunction
+unlet s:bundle
+" 2}}}
 " submode  "{{{2
 call submode#enter_with('changetab', 'n', '', 'gt', 'gt')
 call submode#enter_with('changetab', 'n', '', 'gT', 'gT')
@@ -507,21 +522,6 @@ call submode#enter_with('move-to-fold', 'n', '', 'zj', 'zj')
 call submode#enter_with('move-to-fold', 'n', '', 'zk', 'zk')
 call submode#map('move-to-fold', 'n', '', 'j', 'zj')
 call submode#map('move-to-fold', 'n', '', 'k', 'zk')
-" 2}}}
-" smartinput "{{{2
-let s:bundle = neobundle#get('vim-smartinput')
-function! s:bundle.hooks.on_post_source(bundle)
-    call smartinput#map_to_trigger('i', '<Space>', '<Space>', '<Space>')
-
-    call smartinput#define_rule({ 'at' : '\s\+\%#', 'char' : '<CR>', 'input' : "<C-o>:call setline('.', substitute(getline('.'), '\\s\\+$', '', '')) <Bar> echo 'delete trailing spaces'<CR><CR>" })
-    call smartinput#define_rule({ 'at' : '(\%#)', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
-    call smartinput#define_rule({ 'at' : '{\%#}', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
-    call smartinput#define_rule({ 'at' : '\[\%#\]', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
-    call smartinput#define_rule({ 'at' : '( \%# )', 'char' : '<BS>', 'input' : '<Del><BS>' })
-    call smartinput#define_rule({ 'at' : '{ \%# }', 'char' : '<BS>', 'input' : '<Del><BS>' })
-    call smartinput#define_rule({ 'at' : '\[ \%# \]', 'char' : '<BS>', 'input' : '<Del><BS>' })
-endfunction
-unlet s:bundle
 " 2}}}
 " sonictemplate  " {{{2
 let g:sonictemplate_vim_template_dir = ['~/.vim/template']
