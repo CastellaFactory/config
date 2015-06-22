@@ -29,7 +29,7 @@ elseif g:is_linux_p
     set guioptions-=t
     set guioptions-=T
 
-    set guifont=源ノ角ゴシック\ Code\ JP\ Bold\ 11
+    set guifont=源ノ角ゴシック\ Code\ JP\ Heavy\ 11
     if filereadable(expand('~/.vim/local.gvimrc'))
         source ~/.vim/local.gvimrc
     endif
