@@ -97,8 +97,35 @@ end
 
 namespace :linux do
   desc 'set up dotfiles for Linux'
-  task :setup => ['common:all', :tmux, :vim, :zsh, :awesome, :xmonad, :X]
 
+  task :gentoo do
+    if File.file? "/etc/gentoo-release"
+      make_symlink 'gentoo/etc/eix-sync.conf', '/etc/eix-sync.conf'
+      make_symlink 'gentoo/etc/portage/make.conf', '/etc/portage/make.conf'
+      if File.directory? "/sys/class/power_supply/BAT0" then
+        make_symlink 'gentoo/etc/portage/make.conf_laptop', '/etc/portage/make.conf.local'
+      else
+        make_symlink 'gentoo/etc/portage/make.conf_desktop', '/etc/portage/make.conf.local'
+      end
+
+      make_symlink 'gentoo/etc/portage/package.accept_keywords', '/etc/portage/package.accept_keywords'
+      make_symlink 'gentoo/etc/portage/package.use', '/etc/portage/package.use'
+
+      unless File.directory? '/etc/portage/repos.conf'
+        mkdir_p '/etc/portage/repos.conf'
+      end
+      make_symlink 'gentoo/etc/portage/repos.conf/gentoo.conf', '/etc/portage/repos.conf/gentoo.conf'
+      make_symlink 'gentoo/etc/portage/repos.conf/layman.conf', '/etc/portage/repos.conf/layman.conf'
+      unless File.file? "/etc/portage/repos.conf/local.conf"
+        copy("#{$this_script_dir}/gentoo/etc/portage/repos.conf/local.conf", '/etc/portage/repos.conf/local.conf')
+        puts 'If you have local overlay, edit /etc/portage/repos.conf/local.conf.'
+      end
+    end
+  end
+
+
+  task :setup => ['common:all', :tmux, :vim, :zsh, :awesome, :xmonad, :X, :notification]
+ 
   task :tmux do
     make_symlink 'tmux/dot.tmux.conf.linux', "#{home}/.tmux.conf"
   end
@@ -138,6 +165,12 @@ namespace :linux do
     make_symlink 'X/dot.Xmodmap', "#{home}/.Xmodmap"
   end
 
+  task :notification do
+    puts '----------------------------------------------'
+    puts 'If you using gentoo, exec "sudo rake gentoo".'
+    puts '----------------------------------------------'
+  end
+
 end
 
 namespace :mac do
@@ -158,13 +191,14 @@ end
 
 case platform
 when /mswin(?!ce)|mingw|cygwin|bccwin/
-  raise 'Windows is not supported'
+  raise 'Windows is not supported.'
 when /linux/
   desc 'Linux'
   task :setup => ['linux:setup']
+  task :gentoo => ['linux:gentoo']
 when /darwin/
   desc 'MacOSX'
   task :setup => ['mac:setup']
 else
-  raise 'Unknown platform'
+  raise 'Unknown platform.'
 end

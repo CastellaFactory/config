@@ -1,0 +1,8 @@
+CPU_FLAGS_X86="aes avx avx2 fma3 mmx mmxext popcnt sse sse2 sse3 sse4_1 sse4_2 ssse3"
+
+MAKEOPTS="-j4"
+
+INPUT_DEVICES="mouse keyboard evdev synaptics"
+VIDEO_CARDS="intel i965"
+
+GRUB_PLATFORMS="emu efi-32 efi-64"

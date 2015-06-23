@@ -1,0 +1,54 @@
+# my packages
+app-backup/spideroak-bin ~amd64
+app-editors/emacs ~amd64
+app-editors/gvim ~amd64
+app-editors/vim ~amd64
+app-editors/vim-core ~amd64
+app-i18n/mozc ~amd64
+app-shells/fish ~amd64
+app-shells/gentoo-zsh-completions ~amd64
+app-text/calibre ~amd64
+dev-lang/go ~amd64
+dev-lang/ocaml ~amd64
+dev-lang/rust ~amd64
+dev-lang/smlnj ~amd64
+dev-ml/opam ~amd64
+dev-python/flake8 ~amd64
+dev-tex/dot2tex ~amd64
+dev-util/cmake ~amd64
+dev-util/cppcheck ~amd64
+dev-util/ninja ~amd64
+dev-util/re2c ~amd64
+media-fonts/ricty ~amd64
+media-fonts/source-han-sans ~amd64
+media-gfx/mcomix ~amd64
+net-im/skype ~amd64
+net-misc/dropbox ~amd64
+sys-apps/the_silver_searcher ~amd64
+sys-devel/bison ~amd64
+sys-devel/clang ~amd64
+sys-devel/flex ~amd64
+sys-devel/llvm ~amd64
+www-client/firefox ~amd64
+x11-misc/compton ~amd64
+x11-terms/rxvt-unicode ~amd64
+x11-wm/awesome ~amd64
+x11-wm/i3 ~amd64
+
+# Overlay
+# gentoo-haskell
+*/*::haskell ~amd64
+# gentoo-rust
+*/*::rust ~amd64
+
+# required by ricty (argument)
+>=media-fonts/mix-mplus-ipa-20130617 ~amd64
+
+# required by www-client/firefox-38.0.5::gentoo
+>=dev-libs/nss-3.19.1 ~amd64
+
+# required by app-i18n/mozc-2.16.2037.102::gentoo
+=app-i18n/tegaki-zinnia-japanese-0.3 ~amd64
+
+# required by iwl7260-ucode
+=sys-firmware/iwl7260-ucode-0.12.16.25 ~amd64
