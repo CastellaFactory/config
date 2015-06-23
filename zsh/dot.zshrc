@@ -77,19 +77,6 @@ zstyle ':completion:*:warnings' format '%F{RED}No matches for:''%F{YELLOW} %d'$D
 zstyle ':completion:*:options' description 'yes'
 # 1}}}
 
-# Functions  # {{{1
-function zsh-plugin-update() {
-    local cwd
-    cwd=$PWD
-    for plugin in `\ls $ZPLUGINDIR`; do
-        cd $ZPLUGINDIR/$plugin
-        git pull
-        cd ..
-    done
-    cd $cwd
-}
-# 1}}}
-
 # misc  # {{{1
 bindkey -e
 
