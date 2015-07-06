@@ -230,11 +230,14 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList
 {- 1}}} -}
 
 {- Layouts {{{1 -}
-myLayout = layoutHints
+myLayoutHook = layoutHints
            $ avoidStruts
            $ smartBorders . mkToggle (FULL ?? EOT)
            $ Mag.magnifiercz 1.3
-           $ Tall 1 (3/100) (1/2) ||| Grid
+           $ myLayout
+
+myLayout = Tall 1 (3/100) (1/2) 
+           ||| Grid
 
 {- 1}}} -}
 
