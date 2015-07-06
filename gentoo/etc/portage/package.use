@@ -21,6 +21,7 @@ x11-terms/rxvt-unicode blink wcwidth alt-font-width unicode3 fading-colors 256co
 
 # x86_32
 >=app-arch/bzip2-1.0.6-r6 abi_x86_32
+>=app-arch/lz4-0_p120 abi_x86_32
 >=dev-db/mysql-5.6.24 abi_x86_32
 >=dev-db/sqlite-3.8.10.1 abi_x86_32
 >=dev-lang/orc-0.4.23 abi_x86_32
@@ -68,6 +69,7 @@ x11-terms/rxvt-unicode blink wcwidth alt-font-width unicode3 fading-colors 256co
 >=net-print/cups-2.0.2-r1 abi_x86_32
 >=sys-apps/attr-2.4.47-r1 abi_x86_32
 >=sys-apps/dbus-1.8.16 abi_x86_32
+>=sys-apps/systemd-218-r3 abi_x86_32
 >=sys-apps/tcp-wrappers-7.6.22-r1 abi_x86_32
 >=sys-apps/util-linux-2.25.2-r2 abi_x86_32
 >=sys-libs/gpm-1.20.7-r2 abi_x86_32
