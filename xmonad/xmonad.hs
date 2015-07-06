@@ -333,8 +333,6 @@ defaults = defaultConfig {
               ((myModMask, xK_f), sendMessage $ Toggle FULL)
               , ((myModMask .|. controlMask,  xK_l), sendMessage $ Toggle FULL)
 
-              , ((myModMask, xK_b), sendMessage $ ToggleStruts)
-
               , ((myModMask, xK_o), runOrRaise "firefox" (className =? "Firefox"))
               , ((myModMask .|. shiftMask, xK_o), runOrRaise "thunderbird" (className =? "Thunderbird"))
 
