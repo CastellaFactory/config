@@ -2,6 +2,7 @@
 -- XMonad config
 ----------------------------------------------------------------------
 
+{- Import {{{1 -}
 -- import System.IO
 -- import XMonad.Layout
 -- import XMonad.Util.Run
@@ -30,8 +31,9 @@ import qualified Data.Map as M (Map, fromList)
 import qualified XMonad.Layout.Fullscreen as F (fullscreenEventHook, fullscreenManageHook)
 import qualified XMonad.Layout.Magnifier as Mag
 import qualified XMonad.StackSet as W
+{- 1}}} -}
 
--- mySetting
+{- mySetting {{{1 -}
 myTerminal          :: String
 myTerminal          = "urxvt"
 myFocusFollowsMouse :: Bool
@@ -101,8 +103,9 @@ myXPKeymap' p = M.fromList $
                 , (xK_Up, moveHistory W.focusDown')
                 , (xK_Escape, quit)
                 ]
+{- 1}}} -}
 
-------------------------------------------------------------------------
+{- Key bindings {{{1 -}
 -- Key bindings. Add, modify or remove key bindings here.
 -- see also `additionalKeys` at bottom of this file.
 --
@@ -201,9 +204,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
   ]
 
+{- 1}}} -}
 
-------------------------------------------------------------------------
-------------------------------------------------------------------------
+{- Mouse bindings {{{1 -}
 -- Mouse bindings: default actions bound to mouse events
 --
 myMouseBindings :: XConfig t -> M.Map (KeyMask, Button) (Window -> X())
@@ -224,20 +227,18 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList
 -- you may also bind events to the mouse scroll wheel (button4 and button5)
   ]
 
+{- 1}}} -}
 
-------------------------------------------------------------------------
--- Layouts:
---
+{- Layouts {{{1 -}
 myLayout = layoutHints
            $ avoidStruts
            $ smartBorders . mkToggle (FULL ?? EOT)
            $ Mag.magnifiercz 1.3
            $ Tall 1 (3/100) (1/2) ||| Grid
 
+{- 1}}} -}
 
-------------------------------------------------------------------------
--- Window rules:
---
+{- Window rules {{{1 -}
 myManageHook :: Query (Endo WindowSet)
 myManageHook = manageDocks <+> F.fullscreenManageHook
                <+> composeAll [
@@ -261,38 +262,25 @@ myManageHook = manageDocks <+> F.fullscreenManageHook
                , resource  =? "kdesktop"                              --> doIgnore
                ]
   where viewShift = doF . liftM2 (.) W.view W.shift
+{- 1}}} -}
 
-
-----------------------------------------------------------------------
--- Event handling
---
+{- Event handling {{{1 -}
 myEventHook :: Event -> X All
 myEventHook = F.fullscreenEventHook <+> hintsEventHook <+> docksEventHook <+> fadeWindowsEventHook
+{- 1}}} -}
 
-
-------------------------------------------------------------------------
--- Status bars and logging
---
+{- Status bars and logging {{{1 -}
 myLogHook :: X ()
-myLogHook  = ewmhDesktopsLogHook <+> fadeWindowsLogHook myFadeHook
+myLogHook = ewmhDesktopsLogHook <+> fadeWindowsLogHook myFadeHook
   where myFadeHook = composeAll [
                         opaque
                         , className =? "Gvim"     --> transparency 0.15
                         , className =? "Emacs"    --> transparency 0.15
                         -- , isUnfocused             --> transparency 0.50
                      ]
+{- 1}}} -}
 
-
-------------------------------------------------------------------------
--- Startup hook
---
-myStartupHook :: X ()
-myStartupHook = setWMName "LG3D"
-
-
-------------------------------------------------------------------------
--- xmobar
---
+{- xmobar {{{1 -}
 myBar :: String
 myBar = "xmobar"
 myPP :: PP
@@ -301,10 +289,16 @@ myPP = xmobarPP {
           ppCurrent   = xmobarColor "#429942" "" . wrap "[" "]"
           , ppLayout  = drop 7
        }
-toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
+-- toggleStrutsKey :: XConfig t -> (KeyMask, KeySym)
+toggleStrutsKey XConfig {XMonad.modMask = myModMask} = (myModMask, xK_b)
+{- 1}}} -}
 
+{- Startup hook {{{1 -}
+myStartupHook :: X ()
+myStartupHook = setWMName "LG3D"
+{- 1}}} -}
 
-------------------------------------------------------------------------
+{- main {{{1 -}
 main :: IO ()
 main = xmonad =<< statusBar myBar myPP toggleStrutsKey defaults
 
@@ -337,6 +331,8 @@ defaults = defaultConfig {
               ((myModMask, xK_f), sendMessage $ Toggle FULL)
               , ((myModMask .|. controlMask,  xK_l), sendMessage $ Toggle FULL)
 
+              , ((myModMask, xK_b), sendMessage $ ToggleStruts)
+
               , ((myModMask, xK_o), runOrRaise "firefox" (className =? "Firefox"))
               , ((myModMask .|. shiftMask, xK_o), runOrRaise "thunderbird" (className =? "Thunderbird"))
 
@@ -352,3 +348,6 @@ defaults = defaultConfig {
               , ((myModMask .|. controlMask , xK_colon), sendMessage Mag.MagnifyLess)
               , ((myModMask .|. controlMask , xK_z ), sendMessage Mag.Toggle )
            ]
+
+{- 1}}} -}
+
