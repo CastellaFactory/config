@@ -236,8 +236,7 @@ myLayoutHook = layoutHints
            $ Mag.magnifiercz 1.3
            $ myLayout
 
-myLayout = Tall 1 (3/100) (1/2) 
-           ||| Grid
+myLayout = Tall 1 (3/100) (1/2) ||| Grid
 
 {- 1}}} -}
 
@@ -321,7 +320,7 @@ defaults = defaultConfig {
                          , mouseBindings      = myMouseBindings
 
                          -- hooks, layouts
-                         , layoutHook         = myLayout
+                         , layoutHook         = myLayoutHook
                          , manageHook         = myManageHook
                          , handleEventHook    = myEventHook
                          , logHook            = myLogHook
