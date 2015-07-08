@@ -96,7 +96,7 @@ fi
 
 # peco  # {{{1
 # select-history  # {{{2
-function peco-select-history() {
+function peco-select_history() {
     local tac
     if which tac > /dev/null; then
         tac="tac"
@@ -109,7 +109,7 @@ function peco-select-history() {
     CURSOR=$#BUFFER
     zle clear-screen
 }
-zle -N peco-select-history
+zle -N peco-select_history
 # 2}}}
 # cdr  # {{{2
 function peco-cdr () {
@@ -135,9 +135,47 @@ function peco-dir_find() {
 }
 zle -N peco-dir_find
 # 2}}}
-bindkey '^r' peco-select-history
+# ghq  # {{{2
+function peco-ghq() {
+    local selected_dir=$(ghq list | peco --prompt 'ghq >' --query "$LBUFFER")
+    if [ -n "$selected_dir" ]; then
+        local ghq_root=$(git config ghq.root)
+        if [[ "$ghq_root" != "" ]] then
+            BUFFER="cd ${ghq_root}/${selected_dir}"
+            zle accept-line
+        else
+            echo "Set ghq root."
+        fi
+    fi
+    zle clear-screen
+}
+zle -N peco-ghq
+
+function peco-ghq_open() {
+    local open
+    case $OSTYPE in
+    darwin*)
+        open="open"
+        ;;
+    linux*)
+        open="xdg-open"
+        ;;
+    esac
+
+    local selected_repo=$(ghq list | peco --prompt 'ghq-open >' --query "$LBUFFER")
+    if [ -n "$selected_repo" ]; then
+        $open "https://${selected_repo}"
+    fi
+    zle clear-screen
+}
+zle -N peco-ghq_open
+# 2}}}
+
+bindkey '^r' peco-select_history
 bindkey '^@' peco-cdr
 bindkey '^x^f' peco-dir_find
+bindkey '^g' peco-ghq
+bindkey '^o' peco-ghq_open
 # 1}}}
 
 # OS specific settings  # {{{1

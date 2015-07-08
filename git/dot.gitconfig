@@ -10,5 +10,7 @@
 	default = simple
 [github]
 	user = CastellaFactory
+[ghq]
+	root = ~/Dev
 
 # vim: ft=gitconfig
