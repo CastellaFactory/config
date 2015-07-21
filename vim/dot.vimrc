@@ -309,7 +309,6 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'kana/vim-submode'
 NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'mattn/sonictemplate-vim'
 NeoBundle 'NLKNguyen/papercolor-theme'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vimproc.vim', {
@@ -528,9 +527,6 @@ call submode#enter_with('move-to-fold', 'n', '', 'zj', 'zj')
 call submode#enter_with('move-to-fold', 'n', '', 'zk', 'zk')
 call submode#map('move-to-fold', 'n', '', 'j', 'zj')
 call submode#map('move-to-fold', 'n', '', 'k', 'zk')
-" 2}}}
-" sonictemplate  " {{{2
-let g:sonictemplate_vim_template_dir = ['~/.vim/template']
 " 2}}}
 " Syntastic  " {{{2
 let s:bundle = neobundle#get('syntastic')

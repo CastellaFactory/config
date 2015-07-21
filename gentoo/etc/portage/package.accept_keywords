@@ -1,5 +1,8 @@
 # gcc
 =sys-devel/gcc-4.9.3 ~amd64
+# dropbox
+=net-misc/dropbox-2.10.41-r1 ~amd64
+
 # my packages
 app-backup/spideroak-bin ~amd64
 app-editors/emacs ~amd64
@@ -25,7 +28,6 @@ media-fonts/ricty ~amd64
 media-fonts/source-han-sans ~amd64
 media-gfx/mcomix ~amd64
 net-im/skype ~amd64
-net-misc/dropbox ~amd64
 sys-apps/the_silver_searcher ~amd64
 sys-devel/bison ~amd64
 sys-devel/clang ~amd64
