@@ -310,6 +310,7 @@ NeoBundle 'kana/vim-operator-user'
 NeoBundle 'kana/vim-submode'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'mattn/sonictemplate-vim'
+NeoBundle 'NLKNguyen/papercolor-theme'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/vimproc.vim', {
             \   'build' : {
