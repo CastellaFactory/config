@@ -11,6 +11,16 @@ Session.vim
 \#*\#
 *.elc
 
+# CMake
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+cmake_install.cmake
+
+# Ninja
+.ninja_deps
+.ninja_log
+
 # C, C++
 *.o
 *.a
