@@ -1,0 +1,7 @@
+# required by media-gfx/mcomix
+>=dev-lang/python-2.7.9-r1:2.7 sqlite
+
+# required by app-text/texlive-core
+>=media-libs/harfbuzz-0.9.38 icu
+
+

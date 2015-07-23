@@ -99,24 +99,39 @@ namespace :linux do
   desc 'set up dotfiles for Linux'
 
   task :gentoo do
-    if File.file? "/etc/gentoo-release"
+    if File.exist? "/etc/gentoo-release"
       make_symlink 'gentoo/etc/eix-sync.conf', '/etc/eix-sync.conf'
       make_symlink 'gentoo/etc/portage/make.conf', '/etc/portage/make.conf'
-      if File.directory? "/sys/class/power_supply/BAT0" then
+      if File.exist? "/sys/class/power_supply/BAT0" then
         make_symlink 'gentoo/etc/portage/make.conf_laptop', '/etc/portage/make.conf.local'
       else
         make_symlink 'gentoo/etc/portage/make.conf_desktop', '/etc/portage/make.conf.local'
       end
 
       make_symlink 'gentoo/etc/portage/package.accept_keywords', '/etc/portage/package.accept_keywords'
-      make_symlink 'gentoo/etc/portage/package.use', '/etc/portage/package.use'
+
+      unless File.directory? '/etc/portage/package.use'
+        if File.exist? '/etc/portage/package.use'
+          mv '/etc/portage/package.use', '/etc/portage/package.use.old'
+          puts 'Your package.use is moved to package.use.old.'
+        end
+        mkdir_p '/etc/portage/package.use'
+      end
+
+      make_symlink 'gentoo/etc/portage/package.use/my_package.use', '/etc/portage/package.use/my_package.use'
+      make_symlink 'gentoo/etc/portage/package.use/package.use', '/etc/portage/package.use/package.use'
+      if File.exist? "/sys/class/power_supply/BAT0" then
+        make_symlink 'gentoo/etc/portage/package.use/laptop.use', '/etc/portage/package.use/laptop.use'
+      else
+        make_symlink 'gentoo/etc/portage/package.use/desktop.use', '/etc/portage/package.use/desktop.use'
+      end
 
       unless File.directory? '/etc/portage/repos.conf'
         mkdir_p '/etc/portage/repos.conf'
       end
       make_symlink 'gentoo/etc/portage/repos.conf/gentoo.conf', '/etc/portage/repos.conf/gentoo.conf'
       make_symlink 'gentoo/etc/portage/repos.conf/layman.conf', '/etc/portage/repos.conf/layman.conf'
-      unless File.file? "/etc/portage/repos.conf/local.conf"
+      unless File.exist? "/etc/portage/repos.conf/local.conf"
         copy("#{$this_script_dir}/gentoo/etc/portage/repos.conf/local.conf", '/etc/portage/repos.conf/local.conf')
         puts 'If you have local overlay, edit /etc/portage/repos.conf/local.conf.'
       end

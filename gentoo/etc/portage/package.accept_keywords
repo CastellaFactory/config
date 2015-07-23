@@ -15,7 +15,6 @@ app-shells/gentoo-zsh-completions ~amd64
 app-text/calibre ~amd64
 dev-lang/go ~amd64
 dev-lang/ocaml ~amd64
-dev-lang/rust ~amd64
 dev-lang/smlnj ~amd64
 dev-ml/opam ~amd64
 dev-python/flake8 ~amd64
@@ -29,9 +28,7 @@ media-fonts/source-han-sans ~amd64
 media-gfx/mcomix ~amd64
 net-im/skype ~amd64
 sys-apps/the_silver_searcher ~amd64
-sys-devel/bison ~amd64
 sys-devel/clang ~amd64
-sys-devel/flex ~amd64
 sys-devel/llvm ~amd64
 www-client/firefox ~amd64
 x11-misc/compton ~amd64

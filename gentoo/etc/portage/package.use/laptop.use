@@ -1,28 +1,4 @@
-# my packages
-app-editors/emacs toolkit-scroll-bars
-app-editors/gvim cscope lua luajit python ruby gtk
-app-editors/vim cscope lua luajit python ruby
-app-i18n/mozc fcitx -ibus
-app-portage/layman mercurial
-app-text/texlive graphics metapost pstricks science dvipdfm publishers extra humanities luatex xetex
-app-text/texlive-core xetex
-dev-lang/ocaml -emacs
-dev-lang/rust clang
-dev-libs/protobuf -emacs
-dev-qt/qtwebkit icu
-dev-util/cppcheck -qt4
-media-gfx/graphviz python
-media-libs/mesa -llvm
-sys-devel/clang python
-sys-devel/llvm python clang
-sys-kernel/gentoo-sources symlink
-x11-misc/xmobar inotify timezone wifi
-x11-terms/rxvt-unicode blink wcwidth alt-font-width unicode3 fading-colors 256color -vanilla 256-color pixbuf buffer-on-clear
-
-# gentoo-rust
-dev-lang/rust::rust doc
-
-# x86_32
+# abi_x86_32
 >=app-arch/bzip2-1.0.6-r6 abi_x86_32
 >=app-arch/lz4-0_p120 abi_x86_32
 >=dev-db/mysql-5.6.24 abi_x86_32
@@ -110,18 +86,8 @@ dev-lang/rust::rust doc
 >=x11-proto/renderproto-0.11.1-r1 abi_x86_32
 >=x11-proto/scrnsaverproto-1.2.2-r1 abi_x86_32
 >=x11-proto/videoproto-2.3.2 abi_x86_32
->=x11-proto/xcb-proto-1.11 abi_x86_32 python_targets_python3_4
+>=x11-proto/xcb-proto-1.11 abi_x86_32
 >=x11-proto/xextproto-7.3.0 abi_x86_32
 >=x11-proto/xf86bigfontproto-1.2.0-r1 abi_x86_32
 >=x11-proto/xineramaproto-1.2.1-r1 abi_x86_32
 >=x11-proto/xproto-7.0.27 abi_x86_32
-
-
->=app-office/akonadi-server-1.13.0 soprano
->=dev-lang/python-2.7.9-r1:2.7 sqlite
->=dev-libs/libxml2-2.9.2-r1 icu
->=media-libs/phonon-4.7.2 designer
->=sys-devel/llvm-3.6.1 multitarget
->=sys-libs/zlib-1.2.8-r1 static-libs
->=media-libs/harfbuzz-0.9.38 icu
-

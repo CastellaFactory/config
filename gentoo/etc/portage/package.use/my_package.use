@@ -1,0 +1,20 @@
+app-editors/emacs toolkit-scroll-bars
+app-editors/gvim cscope lua luajit python ruby gtk
+app-editors/vim cscope lua luajit python ruby
+app-i18n/mozc fcitx -ibus
+app-portage/layman mercurial
+app-text/texlive graphics metapost pstricks science dvipdfm publishers extra humanities luatex
+dev-qt/qtwebkit icu
+dev-util/cppcheck -qt4
+media-gfx/graphviz python
+media-libs/mesa -llvm
+sys-devel/clang python
+sys-devel/llvm python clang
+sys-kernel/gentoo-sources symlink
+x11-misc/xmobar inotify timezone wifi
+x11-terms/rxvt-unicode blink wcwidth alt-font-width unicode3 fading-colors 256color -vanilla 256-color pixbuf buffer-on-clear
+
+# gentoo-rust
+dev-lang/rust::rust doc clang
+# required by rust[system-llvm] & cargo
+sys-devel/llvm multitarget
