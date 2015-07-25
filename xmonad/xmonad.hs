@@ -14,7 +14,7 @@ import System.Exit (exitSuccess)
 import XMonad
 import XMonad.Actions.WindowGo (runOrRaise)
 import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.EwmhDesktops (ewmhDesktopsLogHook)
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.FadeWindows
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers (isDialog, doCenterFloat)
@@ -273,7 +273,7 @@ myEventHook = F.fullscreenEventHook <+> hintsEventHook <+> docksEventHook <+> fa
 
 {- Status bars and logging {{{1 -}
 myLogHook :: X ()
-myLogHook = ewmhDesktopsLogHook <+> fadeWindowsLogHook myFadeHook
+myLogHook = fadeWindowsLogHook myFadeHook
   where myFadeHook = composeAll [
                         opaque
                         , className =? "Gvim"     --> transparency 0.15
@@ -304,7 +304,7 @@ myStartupHook = setWMName "LG3D"
 main :: IO ()
 main = xmonad =<< statusBar myBar myPP toggleStrutsKey defaults
 
-defaults = defaultConfig {
+defaults = ewmh defaultConfig {
                          -- simple stuff
                          terminal             = myTerminal
                          , focusFollowsMouse  = myFocusFollowsMouse
