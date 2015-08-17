@@ -34,6 +34,7 @@ end
 
 namespace :common do
   task :all => [:git, :vim, :zsh, :tmux, :ocaml, :vimperator, :tex]
+  task :nox => [:git, :vim, :zsh, :tmux, :ocaml]
 
   task :git do
     make_symlink 'git/dot.gitconfig', "#{home}/.gitconfig"
@@ -139,7 +140,8 @@ namespace :linux do
   end
 
 
-  task :setup => ['common:all', :tmux, :vim, :zsh, :awesome, :xmonad, :X, :notification]
+  task :setup => ['common:all', :tmux, :zsh, :awesome, :xmonad, :X, :notification]
+  task :setup_nox => ['common:nox', :tmux, :zsh, :notification]
  
   task :tmux do
     make_symlink 'tmux/dot.tmux.conf.linux', "#{home}/.tmux.conf"
@@ -210,6 +212,7 @@ when /mswin(?!ce)|mingw|cygwin|bccwin/
 when /linux/
   desc 'Linux'
   task :setup => ['linux:setup']
+  task :setup_nox => ['linux:setup_nox']
   task :gentoo => ['linux:gentoo']
 when /darwin/
   desc 'MacOSX'
