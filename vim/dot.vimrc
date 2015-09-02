@@ -369,8 +369,8 @@ NeoBundleLazy 'ujihisa/unite-haskellimport', {
             \   'autoload' : {'unite_sources' : 'haskellimport'} }
 NeoBundleLazy 'Valloric/YouCompleteMe', {
             \   'build' : {
-            \       'unix' : 'git submodule update --init --recursive && ./install.sh --clang-completer --system-libclang --gocode-completer',
-            \       'mac' : 'git submodule update --init --recursive && ./install.sh --clang-completer --system-libclang --gocode-completer'},
+            \       'unix' : 'git submodule update --init --recursive && ./install.py --clang-completer --system-libclang --gocode-completer',
+            \       'mac' : 'git submodule update --init --recursive && ./install.py --clang-completer --system-libclang --gocode-completer'},
             \   'autoload' : {'insert' : 1, 'commands' : ['YcmCompleter']},
             \   'augroup' : 'youcompletemeStart' }
 NeoBundleLazy 'vim-jp/vim-cpp', {
