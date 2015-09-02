@@ -1,7 +1,5 @@
 # gcc
 =sys-devel/gcc-4.9.3 ~amd64
-# dropbox
-=net-misc/dropbox-2.10.41-r1 ~amd64
 
 # my packages
 app-backup/spideroak-bin ~amd64
@@ -50,5 +48,11 @@ x11-wm/i3 ~amd64
 # required by app-i18n/mozc-2.16.2037.102::gentoo
 =app-i18n/tegaki-zinnia-japanese-0.3 ~amd64
 
-# required by iwl7260-ucode
-=sys-firmware/iwl7260-ucode-0.12.16.25 ~amd64
+# required by www-client/firefox-40.0.3::gentoo
+# required by @selected
+# required by @world (argument)
+=media-libs/libpng-1.6.18 ~amd64
+# required by dev-lang/go-1.5::gentoo
+# required by @selected
+# required by @world (argument)
+=dev-lang/go-bootstrap-1.4.2 ~amd64
