@@ -315,6 +315,7 @@ NeoBundle 'Shougo/vimproc.vim', {
             \   'build' : {
             \       'mac' : 'make -f make_mac.mak',
             \       'unix' : 'make -f make_unix.mak'} }
+NeoBundle 'SirVer/ultisnips'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundleLazy 'eagletmt/ghcmod-vim', {
@@ -346,11 +347,6 @@ NeoBundleLazy 'kana/vim-textobj-line', {
             \   'autoload' : {'mappings' : [ ['xo', 'al'], ['xo', 'il'] ]} }
 NeoBundleLazy 'kana/vim-textobj-syntax', {
             \   'autoload' : {'mappings' : [ ['xo', 'ay'], ['xo', 'iy'] ]} }
-NeoBundleLazy 'phildawes/racer', {
-            \   'build' : {
-            \       'mac' : 'cargo build --release',
-            \       'unix' : 'cargo build --release'},
-            \   'autoload' : {'filetypes' : ['rust']} }
 NeoBundleLazy 'rhysd/vim-clang-format', {
             \   'autoload' : {'mappings' : ['<Plug>(operator-clang-format)']} }
 NeoBundleLazy 'rhysd/vim-operator-surround', {
@@ -361,8 +357,8 @@ NeoBundleLazy 'scrooloose/syntastic', {
             \   'autoload' : {'commands' : ['SyntasticCheck']} }
 NeoBundleLazy 'Shougo/unite.vim', {
             \   'autoload' : {'commands' : [{'name' : 'Unite', 'complete' : 'customlist,unite#complete#source'}]} }
-NeoBundleLazy 'SirVer/ultisnips', {
-            \   'autoload' : {'functions' : ['UltiSnips#FileTypeChanged']} }
+NeoBundleLazy 'the-lambda-church/merlin', {
+            \   'rtp' : 'vim', 'autoload' : {'filetypes' : ['ocaml']} }
 NeoBundleLazy 'tyru/caw.vim', {
             \   'autoload' : {'mappings' : ['<Plug>(caw:']} }
 NeoBundleLazy 'ujihisa/unite-haskellimport', {
@@ -375,9 +371,10 @@ NeoBundleLazy 'Valloric/YouCompleteMe', {
             \   'augroup' : 'youcompletemeStart' }
 NeoBundleLazy 'vim-jp/vim-cpp', {
             \   'autoload' : {'filetypes' : ['cpp']} }
-NeoBundleLazy 'ocamlmerlin', {
-            \   'base' : '~/.opam/system/share/merlin', 'directory' : 'vim',
-            \   'type' : 'nosync', 'autoload' : {'filetypes' : ['ocaml']} }
+NeoBundleFetch 'phildawes/racer', {
+            \   'build' : {
+            \       'mac' : 'cargo build --release',
+            \       'unix' : 'cargo build --release'}}
 NeoBundleFetch 'powerline/powerline'
 " 2}}}
 call neobundle#end()
@@ -557,15 +554,11 @@ endfunction
 unlet s:bundle
 " 2}}}
 " UltiSnips  "{{{2
-let s:bundle = neobundle#get('ultisnips')
-function! s:bundle.hooks.on_source(bundle)
-    let g:UltiSnipsSnippetDirectories = ['ultisnips-snippets']
-    let g:UltiSnipsExpandTrigger = '<C-k>'
-    let g:UltiSnipsJumpForwardTrigger = '<C-k>'
-    let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
-    let g:snips_author = 'Castella'
-endfunction
-unlet s:bundle
+let g:UltiSnipsSnippetDirectories = ['ultisnips-snippets']
+let g:UltiSnipsExpandTrigger = '<C-k>'
+let g:UltiSnipsJumpForwardTrigger = '<C-k>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
+let g:snips_author = 'Castella'
 " 2}}}
 " unite  " {{{2
 nnoremap <Space>ub  :<C-u>Unite buffer<CR>

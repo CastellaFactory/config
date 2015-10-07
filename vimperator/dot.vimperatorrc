@@ -11,7 +11,9 @@ set visualbell
 set! security.dialog_enable_delay=0
 set! browser.tabs.closeWindowWithLastTab=false
 set! general.useragent.locale=ja
-
+" for youtube HTML5 player
+set! media.mediasource.enabled=true
+set! media.mediasource.webm.enabled=true
 " }}}
 
 " {{{ key mappings

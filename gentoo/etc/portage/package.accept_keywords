@@ -1,6 +1,3 @@
-# gcc
-=sys-devel/gcc-4.9.3 ~amd64
-
 # my packages
 app-backup/spideroak-bin ~amd64
 app-editors/emacs ~amd64

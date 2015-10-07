@@ -60,6 +60,7 @@
 >=virtual/libffi-3.0.13-r1 abi_x86_32
 >=virtual/libiconv-0-r2 abi_x86_32
 >=virtual/libintl-0-r1 abi_x86_32
+>=virtual/libmysqlclient-18 abi_x86_32
 >=virtual/mysql-5.6-r2 abi_x86_32
 >=virtual/pkgconfig-0-r1 abi_x86_32
 >=x11-libs/libICE-1.0.9 abi_x86_32
