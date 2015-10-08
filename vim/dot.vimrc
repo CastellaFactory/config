@@ -459,18 +459,16 @@ autocmd MyAutoCmd FileType c,cpp
 
 let s:bundle = neobundle#get('vim-clang-format')
 function! s:bundle.hooks.on_source(bundle)
-    " based on Google style. see clang-format-HEAD -dump-config -style='{BasedOnStyle: Google}'
-    let g:clang_format#command = executable('clang-format-3.6') ? 'clang-format-3.6' : 'clang-format'
+    " clang-format -style=google -dump-config 
+    let g:clang_format#command = executable('clang-format-3.7') ? 'clang-format-3.7' : 'clang-format'
     let g:clang_format#style_options = {
                 \   'AccessModifierOffset' : -4,
-                \   'AllowShortFunctionsOnASingleLine': 'Inline',
                 \   'AllowShortIfStatementsOnASingleLine' : 'false',
                 \   'AllowShortLoopsOnASingleLine' : 'false',
+                \   'BreakBeforeBinaryOperators' : 'NonAssignment',
                 \   'BreakBeforeBraces' : 'Stroustrup',
-                \   'ColumnLimit' : 120,
                 \   'IndentCaseLabels' : 'false',
-                \   'IndentWidth' : 4,
-                \   'Standard' : 'Cpp11'
+                \   'IndentWidth' : 4
                 \ }
 endfunction
 unlet s:bundle
@@ -578,7 +576,6 @@ let g:neomru#directory_mru_limit = 100
 let s:bundle = neobundle#get('unite.vim')
 function! s:bundle.hooks.on_source(bundle)
     let g:unite_enable_start_insert = 1
-    let g:unite_force_overwrite_statusline = 0
 
     let g:unite_source_grep_command = 'ag'
     let g:unite_source_grep_default_opts = '--nocolor --nogroup'
@@ -640,11 +637,6 @@ let g:quickrun_config = {
             \       'outputter/error/success' : 'null'
             \   }
             \ }
-
-autocmd MyAutoCmd FileType cpp
-            \   nnoremap <buffer> <Leader>R  :<C-u>QuickRun cpp_compile<CR>
-autocmd MyAutoCmd FileType haskell
-            \   nnoremap <buffer> <Leader>R  :<C-u>QuickRun haskell_compile<CR>
 " 2}}}
 " 1}}}
 
