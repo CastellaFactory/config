@@ -1,0 +1,11 @@
+*.bin
+*.swp
+*.bak
+*.old
+*.zip
+*.tar.gz
+*.jpeg
+*.png
+*.gif
+.git
+.hg

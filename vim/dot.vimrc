@@ -18,6 +18,32 @@ language messages C
 let g:is_darwin_p = has('mac') || has('macunix')
 let g:is_linux_p = !g:is_darwin_p && has('unix')
 
+function! MyEnv()
+    let env = {}
+    let dot_vim_dir = fnamemodify(expand('$HOME/.vim'), ':p')
+    let env = {
+                \   'path' : {
+                \       'user' : dot_vim_dir,
+                \       'bundle' : dot_vim_dir . 'bundle',
+                \       'neobundle' : dot_vim_dir . 'bundle/neobundle.vim',
+                \       'vimrc' : dot_vim_dir . 'vimrc',
+                \       'local_vimrc' : dot_vim_dir . 'local.vimrc',
+                \       'backup' : dot_vim_dir . 'backups',
+                \       'undo' : dot_vim_dir . 'undo'
+                \   },
+                \   'compiler' : {
+                \       'c' : executable('clang-3.7') ? 'clang-3.7' : 'clang',
+                \       'cpp' : executable('clang++-3.7') ? 'clang++-3.7' : 'clang++'
+                \   },
+                \   'formatter' : {
+                \       'cpp' : executable('clang-format-3.7') ? 'clang-format-3.7' : 'clang-format'
+                \   }
+                \ }
+
+    return env
+endfunction
+let s:env = has_key(s:, 'env') ? s:env : MyEnv()
+
 function! s:SID_PREFIX()
     return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
 endfunction
@@ -27,7 +53,7 @@ set ambiwidth=double
 set autoindent
 set autoread
 set backspace=indent,eol,start
-set backupdir=~/.vim/backups
+let &backupdir = s:env.path.backup
 if exists('+breakindent')
     set breakindent
 endif
@@ -38,7 +64,7 @@ else
 endif
 set cmdheight=2
 set completeopt=menuone,preview
-set directory=~/.vim/backups
+let &directory = &backupdir
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8,cp932
@@ -76,7 +102,7 @@ set t_vb=
 set termencoding=utf-8
 set ttimeoutlen=50
 set ttyfast
-set undodir=~/.vim/undo
+let &undodir = s:env.path.undo
 set virtualedit=block
 set visualbell
 set whichwrap=b,s,h,l,[,],<,>,~
@@ -114,11 +140,14 @@ function! s:cd_to_current_buffer_dir()  " {{{2
     pwd
 endfunction  " 2}}}
 function! s:cd_to_git_root_dir()  " {{{2
+    let save_dir = fnamemodify(getcwd(), ':p')
+    lcd %:p:h
     if (system('git rev-parse --is-inside-work-tree') =~# '^\<true')
         lcd `=fnamemodify(system('git rev-parse --show-toplevel'), ':p')`
         pwd
     else
         echohl ErrorMsg | echomsg 'This file is not inside git tree.' | echohl none
+        lcd save_dir
     endif
 endfunction  " 2}}}
 function! s:toggle_fullscreen()  " {{{2
@@ -149,32 +178,32 @@ function! s:toggle_background_color()  " {{{2
     endif
 endfunction  " 2}}}
 function! Preserve(command)  " {{{2
-    let l:save_cursor = getpos('.')
-    let l:save_win = winsaveview()
-    let l:save_search = @/
+    let save_cursor = getpos('.')
+    let save_win = winsaveview()
+    let save_search = @/
     try
         execute a:command
     finally
-        call setpos('.', l:save_cursor)
-        call winrestview(l:save_win)
-        let @/ = l:save_search
+        call setpos('.', save_cursor)
+        call winrestview(save_win)
+        let @/ = save_search
     endtry
 endfunction  " 2}}}
-" AllMaps - :map in all modes " {{{2
+" AllMaps  " {{{2
 command! -nargs=* -complete=mapping AllMaps map <args> | map! <args> | lmap <args>
 " 2}}}
 " DeleteTrailingSpaces  " {{{2
 command! -bar -range=% DeleteTrailingSpaces call Preserve('<line1>,<line2>s/\s\+$//ceg')
 " 2}}}
-" Objmap - wrapper for textobj mapping  " {{{2
-command! -nargs=+ Objmap execute 'omap' <q-args> | execute 'vmap' <q-args>
-command! -nargs=+ Objnoremap execute 'onoremap' <q-args> | execute 'vnoremap' <q-args>
-command! -nargs=+ Objunmap execute 'ounmap' <q-args> | execute 'vunmap' <q-args>
+" Ovmap  " {{{2
+command! -nargs=+ Ovmap execute 'omap' <q-args> | execute 'vmap' <q-args>
+command! -nargs=+ Ovnoremap execute 'onoremap' <q-args> | execute 'vnoremap' <q-args>
+command! -nargs=+ Ovunmap execute 'ounmap' <q-args> | execute 'vunmap' <q-args>
 " 2}}}
-" Operatormap - wrapper for operator mapping  " {{{2
-command! -nargs=+ Operatormap  execute 'nmap' <q-args> | execute 'vmap' <q-args>
-command! -nargs=+ Operatornoremap  execute 'nnoremap' <q-args> | execute 'vnoremap' <q-args>
-command! -nargs=+ Operatorunmap execute 'nunmap' <q-args> | execute 'vunmap' <q-args>
+" Nvmap  " {{{2
+command! -nargs=+ Nvmap  execute 'nmap' <q-args> | execute 'vmap' <q-args>
+command! -nargs=+ Nvnoremap  execute 'nnoremap' <q-args> | execute 'vnoremap' <q-args>
+command! -nargs=+ Nvunmap execute 'nunmap' <q-args> | execute 'vunmap' <q-args>
 " 2}}}
 " SuspendWithAutomaticCD  " {{{2
 command! -bar SuspendWithAutomaticCD  call s:cmd_SuspendWithAutomaticCD()
@@ -183,12 +212,12 @@ function! s:cmd_SuspendWithAutomaticCD()
         call system('open -a iTerm ' . shellescape(getcwd()))
     elseif has('gui_running') && g:is_linux_p
         call system('urxvt -cd ' . shellescape(getcwd()) . ' &')
-    elseif exists('$TMUX')    " this vim is running in tmux
-        let l:shell_name = split(&shell, '/')[-1]    " zsh, bash, etc...
-        let l:windows = split(system('tmux list-windows'), '\n')
+    elseif exists('$TMUX')
+        let shell_name = split(&shell, '/')[-1]
+        let windows = split(system('tmux list-windows'), '\n')
         call map(windows, 'split(v:val, "^\\d\\+\\zs:\\s")')
         call filter(windows, 'matchstr(v:val[1], "\\w\\+") ==# shell_name')    " looking for shell_name runnnig windows
-        let l:select_command = empty(windows) ? 'new-window' : 'select-window -t ' . windows[0][0]
+        let select_command = empty(windows) ? 'new-window' : 'select-window -t ' . windows[0][0]
         " to avoid adding cd to cmdline history, add 'setopt hist_ignore_space' to zshrc and
         " add spaces before 'cd'
         call system('tmux ' . select_command . '&&' . 'tmux send-keys C-u \ cd\ ' . shellescape(getcwd()) . ' C-m C-l')
@@ -217,10 +246,10 @@ if g:is_linux_p && executable('fcitx-remote')
     autocmd MyAutoCmd InsertLeave * call system('fcitx-remote -c')
 endif
 
-" follow symbolic link (don't use $MYVIMRC)
-nnoremap <Space>.  :<C-u>edit `=resolve(fnamemodify("~/.vim/vimrc", ':p'))`<CR>
-nnoremap <Space>t.  :<C-u>tabnew `=resolve(fnamemodify("~/.vim/vimrc", ':p'))`<CR>
-nnoremap <Space>s.  :<C-u>source `=resolve(fnamemodify("~/.vim/vimrc", ':p'))`<CR>
+" $MYVIMRC is not set, since vim launched with -u option
+execute 'nnoremap <Space>. :<C-u>edit' resolve(s:env.path.vimrc) . '<CR>'
+execute 'nnoremap <Space>t. :<C-u>tabnew' resolve(s:env.path.vimrc) . '<CR>'
+execute 'nnoremap <Space>s. :<C-u>source' resolve(s:env.path.vimrc) . '<CR>'
 " 2}}}
 " help  " {{{2
 nnoremap <C-h>  :<C-u>help<Space>
@@ -259,12 +288,9 @@ cnoremap <expr> /  getcmdtype() == '/' ? '\/' : '/'
 " misc  " {{{2
 " select last changed text (like gv p.146)
 nnoremap gc  `[v`]
-Objnoremap gc  :<C-u>normal gc<CR>
+Ovnoremap gc  :<C-u>normal gc<CR>
 
-Objnoremap gv  :<C-u>normal! gv<CR>
-
-Objnoremap ir  i<
-Objnoremap ar  a<
+Ovnoremap gv  :<C-u>normal! gv<CR>
 
 nnoremap <silent> <Space>cd  :<C-u>call <SID>cd_to_current_buffer_dir()<CR>
 nnoremap <silent> <Space>cgd  :<C-u>call <SID>cd_to_git_root_dir()<CR>
@@ -296,12 +322,12 @@ call s:command_abbrev('t', 'tabedit')
 " NeoBundle  " {{{1
 " Basic  " {{{2
 if has('vim_starting')
-    set runtimepath+=~/.vim/bundle/neobundle.vim/
+    execute 'set runtimepath+=' . s:env.path.neobundle
 endif
 
 let g:neobundle#install_process_timeout = 2000
 
-call neobundle#begin(expand('~/.vim/bundle/'))
+call neobundle#begin(s:env.path.bundle)
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 " 2}}}
@@ -311,10 +337,7 @@ NeoBundle 'kana/vim-submode'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'NLKNguyen/papercolor-theme'
 NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'Shougo/vimproc.vim', {
-            \   'build' : {
-            \       'mac' : 'make -f make_mac.mak',
-            \       'unix' : 'make -f make_unix.mak'} }
+NeoBundle 'Shougo/vimproc.vim', { 'build' : {'others' : 'make'} }
 NeoBundle 'SirVer/ultisnips'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tpope/vim-fugitive'
@@ -357,24 +380,20 @@ NeoBundleLazy 'scrooloose/syntastic', {
             \   'autoload' : {'commands' : ['SyntasticCheck']} }
 NeoBundleLazy 'Shougo/unite.vim', {
             \   'autoload' : {'commands' : [{'name' : 'Unite', 'complete' : 'customlist,unite#complete#source'}]} }
-NeoBundleLazy 'the-lambda-church/merlin', {
-            \   'rtp' : 'vim', 'autoload' : {'filetypes' : ['ocaml']} }
 NeoBundleLazy 'tyru/caw.vim', {
             \   'autoload' : {'mappings' : ['<Plug>(caw:']} }
-NeoBundleLazy 'ujihisa/unite-haskellimport', {
-            \   'autoload' : {'unite_sources' : 'haskellimport'} }
 NeoBundleLazy 'Valloric/YouCompleteMe', {
             \   'build' : {
-            \       'unix' : 'git submodule update --init --recursive && ./install.py --clang-completer --system-libclang --gocode-completer',
-            \       'mac' : 'git submodule update --init --recursive && ./install.py --clang-completer --system-libclang --gocode-completer'},
+            \       'others' : 'git submodule update --init --recursive && ./install.py --clang-completer --system-libclang --gocode-completer'},
             \   'autoload' : {'insert' : 1, 'commands' : ['YcmCompleter']},
             \   'augroup' : 'youcompletemeStart' }
 NeoBundleLazy 'vim-jp/vim-cpp', {
             \   'autoload' : {'filetypes' : ['cpp']} }
+NeoBundleLazy 'ocamlmerlin', {
+            \   'base' : '~/.opam/system/share/merlin', 'directory' : 'vim',
+            \   'type' : 'nosync', 'autoload' : {'filetypes' : ['ocaml']} }
 NeoBundleFetch 'phildawes/racer', {
-            \   'build' : {
-            \       'mac' : 'cargo build --release',
-            \       'unix' : 'cargo build --release'}}
+            \   'build' : {'others' : 'cargo build --release'} }
 NeoBundleFetch 'powerline/powerline'
 " 2}}}
 call neobundle#end()
@@ -401,7 +420,7 @@ autocmd MyAutoCmd FileType * call s:on_FileType_all()
 function! s:on_FileType_all()
     setlocal formatoptions-=r
     setlocal formatoptions-=o
-    if empty(&l:omnifunc)
+    if empty(&omnifunc)
         setlocal omnifunc=syntaxcomplete#Complete
     endif
 endfunction
@@ -430,14 +449,13 @@ let g:caw_i_sp_blank = ' '
 
 nmap <Leader>co  <Plug>(caw:jump:comment-next)
 nmap <Leader>cO  <Plug>(caw:jump:comment-prev)
-nmap <Leader>cc  <Plug>(caw:i:toggle)
-vmap <Leader>cc  <Plug>(caw:i:toggle)
-nmap <Leader>ca  <Plug>(caw:a:toggle)
-nmap <Leader>cw  <Plug>(caw:wrap:toggle)
+nmap <Leader>ci  <Plug>(caw:i:comment)
+nmap <Leader>ca  <Plug>(caw:a:comment)
+Nvmap <Leader>cc  <Plug>(caw:i:toggle)
 " 2}}}
 " easy-align  " {{{2
-Operatormap <Leader>ea  <Plug>(EasyAlign)
-Operatormap <Leader>lea  <Plug>(LiveEasyAlign)
+Nvmap <Leader>ea  <Plug>(EasyAlign)
+Nvmap <Leader>lea  <Plug>(LiveEasyAlign)
 " 2}}}
 " fugitive  " {{{2
 nnoremap <Leader>gs  :<C-u>Gstatus<CR>
@@ -454,13 +472,12 @@ autocmd MyAutoCmd FileType haskell
 " 2}}}
 "  operator  " {{{2
 " operator-clang-format  " {{{3
-autocmd MyAutoCmd FileType c,cpp
-            \   execute 'map <buffer> <Leader>x  <Plug>(operator-clang-format)'
+autocmd MyAutoCmd FileType c,cpp map <buffer> <Leader>x  <Plug>(operator-clang-format)
 
 let s:bundle = neobundle#get('vim-clang-format')
 function! s:bundle.hooks.on_source(bundle)
-    " clang-format -style=google -dump-config 
-    let g:clang_format#command = executable('clang-format-3.7') ? 'clang-format-3.7' : 'clang-format'
+    " clang-format -style=google -dump-config
+    let g:clang_format#command = s:env.formatter.cpp
     let g:clang_format#style_options = {
                 \   'AccessModifierOffset' : -4,
                 \   'AllowShortIfStatementsOnASingleLine' : 'false',
@@ -528,26 +545,21 @@ let s:bundle = neobundle#get('syntastic')
 function! s:bundle.hooks.on_source(bundle)
     let g:syntastic_always_populate_loc_list = 1
     let g:syntastic_enable_highlighting = 0
-    let g:syntastic_cppcheck_config_file = '~/.vim/syntastic_config/cppcheck'
+    let g:syntastic_cppcheck_config_file = s:env.path.user . 'syntastic_config/cppcheck'
     let g:syntastic_mode_map = {'mode': 'passive'}
 
     let g:syntastic_c_checkers = ['gcc', 'cppcheck']
     let g:syntastic_c_compier = 'clang'
-    let g:syntastic_c_compiler_options = '-std=c99 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-missing-prototypes -fno-caret-diagnostics'
-    let g:syntastic_c_no_default_include_dirs = 1
-    let g:syntastic_c_no_include_search = 1
+    let g:syntastic_c_compiler_options = '-std=c99 -Weverything -Wno-system-headers'
 
     let g:syntastic_cpp_checkers = ['gcc', 'cppcheck']
     let g:syntastic_cpp_compiler = 'clang++'
-    let g:syntastic_cpp_compiler_options = '-std=c++14 -Weverything -Wno-system-headers -Wno-missing-variable-declarations -Wno-c++98-compat -Wno-missing-prototypes -fno-caret-diagnostics'
-    let g:syntastic_cpp_no_default_include_dirs = 1
-    let g:syntastic_cpp_no_include_search = 1
+    let g:syntastic_cpp_compiler_options = '-std=c++14 -Weverything -Wno-system-headers -Wno-c++98-compat'
 
     let g:syntastic_haskell_checkers = ['ghc_mod', 'hlint']
     let g:syntastic_python_checkers = ['python', 'flake8']
     let g:syntastic_ruby_checkers = ['mri', 'rubylint', 'rubocop']
     let g:syntastic_go_checkers = ['go', 'golint']
-    let g:syntastic_rust_checkers = ['rustc']
 endfunction
 unlet s:bundle
 " 2}}}
@@ -556,22 +568,15 @@ let g:UltiSnipsSnippetDirectories = ['ultisnips-snippets']
 let g:UltiSnipsExpandTrigger = '<C-k>'
 let g:UltiSnipsJumpForwardTrigger = '<C-k>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
-let g:snips_author = 'Castella'
 " 2}}}
 " unite  " {{{2
 nnoremap <Space>ub  :<C-u>Unite buffer<CR>
 nnoremap <Space>um  :<C-u>Unite neomru/file<CR>
 nnoremap <Space>uf  :<C-u>Unite file<CR>
 nnoremap <Space>urm  :<C-u>UniteResume<CR>
-nnoremap <Space>unnb  :<C-u>Unite neobundle<CR>
 nnoremap <Space>ug   :<C-u>Unite grep:. <CR>
 nnoremap ,g  :<C-u>Unite grep:. <CR><C-r><C-w><CR>
 nnoremap  <Space>up  :<C-u>Unite buffer file_rec/async:!<CR>
-
-" neomru
-let g:neomru#file_mru_limit = 300
-let g:neomru#file_mru_ignore_pattern = 'COMMIT_EDITMSG\|\/doc\/.\+\.\(txt\|jax\)$'
-let g:neomru#directory_mru_limit = 100
 
 let s:bundle = neobundle#get('unite.vim')
 function! s:bundle.hooks.on_source(bundle)
@@ -592,7 +597,7 @@ autocmd MyAutoCmd FileType c,cpp
 
 let s:bundle = neobundle#get('YouCompleteMe')
 function! s:bundle.hooks.on_source(bundle)
-    let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_default/ycm_extra_conf.py'
+    let g:ycm_global_ycm_extra_conf = s:env.path.user . 'ycm_default/ycm_extra_conf.py'
     let g:ycm_autoclose_preview_window_after_insertion = 1
     let g:ycm_show_diagnostics_ui = 0
     let g:ycm_confirm_extra_conf = 0
@@ -617,11 +622,13 @@ let g:quickrun_config = {
             \   },
             \   'c' : {
             \       'type' : 'c/clang',
-            \       'cmdopt' : '-std=c99 -fno-caret-diagnostics'
+            \       'command' : s:env.compiler.c,
+            \       'cmdopt' : '-std=c99'
             \   },
             \   'cpp' : {
             \       'type' : 'cpp/clang++',
-            \       'cmdopt' : '-std=c++14 -fno-caret-diagnostics'
+            \       'command' : s:env.compiler.cpp,
+            \       'cmdopt' : '-std=c++14'
             \   },
             \   'tex' : {
             \       'command' : 'latexmk',
@@ -640,8 +647,8 @@ let g:quickrun_config = {
 " 2}}}
 " 1}}}
 
-if filereadable(expand('~/.vim/local.vimrc'))
-    source ~/.vim/local.vimrc
+if filereadable(s:env.path.local_vimrc)
+    source `=s:env.path.local_vimrc`
 endif
 
 set secure

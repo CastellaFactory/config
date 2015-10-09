@@ -33,8 +33,8 @@ end
 
 
 namespace :common do
-  task :all => [:git, :vim, :zsh, :tmux, :ocaml, :vimperator, :tex]
-  task :nox => [:git, :vim, :zsh, :tmux, :ocaml]
+  task :all => [:git, :vim, :zsh, :tmux, :ocaml, :vimperator, :tex, :ag]
+  task :nox => [:git, :vim, :zsh, :tmux, :ocaml, :ag]
 
   task :git do
     make_symlink 'git/dot.gitconfig', "#{home}/.gitconfig"
@@ -92,6 +92,10 @@ namespace :common do
 
   task :tex do
     make_symlink 'tex/dot.latexmkrc', "#{home}/.latexmkrc"
+  end
+
+  task :ag do
+    make_symlink 'ag/dot.agignore', "#{home}/.agignore"
   end
 
 end
