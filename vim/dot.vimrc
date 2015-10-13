@@ -370,6 +370,10 @@ NeoBundleLazy 'kana/vim-textobj-line', {
             \   'autoload' : {'mappings' : [ ['xo', 'al'], ['xo', 'il'] ]} }
 NeoBundleLazy 'kana/vim-textobj-syntax', {
             \   'autoload' : {'mappings' : [ ['xo', 'ay'], ['xo', 'iy'] ]} }
+NeoBundleLazy 'leafgarland/typescript-vim', {
+            \   'autoload' : {'filetypes' : ['typescript']} }
+NeoBundleLazy 'Quramy/tsuquyomi', {
+            \   'autoload' : {'functions' : 'tsuquyomi#'} }
 NeoBundleLazy 'rhysd/vim-clang-format', {
             \   'autoload' : {'mappings' : ['<Plug>(operator-clang-format)']} }
 NeoBundleLazy 'rhysd/vim-operator-surround', {
@@ -603,7 +607,7 @@ function! s:bundle.hooks.on_source(bundle)
     let g:ycm_confirm_extra_conf = 0
     let g:ycm_min_num_identifier_candidate_chars = 4
     let g:ycm_seed_identifiers_with_syntax = 1
-    let g:ycm_semantic_triggers = {'haskell' : ['.']}
+    let g:ycm_semantic_triggers = {'haskell' : ['.'], 'rust' : ['.', '::'], 'typescript' : ['.']}
 endfunction
 unlet s:bundle
 " 2}}}
