@@ -21,6 +21,7 @@ let g:is_linux_p = !g:is_darwin_p && has('unix')
 function! MyEnv()
     let env = {}
     let dot_vim_dir = fnamemodify(expand('$HOME/.vim'), ':p')
+    let ghq_root = substitute(system('ghq root'), '\n\+$', '', '')
     let env = {
                 \   'path' : {
                 \       'user' : dot_vim_dir,
@@ -31,15 +32,20 @@ function! MyEnv()
                 \       'backup' : dot_vim_dir . 'backups',
                 \       'undo' : dot_vim_dir . 'undo'
                 \   },
-                \   'compiler' : {
-                \       'c' : executable('clang-3.7') ? 'clang-3.7' : 'clang',
-                \       'cpp' : executable('clang++-3.7') ? 'clang++-3.7' : 'clang++'
-                \   },
-                \   'formatter' : {
-                \       'cpp' : executable('clang-format-3.7') ? 'clang-format-3.7' : 'clang-format'
+                \   'language' : {
+                \       'c' : {
+                \           'compiler' : executable('clang-3.7') ? 'clang-3.7' : 'clang'
+                \       },
+                \       'cpp' : {
+                \           'compiler' : executable('clang++-3.7') ? 'clang++-3.7' : 'clang++',
+                \           'formatter' : executable('clang-format-3.7') ? 'clang-format-3.7' : 'clang-format'
+                \       },
+                \       'rust' : {
+                \           'src' : ghq_root . '/github.com/rust-lang/rust/src',
+                \           'racer' : dot_vim_dir . 'bundle/racer/target/release/racer'
+                \       }
                 \   }
                 \ }
-
     return env
 endfunction
 let s:env = has_key(s:, 'env') ? s:env : MyEnv()
@@ -372,6 +378,8 @@ NeoBundleLazy 'kana/vim-textobj-syntax', {
             \   'autoload' : {'mappings' : [ ['xo', 'ay'], ['xo', 'iy'] ]} }
 NeoBundleLazy 'leafgarland/typescript-vim', {
             \   'autoload' : {'filetypes' : ['typescript']} }
+NeoBundleLazy 'racer-rust/vim-racer', {
+            \   'autoload' : {'filetypes' : ['rust']} }
 NeoBundleLazy 'Quramy/tsuquyomi', {
             \   'autoload' : {'functions' : 'tsuquyomi#'} }
 NeoBundleLazy 'rhysd/vim-clang-format', {
@@ -481,7 +489,7 @@ autocmd MyAutoCmd FileType c,cpp map <buffer> <Leader>x  <Plug>(operator-clang-f
 let s:bundle = neobundle#get('vim-clang-format')
 function! s:bundle.hooks.on_source(bundle)
     " clang-format -style=google -dump-config
-    let g:clang_format#command = s:env.formatter.cpp
+    let g:clang_format#command = s:env.language.cpp.formatter
     let g:clang_format#style_options = {
                 \   'AccessModifierOffset' : -4,
                 \   'AllowShortIfStatementsOnASingleLine' : 'false',
@@ -502,6 +510,15 @@ map <silent>sa  <Plug>(operator-surround-append)
 map <silent>sd  <Plug>(operator-surround-delete)
 map <silent>sr  <Plug>(operator-surround-replace)
 " 3}}}
+" 2}}}
+" racer "{{{2
+let s:bundle = neobundle#get('vim-racer')
+function! s:bundle.hooks.on_source(bundle)
+    let g:racer_cmd = s:env.language.rust.racer
+    let $RUST_SRC_PATH = s:env.language.rust.src
+    let g:racer_experimental_completer = 1
+endfunction
+unlet s:bundle
 " 2}}}
 " smartinput "{{{2
 let s:bundle = neobundle#get('vim-smartinput')
@@ -626,12 +643,12 @@ let g:quickrun_config = {
             \   },
             \   'c' : {
             \       'type' : 'c/clang',
-            \       'command' : s:env.compiler.c,
+            \       'command' : s:env.language.c.compiler,
             \       'cmdopt' : '-std=c99'
             \   },
             \   'cpp' : {
             \       'type' : 'cpp/clang++',
-            \       'command' : s:env.compiler.cpp,
+            \       'command' : s:env.language.cpp.compiler,
             \       'cmdopt' : '-std=c++14'
             \   },
             \   'tex' : {
