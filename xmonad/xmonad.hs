@@ -41,15 +41,15 @@ myFocusFollowsMouse = False
 myClickJustFocuses  :: Bool
 myClickJustFocuses  = False
 myBorderWidth :: Dimension
-myBorderWidth       = 1
+myBorderWidth       = 2
 myModMask           :: KeyMask
 myModMask           = mod4Mask
 myWorkspaces        :: [String]
 myWorkspaces        = ["1:General","2:Web","3:Code","4:Skype","5:Reading","6:Media","7:Office","8","9"]
 myNormalBorderColor :: String
-myNormalBorderColor = "#99ccff"
+myNormalBorderColor = "blue"
 myFocuseBorderColor :: String
-myFocuseBorderColor = "#0033dd"
+myFocuseBorderColor = "orange"
 
 myXPConfig :: XPConfig
 myXPConfig = defaultXPConfig {
