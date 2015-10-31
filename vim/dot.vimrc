@@ -355,12 +355,12 @@ NeoBundleLazy 'eagletmt/unite-haddock', {
             \   'autoload' : {'unite_sources' : 'haddock'} }
 NeoBundleLazy 'fatih/vim-go', {
             \   'autoload' : {'filetypes' : ['go']} }
+NeoBundleLazy 'itchyny/vim-haskell-indent', {
+            \   'autoload' : {'filetypes' : ['haskell']} }
 NeoBundleLazy 'junegunn/vim-easy-align', {
             \   'autoload' : {'mappings' : ['<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)']} }
 NeoBundleLazy 'kana/vim-altr', {
             \   'autoload' : {'mappings' : ['<Plug>(altr-forward)', '<Plug>(altr-back)']} }
-NeoBundleLazy 'kana/vim-filetype-haskell', {
-            \   'autoload' : {'filetypes' : ['haskell']} }
 NeoBundleLazy 'kana/vim-operator-replace', {
             \   'autoload' : {'mappings' : ['<Plug>(vim-operator-replace)']} }
 NeoBundleLazy 'kana/vim-smartinput', { 'autoload' : {'insert' : 1} }
