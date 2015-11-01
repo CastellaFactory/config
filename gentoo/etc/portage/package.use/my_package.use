@@ -10,7 +10,7 @@ dev-util/cppcheck -qt4
 media-gfx/graphviz python
 media-libs/mesa -llvm
 sys-devel/clang python
-sys-devel/llvm python clang
+sys-devel/llvm python clang gold
 sys-kernel/gentoo-sources symlink
 www-client/firefox gstreamer
 x11-misc/xmobar inotify timezone wifi
