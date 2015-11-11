@@ -380,6 +380,8 @@ NeoBundleLazy 'leafgarland/typescript-vim', {
             \   'autoload' : {'filetypes' : ['typescript']} }
 NeoBundleLazy 'racer-rust/vim-racer', {
             \   'autoload' : {'filetypes' : ['rust']} }
+NeoBundleLazy 'rhysd/devdocs.vim', {
+            \   'autoload' : {'mappings' : ['<Plug>(devdocs-under-cursor)']}}
 NeoBundleLazy 'rhysd/vim-clang-format', {
             \   'autoload' : {'mappings' : ['<Plug>(operator-clang-format)']} }
 NeoBundleLazy 'rhysd/vim-operator-surround', {
@@ -462,6 +464,9 @@ nmap <Leader>cO  <Plug>(caw:jump:comment-prev)
 nmap <Leader>ci  <Plug>(caw:i:comment)
 nmap <Leader>ca  <Plug>(caw:a:comment)
 Nvmap <Leader>cc  <Plug>(caw:i:toggle)
+" 2}}}
+" devdocs  " {{{2
+autocmd MyAutoCmd FileType c,cpp,rust,haskell nmap <buffer> K <Plug>(devdocs-under-cursor)
 " 2}}}
 " easy-align  " {{{2
 Nvmap <Leader>ea  <Plug>(EasyAlign)
