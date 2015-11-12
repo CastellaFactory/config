@@ -659,13 +659,6 @@ let g:quickrun_config = {
             \       'cmdopt' : '-pv',
             \       'exec' : '%c %o %s',
             \       'outputter/error/success' : 'null'
-            \   },
-            \   'markdown' : {
-            \       'command' : 'open',
-            \       'cmdopt' : '-a',
-            \       'args' : 'Marked\ 2',
-            \       'exec' : '%c %o %a %s',
-            \       'outputter/error/success' : 'null'
             \   }
             \ }
 " 2}}}
