@@ -12,7 +12,7 @@ media-libs/mesa -llvm
 sys-devel/clang python
 sys-devel/llvm python clang
 sys-kernel/gentoo-sources symlink
-www-client/firefox gstreamer
+www-client/firefox gstreamer -gtk3
 x11-misc/xmobar inotify timezone wifi
 x11-terms/rxvt-unicode blink wcwidth alt-font-width unicode3 fading-colors 256color -vanilla 256-color pixbuf buffer-on-clear
 
