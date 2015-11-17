@@ -351,8 +351,6 @@ NeoBundleLazy 'eagletmt/ghcmod-vim', {
             \   'autoload' : {'filetypes' : ['haskell']} }
 NeoBundleLazy 'eagletmt/neco-ghc', {
             \   'autoload' : {'filetypes' : ['haskell']} }
-NeoBundleLazy 'eagletmt/unite-haddock', {
-            \   'autoload' : {'unite_sources' : 'haddock'} }
 NeoBundleLazy 'fatih/vim-go', {
             \   'autoload' : {'filetypes' : ['go']} }
 NeoBundleLazy 'itchyny/vim-haskell-indent', {
