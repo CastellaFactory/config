@@ -384,8 +384,9 @@ call plug#end()
 
 " Colorscheme, Highlight  " {{{1
 if !exists('g:colors_name')
-     colorscheme PaperColor
-     set background=dark
+    let g:mycolor_termtrans = 1
+    colorscheme mycolor
+    set background=dark
 endif
 " 1}}}
 
