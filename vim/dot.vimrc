@@ -586,7 +586,6 @@ endfunction
 unlet s:bundle
 " 2}}}
 " UltiSnips  "{{{2
-let g:UltiSnipsSnippetDirectories = ['ultisnips-snippets']
 let g:UltiSnipsExpandTrigger = '<C-k>'
 let g:UltiSnipsJumpForwardTrigger = '<C-k>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-j>'

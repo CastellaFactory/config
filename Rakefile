@@ -33,8 +33,8 @@ end
 
 
 namespace :common do
-  task :all => [:git, :vim, :zsh, :tmux, :ocaml, :vimperator, :tex, :ag]
-  task :nox => [:git, :vim, :zsh, :tmux, :ocaml, :ag]
+  task :all => [:git, :vim, :neovim, :zsh, :tmux, :ocaml, :vimperator, :tex, :ag]
+  task :nox => [:git, :vim, :neovim, :zsh, :tmux, :ocaml, :ag]
 
   task :git do
     make_symlink 'git/dot.gitconfig', "#{home}/.gitconfig"
@@ -60,7 +60,25 @@ namespace :common do
       end
     end
   end
+  
+  task :neovim do
+    unless File.directory? "#{home}/.config/nvim"
+      mkdir_p "#{home}/.config/nvim"
+      mkdir "#{home}/.config/nvim/undo"
+      mkdir "#{home}/.config/nvim/backups"
+      ln_sf "#{home}/.config/nvim", "#{home}/nvim"
+    end
 
+    make_symlink 'neovim/init.vim', "#{home}/.config/nvim/init.vim"
+    ln_sf "#{home}/.config/nvim/init.vim", "#{home}/.config/nvim/nvimrc"
+
+    next unless installed? 'curl'
+    unless File.directory? "#{home}/.config/nvim/plugged"
+      mkdir "#{home}/.config/nvim/plugged"
+      sh "curl -fLo #{home}/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    end
+  end
+  
   task :zsh do
     unless File.directory? "#{home}/.zsh"
       mkdir "#{home}/.zsh"
