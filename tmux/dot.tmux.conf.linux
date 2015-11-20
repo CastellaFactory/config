@@ -80,10 +80,7 @@ bind -r C-k resize-pane -U 6
 bind -r s swap-pane -U
 
 ##+------ mouse settings -----+##
-set-window-option -g mode-mouse on
-set-option -g mouse-select-window on
-set-option -g mouse-select-pane on
-set-option -g mouse-resize-pane on
+set-option -g mouse on
 
 ##+----- powerline -----+##
 source ~/.config/powerline/tmux_powerline.conf
