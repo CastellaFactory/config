@@ -42,7 +42,7 @@ function! MyEnv()
                 \       },
                 \       'rust' : {
                 \           'src' : ghq_root . '/github.com/rust-lang/rust/src',
-                \           'racer' : dot_vim_dir . 'bundle/racer/target/release/racer'
+                \           'racer' : ghq_root . '/github.com/phildawes/racer/target/release/racer'
                 \       }
                 \   }
                 \ }
