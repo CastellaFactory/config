@@ -12,7 +12,6 @@ let g:is_linux_p = !g:is_darwin_p && has('unix')
 function! MyEnv()
     let env = {}
     let dot_nvim_dir = fnamemodify(expand('$HOME/.config/nvim'), ':p')
-    let dot_vim_dir = fnamemodify(expand('$HOME/.vim'), ':p')
     let ghq_root = substitute(system('ghq root'), '\n\+$', '', '')
     let env = {
                 \   'path' : {
@@ -33,7 +32,7 @@ function! MyEnv()
                 \       },
                 \       'rust' : {
                 \           'src' : ghq_root . '/github.com/rust-lang/rust/src',
-                \           'racer' : dot_vim_dir . 'bundle/racer/target/release/racer'
+                \           'racer' : ghq_root . '/github.com/phildawes/racer/target/release/racer'
                 \       }
                 \   }
                 \ }
@@ -62,7 +61,9 @@ endif
 set cmdheight=2
 set completeopt=menuone,preview
 let &directory = &backupdir
-set encoding=utf-8
+if has('vim_starting')
+    set encoding=utf-8
+endif
 set fileencoding=utf-8
 set fileencodings=utf-8,cp932
 set foldenable
@@ -333,35 +334,35 @@ Plug 'kana/vim-textobj-syntax'
 Plug 'kana/vim-textobj-user'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'Shougo/neomru.vim'
-Plug 'Shougo/vimproc.vim', {'build': 'make'}
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'thinca/vim-quickrun'
 Plug 'tpope/vim-fugitive'
-Plug 'eagletmt/ghcmod-vim', {'for': 'haskell'}
-Plug 'eagletmt/neco-ghc', {'for': 'haskell'}
-Plug 'fatih/vim-go', {'for': 'go'}
-Plug 'itchyny/vim-haskell-indent', {'for': 'haskell'}
-Plug 'junegunn/vim-easy-align', {'on': ['<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)']}
-Plug 'kana/vim-altr', {'on': ['<Plug>(altr-forward)','<Plug>(altr-back)']}
+Plug 'eagletmt/ghcmod-vim', {'for' : 'haskell'}
+Plug 'eagletmt/neco-ghc', {'for' : 'haskell'}
+Plug 'fatih/vim-go', {'for' : 'go'}
+Plug 'itchyny/vim-haskell-indent', {'for' : 'haskell'}
+Plug 'junegunn/vim-easy-align', {'on' : ['<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)']}
+Plug 'kana/vim-altr', {'on' : ['<Plug>(altr-forward)', '<Plug>(altr-back)']}
 Plug 'kana/vim-operator-replace'
-Plug 'kana/vim-smartinput', {'on': []}
-Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
-Plug 'racer-rust/vim-racer', {'for': 'rust'}
-Plug 'rhysd/devdocs.vim', {'on': '<Plug>(devdocs-under-cursor)'}
-Plug 'rhysd/vim-clang-format', {'on': '<Plug>(operator-clang-format)'}
-Plug 'rhysd/vim-operator-surround', {'on': ['<Plug>(operator-surround-append)',
+Plug 'kana/vim-smartinput', {'on' : []}
+Plug 'leafgarland/typescript-vim', {'for' : 'typescript'}
+Plug 'racer-rust/vim-racer', {'for' : 'rust'}
+Plug 'rhysd/devdocs.vim', {'on' : '<Plug>(devdocs-under-cursor)'}
+Plug 'rhysd/vim-clang-format', {'on' : '<Plug>(operator-clang-format)'}
+Plug 'rhysd/vim-operator-surround', {'on' : ['<Plug>(operator-surround-append)',
             \   '<Plug>(operator-surround-delete)', '<Plug>(operator-surround-replace)']}
-Plug 'rust-lang/rust.vim', {'for': 'rust'}
-Plug 'scrooloose/syntastic', {'on': 'SyntasticCheck'}
-Plug 'Shougo/unite.vim', {'on': 'Unite'}
-Plug 'SirVer/ultisnips', {'on': []}
-Plug 'tyru/caw.vim', {'on': ['<Plug>(caw:i:toggle)', '<Plug>(caw:a:comment)',
+Plug 'rust-lang/rust.vim', {'for' : 'rust'}
+Plug 'scrooloose/syntastic', {'on' : 'SyntasticCheck'}
+Plug 'Shougo/unite.vim', {'on' : 'Unite'}
+Plug 'SirVer/ultisnips', {'on' : []}
+Plug 'tyru/caw.vim', {'on' : ['<Plug>(caw:i:toggle)', '<Plug>(caw:a:comment)',
             \   '<Plug>(caw:i:comment)', '<Plug>(caw:jump:comment-prev)',
             \   '<Plug>(caw:jump:comment-next)']}
 Plug 'Valloric/YouCompleteMe', {
-            \   'build': 'git submodule update --init --recursive && ./install.py --clang-completer --system-libclang --gocode-completer',
-            \   'on': []}
-Plug 'vim-jp/vim-cpp', {'for': 'cpp'}
-" Plug 'ocamlmerlin'
+            \   'do' : 'git submodule update --init --recursive && ./install.py --clang-completer --system-libclang --gocode-completer',
+            \   'on' : []}
+Plug 'vim-jp/vim-cpp', {'for' : 'cpp'}
+Plug '~/.opam/system/share/merlin/vim', {'for' : 'ocaml'}
 " 2}}}
 " LazyLoading  " {{{2
 augroup Load-InsertEnter
@@ -377,7 +378,7 @@ augroup Load-FileTypeChanged
 augroup END
 
 autocmd! User YouCompleteMe call youcompleteme#Enable()
-autocmd! User vim-smartinput call SmartInput()
+autocmd! User vim-smartinput call s:smartinput()
 " 2}}}
 call plug#end()
 " 1}}}
@@ -478,7 +479,7 @@ let $RUST_SRC_PATH = s:env.language.rust.src
 let g:racer_experimental_completer = 1
 " " 2}}}
 " smartinput "{{{2
-function! SmartInput()
+function! s:smartinput()
     call smartinput#map_to_trigger('i', '<Space>', '<Space>', '<Space>')
 
     call smartinput#define_rule({ 'at' : '\s\+\%#', 'char' : '<CR>', 'input' : "<C-o>:call setline('.', substitute(getline('.'), '\\s\\+$', '', '')) <Bar> echo 'delete trailing spaces'<CR><CR>" })
