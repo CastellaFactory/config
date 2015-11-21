@@ -25,8 +25,7 @@ function! MyEnv()
     let env = {
                 \   'path' : {
                 \       'user' : dot_vim_dir,
-                \       'bundle' : dot_vim_dir . 'bundle',
-                \       'neobundle' : dot_vim_dir . 'bundle/neobundle.vim',
+                \       'bundle' : dot_vim_dir . 'plugged',
                 \       'vimrc' : dot_vim_dir . 'vimrc',
                 \       'local_vimrc' : dot_vim_dir . 'local.vimrc',
                 \       'backup' : dot_vim_dir . 'backups',
@@ -325,91 +324,73 @@ call s:command_abbrev('w!!', 'w !sudo tee % > /dev/null')
 call s:command_abbrev('t', 'tabedit')
 " 1}}}
 
-" NeoBundle  " {{{1
+" vim-plug  " {{{1
 " Basic  " {{{2
-if has('vim_starting')
-    execute 'set runtimepath+=' . s:env.path.neobundle
-endif
-
-let g:neobundle#install_process_timeout = 2000
-
-call neobundle#begin(s:env.path.bundle)
-
-NeoBundleFetch 'Shougo/neobundle.vim'
+let g:plug_timeout = 120
+call plug#begin(s:env.path.bundle)
 " 2}}}
 " Bundles  " {{{2
-NeoBundle 'kana/vim-operator-user'
-NeoBundle 'kana/vim-submode'
-NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'NLKNguyen/papercolor-theme'
-NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'Shougo/vimproc.vim', { 'build' : {'others' : 'make'} }
-NeoBundle 'SirVer/ultisnips'
-NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundleLazy 'eagletmt/ghcmod-vim', {
-            \   'autoload' : {'filetypes' : ['haskell']} }
-NeoBundleLazy 'eagletmt/neco-ghc', {
-            \   'autoload' : {'filetypes' : ['haskell']} }
-NeoBundleLazy 'fatih/vim-go', {
-            \   'autoload' : {'filetypes' : ['go']} }
-NeoBundleLazy 'itchyny/vim-haskell-indent', {
-            \   'autoload' : {'filetypes' : ['haskell']} }
-NeoBundleLazy 'junegunn/vim-easy-align', {
-            \   'autoload' : {'mappings' : ['<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)']} }
-NeoBundleLazy 'kana/vim-altr', {
-            \   'autoload' : {'mappings' : ['<Plug>(altr-forward)', '<Plug>(altr-back)']} }
-NeoBundleLazy 'kana/vim-operator-replace', {
-            \   'autoload' : {'mappings' : ['<Plug>(vim-operator-replace)']} }
-NeoBundleLazy 'kana/vim-smartinput', { 'autoload' : {'insert' : 1} }
-NeoBundleLazy 'kana/vim-textobj-entire', {
-            \   'autoload' : {'mappings' : [ ['xo', 'ae'], ['xo', 'ie'] ]} }
-NeoBundleLazy 'kana/vim-textobj-fold', {
-            \   'autoload' : {'mappings' : [ ['xo', 'az'], ['xo', 'iz'] ]} }
-NeoBundleLazy 'kana/vim-textobj-function', {
-            \   'autoload' : {'mappings' : [ ['xo', 'af'], ['xo', 'if'] ]} }
-NeoBundleLazy 'kana/vim-textobj-indent', {
-            \   'autoload' : {'mappings' : [ ['xo', 'ai'], ['xo', 'ii'], ['xo', 'aI'], ['xo', 'iI'] ]} }
-NeoBundleLazy 'kana/vim-textobj-line', {
-            \   'autoload' : {'mappings' : [ ['xo', 'al'], ['xo', 'il'] ]} }
-NeoBundleLazy 'kana/vim-textobj-syntax', {
-            \   'autoload' : {'mappings' : [ ['xo', 'ay'], ['xo', 'iy'] ]} }
-NeoBundleLazy 'leafgarland/typescript-vim', {
-            \   'autoload' : {'filetypes' : ['typescript']} }
-NeoBundleLazy 'racer-rust/vim-racer', {
-            \   'autoload' : {'filetypes' : ['rust']} }
-NeoBundleLazy 'rhysd/devdocs.vim', {
-            \   'autoload' : {'mappings' : ['<Plug>(devdocs-under-cursor)']}}
-NeoBundleLazy 'rhysd/vim-clang-format', {
-            \   'autoload' : {'mappings' : ['<Plug>(operator-clang-format)']} }
-NeoBundleLazy 'rhysd/vim-operator-surround', {
-            \   'autoload' : {'mappings' : ['<Plug>(operator-surround-']} }
-NeoBundleLazy 'rust-lang/rust.vim', {
-            \   'autoload' : {'filetypes' : ['rust']} }
-NeoBundleLazy 'scrooloose/syntastic', {
-            \   'autoload' : {'commands' : ['SyntasticCheck']} }
-NeoBundleLazy 'Shougo/unite.vim', {
-            \   'autoload' : {'commands' : [{'name' : 'Unite', 'complete' : 'customlist,unite#complete#source'}]} }
-NeoBundleLazy 'tyru/caw.vim', {
-            \   'autoload' : {'mappings' : ['<Plug>(caw:']} }
-NeoBundleLazy 'Valloric/YouCompleteMe', {
-            \   'build' : {
-            \       'others' : 'git submodule update --init --recursive && ./install.py --clang-completer --system-libclang --gocode-completer'},
-            \   'autoload' : {'insert' : 1, 'commands' : ['YcmCompleter']},
-            \   'augroup' : 'youcompletemeStart' }
-NeoBundleLazy 'vim-jp/vim-cpp', {
-            \   'autoload' : {'filetypes' : ['cpp']} }
-NeoBundleLazy 'ocamlmerlin', {
-            \   'base' : '~/.opam/system/share/merlin', 'directory' : 'vim',
-            \   'type' : 'nosync', 'autoload' : {'filetypes' : ['ocaml']} }
+Plug 'kana/vim-operator-user'
+Plug 'kana/vim-submode'
+Plug 'kana/vim-textobj-entire'
+Plug 'kana/vim-textobj-fold'
+Plug 'kana/vim-textobj-function'
+Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-line'
+Plug 'kana/vim-textobj-syntax'
+Plug 'kana/vim-textobj-user'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'Shougo/neomru.vim'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'thinca/vim-quickrun'
+Plug 'tpope/vim-fugitive'
+Plug 'eagletmt/ghcmod-vim', {'for' : 'haskell'}
+Plug 'eagletmt/neco-ghc', {'for' : 'haskell'}
+Plug 'fatih/vim-go', {'for' : 'go'}
+Plug 'itchyny/vim-haskell-indent', {'for' : 'haskell'}
+Plug 'junegunn/vim-easy-align', {'on' : ['<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)']}
+Plug 'kana/vim-altr', {'on' : ['<Plug>(altr-forward)','<Plug>(altr-back)']}
+Plug 'kana/vim-operator-replace'
+Plug 'kana/vim-smartinput', {'on' : []}
+Plug 'leafgarland/typescript-vim', {'for' : 'typescript'}
+Plug 'racer-rust/vim-racer', {'for' : 'rust'}
+Plug 'rhysd/devdocs.vim', {'on' : '<Plug>(devdocs-under-cursor)'}
+Plug 'rhysd/vim-clang-format', {'on' : '<Plug>(operator-clang-format)'}
+Plug 'rhysd/vim-operator-surround', {'on' : ['<Plug>(operator-surround-append)',
+            \   '<Plug>(operator-surround-delete)', '<Plug>(operator-surround-replace)']}
+Plug 'rust-lang/rust.vim', {'for' : 'rust'}
+Plug 'scrooloose/syntastic', {'on' : 'SyntasticCheck'}
+Plug 'Shougo/unite.vim', {'on' : 'Unite'}
+Plug 'SirVer/ultisnips', {'on' : []}
+Plug 'tyru/caw.vim', {'on' : ['<Plug>(caw:i:toggle)', '<Plug>(caw:a:comment)',
+            \   '<Plug>(caw:i:comment)', '<Plug>(caw:jump:comment-prev)',
+            \   '<Plug>(caw:jump:comment-next)']}
+Plug 'Valloric/YouCompleteMe', {
+            \   'do' : 'git submodule update --init --recursive && ./install.py --clang-completer --system-libclang --gocode-completer',
+            \   'on' : []}
+Plug 'vim-jp/vim-cpp', {'for' : 'cpp'}
+Plug '~/.opam/system/share/merlin/vim', {'for' : 'ocaml'}
 " 2}}}
-call neobundle#end()
-filetype plugin indent on
-NeoBundleCheck
+" LazyLoading  " {{{2
+augroup Load-InsertEnter
+    autocmd!
+    autocmd InsertEnter * call plug#load('YouCompleteMe', 'vim-smartinput') 
+                \|  autocmd! Load-InsertEnter
+augroup END
+
+augroup Load-FileTypeChanged
+    autocmd!
+    autocmd FileType * call plug#load('ultisnips') 
+                \|  autocmd! Load-FileTypeChanged
+augroup END
+
+autocmd! User YouCompleteMe call youcompleteme#Enable()
+autocmd! User vim-smartinput call s:smartinput()
+" 2}}}
+call plug#end()
 " 1}}}
 
 " Colorscheme, Highlight  " {{{1
-syntax enable
 if !exists('g:colors_name')
     let g:mycolor_termtrans = 1
     colorscheme mycolor
@@ -443,12 +424,6 @@ autocmd MyAutoCmd BufReadPost *
 " altr  " {{{2
 nmap <F3>  <Plug>(altr-forward)
 nmap <F2>  <Plug>(altr-back)
-
-let s:bundle = neobundle#get('vim-altr')
-function! s:bundle.hooks.on_post_source(bundle)
-    call altr#define('vimrc', 'gvimrc')
-endfunction
-unlet s:bundle
 " 2}}}
 " caw  " {{{2
 let g:caw_no_default_keymappings = 1
@@ -484,21 +459,17 @@ autocmd MyAutoCmd FileType haskell
 " operator-clang-format  " {{{3
 autocmd MyAutoCmd FileType c,cpp map <buffer> <Leader>x  <Plug>(operator-clang-format)
 
-let s:bundle = neobundle#get('vim-clang-format')
-function! s:bundle.hooks.on_source(bundle)
-    " clang-format -style=google -dump-config
-    let g:clang_format#command = s:env.language.cpp.formatter
-    let g:clang_format#style_options = {
-                \   'AccessModifierOffset' : -4,
-                \   'AllowShortIfStatementsOnASingleLine' : 'false',
-                \   'AllowShortLoopsOnASingleLine' : 'false',
-                \   'BreakBeforeBinaryOperators' : 'NonAssignment',
-                \   'BreakBeforeBraces' : 'Stroustrup',
-                \   'IndentCaseLabels' : 'false',
-                \   'IndentWidth' : 4
-                \ }
-endfunction
-unlet s:bundle
+" clang-format -style=google -dump-config
+let g:clang_format#command = s:env.language.cpp.formatter
+let g:clang_format#style_options = {
+            \   'AccessModifierOffset' : -4,
+            \   'AllowShortIfStatementsOnASingleLine' : 'false',
+            \   'AllowShortLoopsOnASingleLine' : 'false',
+            \   'BreakBeforeBinaryOperators' : 'NonAssignment',
+            \   'BreakBeforeBraces' : 'Stroustrup',
+            \   'IndentCaseLabels' : 'false',
+            \   'IndentWidth' : 4
+            \ }
 " 3}}}
 " operator-replace  " {{{3
 map _  <Plug>(operator_replace)
@@ -510,17 +481,12 @@ map <silent>sr  <Plug>(operator-surround-replace)
 " 3}}}
 " 2}}}
 " racer "{{{2
-let s:bundle = neobundle#get('vim-racer')
-function! s:bundle.hooks.on_source(bundle)
-    let g:racer_cmd = s:env.language.rust.racer
-    let $RUST_SRC_PATH = s:env.language.rust.src
-    let g:racer_experimental_completer = 1
-endfunction
-unlet s:bundle
+let g:racer_cmd = s:env.language.rust.racer
+let $RUST_SRC_PATH = s:env.language.rust.src
+let g:racer_experimental_completer = 1
 " 2}}}
 " smartinput "{{{2
-let s:bundle = neobundle#get('vim-smartinput')
-function! s:bundle.hooks.on_post_source(bundle)
+function! s:smartinput()
     call smartinput#map_to_trigger('i', '<Space>', '<Space>', '<Space>')
 
     call smartinput#define_rule({ 'at' : '\s\+\%#', 'char' : '<CR>', 'input' : "<C-o>:call setline('.', substitute(getline('.'), '\\s\\+$', '', '')) <Bar> echo 'delete trailing spaces'<CR><CR>" })
@@ -531,7 +497,6 @@ function! s:bundle.hooks.on_post_source(bundle)
     call smartinput#define_rule({ 'at' : '{ \%# }', 'char' : '<BS>', 'input' : '<Del><BS>' })
     call smartinput#define_rule({ 'at' : '\[ \%# \]', 'char' : '<BS>', 'input' : '<Del><BS>' })
 endfunction
-unlet s:bundle
 " 2}}}
 " submode  "{{{2
 call submode#enter_with('changetab', 'n', '', 'gt', 'gt')
@@ -560,27 +525,23 @@ call submode#map('move-to-fold', 'n', '', 'j', 'zj')
 call submode#map('move-to-fold', 'n', '', 'k', 'zk')
 " 2}}}
 " Syntastic  " {{{2
-let s:bundle = neobundle#get('syntastic')
-function! s:bundle.hooks.on_source(bundle)
-    let g:syntastic_always_populate_loc_list = 1
-    let g:syntastic_enable_highlighting = 0
-    let g:syntastic_cppcheck_config_file = s:env.path.user . 'syntastic_config/cppcheck'
-    let g:syntastic_mode_map = {'mode': 'passive'}
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_enable_highlighting = 0
+let g:syntastic_cppcheck_config_file = s:env.path.user . 'syntastic_config/cppcheck'
+let g:syntastic_mode_map = {'mode': 'passive'}
 
-    let g:syntastic_c_checkers = ['gcc', 'cppcheck']
-    let g:syntastic_c_compier = 'clang'
-    let g:syntastic_c_compiler_options = '-std=c99 -Weverything -Wno-system-headers'
+let g:syntastic_c_checkers = ['gcc', 'cppcheck']
+let g:syntastic_c_compier = 'clang'
+let g:syntastic_c_compiler_options = '-std=c99 -Weverything -Wno-system-headers'
 
-    let g:syntastic_cpp_checkers = ['gcc', 'cppcheck']
-    let g:syntastic_cpp_compiler = 'clang++'
-    let g:syntastic_cpp_compiler_options = '-std=c++14 -Weverything -Wno-system-headers -Wno-c++98-compat'
+let g:syntastic_cpp_checkers = ['gcc', 'cppcheck']
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options = '-std=c++14 -Weverything -Wno-system-headers -Wno-c++98-compat'
 
-    let g:syntastic_haskell_checkers = ['ghc_mod', 'hlint']
-    let g:syntastic_python_checkers = ['python', 'flake8']
-    let g:syntastic_ruby_checkers = ['mri', 'rubylint', 'rubocop']
-    let g:syntastic_go_checkers = ['go', 'golint']
-endfunction
-unlet s:bundle
+let g:syntastic_haskell_checkers = ['ghc_mod', 'hlint']
+let g:syntastic_python_checkers = ['python', 'flake8']
+let g:syntastic_ruby_checkers = ['mri', 'rubylint', 'rubocop']
+let g:syntastic_go_checkers = ['go', 'golint']
 " 2}}}
 " UltiSnips  "{{{2
 let g:UltiSnipsExpandTrigger = '<C-k>'
@@ -596,34 +557,26 @@ nnoremap <Space>ug   :<C-u>Unite grep:. <CR>
 nnoremap ,g  :<C-u>Unite grep:. <CR><C-r><C-w><CR>
 nnoremap  <Space>up  :<C-u>Unite buffer file_rec/async:!<CR>
 
-let s:bundle = neobundle#get('unite.vim')
-function! s:bundle.hooks.on_source(bundle)
-    let g:unite_enable_start_insert = 1
+let g:unite_enable_start_insert = 1
 
-    let g:unite_source_grep_command = 'ag'
-    let g:unite_source_grep_default_opts = '--nocolor --nogroup'
-    let g:unite_source_grep_recursive_opt = ''
+let g:unite_source_grep_command = 'ag'
+let g:unite_source_grep_default_opts = '--nocolor --nogroup'
+let g:unite_source_grep_recursive_opt = ''
 
-    autocmd MyAutoCmd FileType unite imap <buffer> <C-g>  <Plug>(unite_exit)
-                \ | nmap <buffer> <C-g>  <Plug>(unite_exit)
-endfunction
-unlet s:bundle
+autocmd MyAutoCmd FileType unite imap <buffer> <C-g>  <Plug>(unite_exit)
+            \ | nmap <buffer> <C-g>  <Plug>(unite_exit)
 " 2}}}
 " YouCompleteMe  "{{{2
 autocmd MyAutoCmd FileType c,cpp
             \   nnoremap <buffer> <Leader>pg  :<C-u>YcmCompleter GoToDefinitionElseDeclaration<CR>
 
-let s:bundle = neobundle#get('YouCompleteMe')
-function! s:bundle.hooks.on_source(bundle)
-    let g:ycm_global_ycm_extra_conf = s:env.path.user . 'ycm_default/ycm_extra_conf.py'
-    let g:ycm_autoclose_preview_window_after_insertion = 1
-    let g:ycm_show_diagnostics_ui = 0
-    let g:ycm_confirm_extra_conf = 0
-    let g:ycm_min_num_identifier_candidate_chars = 4
-    let g:ycm_seed_identifiers_with_syntax = 1
-    let g:ycm_semantic_triggers = {'haskell' : ['.'], 'rust' : ['.', '::']}
-endfunction
-unlet s:bundle
+let g:ycm_global_ycm_extra_conf = s:env.path.user . 'ycm_default/ycm_extra_conf.py'
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_show_diagnostics_ui = 0
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_min_num_identifier_candidate_chars = 4
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_semantic_triggers = {'haskell' : ['.'], 'rust' : ['.', '::']}
 " 2}}}
 " quickrun  " {{{2
 " default setting
