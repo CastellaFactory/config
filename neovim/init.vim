@@ -1,5 +1,5 @@
-" Basic Settings  " {{{1
-" Base  " {{{2
+" Basic Settings {{{1
+" Base {{{2
 augroup MyAutoCmd
     autocmd!
 augroup END
@@ -44,7 +44,7 @@ function! s:SID_PREFIX()
     return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
 endfunction
 " 2}}}
-" Options " {{{2
+" Options {{{2
 set ambiwidth=double
 set autoindent
 set autoread
@@ -132,7 +132,7 @@ let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
 " 2}}}
 " 1}}}
 
-"Utils  " {{{1
+"Utils {{{1
 function! s:cd_to_current_buffer_dir()  " {{{2
     lcd %:p:h
     pwd
@@ -187,23 +187,23 @@ function! Preserve(command)  " {{{2
         let @/ = save_search
     endtry
 endfunction  " 2}}}
-" AllMaps  " {{{2
+" AllMaps {{{2
 command! -nargs=* -complete=mapping AllMaps map <args> | map! <args> | lmap <args>
 " 2}}}
-" DeleteTrailingSpaces  " {{{2
+" DeleteTrailingSpaces {{{2
 command! -bar -range=% DeleteTrailingSpaces call Preserve('<line1>,<line2>s/\s\+$//ceg')
 " 2}}}
-" Ovmap  " {{{2
+" Ovmap {{{2
 command! -nargs=+ Ovmap execute 'omap' <q-args> | execute 'vmap' <q-args>
 command! -nargs=+ Ovnoremap execute 'onoremap' <q-args> | execute 'vnoremap' <q-args>
 command! -nargs=+ Ovunmap execute 'ounmap' <q-args> | execute 'vunmap' <q-args>
 " 2}}}
-" Nvmap  " {{{2
+" Nvmap {{{2
 command! -nargs=+ Nvmap  execute 'nmap' <q-args> | execute 'vmap' <q-args>
 command! -nargs=+ Nvnoremap  execute 'nnoremap' <q-args> | execute 'vnoremap' <q-args>
 command! -nargs=+ Nvunmap execute 'nunmap' <q-args> | execute 'vunmap' <q-args>
 " 2}}}
-" SuspendWithAutomaticCD  " {{{2
+" SuspendWithAutomaticCD {{{2
 command! -bar SuspendWithAutomaticCD  call s:cmd_SuspendWithAutomaticCD()
 function! s:cmd_SuspendWithAutomaticCD()
     if has('gui_running') && g:is_darwin_p
@@ -226,8 +226,8 @@ function! s:cmd_SuspendWithAutomaticCD()
 endfunction  " 2}}}
 " 1}}}
 
-" Mappings  " {{{1
-" absolute  " {{{2
+" Mappings {{{1
+" absolute {{{2
 " swap colon and semicolon
 noremap ;  :
 noremap :  ;
@@ -249,7 +249,7 @@ execute 'nnoremap <Space>. :<C-u>edit' resolve(s:env.path.nvimrc) . '<CR>'
 execute 'nnoremap <Space>t. :<C-u>tabnew' resolve(s:env.path.nvimrc) . '<CR>'
 execute 'nnoremap <Space>s. :<C-u>source' resolve(s:env.path.nvimrc) . '<CR>'
 " 2}}}
-" help  " {{{2
+" help {{{2
 nnoremap <C-h>  :<C-u>help<Space>
 nnoremap ,h  :<C-u>help<Space><C-r><C-w><CR>
 nnoremap <Space>q  :<C-u>help quickref<CR>
@@ -258,7 +258,7 @@ nnoremap <Space>q  :<C-u>help quickref<CR>
 noremap <F1>  <Nop>
 inoremap <F1>  <Nop>
 " 2}}}
-" <Space> stuffs  " {{{2
+" <Space> stuffs {{{2
 nnoremap <silent> <Space>ow  :<C-u>setlocal wrap! wrap?<CR>
 nnoremap <silent> <Space>of  :<C-u>call <SID>toggle_fullscreen()<CR>
 nnoremap <silent> <Space>ob  :<C-u>call <SID>toggle_background_color()<CR>
@@ -268,14 +268,14 @@ nnoremap <silent> <Space>r  :<C-u>registers<CR>
 nnoremap <silent> <Space>/  :<C-u>nohlsearch<CR>
 nnoremap <silent> <Space>v  zMzv
 " 2}}}
-" movement in Insert mode  " {{{2
+" movement in Insert mode {{{2
 inoremap <C-a>  <Home>
 inoremap <expr> <C-e>  pumvisible() ? "\<C-e>" : "\<End>"
 inoremap <C-d>  <Del>
 inoremap <expr> <Up>  pumvisible()? "\<C-p>" : "\<Up>"
 inoremap <expr> <Down>  pumvisible()? "\<C-n>" : "\<Down>"
 " 2}}}
-" Command-line mode  " {{{2
+" Command-line mode {{{2
 cnoremap <C-p>  <Up>
 cnoremap <C-n>  <Down>
 cnoremap <C-a>  <Home>
@@ -283,7 +283,7 @@ cnoremap <C-e>  <End>
 
 cnoremap <expr> /  getcmdtype() == '/' ? '\/' : '/'
 " 2}}}
-" misc  " {{{2
+" misc {{{2
 " select last changed text (like gv p.146)
 nnoremap gc  `[v`]
 Ovnoremap gc  :<C-u>normal gc<CR>
@@ -307,7 +307,7 @@ nnoremap q  <Nop>
 " 2}}}
 " 1}}}
 
-" Abbreviations  " {{{1
+" Abbreviations {{{1
 function! s:command_abbrev(lhs, rhs)  " {{{2
     execute 'cnoreabbrev <expr>' a:lhs
                 \   '(getcmdtype() == ":" && getcmdline() ==#' '"' . a:lhs . '") ?'
@@ -317,12 +317,12 @@ call s:command_abbrev('w!!', 'w !sudo tee % > /dev/null')
 call s:command_abbrev('t', 'tabedit')
 " 1}}}
 
-" vim-plug  " {{{1
-" Basic  " {{{2
+" vim-plug {{{1
+" Basic {{{2
 let g:plug_timeout = 120
 call plug#begin(s:env.path.bundle)
 " 2}}}
-" Bundles  " {{{2
+" Bundles {{{2
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-submode'
 Plug 'kana/vim-textobj-entire'
@@ -330,21 +330,18 @@ Plug 'kana/vim-textobj-fold'
 Plug 'kana/vim-textobj-function'
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-line'
-Plug 'kana/vim-textobj-syntax'
 Plug 'kana/vim-textobj-user'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'thinca/vim-quickrun'
-Plug 'tpope/vim-fugitive'
+Plug 'cohama/lexima.vim', {'on' : []}
 Plug 'eagletmt/ghcmod-vim', {'for' : 'haskell'}
 Plug 'eagletmt/neco-ghc', {'for' : 'haskell'}
 Plug 'fatih/vim-go', {'for' : 'go'}
 Plug 'itchyny/vim-haskell-indent', {'for' : 'haskell'}
 Plug 'junegunn/vim-easy-align', {'on' : ['<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)']}
 Plug 'kana/vim-altr', {'on' : ['<Plug>(altr-forward)', '<Plug>(altr-back)']}
-Plug 'kana/vim-operator-replace'
-Plug 'kana/vim-smartinput', {'on' : []}
 Plug 'leafgarland/typescript-vim', {'for' : 'typescript'}
 Plug 'racer-rust/vim-racer', {'for' : 'rust'}
 Plug 'rhysd/devdocs.vim', {'on' : '<Plug>(devdocs-under-cursor)'}
@@ -364,26 +361,26 @@ Plug 'Valloric/YouCompleteMe', {
 Plug 'vim-jp/vim-cpp', {'for' : 'cpp'}
 Plug '~/.opam/system/share/merlin/vim', {'for' : 'ocaml'}
 " 2}}}
-" LazyLoading  " {{{2
+" LazyLoading {{{2
 augroup Load-InsertEnter
     autocmd!
-    autocmd InsertEnter * call plug#load('YouCompleteMe', 'vim-smartinput') 
+    autocmd InsertEnter * call plug#load('YouCompleteMe', 'lexima.vim')
                 \|  autocmd! Load-InsertEnter
 augroup END
 
 augroup Load-FileTypeChanged
     autocmd!
-    autocmd FileType * call plug#load('ultisnips') 
+    autocmd FileType * call plug#load('ultisnips')
                 \|  autocmd! Load-FileTypeChanged
 augroup END
 
 autocmd! User YouCompleteMe call youcompleteme#Enable()
-autocmd! User vim-smartinput call s:smartinput()
+autocmd! User lexima.vim call config#lexima_set_rule()
 " 2}}}
 call plug#end()
 " 1}}}
 
-" Colorscheme, Highlight  " {{{1
+" Colorscheme, Highlight {{{1
 if !exists('g:colors_name')
     let g:mycolor_termtrans = 1
     colorscheme mycolor
@@ -391,9 +388,9 @@ if !exists('g:colors_name')
 endif
 " 1}}}
 
-" FileTypes  "{{{1
+" FileTypes {{{1
 " see after/ftplugin
-" All filetypes  " {{{2
+" All filetypes {{{2
 " for source $MYVIMRC
 set formatoptions-=r
 set formatoptions-=o
@@ -414,11 +411,11 @@ autocmd MyAutoCmd BufReadPost *
 " 1}}}
 
 " Plugins {{{1
-" altr  " {{{2
+" altr {{{2
 nmap <F3>  <Plug>(altr-forward)
 nmap <F2>  <Plug>(altr-back)
 " 2}}}
-" caw  " {{{2
+" caw {{{2
 let g:caw_no_default_keymappings = 1
 let g:caw_i_sp_blank = ' '
 
@@ -428,28 +425,23 @@ nmap <Leader>ci  <Plug>(caw:i:comment)
 nmap <Leader>ca  <Plug>(caw:a:comment)
 Nvmap <Leader>cc  <Plug>(caw:i:toggle)
 " 2}}}
-" devdocs  " {{{2
+" devdocs {{{2
 autocmd MyAutoCmd FileType c,cpp,rust,haskell nmap <buffer> K <Plug>(devdocs-under-cursor)
 " 2}}}
-" easy-align  " {{{2
+" easy-align {{{2
 Nvmap <Leader>ea  <Plug>(EasyAlign)
 Nvmap <Leader>lea  <Plug>(LiveEasyAlign)
 " 2}}}
-" fugitive  " {{{2
-nnoremap <Leader>gs  :<C-u>Gstatus<CR>
-nnoremap <Leader>gc  :<C-u>Gcommit -v<CR>
-nnoremap <Leader>ga  :<C-u>Gwrite<CR>
-nnoremap <Leader>gd  :<C-u>Gdiff<CR>
-nnoremap <Leader>gb  :<C-u>Gblame<CR>
-nnoremap <Leader>gp  :<C-u>Git push<CR>
-" 2}}}"
-"  ghcmod-vim  " {{{2
+" ghcmod-vim {{{2
 autocmd MyAutoCmd FileType haskell
             \   nnoremap <buffer> <Leader>t  :<C-u>GhcModType<CR>
             \ | nnoremap <buffer><silent> <Space>/  :<C-u>GhcModTypeClear<CR>:nohlsearch<CR>
 " 2}}}
-"  operator  " {{{2
-" operator-clang-format  " {{{3
+" neco-ghc {{{2
+autocmd MyAutoCmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+" 2}}}
+" operator {{{2
+" operator-clang-format {{{3
 autocmd MyAutoCmd FileType c,cpp map <buffer> <Leader>x  <Plug>(operator-clang-format)
 
 " clang-format -style=google -dump-config
@@ -464,34 +456,18 @@ let g:clang_format#style_options = {
 	\   'IndentWidth' : 4
 	\ }
 " 3}}}
-" operator-replace  " {{{3
-map _  <Plug>(operator_replace)
-" 3}}}"
 " operator-surround  {{{3
 map <silent>sa  <Plug>(operator-surround-append)
 map <silent>sd  <Plug>(operator-surround-delete)
 map <silent>sr  <Plug>(operator-surround-replace)
 " 3}}}
 " 2}}}
-" racer "{{{2
+" racer {{{2
 let g:racer_cmd = s:env.language.rust.racer
 let $RUST_SRC_PATH = s:env.language.rust.src
 let g:racer_experimental_completer = 1
 " " 2}}}
-" smartinput "{{{2
-function! s:smartinput()
-    call smartinput#map_to_trigger('i', '<Space>', '<Space>', '<Space>')
-
-    call smartinput#define_rule({ 'at' : '\s\+\%#', 'char' : '<CR>', 'input' : "<C-o>:call setline('.', substitute(getline('.'), '\\s\\+$', '', '')) <Bar> echo 'delete trailing spaces'<CR><CR>" })
-    call smartinput#define_rule({ 'at' : '(\%#)', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
-    call smartinput#define_rule({ 'at' : '{\%#}', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
-    call smartinput#define_rule({ 'at' : '\[\%#\]', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
-    call smartinput#define_rule({ 'at' : '( \%# )', 'char' : '<BS>', 'input' : '<Del><BS>' })
-    call smartinput#define_rule({ 'at' : '{ \%# }', 'char' : '<BS>', 'input' : '<Del><BS>' })
-    call smartinput#define_rule({ 'at' : '\[ \%# \]', 'char' : '<BS>', 'input' : '<Del><BS>' })
-endfunction
-" 2}}}
-" submode  "{{{2
+" submode {{{2
 call submode#enter_with('changetab', 'n', '', 'gt', 'gt')
 call submode#enter_with('changetab', 'n', '', 'gT', 'gT')
 call submode#map('changetab', 'n', '', 't', 'gt')
@@ -517,7 +493,7 @@ call submode#enter_with('move-to-fold', 'n', '', 'zk', 'zk')
 call submode#map('move-to-fold', 'n', '', 'j', 'zj')
 call submode#map('move-to-fold', 'n', '', 'k', 'zk')
 " 2}}}
-" Syntastic  " {{{2
+" Syntastic {{{2
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_enable_highlighting = 0
 let g:syntastic_cppcheck_config_file = s:env.path.user . 'syntastic_config/cppcheck'
@@ -536,13 +512,13 @@ let g:syntastic_python_checkers = ['python', 'flake8']
 let g:syntastic_ruby_checkers = ['mri', 'rubylint', 'rubocop']
 let g:syntastic_go_checkers = ['go', 'golint']
 " 2}}}
-" UltiSnips  " {{{2
+" UltiSnips {{{2
 let g:UltiSnipsUsePythonVersion = 2
 let g:UltiSnipsExpandTrigger = '<C-k>'
 let g:UltiSnipsJumpForwardTrigger = '<C-k>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
 " 2}}}
-" unite  " {{{2
+" unite {{{2
 nnoremap <Space>ub  :<C-u>Unite buffer<CR>
 nnoremap <Space>um  :<C-u>Unite neomru/file<CR>
 nnoremap <Space>uf  :<C-u>Unite file<CR>
@@ -560,7 +536,7 @@ let g:unite_source_grep_recursive_opt = ''
 autocmd MyAutoCmd FileType unite imap <buffer> <C-g>  <Plug>(unite_exit)
 	\ | nmap <buffer> <C-g>  <Plug>(unite_exit)
 " 2}}}
-" YouCompleteMe  "{{{2
+" YouCompleteMe {{{2
 autocmd MyAutoCmd FileType c,cpp
             \   nnoremap <buffer> <Leader>pg  :<C-u>YcmCompleter GoToDefinitionElseDeclaration<CR>
 
@@ -572,7 +548,7 @@ let g:ycm_min_num_identifier_candidate_chars = 4
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_semantic_triggers = {'haskell' : ['.'], 'rust' : ['.', '::']}
 " 2}}}
-" quickrun  " {{{2
+" quickrun {{{2
 " default setting
 let g:quickrun_config = get(g:, 'quickrun_config', {})
 let g:quickrun_config = {

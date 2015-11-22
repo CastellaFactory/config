@@ -337,21 +337,18 @@ Plug 'kana/vim-textobj-fold'
 Plug 'kana/vim-textobj-function'
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-line'
-Plug 'kana/vim-textobj-syntax'
 Plug 'kana/vim-textobj-user'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'thinca/vim-quickrun'
-Plug 'tpope/vim-fugitive'
+Plug 'cohama/lexima.vim', {'on' : []}
 Plug 'eagletmt/ghcmod-vim', {'for' : 'haskell'}
 Plug 'eagletmt/neco-ghc', {'for' : 'haskell'}
 Plug 'fatih/vim-go', {'for' : 'go'}
 Plug 'itchyny/vim-haskell-indent', {'for' : 'haskell'}
 Plug 'junegunn/vim-easy-align', {'on' : ['<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)']}
 Plug 'kana/vim-altr', {'on' : ['<Plug>(altr-forward)','<Plug>(altr-back)']}
-Plug 'kana/vim-operator-replace'
-Plug 'kana/vim-smartinput', {'on' : []}
 Plug 'leafgarland/typescript-vim', {'for' : 'typescript'}
 Plug 'racer-rust/vim-racer', {'for' : 'rust'}
 Plug 'rhysd/devdocs.vim', {'on' : '<Plug>(devdocs-under-cursor)'}
@@ -374,18 +371,18 @@ Plug '~/.opam/system/share/merlin/vim', {'for' : 'ocaml'}
 " LazyLoading  " {{{2
 augroup Load-InsertEnter
     autocmd!
-    autocmd InsertEnter * call plug#load('YouCompleteMe', 'vim-smartinput') 
+    autocmd InsertEnter * call plug#load('YouCompleteMe', 'lexima.vim')
                 \|  autocmd! Load-InsertEnter
 augroup END
 
 augroup Load-FileTypeChanged
     autocmd!
-    autocmd FileType * call plug#load('ultisnips') 
+    autocmd FileType * call plug#load('ultisnips')
                 \|  autocmd! Load-FileTypeChanged
 augroup END
 
 autocmd! User YouCompleteMe call youcompleteme#Enable()
-autocmd! User vim-smartinput call s:smartinput()
+autocmd! User lexima.vim call config#lexima_set_rule()
 " 2}}}
 call plug#end()
 " 1}}}
@@ -442,19 +439,14 @@ autocmd MyAutoCmd FileType c,cpp,rust,haskell nmap <buffer> K <Plug>(devdocs-und
 Nvmap <Leader>ea  <Plug>(EasyAlign)
 Nvmap <Leader>lea  <Plug>(LiveEasyAlign)
 " 2}}}
-" fugitive  " {{{2
-nnoremap <Leader>gs  :<C-u>Gstatus<CR>
-nnoremap <Leader>gc  :<C-u>Gcommit -v<CR>
-nnoremap <Leader>ga  :<C-u>Gwrite<CR>
-nnoremap <Leader>gd  :<C-u>Gdiff<CR>
-nnoremap <Leader>gb  :<C-u>Gblame<CR>
-nnoremap <Leader>gp  :<C-u>Git push<CR>
-" 2}}}"
-"  ghcmod-vim  " {{{2
+" ghcmod-vim  " {{{2
 autocmd MyAutoCmd FileType haskell
             \   nnoremap <buffer> <Leader>t  :<C-u>GhcModType<CR>
             \ | nnoremap <buffer><silent> <Space>/  :<C-u>GhcModTypeClear<CR>:nohlsearch<CR>
 " 2}}}
+" neco-ghc  " {{{2
+autocmd MyAutoCmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+" 2}}} "
 "  operator  " {{{2
 " operator-clang-format  " {{{3
 autocmd MyAutoCmd FileType c,cpp map <buffer> <Leader>x  <Plug>(operator-clang-format)
@@ -471,9 +463,6 @@ let g:clang_format#style_options = {
             \   'IndentWidth' : 4
             \ }
 " 3}}}
-" operator-replace  " {{{3
-map _  <Plug>(operator_replace)
-" 3}}}"
 " operator-surround  {{{3
 map <silent>sa  <Plug>(operator-surround-append)
 map <silent>sd  <Plug>(operator-surround-delete)
@@ -484,19 +473,6 @@ map <silent>sr  <Plug>(operator-surround-replace)
 let g:racer_cmd = s:env.language.rust.racer
 let $RUST_SRC_PATH = s:env.language.rust.src
 let g:racer_experimental_completer = 1
-" 2}}}
-" smartinput "{{{2
-function! s:smartinput()
-    call smartinput#map_to_trigger('i', '<Space>', '<Space>', '<Space>')
-
-    call smartinput#define_rule({ 'at' : '\s\+\%#', 'char' : '<CR>', 'input' : "<C-o>:call setline('.', substitute(getline('.'), '\\s\\+$', '', '')) <Bar> echo 'delete trailing spaces'<CR><CR>" })
-    call smartinput#define_rule({ 'at' : '(\%#)', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
-    call smartinput#define_rule({ 'at' : '{\%#}', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
-    call smartinput#define_rule({ 'at' : '\[\%#\]', 'char' : '<Space>', 'input' : '<Space><Space><Left>' })
-    call smartinput#define_rule({ 'at' : '( \%# )', 'char' : '<BS>', 'input' : '<Del><BS>' })
-    call smartinput#define_rule({ 'at' : '{ \%# }', 'char' : '<BS>', 'input' : '<Del><BS>' })
-    call smartinput#define_rule({ 'at' : '\[ \%# \]', 'char' : '<BS>', 'input' : '<Del><BS>' })
-endfunction
 " 2}}}
 " submode  "{{{2
 call submode#enter_with('changetab', 'n', '', 'gt', 'gt')

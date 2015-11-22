@@ -52,13 +52,18 @@ namespace :common do
     make_symlink 'vim/dot.vimrc', "#{home}/.vim/vimrc"
     make_symlink 'vim/dot.gvimrc', "#{home}/.vim/gvimrc"
 
-    next unless installed? 'git'
-    unless File.directory? "#{home}/.vim/bundle"
-      mkdir "#{home}/.vim/bundle"
-      chdir "#{home}/.vim/bundle" do
-        sh "git clone git://github.com/Shougo/neobundle.vim.git"
-      end
+    next unless installed? 'curl'
+    unless File.directory? "#{home}/.config/nvim/plugged"
+      mkdir "#{home}/.config/nvim/plugged"
+      sh "curl -fLo #{home}/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
     end
+    # next unless installed? 'git'
+    # unless File.directory? "#{home}/.vim/bundle"
+    #   mkdir "#{home}/.vim/bundle"
+    #   chdir "#{home}/.vim/bundle" do
+    #     sh "git clone git://github.com/Shougo/neobundle.vim.git"
+    #   end
+    # end
   end
   
   task :neovim do
