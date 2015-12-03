@@ -62,3 +62,8 @@ x11-wm/i3 ~amd64
 # required by net-libs/nodejs-5.0.0::gentoo
 # required by nodejs (argument)
 >=net-libs/http-parser-2.6.0 ~amd64
+# required by www-client/firefox-42.0-r2::gentoo
+# required by @selected
+# required by @world (argument)
+>=dev-libs/nspr-4.10.10-r1 ~amd64
+
