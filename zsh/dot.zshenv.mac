@@ -21,4 +21,7 @@ fi
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 
+# cargo(rust)
+export PATH=$PATH:$HOME/.cargo/bin
+
 # vim: ft=zsh

@@ -1,7 +1,7 @@
 export PATH=$PATH:/sbin:/usr/sbin:$HOME/.gem/ruby/2.0.0/bin:$HOME/local/bin:$HOME/.cabal/bin
 
 # for powerline
-export PATH=:$PATH:$HOME/Dev/github.com/powerline/powerline/scripts
+export PATH=$PATH:$HOME/Dev/github.com/powerline/powerline/scripts
 
 # OPAM
 . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
@@ -9,5 +9,8 @@ export PATH=:$PATH:$HOME/Dev/github.com/powerline/powerline/scripts
 # golang
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
+
+# cargo(rust)
+export PATH=$PATH:$HOME/.cargo/bin
 
 # vim: ft=zsh
