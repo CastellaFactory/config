@@ -37,6 +37,8 @@ x11-wm/i3 ~amd64
 */*::haskell ~amd64
 # gentoo-rust
 */*::rust ~amd64
+# gentoo-dlang
+*/*::dlang ~amd64
 
 # required by ricty (argument)
 >=media-fonts/mix-mplus-ipa-20130617 ~amd64

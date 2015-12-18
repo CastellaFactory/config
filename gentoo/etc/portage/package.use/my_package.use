@@ -18,3 +18,7 @@ x11-terms/rxvt-unicode blink wcwidth alt-font-width unicode3 fading-colors 256co
 
 # gentoo-rust
 dev-lang/rust::rust doc clang
+
+# gentoo-dlang
+dev-lang/dmd::dlang tools dmd-2_067
+dev-util/dlang-tools::dlang dmd-2_069
