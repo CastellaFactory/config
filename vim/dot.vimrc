@@ -495,10 +495,6 @@ call submode#enter_with('change-list', 'n', '', 'g;', 'g;')
 call submode#enter_with('change-list', 'n', '', 'g,', 'g,')
 call submode#map('change-list', 'n', '', ';', 'g;')
 call submode#map('change-list', 'n', '', ',', 'g,')
-call submode#enter_with('move-to-fold', 'n', '', 'zj', 'zj')
-call submode#enter_with('move-to-fold', 'n', '', 'zk', 'zk')
-call submode#map('move-to-fold', 'n', '', 'j', 'zj')
-call submode#map('move-to-fold', 'n', '', 'k', 'zk')
 " 2}}}
 " Syntastic  " {{{2
 let g:syntastic_always_populate_loc_list = 1
