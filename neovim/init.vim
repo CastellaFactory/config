@@ -561,11 +561,6 @@ let g:quickrun_config = {
             \       'runner' : 'vimproc',
             \       'runner/vimproc/updatetime' : 60
             \   },
-            \   'c' : {
-            \       'type' : 'c/clang',
-            \       'command' : s:env.language.c.compiler,
-            \       'cmdopt' : '-std=c99'
-            \   },
             \   'cpp' : {
             \       'type' : 'cpp/clang++',
             \       'command' : s:env.language.cpp.compiler,
