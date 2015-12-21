@@ -9,6 +9,7 @@
 import Control.Arrow (first)
 import Control.Monad (liftM2)
 import Data.Char (isSpace)
+import Data.List (stripPrefix)
 import Data.Monoid (All, Endo)
 import System.Exit (exitSuccess)
 import XMonad
@@ -288,8 +289,18 @@ myBar = "xmobar"
 myPP :: PP
 -- hide "Hinted ", length "Hinted " == 7
 myPP = xmobarPP {
-          ppCurrent   = xmobarColor "#429942" "" . wrap "[" "]"
-          , ppLayout  = drop 7
+          ppCurrent = xmobarColor "#429942" "" . wrap "[" "]"
+          , ppHidden = \s -> wrap "<" ">" $ case s of 
+                                  x : xs -> [x]
+                                  _ -> s
+          , ppLayout = \s -> case stripPrefix "Hinted " s of
+                                   Just(x) -> (case stripPrefix "Magnifier " x of
+                                                                    Just(y) -> (case stripPrefix "(off) " y of
+                                                                                     Just(z) -> z
+                                                                                     Nothing -> y)
+                                                                    Nothing -> x)
+                                   Nothing -> s
+          , ppTitle = xmobarColor "green"  "" . shorten 50
        }
 -- toggleStrutsKey :: XConfig t -> (KeyMask, KeySym)
 toggleStrutsKey XConfig {XMonad.modMask = myModMask} = (myModMask, xK_b)
