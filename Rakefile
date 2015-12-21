@@ -167,7 +167,7 @@ namespace :linux do
   end
 
 
-  task :setup => ['common:all', :tmux, :zsh, :awesome, :xmonad, :X, :notification]
+  task :setup => ['common:all', :tmux, :zsh, :xmonad, :X, :notification]
   task :setup_nox => ['common:nox', :tmux, :zsh, :notification]
  
   task :tmux do
@@ -178,13 +178,6 @@ namespace :linux do
     make_symlink 'zsh/dot.zshenv.linux', "#{home}/.zsh/.zshenv"
     make_symlink 'zsh/dot.zprofile.linux', "#{home}/.zsh/.zprofile"
     make_symlink 'zsh/dot.zshrc.linux', "#{home}/.zsh/.zshrc.linux"
-  end
-
-  task :awesome do
-    unless File.directory? "#{home}/.config/awesome"
-      mkdir_p "#{home}/.config/awesome"
-    end
-    make_symlink 'awesome/rc.lua', "#{home}/.config/awesome/rc.lua"
   end
 
   task :xmonad do
@@ -198,7 +191,6 @@ namespace :linux do
       make_symlink 'xmonad/dot.xmobarrc_desktop', "#{home}/.xmobarrc"
     end
     make_symlink 'xmonad/dot.stalonetrayrc', "#{home}/.stalonetrayrc"
-    make_symlink 'xmonad/dot.fehbg', "#{home}/.fehbg"
   end
 
   task :X do
