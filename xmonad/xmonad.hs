@@ -233,9 +233,9 @@ myMouseBindings XConfig {XMonad.modMask = modm} = M.fromList
 {- Layouts {{{1 -}
 myLayoutHook = layoutHints
            $ avoidStruts
-           $ smartBorders . mkToggle (FULL ?? EOT)
-           $ Mag.magnifiercz 1.3
-             myLayout
+           $ smartBorders
+           $ mkToggle (FULL ?? EOT)
+           $ Mag.magnifiercz 1.4 $ myLayout
 
 myLayout = Tall 1 (3/100) (1/2) ||| Grid
 
@@ -290,7 +290,7 @@ myPP :: PP
 -- hide "Hinted ", length "Hinted " == 7
 myPP = xmobarPP {
           ppCurrent = xmobarColor "#429942" "" . wrap "[" "]"
-          , ppHidden = \s -> wrap "<" ">" $ case s of 
+          , ppHidden = \s -> wrap "<" ">" $ case s of
                                   x : xs -> [x]
                                   _ -> s
           , ppLayout = \s -> case stripPrefix "Hinted " s of
@@ -356,7 +356,8 @@ defaults = ewmh defaultConfig {
 
               -- Magnifier
               , ((myModMask .|. controlMask , xK_semicolon), sendMessage Mag.MagnifyMore)
-              , ((myModMask .|. controlMask , xK_colon), sendMessage Mag.MagnifyLess)
+              -- input colon(dvorak)
+              , ((myModMask .|. controlMask .|. shiftMask , xK_semicolon), sendMessage Mag.MagnifyLess)
               , ((myModMask .|. controlMask , xK_z ), sendMessage Mag.Toggle )
            ]
 
