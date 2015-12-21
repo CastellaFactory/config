@@ -9,7 +9,7 @@ Emacs*.toolBar: false
 
 !! urxvt
 URxvt.depth: 32
-URxvt.font: xft:SourceHanCodeJP:size=13:heavy:antialias=true
+URxvt.font: xft:SourceHanCodeJP:size=15:heavy:antialias=true
 URxvt.transparent: true
 URxvt.shading: 80
 URxvt.fading: 40
