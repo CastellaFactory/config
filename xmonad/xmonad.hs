@@ -6,9 +6,7 @@
 -- import System.IO
 -- import XMonad.Layout
 -- import XMonad.Util.Run
-import           Control.Arrow                       (first)
 import           Control.Monad                       (liftM2)
-import           Data.Char                           (isSpace)
 import           Data.List                           (stripPrefix)
 import qualified Data.Map                            as M (Map, fromList, union)
 import           Data.Monoid                         (All, Endo)
