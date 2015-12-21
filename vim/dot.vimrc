@@ -77,8 +77,7 @@ set foldenable
 set foldmethod=marker
 set guioptions+=M    " this flag must be added before 'syntax enable' and 'filetype on'
 set history=100
-set hlsearch
-nohlsearch
+set hlsearch | nohlsearch
 set ignorecase
 set incsearch
 set laststatus=2
@@ -499,16 +498,12 @@ call submode#map('change-list', 'n', '', ',', 'g,')
 " Syntastic  " {{{2
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_enable_highlighting = 0
-let g:syntastic_cppcheck_config_file = s:env.path.user . 'syntastic_config/cppcheck'
 let g:syntastic_mode_map = {'mode': 'passive'}
-
-let g:syntastic_c_checkers = ['gcc', 'cppcheck']
-let g:syntastic_c_compier = 'clang'
-let g:syntastic_c_compiler_options = '-Weverything -Wno-system-headers'
 
 let g:syntastic_cpp_checkers = ['gcc', 'cppcheck']
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = '-std=c++14 -Weverything -Wno-system-headers -Wno-c++98-compat'
+let g:syntastic_cppcheck_config_file = s:env.path.user . 'syntastic_config/cppcheck'
 
 let g:syntastic_ruby_checkers = ['mri', 'rubylint', 'rubocop']
 let g:syntastic_go_checkers = ['go', 'golint']
