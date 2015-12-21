@@ -10,7 +10,7 @@ import           Control.Arrow                       (first)
 import           Control.Monad                       (liftM2)
 import           Data.Char                           (isSpace)
 import           Data.List                           (stripPrefix)
-import qualified Data.Map                            as M (Map, fromList)
+import qualified Data.Map                            as M (Map, fromList, union)
 import           Data.Monoid                         (All, Endo)
 import           System.Exit                         (exitSuccess)
 import           XMonad
@@ -60,52 +60,14 @@ myXPConfig = defaultXPConfig {
                 , height  = 24
                 , bgColor = "black"
                 , fgColor = "white"
-                , promptKeymap = myXPKeymap
+                , promptKeymap = myAdditionalXPKeymap `M.union` emacsLikeXPKeymap
                 , historyFilter = deleteAllDuplicates
              }
+myAdditionalXPKeymap = M.fromList [
+  ((controlMask, xK_h), deleteString Prev)
+  , ((controlMask, xK_c), quit)
+  ]
 
-myXPKeymap :: M.Map (KeyMask,KeySym) (XP ())
-myXPKeymap = myXPKeymap' isSpace
-
-myXPKeymap' :: (Char -> Bool) -> M.Map (KeyMask,KeySym) (XP ())
-myXPKeymap' p = M.fromList $
-                map (first $ (,) controlMask) -- control + <key>
-                [ (xK_u, killBefore)          --kill line backwards
-                , (xK_k, killAfter)           -- kill line fowards
-                , (xK_a, startOfLine)         --move to the beginning of the line
-                , (xK_e, endOfLine)           -- move to the end of the line
-                , (xK_d, deleteString Next)   -- delete a character foward
-                , (xK_h, deleteString Prev)   -- delete a character backward
-                , (xK_b, moveCursor Prev)     -- move cursor forward
-                , (xK_f, moveCursor Next)     -- move cursor backward
-                , (xK_w, killWord' p Prev)    -- kill the previous word
-                , (xK_y, pasteString)
-                , (xK_g, quit)
-                , (xK_c, quit)
-                ]
-                ++
-                map (first $ (,) mod1Mask) -- meta key + <key>
-                [ (xK_BackSpace, killWord' p Prev)
-                , (xK_f, moveWord' p Next) -- move a word forward
-                , (xK_b, moveWord' p Prev) -- move a word backward
-                , (xK_d, killWord' p Next) -- kill the next word
-                , (xK_n, moveHistory W.focusUp')
-                , (xK_p, moveHistory W.focusDown')
-                ]
-                ++
-                map (first $ (,) 0) -- <key>
-                [ (xK_Return, setSuccess True >> setDone True)
-                , (xK_KP_Enter, setSuccess True >> setDone True)
-                , (xK_BackSpace, deleteString Prev)
-                , (xK_Delete, deleteString Next)
-                , (xK_Left, moveCursor Prev)
-                , (xK_Right, moveCursor Next)
-                , (xK_Home, startOfLine)
-                , (xK_End, endOfLine)
-                , (xK_Down, moveHistory W.focusUp')
-                , (xK_Up, moveHistory W.focusDown')
-                , (xK_Escape, quit)
-                ]
 {- 1}}} -}
 
 {- Key bindings {{{1 -}
