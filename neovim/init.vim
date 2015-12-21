@@ -70,8 +70,7 @@ set foldenable
 set foldmethod=marker
 set guioptions+=M    " this flag must be added before 'syntax enable' and 'filetype on'
 set history=100
-set hlsearch
-nohlsearch
+set hlsearch | nohlsearch
 set ignorecase
 set incsearch
 set laststatus=2
@@ -488,29 +487,20 @@ call submode#enter_with('change-list', 'n', '', 'g;', 'g;')
 call submode#enter_with('change-list', 'n', '', 'g,', 'g,')
 call submode#map('change-list', 'n', '', ';', 'g;')
 call submode#map('change-list', 'n', '', ',', 'g,')
-call submode#enter_with('move-to-fold', 'n', '', 'zj', 'zj')
-call submode#enter_with('move-to-fold', 'n', '', 'zk', 'zk')
-call submode#map('move-to-fold', 'n', '', 'j', 'zj')
-call submode#map('move-to-fold', 'n', '', 'k', 'zk')
 " 2}}}
 " Syntastic {{{2
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_enable_highlighting = 0
-let g:syntastic_cppcheck_config_file = s:env.path.user . 'syntastic_config/cppcheck'
 let g:syntastic_mode_map = {'mode': 'passive'}
-
-let g:syntastic_c_checkers = ['gcc', 'cppcheck']
-let g:syntastic_c_compier = 'clang'
-let g:syntastic_c_compiler_options = '-std=c99 -Weverything -Wno-system-headers'
 
 let g:syntastic_cpp_checkers = ['gcc', 'cppcheck']
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = '-std=c++14 -Weverything -Wno-system-headers -Wno-c++98-compat'
+let g:syntastic_cppcheck_config_file = s:env.path.user . 'syntastic_config/cppcheck'
 
-let g:syntastic_haskell_checkers = ['ghc_mod', 'hlint']
-let g:syntastic_python_checkers = ['python', 'flake8']
 let g:syntastic_ruby_checkers = ['mri', 'rubylint', 'rubocop']
 let g:syntastic_go_checkers = ['go', 'golint']
+let g:syntastic_typescript_checkers = ['tsc', 'tslint']
 " 2}}}
 " UltiSnips {{{2
 let g:UltiSnipsUsePythonVersion = 2
@@ -543,7 +533,6 @@ autocmd MyAutoCmd FileType c,cpp
 let g:ycm_global_ycm_extra_conf = s:env.path.user . 'ycm_default/ycm_extra_conf.py'
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_show_diagnostics_ui = 0
-let g:ycm_confirm_extra_conf = 0
 let g:ycm_min_num_identifier_candidate_chars = 4
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_semantic_triggers = {'haskell' : ['.'], 'rust' : ['.', '::']}
