@@ -6,32 +6,34 @@
 -- import System.IO
 -- import XMonad.Layout
 -- import XMonad.Util.Run
-import Control.Arrow (first)
-import Control.Monad (liftM2)
-import Data.Char (isSpace)
-import Data.List (stripPrefix)
-import Data.Monoid (All, Endo)
-import System.Exit (exitSuccess)
-import XMonad
-import XMonad.Actions.WindowGo (runOrRaise)
-import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.FadeWindows
-import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers (isDialog, doCenterFloat)
-import XMonad.Hooks.SetWMName
-import XMonad.Layout.Grid
-import XMonad.Layout.LayoutHints (layoutHints, hintsEventHook)
-import XMonad.Layout.MultiToggle
-import XMonad.Layout.MultiToggle.Instances
-import XMonad.Layout.NoBorders
-import XMonad.Prompt
-import XMonad.Prompt.Shell
-import XMonad.Util.EZConfig (additionalKeys)
-import qualified Data.Map as M (Map, fromList)
-import qualified XMonad.Layout.Fullscreen as F (fullscreenEventHook, fullscreenManageHook)
-import qualified XMonad.Layout.Magnifier as Mag
-import qualified XMonad.StackSet as W
+import           Control.Arrow                       (first)
+import           Control.Monad                       (liftM2)
+import           Data.Char                           (isSpace)
+import           Data.List                           (stripPrefix)
+import qualified Data.Map                            as M (Map, fromList)
+import           Data.Monoid                         (All, Endo)
+import           System.Exit                         (exitSuccess)
+import           XMonad
+import           XMonad.Actions.WindowGo             (runOrRaise)
+import           XMonad.Hooks.DynamicLog
+import           XMonad.Hooks.EwmhDesktops
+import           XMonad.Hooks.FadeWindows
+import           XMonad.Hooks.ManageDocks
+import           XMonad.Hooks.ManageHelpers          (doCenterFloat, isDialog)
+import           XMonad.Hooks.SetWMName
+import qualified XMonad.Layout.Fullscreen            as F (fullscreenEventHook,
+                                                           fullscreenManageHook)
+import           XMonad.Layout.Grid
+import           XMonad.Layout.LayoutHints           (hintsEventHook,
+                                                      layoutHints)
+import qualified XMonad.Layout.Magnifier             as Mag
+import           XMonad.Layout.MultiToggle
+import           XMonad.Layout.MultiToggle.Instances
+import           XMonad.Layout.NoBorders
+import           XMonad.Prompt
+import           XMonad.Prompt.Shell
+import qualified XMonad.StackSet                     as W
+import           XMonad.Util.EZConfig                (additionalKeys)
 {- 1}}} -}
 
 {- mySetting {{{1 -}
@@ -235,7 +237,7 @@ myLayoutHook = layoutHints
            $ avoidStruts
            $ smartBorders
            $ mkToggle (FULL ?? EOT)
-           $ Mag.magnifiercz 1.4 $ myLayout
+           $ Mag.magnifiercz 1.4 myLayout
 
 myLayout = Tall 1 (3/100) (1/2) ||| Grid
 
@@ -291,19 +293,19 @@ myPP :: PP
 myPP = xmobarPP {
           ppCurrent = xmobarColor "#429942" "" . wrap "[" "]"
           , ppHidden = \s -> wrap "<" ">" $ case s of
-                                  x : xs -> [x]
+                                  x : _ -> [x]
                                   _ -> s
           , ppLayout = \s -> case stripPrefix "Hinted " s of
-                                   Just(x) -> (case stripPrefix "Magnifier " x of
-                                                                    Just(y) -> (case stripPrefix "(off) " y of
-                                                                                     Just(z) -> z
-                                                                                     Nothing -> y)
-                                                                    Nothing -> x)
+                                   Just x -> case stripPrefix "Magnifier " x of
+                                                                    Just y -> case stripPrefix "(off) " y of
+                                                                                     Just z -> z
+                                                                                     Nothing -> y
+                                                                    Nothing -> x
                                    Nothing -> s
           , ppTitle = xmobarColor "green"  "" . shorten 50
        }
 -- toggleStrutsKey :: XConfig t -> (KeyMask, KeySym)
-toggleStrutsKey XConfig {XMonad.modMask = myModMask} = (myModMask, xK_b)
+toggleStrutsKey XConfig {} = (myModMask, xK_b)
 {- 1}}} -}
 
 {- Startup hook {{{1 -}
