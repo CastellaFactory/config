@@ -1,4 +1,4 @@
-export PATH=$PATH:/sbin:/usr/sbin:$HOME/.gem/ruby/2.0.0/bin:$HOME/local/bin:$HOME/.cabal/bin
+export PATH=$PATH:/sbin:/usr/sbin:$HOME/.gem/ruby/2.1.0/bin:$HOME/local/bin:$HOME/.cabal/bin
 
 # for powerline
 export PATH=$PATH:$HOME/Dev/github.com/powerline/powerline/scripts

@@ -504,16 +504,15 @@ let g:syntastic_mode_map = {'mode': 'passive'}
 
 let g:syntastic_c_checkers = ['gcc', 'cppcheck']
 let g:syntastic_c_compier = 'clang'
-let g:syntastic_c_compiler_options = '-std=c99 -Weverything -Wno-system-headers'
+let g:syntastic_c_compiler_options = '-Weverything -Wno-system-headers'
 
 let g:syntastic_cpp_checkers = ['gcc', 'cppcheck']
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = '-std=c++14 -Weverything -Wno-system-headers -Wno-c++98-compat'
 
-let g:syntastic_haskell_checkers = ['ghc_mod', 'hlint']
-let g:syntastic_python_checkers = ['python', 'flake8']
 let g:syntastic_ruby_checkers = ['mri', 'rubylint', 'rubocop']
 let g:syntastic_go_checkers = ['go', 'golint']
+let g:syntastic_typescript_checkers = ['tsc', 'tslint']
 " 2}}}
 " UltiSnips  "{{{2
 let g:UltiSnipsExpandTrigger = '<C-k>'
