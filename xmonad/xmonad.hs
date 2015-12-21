@@ -60,7 +60,7 @@ myXPConfig = defaultXPConfig {
                 , height  = 24
                 , bgColor = "black"
                 , fgColor = "white"
-                , promptKeymap = myAdditionalXPKeymap `M.union` emacsLikeXPKeymap
+                , promptKeymap = emacsLikeXPKeymap `M.union` myAdditionalXPKeymap
                 , historyFilter = deleteAllDuplicates
              }
 myAdditionalXPKeymap = M.fromList [
