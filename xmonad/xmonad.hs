@@ -110,7 +110,7 @@ myXPKeymap' p = M.fromList $
 -- see also `additionalKeys` at bottom of this file.
 --
 myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
-myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
+myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
   [
     -- Launch a terminal(Win+Shift+RET)
@@ -210,7 +210,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 -- Mouse bindings: default actions bound to mouse events
 --
 myMouseBindings :: XConfig t -> M.Map (KeyMask, Button) (Window -> X())
-myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList
+myMouseBindings XConfig {XMonad.modMask = modm} = M.fromList
 
 -- mod-button1, Set the window to floating mode and move by dragging
   [
@@ -234,7 +234,7 @@ myLayoutHook = layoutHints
            $ avoidStruts
            $ smartBorders . mkToggle (FULL ?? EOT)
            $ Mag.magnifiercz 1.3
-           $ myLayout
+             myLayout
 
 myLayout = Tall 1 (3/100) (1/2) ||| Grid
 
