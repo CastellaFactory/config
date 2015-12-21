@@ -41,7 +41,7 @@ myFocusFollowsMouse = False
 myClickJustFocuses  :: Bool
 myClickJustFocuses  = False
 myBorderWidth :: Dimension
-myBorderWidth       = 2
+myBorderWidth       = 3
 myModMask           :: KeyMask
 myModMask           = mod4Mask
 myWorkspaces        :: [String]
