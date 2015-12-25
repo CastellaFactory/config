@@ -53,9 +53,9 @@ namespace :common do
     make_symlink 'vim/dot.gvimrc', "#{home}/.vim/gvimrc"
 
     next unless installed? 'curl'
-    unless File.directory? "#{home}/.config/nvim/plugged"
-      mkdir "#{home}/.config/nvim/plugged"
-      sh "curl -fLo #{home}/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    unless File.directory? "#{home}/.vim/plugged"
+      mkdir "#{home}/.vim/plugged"
+      sh "curl -fLo #{home}/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
     end
     # next unless installed? 'git'
     # unless File.directory? "#{home}/.vim/bundle"
