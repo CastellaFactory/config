@@ -103,6 +103,7 @@ set smarttab
 set splitbelow splitright
 set statusline=%f\ %y\ %r\ %m%=%{(&fenc!=''?&fenc:&enc).':'.&ff}\|%l:%v\|%p%%
 set t_vb=
+set tabpagemax=20
 set termencoding=utf-8
 set ttimeoutlen=50
 set ttyfast
