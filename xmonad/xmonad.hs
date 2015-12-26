@@ -9,6 +9,7 @@
 import           Control.Monad                       (liftM2)
 import           Data.List                           (stripPrefix)
 import qualified Data.Map                            as M (Map, fromList, union)
+import           Data.Maybe                          (fromMaybe)
 import           Data.Monoid                         (All, Endo)
 import           System.Exit                         (exitSuccess)
 import           XMonad
@@ -53,7 +54,7 @@ myFocuseBorderColor :: String
 myFocuseBorderColor = "orange"
 
 myXPConfig :: XPConfig
-myXPConfig = defaultXPConfig {
+myXPConfig = def {
                 font      = "xft:SourceHanCodeJP:size=11:bold:antialial=true"
                 , height  = 24
                 , bgColor = "black"
@@ -252,16 +253,12 @@ myPP :: PP
 -- hide "Hinted ", length "Hinted " == 7
 myPP = xmobarPP {
           ppCurrent = xmobarColor "#429942" "" . wrap "[" "]"
-          , ppHidden = \s -> wrap "<" ">" $ case s of
-                                  x : _ -> [x]
-                                  _ -> s
-          , ppLayout = \s -> case stripPrefix "Hinted " s of
-                                   Just x -> case stripPrefix "Magnifier " x of
-                                                                    Just y -> case stripPrefix "(off) " y of
-                                                                                     Just z -> z
-                                                                                     Nothing -> y
-                                                                    Nothing -> x
-                                   Nothing -> s
+          , ppHidden = wrap "<" ">" . take 1
+          , ppVisible = wrap "(" ")" . take 1
+          , ppLayout = \s -> let t = drop 7 s in
+                             case stripPrefix "Magnifier " t of
+                                  Just x -> fromMaybe x $ stripPrefix "(off) " x
+                                  Nothing -> t
           , ppTitle = xmobarColor "green"  "" . shorten 50
        }
 -- toggleStrutsKey :: XConfig t -> (KeyMask, KeySym)
@@ -277,7 +274,7 @@ myStartupHook = setWMName "LG3D"
 main :: IO ()
 main = xmonad =<< statusBar myBar myPP toggleStrutsKey defaults
 
-defaults = ewmh defaultConfig {
+defaults = ewmh def {
                          -- simple stuff
                          terminal             = myTerminal
                          , focusFollowsMouse  = myFocusFollowsMouse
