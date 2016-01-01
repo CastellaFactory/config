@@ -8,6 +8,7 @@ app-i18n/mozc ~amd64
 app-shells/fish ~amd64
 app-shells/gentoo-zsh-completions ~amd64
 app-text/calibre ~amd64
+dev-cpp/gtest ~amd64
 dev-lang/go ~amd64
 dev-lang/ocaml ~amd64
 dev-lang/smlnj ~amd64
