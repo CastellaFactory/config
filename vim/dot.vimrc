@@ -40,8 +40,7 @@ function! MyEnv()
                 \           'formatter' : executable('clang-format-3.7') ? 'clang-format-3.7' : 'clang-format'
                 \       },
                 \       'rust' : {
-                \           'src' : ghq_root . '/github.com/rust-lang/rust/src',
-                \           'racer' : ghq_root . '/github.com/phildawes/racer/target/release/racer'
+                \           'src' : ghq_root . '/github.com/rust-lang/rust/src'
                 \       }
                 \   }
                 \ }
@@ -350,7 +349,6 @@ Plug 'itchyny/vim-haskell-indent', {'for' : 'haskell'}
 Plug 'junegunn/vim-easy-align', {'on' : ['<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)']}
 Plug 'kana/vim-altr', {'on' : ['<Plug>(altr-forward)','<Plug>(altr-back)']}
 Plug 'leafgarland/typescript-vim', {'for' : 'typescript'}
-Plug 'racer-rust/vim-racer', {'for' : 'rust'}
 Plug 'rhysd/devdocs.vim', {'on' : '<Plug>(devdocs-under-cursor)'}
 Plug 'rhysd/vim-clang-format', {'on' : '<Plug>(operator-clang-format)'}
 Plug 'rhysd/vim-operator-surround', {'on' : ['<Plug>(operator-surround-append)',
@@ -363,7 +361,7 @@ Plug 'tyru/caw.vim', {'on' : ['<Plug>(caw:i:toggle)', '<Plug>(caw:a:comment)',
             \   '<Plug>(caw:i:comment)', '<Plug>(caw:jump:comment-prev)',
             \   '<Plug>(caw:jump:comment-next)']}
 Plug 'Valloric/YouCompleteMe', {
-            \   'do' : 'git submodule update --init --recursive && ./install.py --clang-completer --system-libclang --gocode-completer',
+            \   'do' : 'git submodule update --init --recursive && ./install.py --clang-completer --system-libclang --gocode-completer --racer-completer',
             \   'on' : []}
 Plug 'vim-jp/vim-cpp', {'for' : 'cpp'}
 Plug '~/.opam/system/share/merlin/vim', {'for' : 'ocaml'}
@@ -469,11 +467,6 @@ map <silent>sd  <Plug>(operator-surround-delete)
 map <silent>sr  <Plug>(operator-surround-replace)
 " 3}}}
 " 2}}}
-" racer "{{{2
-let g:racer_cmd = s:env.language.rust.racer
-let $RUST_SRC_PATH = s:env.language.rust.src
-let g:racer_experimental_completer = 1
-" 2}}}
 " submode  "{{{2
 call submode#enter_with('changetab', 'n', '', 'gt', 'gt')
 call submode#enter_with('changetab', 'n', '', 'gT', 'gT')
@@ -543,6 +536,7 @@ let g:ycm_show_diagnostics_ui = 0
 let g:ycm_min_num_identifier_candidate_chars = 4
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_semantic_triggers = {'haskell' : ['.'], 'rust' : ['.', '::']}
+let $RUST_SRC_PATH = s:env.language.rust.src
 " 2}}}
 " quickrun  " {{{2
 " default setting
