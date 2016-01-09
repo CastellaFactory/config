@@ -27,6 +27,7 @@ net-libs/nodejs ~amd64
 sys-apps/the_silver_searcher ~amd64
 sys-devel/clang ~amd64
 sys-devel/llvm ~amd64
+sys-libs/libomp ~amd64
 www-client/firefox ~amd64
 x11-misc/compton ~amd64
 x11-terms/rxvt-unicode ~amd64
