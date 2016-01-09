@@ -8,6 +8,7 @@ app-i18n/mozc ~amd64
 app-shells/fish ~amd64
 app-shells/gentoo-zsh-completions ~amd64
 app-text/calibre ~amd64
+dev-cpp/gtest ~amd64
 dev-lang/go ~amd64
 dev-lang/ocaml ~amd64
 dev-lang/smlnj ~amd64
@@ -26,6 +27,7 @@ net-libs/nodejs ~amd64
 sys-apps/the_silver_searcher ~amd64
 sys-devel/clang ~amd64
 sys-devel/llvm ~amd64
+sys-libs/libomp ~amd64
 www-client/firefox ~amd64
 x11-misc/compton ~amd64
 x11-terms/rxvt-unicode ~amd64
