@@ -536,7 +536,7 @@ let g:ycm_show_diagnostics_ui = 0
 let g:ycm_min_num_identifier_candidate_chars = 4
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_semantic_triggers = {'haskell' : ['.'], 'rust' : ['.', '::']}
-let $RUST_SRC_PATH = s:env.language.rust.src
+let g:ycm_rust_src_path = s:env.language.rust.src
 " 2}}}
 " quickrun  " {{{2
 " default setting
