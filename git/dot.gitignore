@@ -10,3 +10,17 @@
 Thumbs.db
 Desktop.ini
 
+# Emacs
+*~
+\#*\#
+*.elc
+tramp
+.\#*
+
+# Vim
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.ycm_extra_conf.py
+.ycm_extra_conf.pyc
