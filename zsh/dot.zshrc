@@ -35,8 +35,8 @@ setopt share_history
 
 # History  # {{{1
 HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=5000
+HISTSIZE=5000
+SAVEHIST=10000
 # don't add 'rm' and 'rmdir'
 zshaddhistory() {
     local line=${1%%$'\n'}
