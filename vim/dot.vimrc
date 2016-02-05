@@ -351,6 +351,7 @@ Plug 'kana/vim-altr', {'on' : ['<Plug>(altr-forward)','<Plug>(altr-back)']}
 Plug 'leafgarland/typescript-vim', {'for' : 'typescript'}
 Plug 'rhysd/devdocs.vim', {'on' : '<Plug>(devdocs-under-cursor)'}
 Plug 'rhysd/vim-clang-format', {'on' : '<Plug>(operator-clang-format)'}
+Plug 'rhysd/vim-crystal', {'for' : 'crystal'}
 Plug 'rhysd/vim-operator-surround', {'on' : ['<Plug>(operator-surround-append)',
             \   '<Plug>(operator-surround-delete)', '<Plug>(operator-surround-replace)']}
 Plug 'rust-lang/rust.vim', {'for' : 'rust'}
