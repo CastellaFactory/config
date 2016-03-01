@@ -6,7 +6,7 @@ compton -b -C -G --config ~/.compton.conf &
 (sleep 3; /usr/lib64/kde4/libexec/polkit-kde-authentication-agent-1) &
 
 fcitx &
-SpiderOakONE &
+insync start &
 stalonetray &
 (sleep 4; dropbox) &
 xset -b

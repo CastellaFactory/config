@@ -1,7 +1,7 @@
 app-editors/emacs toolkit-scroll-bars
 app-editors/gvim cscope lua luajit python ruby gtk
 app-editors/vim cscope lua luajit python ruby
-app-i18n/mozc emacs fcitx -ibus
+app-i18n/mozc fcitx -ibus -emacs
 app-portage/layman mercurial
 app-text/texlive graphics metapost pstricks science dvipdfm publishers extra humanities luatex xetex
 app-text/texlive-core xetex
@@ -19,5 +19,5 @@ x11-terms/rxvt-unicode blink wcwidth alt-font-width unicode3 fading-colors 256co
 dev-lang/rust::rust doc clang
 
 # gentoo-dlang
-dev-lang/dmd::dlang tools ldc2-0_16
+dev-lang/dmd::dlang tools ldc2-0_17
 dev-util/dlang-tools::dlang dmd-2_070
