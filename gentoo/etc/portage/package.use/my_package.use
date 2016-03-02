@@ -3,6 +3,7 @@ app-editors/gvim cscope lua luajit python ruby gtk
 app-editors/vim cscope lua luajit python ruby
 app-i18n/mozc fcitx -ibus -emacs
 app-portage/layman mercurial
+app-text/ghostscript-gpl idn
 app-text/texlive graphics metapost pstricks science dvipdfm publishers extra humanities luatex xetex
 app-text/texlive-core xetex
 dev-qt/qtwebkit icu
