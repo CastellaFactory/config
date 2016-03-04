@@ -7,7 +7,7 @@ export PATH=$PATH:$HOME/Dev/github.com/powerline/powerline/scripts
 . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 # golang
-export GOPATH=$HOME/go
+export GOPATH=$HOME/.go
 export PATH=$PATH:$GOPATH/bin
 
 # cargo(rust)
