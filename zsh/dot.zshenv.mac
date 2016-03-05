@@ -1,3 +1,5 @@
+# zmodload zsh/zprof && zprof
+
 export PATH=/usr/local/bin:$HOME/.rbenv/shims:$HOME/.cabal/bin:$HOME/local/bin:$PATH
 
 # for mactex
@@ -8,7 +10,7 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 
 # rbenv
 if which rbenv > /dev/null; then 
-    eval "$(rbenv init -)";
+    eval "$(rbenv init - --no-rehash)";
 fi
 
 # OPAM
