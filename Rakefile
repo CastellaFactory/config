@@ -98,10 +98,7 @@ namespace :common do
   end
 
   task :tmux do
-    unless File.directory? "#{home}/.config"
-      mkdir "#{home}/.config"
-    end
-    make_symlink 'tmux/powerline', "#{home}/.config"
+    make_symlink 'tmux/dot.tmux.conf', "#{home}/.tmux.conf"
   end
 
   task :ocaml do
@@ -166,11 +163,8 @@ namespace :linux do
   end
 
 
-  task :setup => ['common:all', :tmux, :zsh, :xmonad, :X, :notification]
-  task :setup_nox => ['common:nox', :tmux, :zsh, :notification]
-  task :tmux do
-    make_symlink 'tmux/dot.tmux.conf.linux', "#{home}/.tmux.conf"
-  end
+  task :setup => ['common:all', :zsh, :xmonad, :X, :notification]
+  task :setup_nox => ['common:nox', :zsh, :notification]
 
   task :zsh do
     make_symlink 'zsh/dot.zshenv.linux', "#{home}/.zsh/.zshenv"
@@ -209,18 +203,13 @@ end
 
 namespace :mac do
   desc 'set up dotfiles for Mac OS X'
-  task :setup => ['common:all', :zsh, :tmux]
+  task :setup => ['common:all', :zsh]
 
   task :zsh do
     make_symlink 'zsh/dot.zshenv.mac', "#{home}/.zsh/.zshenv"
     make_symlink 'zsh/dot.zprofile.mac', "#{home}/.zsh/.zprofile"
     make_symlink 'zsh/dot.zshrc.mac', "#{home}/.zsh/.zshrc.mac"
   end
-
-  task :tmux do
-    make_symlink 'tmux/dot.tmux.conf.mac', "#{home}/.tmux.conf"
-  end
-
 end
 
 case platform
