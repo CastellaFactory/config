@@ -1,8 +1,5 @@
 export PATH=/usr/local/bin:$HOME/.rbenv/shims:$HOME/.cabal/bin:$HOME/local/bin:$PATH
 
-# for powerline
-export PATH=$PATH:$HOME/Dev/github.com/powerline/powerline/scripts
-
 # for mactex
 export PATH=$PATH:/Library/TeX/texbin
 

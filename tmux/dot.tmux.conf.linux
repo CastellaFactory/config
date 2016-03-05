@@ -82,7 +82,4 @@ bind -r s swap-pane -U
 ##+------ mouse settings -----+##
 set-option -g mouse on
 
-##+----- powerline -----+##
-source ~/.config/powerline/tmux_powerline.conf
-
 # vim: ft=tmux
