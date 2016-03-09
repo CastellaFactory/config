@@ -18,7 +18,7 @@ language messages C
 let g:is_darwin_p = has('mac') || has('macunix')
 let g:is_linux_p = !g:is_darwin_p && has('unix')
 
-function! MyEnv()
+function! s:MyEnv()
     let env = {}
     let dot_vim_dir = fnamemodify(expand('$HOME/.vim'), ':p')
     let ghq_root = substitute(system('ghq root'), '\n\+$', '', '')
@@ -46,7 +46,7 @@ function! MyEnv()
                 \ }
     return env
 endfunction
-let s:env = has_key(s:, 'env') ? s:env : MyEnv()
+let s:env = has_key(s:, 'env') ? s:env : s:MyEnv()
 
 function! s:SID_PREFIX()
     return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
