@@ -16,9 +16,3 @@ www-client/firefox gstreamer -gtk3
 x11-misc/xmobar inotify timezone wifi
 x11-terms/rxvt-unicode blink wcwidth alt-font-width unicode3 fading-colors 256color -vanilla 256-color pixbuf buffer-on-clear
 
-# gentoo-rust
-dev-lang/rust::rust doc clang
-
-# gentoo-dlang
-dev-lang/dmd::dlang tools ldc2-0_17
-dev-util/dlang-tools::dlang dmd-2_070
