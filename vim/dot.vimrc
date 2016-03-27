@@ -358,8 +358,8 @@ Plug 'rust-lang/rust.vim', {'for' : 'rust'}
 Plug 'scrooloose/syntastic', {'on' : 'SyntasticCheck'}
 Plug 'Shougo/unite.vim', {'on' : 'Unite'}
 Plug 'SirVer/ultisnips', {'on' : []}
-Plug 'tyru/caw.vim', {'on' : ['<Plug>(caw:tildepos:toggle)', '<Plug>(caw:dollarpos:comment)',
-            \   '<Plug>(caw:tildepos:comment)', '<Plug>(caw:jump:comment-prev)',
+Plug 'tyru/caw.vim', {'on' : ['<Plug>(caw:hatpos:toggle)', '<Plug>(caw:dollarpos:comment)',
+            \   '<Plug>(caw:hatpos:comment)', '<Plug>(caw:jump:comment-prev)',
             \   '<Plug>(caw:jump:comment-next)']}
 Plug 'Valloric/YouCompleteMe', {
             \   'do' : 'git submodule update --init --recursive && ./install.py --clang-completer --system-libclang --gocode-completer --racer-completer',
@@ -423,13 +423,13 @@ nmap <F2>  <Plug>(altr-back)
 " 2}}}
 " caw  " {{{2
 let g:caw_no_default_keymappings = 1
-let g:caw_tildepos_sp_blank = ' '
+let g:caw_hatpos_sp_blank = ' '
 
 nmap <Leader>co  <Plug>(caw:jump:comment-next)
 nmap <Leader>cO  <Plug>(caw:jump:comment-prev)
-nmap <Leader>ci  <Plug>(caw:tildepos:comment)
+nmap <Leader>ci  <Plug>(caw:hatpos:comment)
 nmap <Leader>ca  <Plug>(caw:dollarpos:comment)
-Nvmap <Leader>cc  <Plug>(caw:tildepos:toggle)
+Nvmap <Leader>cc  <Plug>(caw:hatpos:toggle)
 " 2}}}
 " devdocs  " {{{2
 autocmd MyAutoCmd FileType c,cpp,rust,haskell nmap <buffer> K <Plug>(devdocs-under-cursor)
