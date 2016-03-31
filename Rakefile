@@ -52,19 +52,15 @@ namespace :common do
     make_symlink 'vim/dot.vimrc', "#{home}/.vim/vimrc"
     make_symlink 'vim/dot.gvimrc', "#{home}/.vim/gvimrc"
 
-    next unless installed? 'curl'
-    unless File.directory? "#{home}/.vim/plugged"
-      mkdir "#{home}/.vim/plugged"
-      sh "curl -fLo #{home}/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    next unless installed? 'git'
+    unless File.directory? "#{home}/.vim/dein"
+      mkdir_p "#{home}/.vim/dein/repos/github.com"
+      chdir "#{home}/.vim/dein/repos/github.com" do
+        sh "git clone git://github.com/Shougo/dein.vim.git Shougo/dein.vim"
+      end
     end
-    # next unless installed? 'git'
-    # unless File.directory? "#{home}/.vim/bundle"
-    #   mkdir "#{home}/.vim/bundle"
-    #   chdir "#{home}/.vim/bundle" do
-    #     sh "git clone git://github.com/Shougo/neobundle.vim.git"
-    #   end
-    # end
   end
+
   task :neovim do
     unless File.directory? "#{home}/.config/nvim"
       mkdir_p "#{home}/.config/nvim"
@@ -76,10 +72,12 @@ namespace :common do
     make_symlink 'neovim/init.vim', "#{home}/.config/nvim/init.vim"
     ln_sf "#{home}/.config/nvim/init.vim", "#{home}/.config/nvim/nvimrc"
 
-    next unless installed? 'curl'
-    unless File.directory? "#{home}/.config/nvim/plugged"
-      mkdir "#{home}/.config/nvim/plugged"
-      sh "curl -fLo #{home}/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    next unless installed? 'git'
+    unless File.directory? "#{home}/.config/nvim/dein"
+      mkdir_p "#{home}/.config/nvim/dein/repos/github.com"
+      chdir "#{home}/.config/nvim/dein/repos/github.com" do
+        sh "git clone git://github.com/Shougo/dein.vim.git Shougo/dein.vim"
+      end
     end
   end
 

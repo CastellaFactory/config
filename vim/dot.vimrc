@@ -25,7 +25,10 @@ function! s:MyEnv()
     let env = {
                 \   'path' : {
                 \       'user' : dot_vim_dir,
-                \       'bundle' : dot_vim_dir . 'plugged',
+                \       'dein' : {
+                \           'bundle' : dot_vim_dir . 'dein',
+                \           'toml' : dot_vim_dir . 'dein.toml'
+                \       },
                 \       'vimrc' : dot_vim_dir . 'vimrc',
                 \       'local_vimrc' : dot_vim_dir . 'local.vimrc',
                 \       'backup' : dot_vim_dir . 'backups',
@@ -323,67 +326,17 @@ call s:command_abbrev('w!!', 'w !sudo tee % > /dev/null')
 call s:command_abbrev('t', 'tabedit')
 " 1}}}
 
-" vim-plug  " {{{1
-" Basic  " {{{2
-let g:plug_timeout = 120
-call plug#begin(s:env.path.bundle)
-" 2}}}
-" Bundles  " {{{2
-Plug 'kana/vim-operator-user'
-Plug 'kana/vim-submode'
-Plug 'kana/vim-textobj-entire'
-Plug 'kana/vim-textobj-fold'
-Plug 'kana/vim-textobj-function'
-Plug 'kana/vim-textobj-indent'
-Plug 'kana/vim-textobj-line'
-Plug 'kana/vim-textobj-user'
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'Shougo/neomru.vim'
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'thinca/vim-quickrun'
-Plug 'cohama/lexima.vim', {'on' : []}
-Plug 'eagletmt/ghcmod-vim', {'for' : 'haskell'}
-Plug 'eagletmt/neco-ghc', {'for' : 'haskell'}
-Plug 'fatih/vim-go', {'for' : 'go'}
-Plug 'itchyny/vim-haskell-indent', {'for' : 'haskell'}
-Plug 'junegunn/vim-easy-align', {'on' : ['<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)']}
-Plug 'kana/vim-altr', {'on' : ['<Plug>(altr-forward)','<Plug>(altr-back)']}
-Plug 'leafgarland/typescript-vim', {'for' : 'typescript'}
-Plug 'rhysd/devdocs.vim', {'on' : '<Plug>(devdocs-under-cursor)'}
-Plug 'rhysd/vim-clang-format', {'on' : '<Plug>(operator-clang-format)'}
-Plug 'rhysd/vim-crystal', {'for' : 'crystal'}
-Plug 'rhysd/vim-operator-surround', {'on' : ['<Plug>(operator-surround-append)',
-            \   '<Plug>(operator-surround-delete)', '<Plug>(operator-surround-replace)']}
-Plug 'rust-lang/rust.vim', {'for' : 'rust'}
-Plug 'scrooloose/syntastic', {'on' : 'SyntasticCheck'}
-Plug 'Shougo/unite.vim', {'on' : 'Unite'}
-Plug 'SirVer/ultisnips', {'on' : []}
-Plug 'tyru/caw.vim', {'on' : ['<Plug>(caw:hatpos:toggle)', '<Plug>(caw:dollarpos:comment)',
-            \   '<Plug>(caw:hatpos:comment)', '<Plug>(caw:jump:comment-prev)',
-            \   '<Plug>(caw:jump:comment-next)']}
-Plug 'Valloric/YouCompleteMe', {
-            \   'do' : 'git submodule update --init --recursive && ./install.py --clang-completer --system-libclang --gocode-completer --racer-completer',
-            \   'on' : []}
-Plug 'vim-jp/vim-cpp', {'for' : 'cpp'}
-Plug '~/.opam/system/share/merlin/vim', {'for' : 'ocaml'}
-" 2}}}
-" LazyLoading  " {{{2
-augroup Load-InsertEnter
-    autocmd!
-    autocmd InsertEnter * call plug#load('YouCompleteMe', 'lexima.vim')
-                \|  autocmd! Load-InsertEnter
-augroup END
-
-augroup Load-FileTypeChanged
-    autocmd!
-    autocmd FileType * call plug#load('ultisnips')
-                \|  autocmd! Load-FileTypeChanged
-augroup END
-
-autocmd! User YouCompleteMe call youcompleteme#Enable()
-autocmd! User lexima.vim call config#lexima_set_rule()
-" 2}}}
-call plug#end()
+" dein {{{1
+execute 'set runtimepath^=' . s:env.path.dein.bundle . '/repos/github.com/Shougo/dein.vim'
+if dein#load_state(s:env.path.dein.bundle)
+    let g:dein#install_process_timeout = 2000
+    call dein#begin(s:env.path.dein.bundle, [s:env.path.vimrc, s:env.path.dein.toml])
+    call dein#load_toml(s:env.path.dein.toml)
+    call dein#end()
+    call dein#save_state()
+endif
+filetype plugin indent on
+syntax enable
 " 1}}}
 
 " Colorscheme, Highlight  " {{{1
