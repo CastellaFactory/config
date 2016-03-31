@@ -80,7 +80,7 @@ namespace :common do
         sh "git clone git://github.com/Shougo/dein.vim.git Shougo/dein.vim"
       end
     end
-    make_symlink 'vim/dein.toml', "#{home}/.vim/dein.toml"
+    make_symlink 'neovim/dein.toml', "#{home}/nvim/dein.toml"
   end
 
   task :zsh do

@@ -97,9 +97,9 @@ on_ft = 'rust'
 repo = 'vim-jp/vim-cpp'
 on_ft = 'cpp'
 
-[[plugins]]
-repo = '~/.opam/system/share/merlin/vim'
-on_ft = 'ocaml'
+# [[plugins]]
+# repo = '~/.opam/system/share/merlin/vim'
+# on_ft = 'ocaml'
 # }}}
 
 [[plugins]]
@@ -131,7 +131,7 @@ on_cmd = 'SyntasticCheck'
 
 [[plugins]]
 repo = 'SirVer/ultisnips'
-on_func = 'UltiSnips#FileTypeChanged'
+on_path = '.*'
 
 [[plugins]]
 repo = 'tyru/caw.vim'
