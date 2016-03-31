@@ -1,0 +1,144 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+build = 'make'
+
+[[plugins]]
+repo = 'kana/vim-submode'
+
+# operator {{{
+[[plugins]]
+repo = 'kana/vim-operator-user'
+lazy = 1
+
+[[plugins]]
+repo = 'rhysd/vim-operator-surround'
+depends = 'vim-textobj-user'
+on_map = '<Plug>(operator-surround-'
+# }}}
+
+# textobj {{{
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+lazy = 1
+
+[[plugins]]
+repo = 'kana/vim-textobj-entire'
+depends = 'vim-textobj-user'
+on_map = '<Plug>(textobj-entire-'
+
+[[plugins]]
+repo = 'kana/vim-textobj-fold'
+depends = 'vim-textobj-user'
+on_map = '<Plug>(textobj-fold-'
+
+[[plugins]]
+repo = 'kana/vim-textobj-function'
+depends = 'vim-textobj-user'
+on_map = '<Plug>(textobj-function-'
+
+[[plugins]]
+repo = 'kana/vim-textobj-indent'
+depends = 'vim-textobj-user'
+on_map = '<Plug>(textobj-indent-'
+
+[[plugins]]
+repo = 'kana/vim-textobj-line'
+depends = 'vim-textobj-user'
+on_map = '<Plug>(textobj-line-'
+# }}}
+
+# Unite {{{
+[[plugins]]
+repo = 'Shougo/unite.vim'
+on_cmd = 'Unite'
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+# }}}
+
+# Filetype {{{
+[[plugins]]
+repo = 'eagletmt/ghcmod-vim'
+on_ft = 'haskell'
+
+[[plugins]]
+repo = 'eagletmt/neco-ghc'
+on_ft = 'haskell'
+
+[[plugins]]
+repo = 'fatih/vim-go'
+on_ft = 'go'
+
+[[plugins]]
+repo = 'itchyny/vim-haskell-indent'
+on_ft = 'haskell'
+
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
+on_ft = 'typescript'
+
+[[plugins]]
+repo = 'rhysd/vim-clang-format'
+depends = 'vim-operator-user'
+on_map = '<Plug>(operator-clang-format)'
+
+[[plugins]]
+repo = 'rhysd/vim-crystal'
+on_ft = 'crystal'
+
+[[plugins]]
+repo = 'rust-lang/rust.vim'
+on_ft = 'rust'
+
+[[plugins]]
+repo = 'vim-jp/vim-cpp'
+on_ft = 'cpp'
+
+[[plugins]]
+repo = '~/.opam/system/share/merlin/vim'
+on_ft = 'ocaml'
+# }}}
+
+[[plugins]]
+repo = 'NLKNguyen/papercolor-theme'
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
+on_i = 1
+hook_post_source = 'call config#lexima_set_rule()'
+
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+on_map = ['<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)']
+
+[[plugins]]
+repo = 'kana/vim-altr'
+on_map = '<Plug>(altr-'
+
+[[plugins]]
+repo = 'rhysd/devdocs.vim'
+on_map = '<Plug>(devdocs-under-cursor)'
+
+[[plugins]]
+repo = 'scrooloose/syntastic'
+on_cmd = 'SyntasticCheck'
+
+[[plugins]]
+repo = 'SirVer/ultisnips'
+on_func = 'UltiSnips#FileTypeChanged'
+
+[[plugins]]
+repo = 'tyru/caw.vim'
+on_map = '<Plug>(caw:'
+
+[[plugins]]
+repo = 'Valloric/YouCompleteMe'
+build = 'git submodule update --init --recursive && ./install.py --clang-completer --system-libclang --gocode-completer --racer-completer'
+on_i = 1
+hook_post_source = 'call youcompleteme#Enable()'
