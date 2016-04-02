@@ -33,7 +33,7 @@ end
 
 
 namespace :common do
-  task :all => [:git, :vim, :neovim, :zsh, :tmux, :ocaml, :vimperator, :tex, :ag]
+  task :all => [:git, :vim, :neovim, :atom, :zsh, :tmux, :ocaml, :vimperator, :tex, :ag]
   task :nox => [:git, :vim, :neovim, :zsh, :tmux, :ocaml, :ag]
 
   task :git do
@@ -81,6 +81,19 @@ namespace :common do
       end
     end
     make_symlink 'neovim/dein.toml', "#{home}/nvim/dein.toml"
+  end
+
+  task :atom do
+    unless File.directory? "#{home}/.atom"
+      mkdir_p "#{home}/.atom"
+    end
+
+    make_symlink 'atom/config.cson', "#{home}/.atom/config.cson"
+    make_symlink 'atom/init.coffee', "#{home}/.atom/init.coffee"
+    make_symlink 'atom/keymap.cson', "#{home}/.atom/keymap.cson"
+    make_symlink 'atom/snippets.cson', "#{home}/.atom/snippets.cson"
+    make_symlink 'atom/styles.less', "#{home}/.atom/styles.less"
+    make_symlink 'atom/atom-packages', "#{home}/.atom/atom-packages"
   end
 
   task :zsh do
