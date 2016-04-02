@@ -342,8 +342,8 @@ syntax enable
 " Colorscheme, Highlight  " {{{1
 if !exists('g:colors_name')
     let g:mycolor_termtrans = 1
-    colorscheme mycolor
     set background=dark
+    colorscheme mycolor
 endif
 " 1}}}
 
