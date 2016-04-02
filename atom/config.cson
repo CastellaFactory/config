@@ -1,0 +1,22 @@
+"*":
+  "atom-typescript": {}
+  "autocomplete-plus": {}
+  core: {}
+  editor:
+    fontFamily: "Source Han Code JP"
+    fontSize: 15
+    invisibles: {}
+    softWrap: true
+    tabLength: 4
+  "exception-reporting":
+    userId: "99b03452-1184-ad1d-5547-3e22161278d4"
+  "git-plus": {}
+  linter: {}
+  "vim-mode-plus":
+    highlightSearch: true
+    incrementalSearch: true
+    useClipboardAsDefaultRegister: true
+    useSmartcaseForSearch: true
+    useSmartcaseForSearchCurrentWord: true
+  welcome:
+    showOnStartup: false
