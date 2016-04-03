@@ -61,9 +61,7 @@ set autoindent
 set autoread
 set backspace=indent,eol,start
 let &backupdir = s:env.path.backup
-if exists('+breakindent')
-    set breakindent
-endif
+set breakindent
 if has('unnamedplus')
     set clipboard=unnamed,unnamedplus
 else
