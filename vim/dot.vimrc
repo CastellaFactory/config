@@ -75,6 +75,7 @@ let &directory = &backupdir
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8,cp932
+set nofixendofline
 set foldenable
 set foldmethod=marker
 set guioptions+=M    " this flag must be added before 'syntax enable' and 'filetype on'
