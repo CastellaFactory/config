@@ -7,7 +7,7 @@ compton -b -C -G --config ~/.compton.conf &
 
 fcitx &
 insync start &
-stalonetray &
+(sleep 3; stalonetray) &
 (sleep 4; dropbox) &
 xset -b
 
