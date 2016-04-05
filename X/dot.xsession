@@ -1,13 +1,14 @@
 #!/bin/sh
 
 nitrogen --restore
-kmix --keepvisibility &
+
 compton -b -C -G --config ~/.compton.conf &
 (sleep 3; /usr/lib64/kde4/libexec/polkit-kde-authentication-agent-1) &
 
-fcitx &
-insync start &
-(sleep 3; stalonetray) &
+(sleep 1; stalonetray) &
+(sleep 2; kmix --keepvisibility) &
+(sleep 2; fcitx) &
+(sleep 3; insync start) &
 (sleep 4; dropbox) &
 xset -b
 
