@@ -9,6 +9,8 @@ app-text/texlive-core xetex
 dev-qt/qtwebkit icu
 dev-util/cppcheck -qt4
 media-gfx/graphviz python
+media-sound/audacious gtk -gtk3
+media-plugins/audacious-plugins gtk -gtk3
 sys-devel/clang python
 sys-devel/llvm python clang
 sys-kernel/gentoo-sources symlink
