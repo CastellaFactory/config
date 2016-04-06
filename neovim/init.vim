@@ -320,8 +320,8 @@ call s:command_abbrev('t', 'tabedit')
 
 " dein {{{1
 execute 'set runtimepath^=' . s:env.path.dein.bundle . '/repos/github.com/Shougo/dein.vim'
+let g:dein#install_process_timeout = 2000
 if dein#load_state(s:env.path.dein.bundle)
-    let g:dein#install_process_timeout = 2000
     call dein#begin(s:env.path.dein.bundle, [s:env.path.nvimrc, s:env.path.dein.toml])
     call dein#load_toml(s:env.path.dein.toml)
     call dein#end()
