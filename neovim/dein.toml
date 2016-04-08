@@ -15,7 +15,7 @@ lazy = 1
 
 [[plugins]]
 repo = 'rhysd/vim-operator-surround'
-depends = 'vim-textobj-user'
+depends = 'vim-operator-user'
 on_map = '<Plug>(operator-surround-'
 # }}}
 
