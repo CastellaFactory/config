@@ -4,6 +4,6 @@
 
 # /etc/zsh/zprofile overwrites PATH setting
 # PATH setting must be sourced after /etc/zsh/zprofile
-source $ZDOTDIR/.zshenv
+source $HOME/.zshenv
 
 # vim: ft=zsh

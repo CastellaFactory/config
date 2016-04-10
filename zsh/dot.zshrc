@@ -181,11 +181,11 @@ bindkey '^o' peco-ghq_open
 # OS specific settings  # {{{1
 case "${OSTYPE}" in
     darwin*)
-        source $ZDOTDIR/.zshrc.mac
+        source $HOME/.zshrc.mac
         ;;
 
     linux*)
-        source $ZDOTDIR/.zshrc.linux
+        source $HOME/.zshrc.linux
         ;;
 esac
 # 1}}}

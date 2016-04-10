@@ -97,12 +97,7 @@ namespace :common do
   end
 
   task :zsh do
-    unless File.directory? "#{home}/.zsh"
-      mkdir "#{home}/.zsh"
-      mkdir "#{home}/.zsh/plugins"
-    end
-    make_symlink 'zsh/dot.zshenv', "#{home}/.zshenv"
-    make_symlink 'zsh/dot.zshrc', "#{home}/.zsh/.zshrc"
+    make_symlink 'zsh/dot.zshrc', "#{home}/.zshrc"
 
     unless File.directory? "#{home}/.config/peco"
       mkdir_p "#{home}/.config/peco"
@@ -180,9 +175,9 @@ namespace :linux do
   task :setup_nox => ['common:nox', :zsh, :notification]
 
   task :zsh do
-    make_symlink 'zsh/dot.zshenv.linux', "#{home}/.zsh/.zshenv"
-    make_symlink 'zsh/dot.zprofile.linux', "#{home}/.zsh/.zprofile"
-    make_symlink 'zsh/dot.zshrc.linux', "#{home}/.zsh/.zshrc.linux"
+    make_symlink 'zsh/dot.zshenv.linux', "#{home}/.zshenv"
+    make_symlink 'zsh/dot.zprofile.linux', "#{home}/.zprofile"
+    make_symlink 'zsh/dot.zshrc.linux', "#{home}/.zshrc.linux"
   end
 
   task :xmonad do
@@ -219,9 +214,9 @@ namespace :mac do
   task :setup => ['common:all', :zsh]
 
   task :zsh do
-    make_symlink 'zsh/dot.zshenv.mac', "#{home}/.zsh/.zshenv"
-    make_symlink 'zsh/dot.zprofile.mac', "#{home}/.zsh/.zprofile"
-    make_symlink 'zsh/dot.zshrc.mac', "#{home}/.zsh/.zshrc.mac"
+    make_symlink 'zsh/dot.zshenv.mac', "#{home}/.zshenv"
+    make_symlink 'zsh/dot.zprofile.mac', "#{home}/.zprofile"
+    make_symlink 'zsh/dot.zshrc.mac', "#{home}/.zshrc.mac"
   end
 end
 
