@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# workaround for Qt apps under environments other than KDE
+export XDG_CURRENT_DESKTOP=KDE
+
 compton -b -C -G --config ~/.compton.conf &
 (sleep 3; /usr/lib64/libexec/polkit-kde-authentication-agent-1) &
 # (sleep 3; /usr/lib64/libexec/polkit-gnome-authentication-agent-1) &

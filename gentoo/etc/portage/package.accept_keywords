@@ -88,3 +88,11 @@ x11-wm/i3 ~amd64
 # required by infinality-ultimate-meta (argument)
 >=media-fonts/courier-prime-1.203 ~amd64
 
+# required by kmix:5 (argument)
+=kde-apps/kmix-15.12.3 ~amd64
+# required by kde-apps/dolphin:5 (argument)
+=kde-apps/dolphin-15.12.3-r1 ~amd64
+# required by kde-apps/dolphin-15.12.3-r1::gentoo
+# required by @selected
+# required by @world (argument)
+=kde-apps/kio-extras-15.12.3 ~amd64
