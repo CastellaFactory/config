@@ -8,6 +8,7 @@ app-text/texlive graphics metapost pstricks science dvipdfm publishers extra hum
 app-text/texlive-core xetex
 dev-qt/qtwebkit icu
 dev-util/cppcheck -qt4
+kde-plasma/plasma-desktop gtk2 gtk3 qt4 legacy-systray
 media-gfx/graphviz python
 media-sound/audacious gtk -gtk3
 media-plugins/audacious-plugins gtk -gtk3
