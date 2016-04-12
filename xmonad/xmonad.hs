@@ -223,7 +223,7 @@ myManageHook = manageDocks <+> F.fullscreenManageHook
                , className =? "Calibre-ebook-viewer"                  --> viewShift "5:Reading"
                , className =? "Calibre-ebook-viewer"                  --> doFloat
                , className =? "Audacious"                             --> doShift "6:Media"
-               , className =? "Audacious"                             --> doFloat
+               -- , className =? "Audacious"                             --> doFloat
                , resource  =? "desktop_window"                        --> doIgnore
                , resource  =? "kdesktop"                              --> doIgnore
                ]
