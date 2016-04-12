@@ -12,8 +12,8 @@ kde-apps/okular dpi
 kde-plasma/plasma-desktop gtk2 gtk3 qt4 legacy-systray
 kde-plasma/plasma-meta -sddm
 media-gfx/graphviz python
-media-plugins/audacious-plugins gtk -gtk3
-media-sound/audacious gtk -gtk3
+media-plugins/audacious-plugins -gtk -gtk3
+media-sound/audacious -gtk -gtk3
 net-wireless/wpa_supplicant -fasteap p2p eap-sim -qt4
 sys-devel/clang python
 sys-devel/llvm python clang
