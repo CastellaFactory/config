@@ -8,17 +8,34 @@ app-text/texlive graphics metapost pstricks science dvipdfm publishers extra hum
 app-text/texlive-core xetex
 dev-qt/qtwebkit icu
 dev-util/cppcheck -qt4
+kde-apps/okular dpi
 kde-plasma/plasma-desktop gtk2 gtk3 qt4 legacy-systray
 kde-plasma/plasma-meta -sddm
 media-gfx/graphviz python
+<<<<<<< HEAD
 media-sound/audacious gtk -gtk3 -qt5
 media-plugins/audacious-plugins gtk -gtk3 -qt5
+=======
+media-plugins/audacious-plugins gtk -gtk3
+media-sound/audacious gtk -gtk3
+net-wireless/wpa_supplicant -fasteap p2p eap-sim -qt4
+>>>>>>> 59b29c9727f48dba8b3621048544e1ecc5dc95a4
 sys-devel/clang python
 sys-devel/llvm python clang
-sys-libs/ncurses tinfo
 sys-kernel/gentoo-sources symlink
+sys-libs/ncurses tinfo
 www-client/firefox gstreamer -gtk3
 x11-misc/xmobar inotify timezone wifi
 x11-terms/rxvt-unicode blink wcwidth alt-font-width unicode3 fading-colors 256color -vanilla 256-color pixbuf buffer-on-clear
 
 
+# required by media-gfx/mcomix
+>=dev-lang/python-2.7.9-r1:2.7 sqlite
+
+# required by app-text/texlive-core
+>=media-libs/harfbuzz-0.9.38 icu
+
+# required by net-im/skype-4.3.0.37-r6::gentoo
+# required by @selected
+# required by @world (argument)
+>=dev-qt/qtwebkit-4.8.6-r1:4 -exceptions

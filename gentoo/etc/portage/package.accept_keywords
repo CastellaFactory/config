@@ -56,10 +56,6 @@ x11-wm/i3 ~amd64
 # required by @selected
 # required by @world (argument)
 >=media-libs/libpng-1.6.18 ~amd64
-# required by dev-lang/go-1.5::gentoo
-# required by @selected
-# required by @world (argument)
->=dev-lang/go-bootstrap-1.4.2 ~amd64
 
 # required by net-libs/nodejs-5.0.0::gentoo
 # required by nodejs (argument)
@@ -88,3 +84,13 @@ x11-wm/i3 ~amd64
 # required by infinality-ultimate-meta (argument)
 >=media-fonts/courier-prime-1.203 ~amd64
 
+=kde-apps/kmix-15.12.3 ~amd64
+
+# required by kde-plasma/plasma-workspace-5.5.5-r2::gentoo
+# required by kde-plasma/powerdevil-5.5.5::gentoo
+# required by kde-plasma/plasma-meta-5.5.5::gentoo
+# required by @selected
+# required by @world (argument)
+=kde-apps/kio-extras-15.12.3 ~amd64
+# required by kde-apps/dolphin:5 (argument)
+=kde-apps/dolphin-15.12.3-r1 ~amd64
