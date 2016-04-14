@@ -306,7 +306,7 @@ defaults = ewmh def {
               , ((myModMask, xK_o), runOrRaise "firefox" (className =? "Firefox"))
               , ((myModMask .|. shiftMask, xK_o), runOrRaise "thunderbird" (className =? "Thunderbird"))
 
-              , ((myModMask, xK_a), runOrRaise "dolphin" (className =? "Dolphin"))
+              , ((myModMask, xK_a), runOrRaise "dolphin" (className =? "dolphin"))
               , ((myModMask .|. shiftMask, xK_a), runOrRaise "emacs" (className =? "Emacs"))
 
               , ((myModMask, xK_e), spawn "gvim -u ~/.vim/vimrc -U ~/.vim/gvimrc -N")
