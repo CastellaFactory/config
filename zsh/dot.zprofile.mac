@@ -2,6 +2,6 @@
 # export VISUAL="vim"
 # export ALTERNATE_EDITOR=""
 
-source $ZDOTDIR/.zshenv
+source $HOME/.zshenv
 
 # vim: ft=zsh
