@@ -10,3 +10,5 @@
 # required by @world (argument)
 >=dev-qt/qtwebkit-4.8.6-r1:4 -exceptions
 
+# fix conflict
+>=net-libs/nodejs-5.10.1 -icu
