@@ -24,3 +24,6 @@ tramp
 Session.vim
 .ycm_extra_conf.py
 .ycm_extra_conf.pyc
+
+# python
+__pycache__
