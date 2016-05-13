@@ -18,6 +18,7 @@ dev-tex/biblatex ~amd64
 dev-tex/dot2tex ~amd64
 dev-util/cmake ~amd64
 dev-util/cppcheck ~amd64
+dev-util/include-what-you-use ~amd64
 dev-util/ninja ~amd64
 dev-util/re2c ~amd64
 media-fonts/infinality-ultimate-meta ~amd64
