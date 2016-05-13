@@ -94,3 +94,10 @@ x11-wm/i3 ~amd64
 =kde-apps/kio-extras-15.12.3 ~amd64
 # required by kde-apps/dolphin:5 (argument)
 =kde-apps/dolphin-15.12.3-r1 ~amd64
+
+# required by @__auto_slot_operator_replace_installed__ (argument)
+=media-libs/mesa-11.2.2 ~amd64
+# required by media-libs/mesa-11.2.2::gentoo[video_cards_intel,-video_cards_ilo,-video_cards_i915,video_cards_i965]
+# required by @selected
+# required by @world (argument)
+=x11-libs/libdrm-2.4.68 ~amd64
