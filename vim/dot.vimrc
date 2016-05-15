@@ -36,11 +36,11 @@ function! s:MyEnv()
                 \   },
                 \   'language' : {
                 \       'c' : {
-                \           'compiler' : executable('clang-3.7') ? 'clang-3.7' : 'clang'
+                \           'compiler' : executable('clang-3.8') ? 'clang-3.8' : 'clang'
                 \       },
                 \       'cpp' : {
-                \           'compiler' : executable('clang++-3.7') ? 'clang++-3.7' : 'clang++',
-                \           'formatter' : executable('clang-format-3.7') ? 'clang-format-3.7' : 'clang-format'
+                \           'compiler' : executable('clang++-3.8') ? 'clang++-3.8' : 'clang++',
+                \           'formatter' : executable('clang-format-3.8') ? 'clang-format-3.8' : 'clang-format'
                 \       },
                 \       'rust' : {
                 \           'src' : ghq_root . '/github.com/rust-lang/rust/src'
