@@ -409,7 +409,6 @@ let g:clang_format#style_options = {
             \   'AllowShortIfStatementsOnASingleLine' : 'false',
             \   'AllowShortLoopsOnASingleLine' : 'false',
             \   'BreakBeforeBinaryOperators' : 'NonAssignment',
-            \   'BreakBeforeBraces' : 'Stroustrup',
             \   'IndentCaseLabels' : 'false',
             \   'IndentWidth' : 4
             \ }
