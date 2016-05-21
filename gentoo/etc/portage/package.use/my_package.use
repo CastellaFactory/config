@@ -10,7 +10,7 @@ dev-qt/qtwebkit icu
 dev-util/cmake -qt5
 dev-util/cppcheck -qt4
 kde-apps/okular dpi
-kde-plasma/plasma-desktop gtk2 gtk3 qt4 legacy-systray
+kde-plasma/plasma-desktop gtk2 gtk3 legacy-systray -qt4
 kde-plasma/plasma-meta -sddm
 media-gfx/graphviz python
 media-plugins/audacious-plugins -gtk -gtk3
@@ -21,5 +21,6 @@ sys-devel/llvm python clang
 sys-kernel/gentoo-sources symlink
 sys-libs/ncurses tinfo
 www-client/firefox gstreamer -gtk3
+x11-misc/lightdm -kde
 x11-misc/xmobar inotify timezone wifi
 x11-terms/rxvt-unicode blink wcwidth alt-font-width unicode3 fading-colors 256color -vanilla 256-color pixbuf buffer-on-clear
