@@ -37,6 +37,19 @@ x11-terms/rxvt-unicode ~amd64
 x11-wm/awesome ~amd64
 x11-wm/i3 ~amd64
 
+# KDE
+kde-apps/*:5 ~amd64
+kde-frameworks/*:5 ~amd64
+kde-plasma/*:5 ~amd64
+# required by kde-apps/kdeutils-meta-16.04.1::gentoo
+# required by @selected
+# required by @world (argument)
+>=kde-apps/kdf-16.04.1 ~amd64
+# required by kde-apps/kdeutils-meta-16.04.1::gentoo
+# required by @selected
+# required by @world (argument)
+>=kde-apps/sweeper-16.04.1 ~amd64
+
 # Overlay
 # gentoo-haskell
 */*::haskell ~amd64
@@ -83,17 +96,6 @@ x11-wm/i3 ~amd64
 # required by media-fonts/infinality-ultimate-meta-1::gentoo[latin,free]
 # required by infinality-ultimate-meta (argument)
 >=media-fonts/courier-prime-1.203 ~amd64
-
-=kde-apps/kmix-15.12.3 ~amd64
-
-# required by kde-plasma/plasma-workspace-5.5.5-r2::gentoo
-# required by kde-plasma/powerdevil-5.5.5::gentoo
-# required by kde-plasma/plasma-meta-5.5.5::gentoo
-# required by @selected
-# required by @world (argument)
-=kde-apps/kio-extras-15.12.3 ~amd64
-# required by kde-apps/dolphin:5 (argument)
-=kde-apps/dolphin-15.12.3-r1 ~amd64
 
 # required by @__auto_slot_operator_replace_installed__ (argument)
 =media-libs/mesa-11.2.2 ~amd64
