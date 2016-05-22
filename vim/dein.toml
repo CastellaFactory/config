@@ -102,8 +102,16 @@ on_ft = 'cpp'
 # on_ft = 'ocaml'
 # }}}
 
+# Colorscheme {{{
+[[plugins]]
+repo = 'adelarsq/vim-grimmjow'
+
+[[plugins]]
+repo = 'cocopon/iceberg.vim'
+
 [[plugins]]
 repo = 'NLKNguyen/papercolor-theme'
+# }}}
 
 [[plugins]]
 repo = 'thinca/vim-quickrun'
