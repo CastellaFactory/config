@@ -104,13 +104,7 @@ on_ft = 'cpp'
 
 # Colorscheme {{{
 [[plugins]]
-repo = 'adelarsq/vim-grimmjow'
-
-[[plugins]]
 repo = 'cocopon/iceberg.vim'
-
-[[plugins]]
-repo = 'NLKNguyen/papercolor-theme'
 # }}}
 
 [[plugins]]
