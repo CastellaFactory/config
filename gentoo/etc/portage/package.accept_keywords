@@ -112,3 +112,9 @@ kde-plasma/*:5 ~amd64
 # required by clementine (argument)
 >=media-libs/libechonest-2.3.1-r1 ~amd64
 
+# required by kde-frameworks/kf-env-4::gentoo
+# required by kde-plasma/kdecoration-5.6.4::gentoo
+# required by kde-plasma/plasma-meta-5.6.4::gentoo
+# required by @selected
+# required by @world (argument)
+>=x11-misc/xdg-utils-1.1.1-r1 ~amd64
