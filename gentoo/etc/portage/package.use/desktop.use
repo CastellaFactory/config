@@ -65,6 +65,7 @@
 >=sys-libs/zlib-1.2.8-r1 abi_x86_32
 >=virtual/glu-9.0-r1 abi_x86_32
 >=virtual/jpeg-0-r2:0 abi_x86_32
+>=virtual/libelf-1 abi_x86_32
 >=virtual/libffi-3.0.13-r1 abi_x86_32
 >=virtual/libiconv-0-r2 abi_x86_32
 >=virtual/libintl-0-r1 abi_x86_32
@@ -109,3 +110,4 @@
 >=x11-proto/xf86vidmodeproto-2.3.1-r1 abi_x86_32
 >=x11-proto/xineramaproto-1.2.1-r1 abi_x86_32
 >=x11-proto/xproto-7.0.27 abi_x86_32
+
