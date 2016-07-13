@@ -143,4 +143,3 @@ on_map = '<Plug>(caw:'
 repo = 'Valloric/YouCompleteMe'
 build = 'git submodule update --init --recursive && ./install.py --clang-completer --gocode-completer --racer-completer'
 on_i = 1
-hook_post_source = 'call youcompleteme#Enable()'
