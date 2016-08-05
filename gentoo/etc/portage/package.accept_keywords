@@ -34,6 +34,7 @@ sys-devel/llvm ~amd64
 sys-libs/libomp ~amd64
 www-client/firefox ~amd64
 x11-misc/compton ~amd64
+x11-misc/qt5ct ~amd64
 x11-terms/rxvt-unicode ~amd64
 x11-wm/awesome ~amd64
 x11-wm/i3 ~amd64
