@@ -462,6 +462,7 @@ let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
 " 2}}}
 " unite  " {{{2
 nnoremap <Space>ub  :<C-u>Unite buffer<CR>
+nnoremap <Space>ut  :<C-u>Unite tab<CR>
 nnoremap <Space>um  :<C-u>Unite neomru/file<CR>
 nnoremap <Space>uf  :<C-u>Unite file<CR>
 nnoremap <Space>urm  :<C-u>UniteResume<CR>
