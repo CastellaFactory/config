@@ -33,8 +33,8 @@ end
 
 
 namespace :common do
-  task :all => [:git, :vim, :neovim, :atom, :zsh, :tmux, :ocaml, :vimperator, :tex, :ag]
-  task :nox => [:git, :vim, :neovim, :zsh, :tmux, :ocaml, :ag]
+  task :all => [:git, :vim, :neovim, :atom, :tmux, :ocaml, :vimperator, :tex, :ag]
+  task :nox => [:git, :vim, :neovim, :tmux, :ocaml, :ag]
 
   task :git do
     make_symlink 'git/dot.gitconfig', "#{home}/.gitconfig"
@@ -94,15 +94,6 @@ namespace :common do
     make_symlink 'atom/snippets.cson', "#{home}/.atom/snippets.cson"
     make_symlink 'atom/styles.less', "#{home}/.atom/styles.less"
     make_symlink 'atom/atom-packages', "#{home}/.atom/atom-packages"
-  end
-
-  task :zsh do
-    make_symlink 'zsh/dot.zshrc', "#{home}/.zshrc"
-
-    unless File.directory? "#{home}/.config/peco"
-      mkdir_p "#{home}/.config/peco"
-    end
-    make_symlink 'peco/config.json', "#{home}/.config/peco/config.json"
   end
 
   task :tmux do
@@ -171,14 +162,8 @@ namespace :linux do
   end
 
 
-  task :setup => ['common:all', :zsh, :xmonad, :X, :notification]
-  task :setup_nox => ['common:nox', :zsh, :notification]
-
-  task :zsh do
-    make_symlink 'zsh/dot.zshenv.linux', "#{home}/.zshenv"
-    make_symlink 'zsh/dot.zprofile.linux', "#{home}/.zprofile"
-    make_symlink 'zsh/dot.zshrc.linux', "#{home}/.zshrc.linux"
-  end
+  task :setup => ['common:all', :xmonad, :X, :notification]
+  task :setup_nox => ['common:nox', :notification]
 
   task :xmonad do
     unless File.directory? "#{home}/.xmonad"
@@ -210,13 +195,7 @@ end
 
 namespace :mac do
   desc 'set up dotfiles for Mac OS X'
-  task :setup => ['common:all', :zsh]
-
-  task :zsh do
-    make_symlink 'zsh/dot.zshenv.mac', "#{home}/.zshenv"
-    make_symlink 'zsh/dot.zprofile.mac', "#{home}/.zprofile"
-    make_symlink 'zsh/dot.zshrc.mac', "#{home}/.zshrc.mac"
-  end
+  task :setup => ['common:all']
 end
 
 case platform

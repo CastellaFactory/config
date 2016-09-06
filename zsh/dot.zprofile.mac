@@ -1,7 +1,0 @@
-# export EDITOR="vim"
-# export VISUAL="vim"
-# export ALTERNATE_EDITOR=""
-
-source $HOME/.zshenv
-
-# vim: ft=zsh
