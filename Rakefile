@@ -33,8 +33,8 @@ end
 
 
 namespace :common do
-  task :all => [:git, :vim, :neovim, :atom, :tmux, :ocaml, :vimperator, :tex, :ag]
-  task :nox => [:git, :vim, :neovim, :tmux, :ocaml, :ag]
+  task :all => [:git, :vim, :neovim, :fish, :atom, :tmux, :ocaml, :vimperator, :tex, :ag]
+  task :nox => [:git, :vim, :neovim, :fish, :tmux, :ocaml, :ag]
 
   task :git do
     make_symlink 'git/dot.gitconfig', "#{home}/.gitconfig"
@@ -81,6 +81,13 @@ namespace :common do
       end
     end
     make_symlink 'neovim/dein.toml', "#{home}/nvim/dein.toml"
+  end
+
+  task :fish do
+    unless File.directory? "#{home}/.config/fish"
+      mkdir_p "#{home}/.config/fish"
+    end
+    make_symlink 'fish/config.fish', "#{home}/.config/fish/config.fish"
   end
 
   task :atom do
