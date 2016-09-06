@@ -196,7 +196,6 @@ namespace :linux do
   task :X do
     make_symlink 'X/dot.xprofile', "#{home}/.xprofile"
     make_symlink 'X/dot.Xresources', "#{home}/.Xresources"
-    make_symlink 'X/dot.xsession', "#{home}/.xsession"
     make_symlink 'X/dot.compton.conf', "#{home}/.compton.conf"
     make_symlink 'X/dot.Xmodmap', "#{home}/.Xmodmap"
   end

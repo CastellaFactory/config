@@ -11,7 +11,6 @@ dev-util/cmake -qt5
 dev-util/cppcheck -qt4
 kde-apps/okular dpi
 kde-plasma/plasma-desktop gtk2 gtk3 legacy-systray -qt4
-kde-plasma/plasma-meta -sddm
 media-gfx/graphviz python
 media-plugins/audacious-plugins -gtk -gtk3
 media-sound/audacious -gtk -gtk3

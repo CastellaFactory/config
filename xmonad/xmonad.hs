@@ -33,6 +33,7 @@ import           XMonad.Prompt
 import           XMonad.Prompt.Shell
 import qualified XMonad.StackSet                     as W
 import           XMonad.Util.EZConfig                (additionalKeys)
+import           XMonad.Util.SpawnOnce
 {- 1}}} -}
 
 {- mySetting {{{1 -}
@@ -267,7 +268,19 @@ toggleStrutsKey XConfig {} = (myModMask, xK_b)
 
 {- Startup hook {{{1 -}
 myStartupHook :: X ()
-myStartupHook = setWMName "LG3D"
+myStartupHook = do
+  setWMName "LG3D"
+  spawnOnce "compton -b -C -G --config ~/.compton.conf"
+  spawnOnce "/usr/lib64/libexec/polkit-kde-authentication-agent-1"
+  spawnOnce "stalonetray"
+  spawnOnce "nitrogen --restore"
+  spawnOnce "kmix --keepvisibility"
+  spawnOnce "fcitx"
+  spawnOnce "insync start"
+  spawnOnce "dropbox"
+  spawnOnce "xset -b"
+  spawnOnce "xrdb -merge ~/.Xresources"
+
 {- 1}}} -}
 
 {- main {{{1 -}

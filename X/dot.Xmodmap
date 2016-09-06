@@ -1,13 +1,8 @@
-! this settnigs is used only in laptop
+! swap CapsLock and Control
 remove Lock = Caps_Lock
 remove Control = Control_L
 keysym Control_L = Caps_Lock
 keysym Caps_Lock = Control_L
 add Lock = Caps_Lock
 add Control = Control_L
-
-keycode 135 = Super_R
-add mod4 = Super_R
-keycode 132 = BackSpace
-keycode 97 = Escape
 
