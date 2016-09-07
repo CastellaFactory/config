@@ -189,7 +189,6 @@ namespace :linux do
     make_symlink 'X/dot.xprofile', "#{home}/.xprofile"
     make_symlink 'X/dot.Xresources', "#{home}/.Xresources"
     make_symlink 'X/dot.compton.conf', "#{home}/.compton.conf"
-    make_symlink 'X/dot.Xmodmap', "#{home}/.Xmodmap"
   end
 
   task :notification do
