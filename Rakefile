@@ -88,6 +88,7 @@ namespace :common do
       mkdir_p "#{home}/.config/fish"
     end
     make_symlink 'fish/config.fish', "#{home}/.config/fish/config.fish"
+    make_symlink 'fish/functions', "#{home}/.config/fish/functions"
   end
 
   task :atom do
