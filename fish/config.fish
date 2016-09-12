@@ -32,7 +32,6 @@
     
         # Java
         set -gx _JAVA_OPTIONS -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dsun.java2d.xrender=true
-        set -gx _JAVA_AWT_WM_NONREPARENTING 1
     
         # alias
         alias ls='ls --color -F'

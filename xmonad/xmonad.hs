@@ -34,6 +34,7 @@ import           XMonad.Prompt.Shell
 import qualified XMonad.StackSet                     as W
 import           XMonad.Util.EZConfig                (additionalKeys)
 import           XMonad.Util.SpawnOnce
+import           System.Posix.Env                    as Env
 {- 1}}} -}
 
 {- mySetting {{{1 -}
@@ -270,6 +271,8 @@ toggleStrutsKey XConfig {} = (myModMask, xK_b)
 myStartupHook :: X ()
 myStartupHook = do
   setWMName "LG3D"
+  liftIO $ Env.putEnv "_JAVA_AWT_WM_NONREPARENTING=1"
+  liftIO $ Env.putEnv "XDG_CURRENT_DESKTOP=KDE"
   spawnOnce "compton -b -C -G --config ~/.compton.conf"
   spawnOnce "/usr/lib64/libexec/polkit-kde-authentication-agent-1"
   spawnOnce "stalonetray"
