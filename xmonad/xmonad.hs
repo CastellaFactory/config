@@ -3,15 +3,13 @@
 ----------------------------------------------------------------------
 
 {- Import {{{1 -}
--- import System.IO
--- import XMonad.Layout
--- import XMonad.Util.Run
 import           Control.Monad                       (liftM2)
 import           Data.List                           (stripPrefix)
 import qualified Data.Map                            as M (Map, fromList, union)
 import           Data.Maybe                          (fromMaybe)
 import           Data.Monoid                         (All, Endo)
 import           System.Exit                         (exitSuccess)
+import           System.Posix.Env                    as Env
 import           XMonad
 import           XMonad.Actions.WindowGo             (runOrRaise)
 import           XMonad.Hooks.DynamicLog
@@ -34,7 +32,6 @@ import           XMonad.Prompt.Shell
 import qualified XMonad.StackSet                     as W
 import           XMonad.Util.EZConfig                (additionalKeys)
 import           XMonad.Util.SpawnOnce
-import           System.Posix.Env                    as Env
 {- 1}}} -}
 
 {- mySetting {{{1 -}
