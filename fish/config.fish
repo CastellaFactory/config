@@ -30,9 +30,6 @@
         set -gx PATH /sbin /usr/sbin $PATH
         set -gx PATH ~/.gem/ruby/2.1.0/bin $PATH
     
-        # Java
-        set -gx _JAVA_OPTIONS '-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dsun.java2d.xrender=true'
-    
         # alias
         alias ls='ls --color -F'
         alias vi='vim -u ~/.vim/vimrc -N'
