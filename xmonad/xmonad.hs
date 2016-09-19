@@ -279,7 +279,7 @@ myStartupHook = do
   spawnOnce "insync start"
   spawnOnce "dropbox"
   spawnOnce "xset -b"
-  spawnOnce "xrdb -merge ~/.Xresources"
+  -- spawnOnce "xrdb -merge ~/.Xresources"
 
 {- 1}}} -}
 

@@ -8,14 +8,14 @@ Config {font = "xft:SourceHanCodeJP:bold:size=11:antialias=true,hinting=true,aut
                       , Run Memory ["-t","Mem: <usedratio>%"] 10
                       , Run Com "uname" ["-s","-r"] "" 36000
                       , Run Date "%Y/%m/%d %a %H:%M" "date" 10
-                      , Run BatteryP ["BAT0", "BAT1"] ["-t", "<acstatus>"
+                      , Run Battery ["-t", "<acstatus>"
                                                         , "-L", "15", "-H", "90"
                                                         , "-l", "red", "-h", "green"
                                                         , "--"
                                                         , "-O", "AC: <left>%"
                                                         , "-i", "AC: <left>%"
                                                         , "-o", "Bat: <left>%"
-                                                      ] 100
+                                                      ] 50
                       , Run StdinReader
                       ]
         , sepChar = "%"
