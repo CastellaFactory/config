@@ -14,6 +14,7 @@
 >=dev-libs/libffi-3.0.13-r1 abi_x86_32
 >=dev-libs/libgcrypt-1.5.4-r1 abi_x86_32
 >=dev-libs/libgpg-error-1.13 abi_x86_32
+>=dev-libs/libpcre-8.38-r1 abi_x86_32
 >=dev-libs/libpthread-stubs-0.3-r1 abi_x86_32
 >=dev-libs/libtasn1-4.5 abi_x86_32
 >=dev-libs/libxml2-2.9.2-r1 abi_x86_32
