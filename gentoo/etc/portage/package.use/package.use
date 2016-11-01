@@ -16,3 +16,4 @@
 # required by gnome-base/gnome-keyring-3.18.3::gentoo
 # required by app-crypt/libsecret-0.18.4::gentoo
 >=app-crypt/pinentry-0.9.5 gnome-keyring
+

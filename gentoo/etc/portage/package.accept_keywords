@@ -32,6 +32,7 @@ net-im/skype ~amd64
 net-libs/nodejs ~amd64
 sys-apps/the_silver_searcher ~amd64
 sys-devel/clang ~amd64
+sys-devel/clang-runtime ~amd64
 sys-devel/llvm ~amd64
 sys-libs/libomp ~amd64
 www-client/firefox ~amd64
