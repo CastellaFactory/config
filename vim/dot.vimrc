@@ -9,7 +9,7 @@
 
 " Basic Settings  " {{{1
 " Base  " {{{2
-augroup MyAutoCmd
+augroup Vimrc
     autocmd!
 augroup END
 
@@ -36,11 +36,11 @@ function! s:MyEnv()
                 \   },
                 \   'language' : {
                 \       'c' : {
-                \           'compiler' : executable('clang-3.8') ? 'clang-3.8' : 'clang'
+                \           'compiler' : executable('clang-3.9') ? 'clang-3.9' : 'clang'
                 \       },
                 \       'cpp' : {
-                \           'compiler' : executable('clang++-3.8') ? 'clang++-3.8' : 'clang++',
-                \           'formatter' : executable('clang-format-3.8') ? 'clang-format-3.8' : 'clang-format'
+                \           'compiler' : executable('clang++-3.9') ? 'clang++-3.9' : 'clang++',
+                \           'formatter' : executable('clang-format-3.9') ? 'clang-format-3.9' : 'clang-format'
                 \       },
                 \       'rust' : {
                 \           'src' : ghq_root . '/github.com/rust-lang/rust/src'
@@ -241,15 +241,19 @@ noremap ;  :
 noremap :  ;
 
 " move cursor by display lines
-nnoremap j  gj
-nnoremap k  gk
+noremap j  gj
+noremap k  gk
+
+" visual shifting
+vnoremap <  <gv
+vnoremap >  >gv
 
 " hard to hit <Esc> and <C-[> for me, and to cause InsertLeave.
 imap <silent> <C-c>  <Esc>
 
 " for fcitx
 if g:is_linux_p && executable('fcitx-remote')
-    autocmd MyAutoCmd InsertLeave * call system('fcitx-remote -c')
+    autocmd Vimrc InsertLeave * call system('fcitx-remote -c')
 endif
 
 " $MYVIMRC is not set, since vim launched with -u option
@@ -292,7 +296,7 @@ cnoremap <C-e>  <End>
 cnoremap <expr> /  getcmdtype() == '/' ? '\/' : '/'
 " 2}}}
 " misc  " {{{2
-" select last changed text (like gv p.146)
+" select last changed text (like gv)
 nnoremap gc  `[v`]
 Ovnoremap gc  :<C-u>normal gc<CR>
 
@@ -352,7 +356,7 @@ endif
 " for source $MYVIMRC
 set formatoptions-=r
 set formatoptions-=o
-autocmd MyAutoCmd FileType * call s:on_FileType_all()
+autocmd Vimrc FileType * call s:on_FileType_all()
 function! s:on_FileType_all()
     setlocal formatoptions-=r
     setlocal formatoptions-=o
@@ -361,7 +365,7 @@ function! s:on_FileType_all()
     endif
 endfunction
 
-autocmd MyAutoCmd BufReadPost *
+autocmd Vimrc BufReadPost *
             \   if line("'\"") > 1 && line("'\"") <= line("$")
             \ |     execute "normal! g`\""
             \ | endif
@@ -384,23 +388,23 @@ nmap <Leader>ca  <Plug>(caw:dollarpos:comment)
 Nvmap <Leader>cc  <Plug>(caw:hatpos:toggle)
 " 2}}}
 " devdocs  " {{{2
-autocmd MyAutoCmd FileType c,cpp,rust,haskell nmap <buffer> K <Plug>(devdocs-under-cursor)
+autocmd Vimrc FileType c,cpp,rust,haskell nmap <buffer> K <Plug>(devdocs-under-cursor)
 " 2}}}
 " easy-align  " {{{2
 Nvmap <Leader>ea  <Plug>(EasyAlign)
 Nvmap <Leader>lea  <Plug>(LiveEasyAlign)
 " 2}}}
 " ghcmod-vim  " {{{2
-autocmd MyAutoCmd FileType haskell
+autocmd Vimrc FileType haskell
             \   nnoremap <buffer> <Leader>t  :<C-u>GhcModType<CR>
             \ | nnoremap <buffer><silent> <Space>/  :<C-u>GhcModTypeClear<CR>:nohlsearch<CR>
 " 2}}}
 " neco-ghc  " {{{2
-autocmd MyAutoCmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+autocmd Vimrc FileType haskell setlocal omnifunc=necoghc#omnifunc
 " 2}}} "
 "  operator  " {{{2
 " operator-clang-format  " {{{3
-autocmd MyAutoCmd FileType c,cpp map <buffer> <Leader>x  <Plug>(operator-clang-format)
+autocmd Vimrc FileType c,cpp map <buffer> <Leader>x  <Plug>(operator-clang-format)
 
 " clang-format -style=google -dump-config
 let g:clang_format#command = s:env.language.cpp.formatter
@@ -476,11 +480,11 @@ let g:unite_source_grep_command = 'ag'
 let g:unite_source_grep_default_opts = '--nocolor --nogroup'
 let g:unite_source_grep_recursive_opt = ''
 
-autocmd MyAutoCmd FileType unite imap <buffer> <C-g>  <Plug>(unite_exit)
+autocmd Vimrc FileType unite imap <buffer> <C-g>  <Plug>(unite_exit)
             \ | nmap <buffer> <C-g>  <Plug>(unite_exit)
 " 2}}}
 " YouCompleteMe  "{{{2
-autocmd MyAutoCmd FileType c,cpp
+autocmd Vimrc FileType c,cpp
             \   nnoremap <buffer> <Leader>pg  :<C-u>YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 let g:ycm_global_ycm_extra_conf = s:env.path.user . 'ycm_default/ycm_extra_conf.py'
