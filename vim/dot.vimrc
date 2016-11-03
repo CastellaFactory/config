@@ -412,6 +412,7 @@ let g:clang_format#style_options = {
             \   'AccessModifierOffset' : -4,
             \   'AllowShortIfStatementsOnASingleLine' : 'false',
             \   'AllowShortLoopsOnASingleLine' : 'false',
+            \   'BreakBeforeBraces' : 'Stroustrup',
             \   'BreakBeforeBinaryOperators' : 'NonAssignment',
             \   'IndentCaseLabels' : 'false',
             \   'IndentWidth' : 4

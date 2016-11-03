@@ -70,8 +70,8 @@ namespace :common do
       ln_sf "#{home}/.config/nvim", "#{home}/nvim"
     end
 
-    make_symlink 'neovim/init.vim', "#{home}/.config/nvim/init.vim"
-    ln_sf "#{home}/.config/nvim/init.vim", "#{home}/.config/nvim/nvimrc"
+    make_symlink 'vim/dot.vimrc', "#{home}/.config/nvim/init.vim"
+    make_symlink 'vim/dein.toml', "#{home}/.config/nvim/dein.toml"
 
     next unless installed? 'git'
     unless File.directory? "#{home}/.config/nvim/dein"
@@ -80,7 +80,6 @@ namespace :common do
         sh "git clone git://github.com/Shougo/dein.vim.git Shougo/dein.vim"
       end
     end
-    make_symlink 'neovim/dein.toml', "#{home}/nvim/dein.toml"
   end
 
   task :fish do
@@ -88,7 +87,7 @@ namespace :common do
       mkdir_p "#{home}/.config/fish"
     end
     make_symlink 'fish/config.fish', "#{home}/.config/fish/config.fish"
-    make_symlink 'fish/functions', "#{home}/.config/fish/functions"
+    make_symlink 'fish/functions', "#{home}/.config/fish"
   end
 
   task :atom do
