@@ -63,23 +63,10 @@ namespace :common do
   end
 
   task :neovim do
-    unless File.directory? "#{home}/.config/nvim"
-      mkdir_p "#{home}/.config/nvim"
-      mkdir "#{home}/.config/nvim/undo"
-      mkdir "#{home}/.config/nvim/backups"
-      ln_sf "#{home}/.config/nvim", "#{home}/nvim"
-    end
-
+    ln_sf "#{home}/.vim", "#{home}/.config/nvim"
     make_symlink 'vim/dot.vimrc', "#{home}/.config/nvim/init.vim"
     make_symlink 'vim/dein.toml', "#{home}/.config/nvim/dein.toml"
 
-    next unless installed? 'git'
-    unless File.directory? "#{home}/.config/nvim/dein"
-      mkdir_p "#{home}/.config/nvim/dein/repos/github.com"
-      chdir "#{home}/.config/nvim/dein/repos/github.com" do
-        sh "git clone git://github.com/Shougo/dein.vim.git Shougo/dein.vim"
-      end
-    end
   end
 
   task :fish do

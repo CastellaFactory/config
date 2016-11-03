@@ -20,7 +20,7 @@ let g:is_linux_p = !g:is_darwin_p && has('unix')
 
 function! s:MyEnv()
     let env = {}
-    let dot_vim_dir = fnamemodify(expand('$HOME/.vim'), ':p')
+    let dot_vim_dir = has('nvim') ? fnamemodify(expand('$HOME/.config/nvim'), ':p') : fnamemodify(expand('$HOME/.vim'), ':p')
     let ghq_root = substitute(system('ghq root'), '\n\+$', '', '')
     let env = {
                 \   'path' : {
@@ -29,7 +29,7 @@ function! s:MyEnv()
                 \           'bundle' : dot_vim_dir . 'dein',
                 \           'toml' : dot_vim_dir . 'dein.toml'
                 \       },
-                \       'vimrc' : dot_vim_dir . 'vimrc',
+                \       'vimrc' : dot_vim_dir . (has('nvim') ? 'init.vim' : 'vimrc'),
                 \       'local_vimrc' : dot_vim_dir . 'local.vimrc',
                 \       'backup' : dot_vim_dir . 'backups',
                 \       'undo' : dot_vim_dir . 'undo'
@@ -56,6 +56,9 @@ function! s:SID_PREFIX()
 endfunction
 " 2}}}
 " Options " {{{2
+if has('vim_starting')
+    set encoding=utf-8
+endif
 set ambiwidth=double
 set autoindent
 set autoread
@@ -70,7 +73,6 @@ endif
 set cmdheight=2
 set completeopt=menuone,preview
 let &directory = &backupdir
-set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8,cp932
 set nofixendofline
