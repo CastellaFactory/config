@@ -56,6 +56,10 @@ repo = 'Shougo/unite.vim'
 on_cmd = 'Unite'
 
 [[plugins]]
+repo = 'Shougo/denite.nvim'
+on_cmd = 'Denite'
+
+[[plugins]]
 repo = 'Shougo/neomru.vim'
 # }}}
 
