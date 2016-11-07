@@ -47,8 +47,8 @@
     
         # alias
         alias ls='ls -GF'
-        alias vi='/Applications/MacVim.app/Contents/MacOS/Vim $argv -u ~/.vim/vimrc -N'
-        alias vim='/Applications/MacVim.app/Contents/MacOS/Vim $argv -u ~/.vim/vimrc -N'
+        alias vi='/Applications/MacVim.app/Contents/MacOS/Vim -u ~/.vim/vimrc -N'
+        alias vim='/Applications/MacVim.app/Contents/MacOS/Vim -u ~/.vim/vimrc -N'
         alias gvim='/usr/local/bin/mvim -u ~/.vim/vimrc -U ~/.vim/gvimrc -N'
         alias mvim='/usr/local/bin/mvim -u ~/.vim/vimrc -U ~/.vim/gvimrc -N'
     
