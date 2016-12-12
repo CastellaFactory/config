@@ -17,3 +17,9 @@
 # required by app-crypt/libsecret-0.18.4::gentoo
 >=app-crypt/pinentry-0.9.5 gnome-keyring
 
+# required by kde-plasma/plasma-pa-5.8.3::gentoo
+# required by kde-plasma/plasma-desktop-5.8.3::gentoo[pulseaudio]
+# required by kde-plasma/plasma-meta-5.8.3::gentoo
+# required by @selected
+# required by @world (argument)
+>=media-sound/pulseaudio-9.0 gnome
