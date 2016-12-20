@@ -75,7 +75,6 @@ set completeopt=menuone,preview
 let &directory = &backupdir
 set fileencoding=utf-8
 set fileencodings=utf-8,cp932
-set nofixendofline
 set foldenable
 set foldmethod=marker
 set guioptions+=M    " this flag must be added before 'syntax enable' and 'filetype on'
@@ -508,8 +507,7 @@ let g:quickrun_config = {
             \       'outputter/error/error' : 'quickfix',
             \       'outputter/buffer/split' : ':botright 10sp',
             \       'outputter/buffer/close_on_empty' : 1,
-            \       'runner' : 'vimproc',
-            \       'runner/vimproc/updatetime' : 60
+            \       'runner' : 'job'
             \   },
             \   'cpp' : {
             \       'type' : 'cpp/clang++',
