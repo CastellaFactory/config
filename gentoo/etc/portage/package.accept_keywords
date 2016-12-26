@@ -17,6 +17,7 @@ dev-lang/smlnj ~amd64
 dev-python/flake8 ~amd64
 dev-tex/biblatex ~amd64
 dev-tex/dot2tex ~amd64
+dev-util/bazel ~amd64
 dev-util/cmake ~amd64
 dev-util/cppcheck ~amd64
 dev-util/include-what-you-use ~amd64
@@ -34,6 +35,8 @@ sys-apps/the_silver_searcher ~amd64
 sys-devel/clang ~amd64
 sys-devel/clang-runtime ~amd64
 sys-devel/llvm ~amd64
+sys-libs/libcxx ~amd64
+sys-libs/libcxxrt ~amd64
 sys-libs/libomp ~amd64
 www-client/firefox ~amd64
 x11-misc/compton ~amd64
