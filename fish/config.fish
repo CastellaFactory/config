@@ -20,9 +20,7 @@
     set -gx PATH $GOPATH/bin $PATH
     
     # cargo
-    if command --search cargo > /dev/null
-        set -gx PATH ~/.cargo/bin $PATH
-    end
+    set -gx PATH ~/.cargo/bin $PATH
     
     
     switch (uname)
@@ -59,3 +57,4 @@ function fish_user_key_bindings
     bind \cr peco_select_history
     bind \cg peco_select_ghq_repository
 end
+
