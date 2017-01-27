@@ -466,24 +466,14 @@ let g:UltiSnipsExpandTrigger = '<C-k>'
 let g:UltiSnipsJumpForwardTrigger = '<C-k>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
 " 2}}}
-" unite  " {{{2
-nnoremap <Space>ub  :<C-u>Unite buffer<CR>
-nnoremap <Space>ut  :<C-u>Unite tab<CR>
-nnoremap <Space>um  :<C-u>Unite neomru/file<CR>
-nnoremap <Space>uf  :<C-u>Unite file<CR>
-nnoremap <Space>urm  :<C-u>UniteResume<CR>
-nnoremap <Space>ug   :<C-u>Unite grep:. <CR>
-nnoremap ,g  :<C-u>Unite grep:. <CR><C-r><C-w><CR>
-nnoremap  <Space>up  :<C-u>Unite buffer file_rec/async:!<CR>
-
-let g:unite_enable_start_insert = 1
-
-let g:unite_source_grep_command = 'ag'
-let g:unite_source_grep_default_opts = '--nocolor --nogroup'
-let g:unite_source_grep_recursive_opt = ''
-
-autocmd Vimrc FileType unite imap <buffer> <C-g>  <Plug>(unite_exit)
-            \ | nmap <buffer> <C-g>  <Plug>(unite_exit)
+" Denite  " {{{2
+nnoremap <Space>ub  :<C-u>Denite buffer<CR>
+nnoremap <Space>um  :<C-u>Denite file_mru<CR>
+nnoremap <Space>uf  :<C-u>Denite file_rec<CR>
+nnoremap <Space>ug   :<C-u>Denite grep:. <CR>
+nnoremap ,g  :<C-u>Denite grep:. <CR><C-r><C-w><CR>
+nnoremap <Space>ul   :<C-u>DeniteCursorWord line<CR>
+nnoremap <Space>ur   :<C-u>Denite -resume<CR>
 " 2}}}
 " YouCompleteMe  "{{{2
 autocmd Vimrc FileType c,cpp

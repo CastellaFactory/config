@@ -46,14 +46,11 @@ depends = 'vim-textobj-user'
 on_map = [['xo', 'il'], ['xo', 'al']]
 # }}}
 
-# Unite {{{
-[[plugins]]
-repo = 'Shougo/unite.vim'
-on_cmd = 'Unite'
-
+# Denite {{{
 [[plugins]]
 repo = 'Shougo/denite.nvim'
 on_cmd = 'Denite'
+hook_post_source = 'call config#denite()'
 
 [[plugins]]
 repo = 'Shougo/neomru.vim'
@@ -113,7 +110,7 @@ repo = 'thinca/vim-quickrun'
 [[plugins]]
 repo = 'cohama/lexima.vim'
 on_i = 1
-hook_post_source = 'call config#lexima_set_rule()'
+hook_post_source = 'call config#lexima()'
 
 [[plugins]]
 repo = 'junegunn/vim-easy-align'
