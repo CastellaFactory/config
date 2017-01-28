@@ -469,9 +469,9 @@ let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
 " Denite  " {{{2
 nnoremap <Space>ub  :<C-u>Denite buffer<CR>
 nnoremap <Space>um  :<C-u>Denite file_mru<CR>
-nnoremap <Space>uf  :<C-u>Denite file_rec<CR>
-nnoremap <Space>ug   :<C-u>Denite grep:. <CR>
-nnoremap ,g  :<C-u>Denite grep:. <CR><C-r><C-w><CR>
+nnoremap <Space>uf  :<C-u>DeniteBufferDir file_rec<CR>
+nnoremap <Space>ug   :<C-u>DeniteBufferDir grep:. <CR>
+nnoremap ,g  :<C-u>DeniteBufferDir grep:. <CR><C-r><C-w><CR>
 nnoremap <Space>ul   :<C-u>DeniteCursorWord line<CR>
 nnoremap <Space>ur   :<C-u>Denite -resume<CR>
 " 2}}}
