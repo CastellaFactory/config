@@ -23,3 +23,12 @@
 # required by @selected
 # required by @world (argument)
 >=media-sound/pulseaudio-9.0 gnome
+
+# required by app-shells/fish-2.4.0-r1::gentoo
+# required by @selected
+# required by @world (argument)
+>=dev-libs/libpcre2-10.22 pcre32
+
+# required by app-emulation/docker-1.13.1::gentoo[container-init]
+# required by app-emulation/docker (argument)
+>=sys-process/tini-0.13.2 static
