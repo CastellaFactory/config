@@ -1,3 +1,4 @@
+app-emulation/docker overlay -device-mapper
 app-editors/emacs toolkit-scroll-bars
 app-editors/gvim cscope lua luajit python ruby gtk
 app-editors/vim cscope lua luajit python ruby
