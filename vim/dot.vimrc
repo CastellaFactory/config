@@ -403,7 +403,7 @@ autocmd Vimrc FileType haskell
 " neco-ghc  " {{{2
 autocmd Vimrc FileType haskell setlocal omnifunc=necoghc#omnifunc
 " 2}}} "
-"  operator  " {{{2
+" operator  " {{{2
 " operator-clang-format  " {{{3
 autocmd Vimrc FileType c,cpp map <buffer> <Leader>x  <Plug>(operator-clang-format)
 
