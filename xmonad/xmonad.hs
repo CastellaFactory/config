@@ -46,7 +46,7 @@ myBorderWidth       = 3
 myModMask           :: KeyMask
 myModMask           = mod4Mask
 myWorkspaces        :: [String]
-myWorkspaces        = ["1:General","2:Web","3:Code","4:Skype","5:Reading","6:Media","7:Office","8","9"]
+myWorkspaces        = ["1:General","2:Web","3:Code","4:Skype","5:Document","6:Media","7:Office","8","9"]
 myNormalBorderColor :: String
 myNormalBorderColor = "blue"
 myFocuseBorderColor :: String
@@ -212,15 +212,13 @@ myManageHook = manageDocks <+> F.fullscreenManageHook
                , className =? "Smplayer"                              --> doFloat
                , className =? "Kmix"                                  --> doFloat
                , className =? "Firefox"                               --> viewShift "2:Web"
-               , className =? "Thunderbird"                           --> viewShift "2:Web"
                , className =? "Chromium-browser"                      --> viewShift "2:Web"
+               , className =? "Google-chrome"                         --> viewShift "2:Web"
+               , className =? "Thunderbird"                           --> viewShift "2:Web"
                --             , className =? "Gvim"                 --> viewShift "3:Code"
                --             , className =? "Emacs"                --> viewShift "3:Code"
                , className =? "Skype"                                 --> doShift "4:Skype"
                , className =? "Skype"                                 --> doFloat
-               , className =? "Calibre-gui"                           --> viewShift "5:Reading"
-               , className =? "Calibre-ebook-viewer"                  --> viewShift "5:Reading"
-               , className =? "Calibre-ebook-viewer"                  --> doFloat
                , className =? "Audacious"                             --> doShift "6:Media"
                , className =? "Clementine"                            --> doShift "6:Media"
                , resource  =? "desktop_window"                        --> doIgnore
@@ -275,7 +273,7 @@ myStartupHook = do
   spawnOnce "stalonetray"
   spawnOnce "nitrogen --restore"
   spawnOnce "kmix --keepvisibility"
-  spawnOnce "fcitx"
+  spawnOnce "fcitx-autostart"
   spawnOnce "insync start"
   spawnOnce "dropbox"
   spawnOnce "xset -b"
@@ -316,8 +314,8 @@ defaults = ewmh def {
               ((myModMask, xK_f), sendMessage $ Toggle FULL)
               , ((myModMask .|. controlMask,  xK_l), sendMessage $ Toggle FULL)
 
-              , ((myModMask, xK_o), runOrRaise "firefox" (className =? "Firefox"))
-              , ((myModMask .|. shiftMask, xK_o), runOrRaise "thunderbird" (className =? "Thunderbird"))
+              , ((myModMask, xK_o), runOrRaise "google-chrome-stable" (className =? "Google-chrome"))
+              , ((myModMask .|. shiftMask, xK_o), runOrRaise "thunderbird-bin" (className =? "Thunderbird"))
 
               , ((myModMask, xK_a), runOrRaise "dolphin" (className =? "dolphin"))
               , ((myModMask .|. shiftMask, xK_a), runOrRaise "emacs" (className =? "Emacs"))
