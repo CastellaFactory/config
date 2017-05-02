@@ -6,3 +6,4 @@ INPUT_DEVICES="mouse keyboard evdev synaptics"
 VIDEO_CARDS="intel i965"
 
 GRUB_PLATFORMS="emu efi-32 efi-64"
+

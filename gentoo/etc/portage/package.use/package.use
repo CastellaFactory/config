@@ -10,9 +10,6 @@
 # required by @world (argument)
 >=dev-qt/qtwebkit-4.8.6-r1:4 -exceptions
 
-# fix conflict
->=net-libs/nodejs-5.10.1 -icu
-
 # required by gnome-base/gnome-keyring-3.18.3::gentoo
 # required by app-crypt/libsecret-0.18.4::gentoo
 >=app-crypt/pinentry-0.9.5 gnome-keyring
@@ -32,3 +29,4 @@
 # required by app-emulation/docker-1.13.1::gentoo[container-init]
 # required by app-emulation/docker (argument)
 >=sys-process/tini-0.13.2 static
+
