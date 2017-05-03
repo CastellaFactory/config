@@ -1,26 +1,52 @@
-Config {font = "xft:SourceHanCodeJP:bold:size=11:antialias=true,hinting=true,autohint=true"
+Config { font = "xft:Source Han Code JP:semibold:size=10:antialias=true"
+        , alpha = 125
         , bgColor = "black"
-        , fgColor = "white"
+        , fgColor = "gray"
         , position = Top
         , lowerOnStart = True
-        , commands = [Run DynNetwork ["-L","0","-H","32","--normal","green","--high","red"] 10
-                      , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
-                      , Run Memory ["-t","Mem: <usedratio>%"] 10
-                      , Run Com "uname" ["-s","-r"] "" 36000
-                      , Run Date "%Y/%m/%d %a %H:%M" "date" 10
-                      , Run Battery ["-t", "<acstatus>"
-                                                        , "-L", "15", "-H", "90"
-                                                        , "-l", "red", "-h", "green"
-                                                        , "--"
-                                                        , "-O", "AC: <left>%"
-                                                        , "-i", "AC: <left>%"
-                                                        , "-o", "Bat: <left>%"
-                                                      ] 50
-                      , Run StdinReader
-                      ]
+        , commands = [ Run Cpu [ "--template", "Cpu: <total>%"
+                               , "--Low", "5"
+                               , "--High", "70"
+                               , "--low", "green"
+                               , "--normal", "orange"
+                               , "--high", "red"
+                               ] 10
+                     , Run Memory [ "--template","Mem: <usedratio>%"
+                                  , "--Low", "20"
+                                  , "--High", "60"
+                                  , "--low", "green"
+                                  , "--normal", "orange"
+                                  , "--high", "red"
+                     ] 10
+                     , Run DynNetwork [ "--template", "<dev>: <tx>kB|<rx>kB"
+                                      , "--Low", "100", "--High", "5000"
+                                      , "--low", "green"
+                                      , "--normal", "orange"
+                                      , "--high", "red"
+                                      ] 10
+                     , Run Volume "default" "Master" [] 10
+                     , Run Battery [ "--template", "<acstatus>"
+                                   , "--Low", "15"
+                                   , "--High", "90"
+                                   , "--high", "green"
+                                   , "--normal", "orange"
+                                   , "--low", "red"
+                                   , "--"
+                                   -- AC on
+                                   , "-O", "AC: <left>%"
+                                   -- chared
+                                   , "-i", "AC: <left>%"
+                                   -- discharging
+                                   , "-o", "Bat: <left>%"
+                                   ] 50
+                     , Run Date "%a %m/%d %H:%M" "date" 10
+                     , Run Com "uname" ["-r"] "" 36000
+                     -- , Run StdinReader
+                     ]
         , sepChar = "%"
         , alignSep = "}{"
-        , template = "%cpu% | %memory% | %battery% | %dynnetwork% } %StdinReader% { <fc=#ee9a00>%date%</fc> | %uname%"
+        , template = "%focus% }{ Ws: %workspaces% | %cpu% | %memory% | %dynnetwork% | %default:Master% | %battery% | <fc=#ee9a00>%date%</fc> | %uname% |              "
 }
 
 -- vim: ft=haskell
+

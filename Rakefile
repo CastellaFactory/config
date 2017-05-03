@@ -77,19 +77,6 @@ namespace :common do
     make_symlink 'fish/functions', "#{home}/.config/fish"
   end
 
-  task :atom do
-    unless File.directory? "#{home}/.atom"
-      mkdir_p "#{home}/.atom"
-    end
-
-    make_symlink 'atom/config.cson', "#{home}/.atom/config.cson"
-    make_symlink 'atom/init.coffee', "#{home}/.atom/init.coffee"
-    make_symlink 'atom/keymap.cson', "#{home}/.atom/keymap.cson"
-    make_symlink 'atom/snippets.cson', "#{home}/.atom/snippets.cson"
-    make_symlink 'atom/styles.less', "#{home}/.atom/styles.less"
-    make_symlink 'atom/atom-packages', "#{home}/.atom/atom-packages"
-  end
-
   task :tmux do
     make_symlink 'tmux/dot.tmux.conf', "#{home}/.tmux.conf"
   end
@@ -169,6 +156,7 @@ namespace :linux do
   end
 
   task :X do
+    make_symlink 'X/dot.xsession', "#{home}/.xsession"
     make_symlink 'X/dot.xprofile', "#{home}/.xprofile"
     make_symlink 'X/dot.Xresources', "#{home}/.Xresources"
     make_symlink 'X/dot.compton.conf', "#{home}/.compton.conf"
