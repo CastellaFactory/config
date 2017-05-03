@@ -6,6 +6,7 @@ app-i18n/mozc fcitx renderer -ibus -emacs
 app-text/ghostscript-gpl idn
 app-text/texlive graphics metapost pstricks science publishers extra humanities luatex xetex
 app-text/texlive-core xetex
+dev-lang/ghc binary -profile
 dev-qt/qtwebkit icu
 dev-util/cmake -qt5
 dev-util/cppcheck -qt4
@@ -18,6 +19,7 @@ sys-devel/clang python
 sys-devel/llvm python clang
 sys-kernel/gentoo-sources symlink
 sys-libs/ncurses tinfo
+x11-misc/rofi windowmode
 x11-misc/xmobar inotify timezone wifi
 x11-terms/rxvt-unicode blink unicode3 fading-colors 256-color pixbuf
 
