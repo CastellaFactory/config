@@ -30,6 +30,7 @@ media-gfx/mcomix ~amd64
 media-libs/fontconfig-ultimate ~amd64
 media-sound/clementine ~amd64
 net-im/skype ~amd64
+net-im/slack-bin ~amd64
 net-libs/nodejs ~amd64
 sys-apps/the_silver_searcher ~amd64
 sys-devel/clang ~amd64
