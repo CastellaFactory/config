@@ -6,7 +6,7 @@ if [[ "$DESKTOP_SESSION" =~ Xsession$ ]]; then
     stalonetray &
     nitrogen --restore
     fcitx &
-    # insync start &
+    insync start &
     dropbox &
     xset -b
 
