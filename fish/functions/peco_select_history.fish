@@ -5,12 +5,12 @@ function peco_select_history
         set peco_flags --query "$query"
     end
 
-  history|peco $peco_flags|read cmd
+    history|peco $peco_flags|read cmd
 
-  if [ $cmd ]
-    commandline $cmd
-  else
-    commandline ''
-  end
+    if [ $cmd ]
+        commandline $cmd
+    else
+        commandline ''
+    end
 end
 
