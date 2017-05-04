@@ -389,7 +389,13 @@ nmap <Leader>ca  <Plug>(caw:dollarpos:comment)
 Nvmap <Leader>cc  <Plug>(caw:hatpos:toggle)
 " 2}}}
 " devdocs  " {{{2
-autocmd Vimrc FileType c,cpp,rust,haskell nmap <buffer> K <Plug>(devdocs-under-cursor)
+let g:devdocs_filetype_map = {
+            \   'crystal' : 'crystal',
+            \   'ruby' : 'ruby~2.4'
+            \ }
+
+autocmd Vimrc FileType c,cpp,crystal,go,haskell,ruby,rust
+            \   nmap <buffer> K <Plug>(devdocs-under-cursor)
 " 2}}}
 " easy-align  " {{{2
 Nvmap <Leader>ea  <Plug>(EasyAlign)
