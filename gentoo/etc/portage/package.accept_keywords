@@ -29,7 +29,7 @@ media-fonts/source-han-sans ~amd64
 media-gfx/mcomix ~amd64
 media-libs/fontconfig-ultimate ~amd64
 media-sound/clementine ~amd64
-net-im/skype ~amd64
+net-im/skypeforlinux ~amd64
 net-im/slack-bin ~amd64
 net-libs/nodejs ~amd64
 sys-apps/the_silver_searcher ~amd64

@@ -11,6 +11,7 @@ dev-qt/qtwebkit icu
 dev-util/cmake -qt5
 dev-util/cppcheck -qt4
 kde-plasma/plasma-desktop gtk2 gtk3 legacy-systray -qt4
+kde-plasma/plasma-meta -pam
 media-gfx/graphviz python -qt4
 media-plugins/audacious-plugins -gtk -gtk3
 media-sound/audacious -gtk -gtk3
