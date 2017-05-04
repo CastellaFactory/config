@@ -66,6 +66,7 @@ log_level err
                              #     icon_size
                              # * use_icon_hints - use icon window hints to
                              #     dtermine icon size
+kludges "force_icons_size"
 
 # max_geometry <geometry>    # maximal tray dimensions; 0 in width/height means
                              # no limit
