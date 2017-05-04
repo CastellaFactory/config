@@ -22,4 +22,5 @@ sys-libs/ncurses tinfo
 x11-misc/rofi windowmode
 x11-misc/xmobar inotify timezone wifi
 x11-terms/rxvt-unicode blink unicode3 fading-colors 256-color pixbuf
+x11-drivers/xf86-video-intel dri3
 
