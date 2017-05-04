@@ -9,13 +9,13 @@ Emacs*.toolBar: false
 
 !! urxvt
 URxvt.depth: 32
-URxvt.font: xft:SourceHanCodeJP:size=15:semibold:antialias=true
+URxvt.font: xft:SourceHanCodeJP:size=16:semibold:antialias=true
 URxvt.transparent: true
 URxvt.shading: 80
 URxvt.fading: 40
 URxvt.scrollBar: false
 URxvt.termName: rxvt-256color
-URxvt.saveLines: 2048
+URxvt.saveLines: 4096
 URxvt.cursorBlink: true
 
 URxvt.background: #101010
@@ -46,11 +46,10 @@ URxvt.color14: #4eb4fa
 URxvt.color7: #9999aa
 URxvt.color15: #d0d0d0
 
-
 ! extensions
-URxvt.perl-ext-common:default,clipboard,matcher,keyboard-select
+URxvt.perl-ext-common:default,clipboard,matcher,keyboard-select,tabbed
 URxvt.keysym.M-u:     perl:url-select:select_next
-URxvt.url-launcher:   /usr/bin/firefox
+URxvt.url-launcher:   /usr/bin/google-chrome-stable
 URxvt.underlineURLs:  True
 URxvt.matcher.button: 1
 URxvt.keysym.M-Escape:perl:keyboard-select:activate
@@ -58,4 +57,10 @@ URxvt.keysym.M-c:     perl:clipboard:copy
 URxvt.keysym.M-v:     perl:clipboard:paste
 URxvt.keysym.M-C-v:   perl:clipboard:paste_escaped
 
+URxvt.tabbed.tabbar-fg: 2
+URxvt.tabbed.tabbar-bg: #000000
+URxvt.tabbed.tab-fg: 3
+URxvt.tabbed.tab-bg: #000000
+
 ! vim: ft=xdefaults
+
