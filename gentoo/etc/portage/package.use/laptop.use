@@ -17,6 +17,7 @@
 >=dev-libs/libpcre-8.38-r1 abi_x86_32
 >=dev-libs/libpthread-stubs-0.3-r1 abi_x86_32
 >=dev-libs/libtasn1-4.5 abi_x86_32
+>=dev-libs/libunistring-0.9.7 abi_x86_32
 >=dev-libs/libxml2-2.9.2-r1 abi_x86_32
 >=dev-libs/nettle-2.7.1-r4 abi_x86_32
 >=dev-libs/openssl-1.0.1o abi_x86_32
@@ -48,6 +49,7 @@
 >=media-libs/tiff-4.0.3-r6 abi_x86_32
 >=media-plugins/alsa-plugins-1.0.29 abi_x86_32
 >=media-sound/pulseaudio-5.0-r7 abi_x86_32
+>=net-dns/libidn2-0.16-r1 abi_x86_32
 >=net-libs/gnutls-3.3.15 abi_x86_32
 >=net-libs/libasyncns-0.8-r3 abi_x86_32
 >=net-print/cups-2.0.2-r1 abi_x86_32

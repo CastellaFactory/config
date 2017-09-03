@@ -149,3 +149,10 @@ x11-wm/i3 ~amd64
 # required by @world (argument)
 >=app-crypt/rhash-1.3.4 ~amd64
 
+# required by media-libs/mesa-17.2.0_rc6::gentoo[wayland]
+# required by kde-plasma/kinfocenter-5.10.4::gentoo[opengl]
+# required by kde-plasma/plasma-meta-5.10.4::gentoo
+# required by @selected
+# required by @world (argument)
+>=dev-libs/wayland-protocols-1.10 ~amd64
+
