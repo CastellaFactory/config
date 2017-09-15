@@ -44,7 +44,7 @@ if status --is-login
         end
 
         # alias
-        alias vim='/Applications/MacVim.app/Contents/MacOS/Vim -u ~/.vim/vimrc -N'
+        alias vim='/usr/local/bin/vim -u ~/.vim/vimrc -N'
         alias mvim='/usr/local/bin/mvim -u ~/.vim/vimrc -U ~/.vim/gvimrc -N'
     end
 end
