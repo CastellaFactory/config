@@ -27,6 +27,7 @@ Session.vim
 
 # idea
 .idea/
+*.iml
 
 # python
 __pycache__/

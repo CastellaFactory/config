@@ -374,6 +374,11 @@ autocmd Vimrc BufReadPost *
 " 1}}}
 
 " Plugins {{{1
+" ale  " {{{2
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_open_list = 1
+" 2}}}
 " altr  " {{{2
 nmap <F3>  <Plug>(altr-forward)
 nmap <F2>  <Plug>(altr-back)
@@ -452,20 +457,6 @@ call submode#enter_with('change-list', 'n', '', 'g;', 'g;')
 call submode#enter_with('change-list', 'n', '', 'g,', 'g,')
 call submode#map('change-list', 'n', '', ';', 'g;')
 call submode#map('change-list', 'n', '', ',', 'g,')
-" 2}}}
-" Syntastic  " {{{2
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_enable_highlighting = 0
-let g:syntastic_mode_map = {'mode': 'passive'}
-
-let g:syntastic_cpp_checkers = ['gcc', 'cppcheck']
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_compiler_options = '-std=c++14 -Weverything -Wno-system-headers -Wno-c++98-compat'
-let g:syntastic_cppcheck_config_file = s:env.path.user . 'syntastic_config/cppcheck'
-
-let g:syntastic_ruby_checkers = ['mri', 'rubylint', 'rubocop']
-let g:syntastic_go_checkers = ['go', 'golint']
-let g:syntastic_typescript_checkers = ['tsc', 'tslint']
 " 2}}}
 " UltiSnips  "{{{2
 let g:UltiSnipsExpandTrigger = '<C-k>'

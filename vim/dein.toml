@@ -125,8 +125,7 @@ repo = 'rhysd/devdocs.vim'
 on_map = '<Plug>(devdocs-under-cursor)'
 
 [[plugins]]
-repo = 'scrooloose/syntastic'
-on_cmd = 'SyntasticCheck'
+repo = 'w0rp/ale'
 
 [[plugins]]
 repo = 'SirVer/ultisnips'
