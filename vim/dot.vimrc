@@ -36,14 +36,11 @@ function! s:MyEnv()
                 \   },
                 \   'language' : {
                 \       'c' : {
-                \           'compiler' : executable('clang-3.9') ? 'clang-3.9' : 'clang'
+                \           'compiler' : 'clang'
                 \       },
                 \       'cpp' : {
-                \           'compiler' : executable('clang++-3.9') ? 'clang++-3.9' : 'clang++',
-                \           'formatter' : executable('clang-format-3.9') ? 'clang-format-3.9' : 'clang-format'
-                \       },
-                \       'rust' : {
-                \           'src' : ghq_root . '/github.com/rust-lang/rust/src'
+                \           'compiler' : 'clang++',
+                \           'formatter' : 'clang-format'
                 \       }
                 \   }
                 \ }
@@ -157,26 +154,6 @@ function! s:cd_to_git_root_dir()  " {{{2
         lcd save_dir
     endif
 endfunction  " 2}}}
-function! s:toggle_fullscreen()  " {{{2
-    if g:is_darwin_p
-        if has('gui_running')
-            setlocal fullscreen!
-        else
-            if executable('cliclick')
-                call system('cliclick kd:cmd kp:return ku:cmd')
-            else
-                echohl ErrorMsg | echomsg 'cliclick is not installed.' | echohl none
-            endif
-        endif
-    elseif g:is_linux_p
-        if executable('xdotool')
-            " use super+ctrl+l instead of super+f. (see xmonad.hs)
-            call system('xdotool key super+ctrl+l')
-        else
-            echohl ErrorMsg | echomsg 'xdotool is not installed.' | echohl none
-        endif
-    endif
-endfunction  " 2}}}
 function! s:toggle_background_color()  " {{{2
     if &background ==# 'light'
         set background=dark
@@ -273,10 +250,8 @@ inoremap <F1>  <Nop>
 " 2}}}
 " <Space> stuffs  " {{{2
 nnoremap <silent> <Space>ow  :<C-u>setlocal wrap! wrap?<CR>
-nnoremap <silent> <Space>of  :<C-u>call <SID>toggle_fullscreen()<CR>
 nnoremap <silent> <Space>ob  :<C-u>call <SID>toggle_background_color()<CR>
 nnoremap <Space>sp  :<C-u>DeleteTrailingSpaces<CR>
-vnoremap <Space>sp  :DeleteTrailingSpaces<CR>
 nnoremap <silent> <Space>r  :<C-u>registers<CR>
 nnoremap <silent> <Space>/  :<C-u>nohlsearch<CR>
 nnoremap <silent> <Space>v  zMzv
