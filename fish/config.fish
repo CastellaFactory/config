@@ -36,6 +36,7 @@ if status --is-login
         # homebrew
         if command --search brew > /dev/null
             set -gx PATH /usr/local/sbin $PATH
+            set -gx PATH $PATH /usr/local/opt/llvm/bin 
         end
 
         # rbenv
@@ -50,7 +51,7 @@ if status --is-login
 end
 
 function fish_user_key_bindings
-    bind \cr peco_select_history
-    bind \cg peco_select_ghq_repository
+    bind \cr fzf_select_history
+    bind \cg fzf_select_ghq_repository
 end
 

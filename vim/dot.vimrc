@@ -463,26 +463,13 @@ let g:UltiSnipsExpandTrigger = '<C-k>'
 let g:UltiSnipsJumpForwardTrigger = '<C-k>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-j>'
 " 2}}}
-" Denite  " {{{2
-nnoremap <Space>ub  :<C-u>Denite buffer<CR>
-nnoremap <Space>um  :<C-u>Denite file_mru<CR>
-nnoremap <Space>uf  :<C-u>DeniteBufferDir file_rec<CR>
-nnoremap <Space>ug   :<C-u>DeniteBufferDir grep<CR>
-nnoremap ,g  :<C-u>DeniteBufferDir grep<CR><C-r><C-w><CR>
-nnoremap <Space>ul   :<C-u>DeniteCursorWord line<CR>
-nnoremap <Space>ur   :<C-u>Denite -resume<CR>
-" 2}}}
-" YouCompleteMe  "{{{2
-autocmd Vimrc FileType c,cpp
-            \   nnoremap <buffer> <Leader>pg  :<C-u>YcmCompleter GoToDefinitionElseDeclaration<CR>
-
-let g:ycm_global_ycm_extra_conf = s:env.path.user . 'ycm_default/ycm_extra_conf.py'
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_show_diagnostics_ui = 0
-let g:ycm_min_num_identifier_candidate_chars = 4
-let g:ycm_seed_identifiers_with_syntax = 1
-let g:ycm_semantic_triggers = {'haskell' : ['.'], 'rust' : ['.', '::']}
-let g:ycm_rust_src_path = s:env.language.rust.src
+" FZF  " {{{2
+nnoremap <Space>ub  :<C-u>Buffers<CR>
+nnoremap <Space>um  :<C-u>History<CR>
+nnoremap <Space>uf  :<C-u>GFiles<CR>
+nnoremap <Space>uh  :<C-u>Helptags<CR>
+nnoremap <Space>ul  :<C-u>BLines<CR>
+nnoremap ,g  :<C-u>Rg <C-r><C-w><CR>
 " 2}}}
 " quickrun  " {{{2
 " default setting
@@ -499,13 +486,7 @@ let g:quickrun_config = {
             \   'cpp' : {
             \       'type' : 'cpp/clang++',
             \       'command' : s:env.language.cpp.compiler,
-            \       'cmdopt' : '-std=c++14'
-            \   },
-            \   'tex' : {
-            \       'command' : 'latexmk',
-            \       'cmdopt' : '-pv',
-            \       'exec' : '%c %o %s',
-            \       'outputter/error/success' : 'null'
+            \       'cmdopt' : '-std=c++17'
             \   }
             \ }
 " 2}}}
