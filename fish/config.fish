@@ -22,6 +22,9 @@ if status --is-login
     # cargo
     set -gx PATH ~/.cargo/bin $PATH
 
+    # fzf
+    set -gx FZF_DEFAULT_OPTS '--reverse --border'
+
     switch (uname)
     case Linux
         set -gx PATH $PATH /sbin /usr/sbin
