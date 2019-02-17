@@ -21,7 +21,6 @@ let g:is_linux_p = !g:is_darwin_p && has('unix')
 function! s:MyEnv()
     let env = {}
     let dot_vim_dir = has('nvim') ? fnamemodify(expand('$HOME/.config/nvim'), ':p') : fnamemodify(expand('$HOME/.vim'), ':p')
-    let ghq_root = substitute(system('ghq root'), '\n\+$', '', '')
     let env = {
                 \   'path' : {
                 \       'user' : dot_vim_dir,
@@ -33,15 +32,6 @@ function! s:MyEnv()
                 \       'local_vimrc' : dot_vim_dir . 'local.vimrc',
                 \       'backup' : dot_vim_dir . 'backups',
                 \       'undo' : dot_vim_dir . 'undo'
-                \   },
-                \   'language' : {
-                \       'c' : {
-                \           'compiler' : 'clang'
-                \       },
-                \       'cpp' : {
-                \           'compiler' : 'clang++',
-                \           'formatter' : 'clang-format'
-                \       }
                 \   }
                 \ }
     return env
@@ -394,7 +384,6 @@ autocmd Vimrc FileType haskell setlocal omnifunc=necoghc#omnifunc
 autocmd Vimrc FileType c,cpp map <buffer> <Leader>x  <Plug>(operator-clang-format)
 
 " clang-format -style=google -dump-config
-let g:clang_format#command = s:env.language.cpp.formatter
 let g:clang_format#style_options = {
             \   'AccessModifierOffset' : -4,
             \   'AllowShortIfStatementsOnASingleLine' : 'false',
@@ -460,7 +449,7 @@ let g:quickrun_config = {
             \   },
             \   'cpp' : {
             \       'type' : 'cpp/clang++',
-            \       'command' : s:env.language.cpp.compiler,
+            \       'command' : 'clang++',
             \       'cmdopt' : '-std=c++17'
             \   }
             \ }
