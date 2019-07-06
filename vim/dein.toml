@@ -171,7 +171,6 @@ lazy = 1
 [[plugins]]
 repo = 'prabirshrestha/asyncomplete.vim'
 depends = 'async.vim'
-on_i = 1
 hook_add = '''
 imap <Nul> <C-Space>
 imap <C-Space> <Plug>(asyncomplete_force_refresh)
@@ -181,8 +180,7 @@ autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 [[plugins]]
 repo = 'prabirshrestha/vim-lsp'
 depends = 'async.vim'
-lazy = 1
-hook_source = '''
+hook_add = '''
 let g:lsp_diagnostics_enabled = 0
 let g:lsp_async_completion = 1
 if executable('clangd')
@@ -226,13 +224,11 @@ endif
 [[plugins]]
 repo = 'prabirshrestha/asyncomplete-lsp.vim'
 depends = ['asyncomplete.vim', 'vim-lsp']
-on_i = 1
 
 [[plugins]]
 repo = 'prabirshrestha/asyncomplete-buffer.vim'
-on_i = 1
 depends = 'asyncomplete.vim'
-hook_source = '''
+hook_add = '''
 call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
     \ 'name': 'buffer',
     \ 'whitelist': ['*'],
@@ -245,9 +241,8 @@ call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options
 
 [[plugins]]
 repo = 'prabirshrestha/asyncomplete-file.vim'
-on_i = 1
 depends = 'asyncomplete.vim'
-hook_source = '''
+hook_add = '''
 call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
     \ 'name': 'file',
     \ 'whitelist': ['*'],
@@ -257,9 +252,8 @@ call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
 
 [[plugins]]
 repo = 'prabirshrestha/asyncomplete-ultisnips.vim'
-on_i = 1
 depends = 'asyncomplete.vim'
-hook_source = '''
+hook_add = '''
 call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
     \ 'name': 'ultisnips',
     \ 'whitelist': ['*'],
