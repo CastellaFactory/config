@@ -1,25 +1,25 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
-[[plugins]]
-repo = 'junegunn/fzf'
-build = './install --no-key-bindings --no-update-rc'
-
-[[plugins]]
-repo = 'junegunn/fzf.vim'
-
-[[plugins]]
-repo = 'kana/vim-submode'
-
 # operator {{{
 [[plugins]]
 repo = 'kana/vim-operator-user'
 lazy = 1
 
 [[plugins]]
+repo = 'kana/vim-operator-replace'
+depends = 'vim-operator-user'
+on_map = '<Plug>(operator-replace)'
+
+[[plugins]]
 repo = 'rhysd/vim-operator-surround'
 depends = 'vim-operator-user'
 on_map = '<Plug>(operator-surround-'
+
+[[plugins]]
+repo = 'haya14busa/vim-operator-flashy'
+depends = 'vim-operator-user'
+on_map = '<Plug>(operator-flashy)'
 # }}}
 
 # textobj {{{
@@ -51,9 +51,15 @@ on_map = [['xo', 'ii'], ['xo', 'ai']]
 repo = 'kana/vim-textobj-line'
 depends = 'vim-textobj-user'
 on_map = [['xo', 'il'], ['xo', 'al']]
+
+[[plugins]]
+repo = 'rhysd/vim-textobj-anyblock'
+depends = 'vim-textobj-user'
+on_map = [['xo', 'ib'], ['xo', 'ab']]
 # }}}
 
 # Filetype {{{
+# Haskell {{{
 [[plugins]]
 repo = 'eagletmt/ghcmod-vim'
 on_ft = 'haskell'
@@ -63,82 +69,120 @@ repo = 'eagletmt/neco-ghc'
 on_ft = 'haskell'
 
 [[plugins]]
-repo = 'fatih/vim-go'
-on_ft = 'go'
-
-[[plugins]]
 repo = 'itchyny/vim-haskell-indent'
 on_ft = 'haskell'
-
+# }}}
+# Go {{{
 [[plugins]]
-repo = 'leafgarland/typescript-vim'
-on_ft = 'typescript'
-
+repo = 'fatih/vim-go'
+on_ft = 'go'
+# }}}
+# C++ {{{
 [[plugins]]
 repo = 'rhysd/vim-clang-format'
 depends = 'vim-operator-user'
 on_map = '<Plug>(operator-clang-format)'
 
 [[plugins]]
+repo = 'vim-jp/vim-cpp'
+on_ft = 'cpp'
+# }}}
+# TypeScript {{{
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
+on_ft = 'typescript'
+# }}}
+# Crystal {{{
+[[plugins]]
 repo = 'rhysd/vim-crystal'
 on_ft = 'crystal'
-
+# }}}
+# Rust {{{
 [[plugins]]
 repo = 'rust-lang/rust.vim'
 on_ft = 'rust'
-
-[[plugins]]
-repo = 'vim-jp/vim-cpp'
-on_ft = 'cpp'
+# }}}
+# }}}
 
 # Colorscheme {{{
 [[plugins]]
 repo = 'cocopon/iceberg.vim'
-# }}}
 
 [[plugins]]
-repo = 'thinca/vim-quickrun'
+repo = 'rakr/vim-one'
+# }}}
 
+# Input {{{
 [[plugins]]
 repo = 'cohama/lexima.vim'
 on_i = 1
-hook_post_source = 'call config#lexima()'
+hook_add = '''
+let g:lexima_ctrlh_as_backspace = 1
+'''
+hook_source = '''
+call lexima#add_rule({ 'at' : '\s\+\%#', 'char' : '<CR>', 'input' : "<Esc>:call setline('.', substitute(getline('.'), '\\s\\+$', '', '')) | echo 'delete trailing spaces'<CR>a<CR>" })
 
-[[plugins]]
-repo = 'junegunn/vim-easy-align'
-on_map = ['<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)']
+" X.# -> X-># (c,cpp)
+call lexima#add_rule({ 'at' : '\w\.\%#', 'char' : '.', 'input' : '<BS>->', 'filetype' : ['c', 'cpp'] })
 
-[[plugins]]
-repo = 'kana/vim-altr'
-on_map = '<Plug>(altr-'
+" s:# -> std::# (cpp, rust)
+call lexima#add_rule({ 'at' : '\<s:\%#', 'char' : ':', 'input' : '<BS>td::', 'filetype' : ['cpp', 'rust'] })
+call lexima#add_rule({ 'at' : '\<s;\%#', 'char' : ';', 'input' : '<BS>td::', 'filetype' : ['cpp', 'rust'] })
+" b;# -> boost::# (cpp)
+call lexima#add_rule({ 'at' : '\<b:\%#', 'char' : ':', 'input' : '<BS>oost::', 'filetype' : ['cpp'] })
+call lexima#add_rule({ 'at' : '\<b;\%#', 'char' : ';', 'input' : '<BS>oost::', 'filetype' : ['cpp'] })
+" ;# -> ::# (cpp, rust)
+call lexima#add_rule({ 'at' : ';\%#', 'char' : ';', 'input' : '<BS>::', 'filetype' : ['cpp', 'rust'] })
 
-[[plugins]]
-repo = 'rhysd/devdocs.vim'
-on_map = '<Plug>(devdocs-under-cursor)'
+" operator < and >
+" cout<# -> cout << # (cpp)
+call lexima#add_rule({ 'at' : '[^<> [:tab:]]<\%#', 'char' : '<', 'input' : '<BS><Space><<<Space>', 'filetype' : ['cpp'] })
+" cout < # -> cout << #
+call lexima#add_rule({ 'at' : '[^<> ]\s<\s\%#', 'char' : '<', 'input' : '<BS><<Space>', 'filetype' : ['cpp'] })
+" cout <# -> cout << #
+call lexima#add_rule({ 'at' : '[^<> [:tab:]]\s<\%#', 'char' : '<', 'input' : '<<Space>', 'filetype' : ['cpp'] })
+" cin># -> cin >> #
+call lexima#add_rule({ 'at' : '[^<> [:tab:]]>\%#', 'char' : '>', 'input' : '<BS><Space>>><Space>', 'filetype' : ['cpp'] })
+" cin > # -> cin >> #
+call lexima#add_rule({ 'at' : '[^<> ]\s>\s\%#', 'char' : '>', 'input' : '<BS>><Space>', 'filetype' : ['cpp'] })
+" cin ># -> cin >> #
+call lexima#add_rule({ 'at' : '[^<> [:tab:]]\s>\%#', 'char' : '>', 'input' : '><Space>', 'filetype' : ['cpp'] })
 
-[[plugins]]
-repo = 'w0rp/ale'
+" template # -> template <#>
+call lexima#add_rule({ 'at' : '\<template\>\s*\%#', 'char' : '<', 'input_after' : '>', 'filetype' : ['cpp'] })
+
+" <#> -> < # >
+call lexima#add_rule({ 'at' : '<\%#>', 'char' : '<Space>', 'input_after' : '<Space>', 'filetype' : ['cpp'] })
+" < # > -> <#>
+call lexima#add_rule({ 'at' : '< \%# >', 'char' : '<BS>', 'delete' : 1, 'filetype' : ['cpp'] })
+" <#> -> #
+call lexima#add_rule({ 'at' : '<\%#>', 'char' : '<BS>', 'input' : '<BS><Delete>', 'filetype' : ['cpp']  })
+
+'''
 
 [[plugins]]
 repo = 'SirVer/ultisnips'
 on_path = '.*'
 
 [[plugins]]
-repo = 'tyru/caw.vim'
-on_map = '<Plug>(caw:'
+repo = 'prabirshrestha/async.vim'
+lazy = 1
 
 [[plugins]]
 repo = 'prabirshrestha/asyncomplete.vim'
+depends = 'async.vim'
+on_i = 1
 hook_add = '''
+imap <Nul> <C-Space>
+imap <C-Space> <Plug>(asyncomplete_force_refresh)
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 '''
 
 [[plugins]]
-repo = 'prabirshrestha/async.vim'
-
-[[plugins]]
 repo = 'prabirshrestha/vim-lsp'
-hook_add = '''
+depends = 'async.vim'
+lazy = 1
+hook_source = '''
 let g:lsp_diagnostics_enabled = 0
 let g:lsp_async_completion = 1
 if executable('clangd')
@@ -181,13 +225,99 @@ endif
 
 [[plugins]]
 repo = 'prabirshrestha/asyncomplete-lsp.vim'
+depends = ['asyncomplete.vim', 'vim-lsp']
+on_i = 1
+
+[[plugins]]
+repo = 'prabirshrestha/asyncomplete-buffer.vim'
+on_i = 1
+depends = 'asyncomplete.vim'
+hook_source = '''
+call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+    \ 'name': 'buffer',
+    \ 'whitelist': ['*'],
+    \ 'completor': function('asyncomplete#sources#buffer#completor'),
+    \ 'config': {
+    \    'max_buffer_size': 10000000,
+    \  },
+    \ }))
+'''
+
+[[plugins]]
+repo = 'prabirshrestha/asyncomplete-file.vim'
+on_i = 1
+depends = 'asyncomplete.vim'
+hook_source = '''
+call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+    \ 'name': 'file',
+    \ 'whitelist': ['*'],
+    \ 'completor': function('asyncomplete#sources#file#completor'),
+    \ }))
+'''
 
 [[plugins]]
 repo = 'prabirshrestha/asyncomplete-ultisnips.vim'
-hook_add = '''
-    call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
-        \ 'name': 'ultisnips',
-        \ 'whitelist': ['*'],
-        \ 'completor': function('asyncomplete#sources#ultisnips#completor'),
-        \ }))
+on_i = 1
+depends = 'asyncomplete.vim'
+hook_source = '''
+call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
+    \ 'name': 'ultisnips',
+    \ 'whitelist': ['*'],
+    \ 'completor': function('asyncomplete#sources#ultisnips#completor'),
+    \ }))
 '''
+# }}}
+
+# Document {{{
+[[plugins]]
+repo = 'rhysd/devdocs.vim'
+on_map = '<Plug>(devdocs-under-cursor)'
+# }}}
+
+# Fuzzy Finder {{{
+[[plugins]]
+repo = 'junegunn/fzf'
+build = './install --no-key-bindings --no-update-rc'
+
+[[plugins]]
+repo = 'junegunn/fzf.vim'
+# }}}
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+on_map = ['<Plug>(EasyAlign)', '<Plug>(LiveEasyAlign)']
+
+[[plugins]]
+repo = 'kana/vim-submode'
+
+[[plugins]]
+repo = 'kana/vim-altr'
+on_map = '<Plug>(altr-'
+
+[[plugins]]
+repo = 'w0rp/ale'
+on_cmd = 'ALELint'
+hook_add = '''
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_save = 0
+let g:ale_lint_on_insert_leave = 0
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_open_list = 1
+
+let g:ale_c_clang_options = '-std=c11 -Wall -Wextra'
+let g:ale_c_gcc_options = '-std=c11 -Wall -Wextra'
+let g:ale_cpp_clang_options = '-std=c++17 -Wall -Wextra'
+let g:ale_cpp_gcc_options = '-std=c++17 -Wall -Wextra'
+let g:ale_linters = {
+            \ 'c' : ['clangd', 'clangcheck', 'clangtidy'],
+            \ 'cpp' : ['clangd', 'clangcheck', 'clangtidy']
+            \}
+'''
+
+[[plugins]]
+repo = 'tyru/caw.vim'
+on_map = '<Plug>(caw:'
+

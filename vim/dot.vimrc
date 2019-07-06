@@ -17,10 +17,13 @@ language messages C
 
 let g:is_darwin_p = has('mac') || has('macunix')
 let g:is_linux_p = !g:is_darwin_p && has('unix')
+let g:is_windows_p = has('win32')
 
 function! s:MyEnv()
     let env = {}
-    let dot_vim_dir = has('nvim') ? fnamemodify(expand('$HOME/.config/nvim'), ':p') : fnamemodify(expand('$HOME/.vim'), ':p')
+    let dot_vim_dir = g:is_windows_p
+                    \ ? fnamemodify(expand('$HOME/vimfiles'), ':p')
+                    \ : fnamemodify(expand('$HOME/.vim'), ':p')
     let env = {
                 \   'path' : {
                 \       'user' : dot_vim_dir,
@@ -28,7 +31,7 @@ function! s:MyEnv()
                 \           'bundle' : dot_vim_dir . 'dein',
                 \           'toml' : dot_vim_dir . 'dein.toml'
                 \       },
-                \       'vimrc' : dot_vim_dir . (has('nvim') ? 'init.vim' : 'vimrc'),
+                \       'vimrc' : dot_vim_dir . 'vimrc',
                 \       'local_vimrc' : dot_vim_dir . 'local.vimrc',
                 \       'backup' : dot_vim_dir . 'backups',
                 \       'undo' : dot_vim_dir . 'undo'
@@ -94,6 +97,7 @@ set statusline=%f\ %y\ %r\ %m%=%{(&fenc!=''?&fenc:&enc).':'.&ff}\|%l:%v\|%p%%
 set t_vb=
 set tabpagemax=20
 set termencoding=utf-8
+set termguicolors
 set ttimeoutlen=50
 set ttyfast
 let &undodir = s:env.path.undo
@@ -310,9 +314,8 @@ syntax enable
 
 " Colorscheme, Highlight  " {{{1
 if !exists('g:colors_name')
-    let g:mycolor_termtrans = 1
     set background=dark
-    colorscheme mycolor
+    colorscheme iceberg
 endif
 " 1}}}
 
@@ -339,11 +342,6 @@ autocmd Vimrc BufReadPost *
 " 1}}}
 
 " Plugins {{{1
-" ale  " {{{2
-let g:ale_lint_on_enter = 0
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_open_list = 1
-" 2}}}
 " altr  " {{{2
 nmap <F3>  <Plug>(altr-forward)
 nmap <F2>  <Plug>(altr-back)
@@ -360,8 +358,7 @@ Nvmap <Leader>cc  <Plug>(caw:hatpos:toggle)
 " 2}}}
 " devdocs  " {{{2
 let g:devdocs_filetype_map = {
-            \   'crystal' : 'crystal',
-            \   'ruby' : 'ruby~2.4'
+            \   'ruby' : 'ruby~2.5'
             \ }
 
 autocmd Vimrc FileType c,cpp,crystal,go,haskell,ruby,rust
@@ -391,13 +388,22 @@ let g:clang_format#style_options = {
             \   'BreakBeforeBraces' : 'Stroustrup',
             \   'BreakBeforeBinaryOperators' : 'NonAssignment',
             \   'IndentCaseLabels' : 'false',
-            \   'IndentWidth' : 4
+            \   'IndentWidth' : 4,
+            \   'PointerAlignment' : 'Left'
             \ }
 " 3}}}
 " operator-surround  {{{3
 map <silent>sa  <Plug>(operator-surround-append)
 map <silent>sd  <Plug>(operator-surround-delete)
 map <silent>sr  <Plug>(operator-surround-replace)
+" 3}}}
+" operator-replace  {{{3
+map <silent>_  <Plug>(operator-replace)
+vmap <silent>p <Plug>(operator-replace)
+" 3}}}
+" operator-flashy  {{{3
+map <silent>y  <Plug>(operator-flashy)
+nmap <silent>Y <Plug>(operator-flashy)$
 " 3}}}
 " 2}}}
 " submode  "{{{2
@@ -440,16 +446,12 @@ nnoremap ,g  :<C-u>Rg <C-r><C-w><CR>
 let g:quickrun_config = get(g:, 'quickrun_config', {})
 let g:quickrun_config = {
             \   '_' : {
-            \       'outputter' : 'error',
-            \       'outputter/error/success' : 'buffer',
-            \       'outputter/error/error' : 'quickfix',
+            \       'outputter' : 'buffer',
             \       'outputter/buffer/split' : ':botright 10sp',
             \       'outputter/buffer/close_on_empty' : 1,
             \       'runner' : 'job'
             \   },
             \   'cpp' : {
-            \       'type' : 'cpp/clang++',
-            \       'command' : 'clang++',
             \       'cmdopt' : '-std=c++17'
             \   }
             \ }
