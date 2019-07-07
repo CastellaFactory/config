@@ -1,0 +1,29 @@
+{
+  "suggest.preferCompleteThanJumpPlaceholder" : true,
+  "diagnostic.enable" : false,
+  "signature.target" : "echo",
+  "languageserver" : {
+    "clangd" : {
+      "command" : "clangd",
+      "rootPatterns" : ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+      "filetypes" : ["c", "cpp", "objc", "objcpp"]
+    },
+    "rust-analyzer" : {
+      "command" : "ra_lsp_server",
+      "rootPatterns" : ["Cargo.toml"],
+      "filetypes" : ["rust"]
+    },
+    "rls" : {
+      "command" : "rustup",
+      "args" : ["run", "nightly", "rls"],
+      "rootPatterns" : ["Cargo.toml"],
+      "filetypes" : []
+    },
+    "gopls" : {
+      "command" : "gopls",
+      "args" : ["-mode", "stdio"],
+      "rootPatterns" : ["go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes" : ["go"]
+    }
+  }
+}

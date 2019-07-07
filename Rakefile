@@ -51,6 +51,7 @@ namespace :common do
 
     make_symlink 'vim/dot.vimrc', "#{home}/.vim/vimrc"
     make_symlink 'vim/dot.gvimrc', "#{home}/.vim/gvimrc"
+    make_symlink 'vim/coc-settings.json', "#{home}/.vim/coc-settings.json"
 
     next unless installed? 'git'
     unless File.directory? "#{home}/.vim/dein"

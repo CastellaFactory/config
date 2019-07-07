@@ -101,6 +101,7 @@ set termguicolors
 set ttimeoutlen=50
 set ttyfast
 let &undodir = s:env.path.undo
+set updatetime=500
 set virtualedit=block
 set visualbell
 set whichwrap=b,s,h,l,[,],<,>,~
