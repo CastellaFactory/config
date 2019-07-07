@@ -1,6 +1,6 @@
 {
-  "suggest.preferCompleteThanJumpPlaceholder" : true,
   "diagnostic.enable" : false,
+  "suggest.acceptSuggestionOnCommitCharacter": true,
   "signature.target" : "echo",
   "languageserver" : {
     "clangd" : {
