@@ -33,8 +33,8 @@ end
 
 
 namespace :common do
-  task :all => [:git, :vim, :neovim, :fish, :atom, :tmux, :ocaml, :vimperator, :tex]
-  task :nox => [:git, :vim, :neovim, :fish, :tmux, :ocaml]
+  task :all => [:git, :vim, :neovim, :fish, :tmux, :tex]
+  task :nox => [:git, :vim, :neovim, :fish, :tmux]
 
   task :git do
     make_symlink 'git/dot.gitconfig', "#{home}/.gitconfig"
@@ -80,14 +80,6 @@ namespace :common do
 
   task :tmux do
     make_symlink 'tmux/dot.tmux.conf', "#{home}/.tmux.conf"
-  end
-
-  task :ocaml do
-    make_symlink 'ocaml/dot.ocamlinit', "#{home}/.ocamlinit"
-  end
-
-  task :vimperator do
-    make_symlink 'vimperator/dot.vimperatorrc', "#{home}/.vimperatorrc"
   end
 
   task :tex do
@@ -190,3 +182,4 @@ when /darwin/
 else
   raise 'Unknown platform.'
 end
+
