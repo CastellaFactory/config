@@ -1,15 +1,21 @@
 # zmodload zsh/zprof && zprof
 
-export PATH=$PATH:/sbin:/usr/sbin:$HOME/local/bin
+export PATH=$HOME/local/bin:$PATH
 
-# OPAM
-. $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+# Golang
+if test -d $HOME/go > /dev/null; then
+    export GOPATH=$HOME/go
+    export PATH=$PATH:$GOPATH/bin
+fi
 
-# golang
-export GOPATH=$HOME/.go
-export PATH=$PATH:$GOPATH/bin
+# Rust Cargo
+if test -d $HOME/.cargo > /dev/null; then
+    export PATH=$PATH:$HOME/.cargo/bin
+fi
 
-# cargo(rust)
-export PATH=$PATH:$HOME/.cargo/bin
+# linuxbrew
+if test -d /home/linuxbrew > /dev/null; then
+    export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
+fi
 
 # vim: ft=zsh

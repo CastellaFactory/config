@@ -1,24 +1,19 @@
 # zmodload zsh/zprof && zprof
 
-export PATH=/usr/local/bin:$HOME/.rbenv/shims:$HOME/.cabal/bin:$HOME/local/bin:$PATH
-
+export PATH=/usr/local/bin:/usr/local/sbin:$HOME/local/bin:$PATH
 
 # fpath
 fpath=(/usr/local/share/zsh-completions $fpath)
 
-# rbenv
-if which rbenv > /dev/null; then 
-    eval "$(rbenv init - --no-rehash)";
+# Golang
+if test -d $HOME/go > /dev/null; then
+    export GOPATH=$HOME/go
+    export PATH=$PATH:$GOPATH/bin
 fi
 
-# OPAM
-. $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-
-# golang
-export GOPATH=$HOME/.go
-export PATH=$PATH:$GOPATH/bin
-
-# cargo(rust)
-export PATH=$PATH:$HOME/.cargo/bin
+# Rust Cargo
+if test -d $HOME/.cargo > /dev/null; then
+    export PATH=$PATH:$HOME/.cargo/bin
+fi
 
 # vim: ft=zsh

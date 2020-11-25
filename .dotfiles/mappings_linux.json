@@ -6,5 +6,7 @@
   "xmonad/dot.stalonetrayrc": "~/.stalonetrayrc",
   "xmonad/dot.xmobarrc_laptop": "~/.xmobarrc",
   "xmonad/dot.xmonad": "~/.xmonad/xmonad.hs",
+  "zsh/dot.zprofile.linux": "~/.zprofile",
+  "zsh/dot.zshenv.linux": "~/.zshenv",
   "zsh/dot.zshrc.linux": "~/.zshrc.linux"
 }
