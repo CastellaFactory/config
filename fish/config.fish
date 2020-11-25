@@ -1,34 +1,31 @@
 if status --is-login
     # remove the greeting message
-    set -g fish_greeting ''
+    set -gx fish_greeting ''
 
     # local
     set -gx PATH ~/local/bin $PATH
 
-    # haskell stack
+    # Haskell Stack
     if command --search stack > /dev/null
         set -gx PATH ~/.local/bin $PATH
     end
 
-    # OPAM
-    if command --search opam > /dev/null
-        source ~/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
-    end
-
-    # golang
+    # Golang
     set -gx GOPATH ~/.go
     set -gx PATH $GOPATH/bin $PATH
 
-    # cargo
+    # Rust cargo
     set -gx PATH ~/.cargo/bin $PATH
 
-    # fzf
+    # Fzf
     set -gx FZF_DEFAULT_OPTS '--reverse --border'
 
     switch (uname)
     case Linux
-        set -gx PATH $PATH /sbin /usr/sbin
-        set -gx PATH ~/.gem/ruby/2.2.0/bin $PATH
+        # linuxbrew
+        if test -d /home/linuxbrew > /dev/null
+            set -gx PATH /home/linuxbrew/.linuxbrew/bin
+        end
 
         # alias
         alias vi='vim -u ~/.vim/vimrc -N'
@@ -57,4 +54,3 @@ function fish_user_key_bindings
     bind \cr fzf_select_history
     bind \cg fzf_select_ghq_repository
 end
-

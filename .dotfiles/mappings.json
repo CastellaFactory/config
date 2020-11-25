@@ -1,0 +1,12 @@
+{
+  "fish": "~/.config/fish",
+  "git/dot.gitconfig": "~/.gitconfig",
+  "git/dot.gitignore": "~/.gitignore",
+  "peco": "~/.config/peco",
+  "tmux/dot.tmux.conf": "~/.tmux.conf",
+  "vim/dot.vimrc": "~/.vim/vimrc",
+  "vim/dot.gvimrc": "~/.vim/gvimrc",
+  "vim/dein.toml": "~/.vim/dein.toml",
+  "vim/coc-settings.json": "~/.vim/coc-settings.json",
+  "zsh/dot.zshrc": "~/.zshrc"
+}

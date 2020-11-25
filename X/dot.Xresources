@@ -62,5 +62,7 @@ URxvt.tabbed.tabbar-bg: #000000
 URxvt.tabbed.tab-fg: 3
 URxvt.tabbed.tab-bg: #000000
 
+#include ".Xresources.local"
+
 ! vim: ft=xdefaults
 

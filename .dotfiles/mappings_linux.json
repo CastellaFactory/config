@@ -1,0 +1,10 @@
+{
+  "X/dot.compton.conf": "~/.compton.conf",
+  "X/dot.xprofile": "~/.xprofile",
+  "X/dot.Xresources": "~/.Xresources",
+  "X/dot.xsession": "~/.xsession",
+  "xmonad/dot.stalonetrayrc": "~/.stalonetrayrc",
+  "xmonad/dot.xmobarrc_laptop": "~/.xmobarrc",
+  "xmonad/dot.xmonad": "~/.xmonad/xmonad.hs",
+  "zsh/dot.zshrc.linux": "~/.zshrc.linux"
+}

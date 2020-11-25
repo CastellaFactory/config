@@ -1,0 +1,10 @@
+alias ls='ls --color -F'
+alias vim='vim -u ~/.vim/vimrc -N'
+alias gvim='gvim -u ~/.vim/vimrc -U ~/.vim/gvimrc -N'
+
+# if (which zprof > /dev/null) ;then
+#   zprof | cat
+# fi
+
+# vim: ft=zsh
+
