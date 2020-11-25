@@ -1,6 +1,11 @@
-!! Note:
-!! To make these settings universal for all forms of URxvt, you may add a wildcard.
-!! For example, URxvt.depth would become URxvt*.depth
+#ifdef SRVR_xps13_gentoo
+  #define  FONT          xft:Hack:size=28:semibold:antialias=true
+  #define  URL_LAUNCHER  /usr/bin/google-chrome-stable
+#else
+  #define  FONT          xft:SourceHanCodeJP:size=16:semibold:antialias=true
+  #define  URL_LAUNCHER  /usr/bin/google-chrome-stable
+#endif
+
 
 !! Emacs
 Emacs*.useXIM: false
@@ -9,7 +14,7 @@ Emacs*.toolBar: false
 
 !! urxvt
 URxvt.depth: 32
-URxvt.font: xft:SourceHanCodeJP:size=16:semibold:antialias=true
+URxvt.font: FONT
 URxvt.transparent: true
 URxvt.shading: 80
 URxvt.fading: 40
@@ -49,7 +54,7 @@ URxvt.color15: #d0d0d0
 ! extensions
 URxvt.perl-ext-common:default,clipboard,matcher,keyboard-select,tabbed
 URxvt.keysym.M-u:     perl:url-select:select_next
-URxvt.url-launcher:   /usr/bin/google-chrome-stable
+URxvt.url-launcher:   URL_LAUNCHER
 URxvt.underlineURLs:  True
 URxvt.matcher.button: 1
 URxvt.keysym.M-Escape:perl:keyboard-select:activate
@@ -62,7 +67,4 @@ URxvt.tabbed.tabbar-bg: #000000
 URxvt.tabbed.tab-fg: 3
 URxvt.tabbed.tab-bg: #000000
 
-#include ".Xresources.local"
-
 ! vim: ft=xdefaults
-
