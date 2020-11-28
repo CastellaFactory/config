@@ -8,5 +8,8 @@
   "vim/dot.gvimrc": "~/.vim/gvimrc",
   "vim/dein.toml": "~/.vim/dein.toml",
   "vim/coc-settings.json": "~/.vim/coc-settings.json",
-  "zsh/dot.zshrc": "~/.zshrc"
+  "zsh/dot.zprofile": "~/.zprofile",
+  "zsh/dot.zshenv": "~/.zshenv",
+  "zsh/dot.zshrc": "~/.zshrc",
+  "alacritty": "~/.config/alacritty"
 }

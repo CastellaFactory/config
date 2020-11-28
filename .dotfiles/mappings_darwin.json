@@ -1,5 +1,4 @@
 {
-  "zsh/dot.zprofile.mac": "~/.zprofile",
-  "zsh/dot.zshenv.mac": "~/.zshenv",
+  "zsh/dot.zshenv.mac": "~/.zshenv.mac",
   "zsh/dot.zshrc.mac": "~/.zshrc.mac"
 }
