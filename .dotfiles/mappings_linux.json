@@ -5,7 +5,7 @@
   "X/dot.xsession": "~/.xsession",
   "xmonad/dot.stalonetrayrc": "~/.stalonetrayrc",
   "xmonad/dot.xmobarrc_laptop": "~/.xmobarrc",
-  "xmonad/dot.xmonad": "~/.xmonad/xmonad.hs",
+  "xmonad/xmonad.hs": "~/.xmonad/xmonad.hs",
   "zsh/dot.zshenv.linux": "~/.zshenv.linux",
   "zsh/dot.zshrc.linux": "~/.zshrc.linux"
 }

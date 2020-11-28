@@ -161,12 +161,18 @@ function peco-ghq_open() {
 }
 zle -N peco-ghq_open
 # 2}}}
+# 1}}}
 
+# Keybinds  {{{1
+# peco
 bindkey '^r' peco-select_history
 bindkey '^@' peco-cdr
 bindkey '^x^f' peco-dir_find
 bindkey '^g' peco-ghq
 bindkey '^o' peco-ghq_open
+
+# delete key
+bindkey "^[[3~" delete-char
 # 1}}}
 
 # OS specific settings  # {{{1
