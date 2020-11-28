@@ -159,7 +159,7 @@ call lexima#add_rule({ 'at' : '< \%# >', 'char' : '<BS>', 'delete' : 1, 'filetyp
 call lexima#add_rule({ 'at' : '<\%#>', 'char' : '<BS>', 'input' : '<BS><Delete>', 'filetype' : ['cpp']  })
 
 " must be added after lexima#add_rule()
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : lexima#expand('<LT>CR>', 'i')
+inoremap <silent> <expr> <CR> pumvisible() ? "\<C-y>" : lexima#expand('<LT>CR>', 'i')
 '''
 
 [[plugins]]
@@ -170,6 +170,9 @@ on_path = '.*'
 repo = 'neoclide/coc.nvim'
 rev = 'release'
 on_i = 1
+hook_add = '''
+let g:coc_global_extensions = ['coc-snippets', 'coc-rust-analyzer']
+'''
 hook_source = '''
 imap <Nul> <C-Space>
 imap <silent> <expr> <C-Space> coc#refresh()

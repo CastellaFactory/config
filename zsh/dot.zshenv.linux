@@ -1,7 +1,5 @@
 # zmodload zsh/zprof && zprof
 
-export PATH=$HOME/local/bin:$PATH
-
 # Golang
 if test -d $HOME/go > /dev/null; then
     export GOPATH=$HOME/go
@@ -15,7 +13,9 @@ fi
 
 # linuxbrew
 if test -d /home/linuxbrew > /dev/null; then
-    export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
+    export PATH=/home/linuxbrew/.linuxbrew/bin:$PATH
 fi
+
+export PATH=$HOME/local/bin:$PATH
 
 # vim: ft=zsh
