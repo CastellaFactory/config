@@ -1,5 +1,5 @@
-Config { font = "xft:Source Han Code JP:semibold:size=10:antialias=true"
-        , alpha = 125
+Config { font = "xft:Source Han Code JP:semibold:size=24:antialias=true"
+        , alpha = 175
         , bgColor = "black"
         , fgColor = "gray"
         , position = Top
@@ -24,7 +24,11 @@ Config { font = "xft:Source Han Code JP:semibold:size=10:antialias=true"
                                       , "--normal", "orange"
                                       , "--high", "red"
                                       ] 10
-                     , Run Volume "default" "Master" [] 10
+                     , Run Volume "default" "Master" [ "--template", "Vol: <volume>%<status>" 
+                                                     , "--"
+                                                     , "--on", ""
+                                                     , "--off", "[mute]"
+                                                     ] 10
                      , Run Battery [ "--template", "<acstatus>"
                                    , "--Low", "15"
                                    , "--High", "90"
@@ -39,13 +43,14 @@ Config { font = "xft:Source Han Code JP:semibold:size=10:antialias=true"
                                    -- discharging
                                    , "-o", "Bat: <left>%"
                                    ] 50
-                     , Run Date "%a %m/%d %H:%M" "date" 10
-                     , Run Com "uname" ["-r"] "" 36000
+                     -- , Run Date "%a %m/%d %H:%M" "date" 10
+                     -- , Run Com "uname" ["-r"] "" 36000
+                     , Run Com "date" ["+%m/%d(%a)%k:%M"] "" 10
                      -- , Run StdinReader
                      ]
         , sepChar = "%"
         , alignSep = "}{"
-        , template = "%focus% }{ Ws: %workspaces% | %cpu% | %memory% | %dynnetwork% | %default:Master% | %battery% | <fc=#ee9a00>%date%</fc> | %uname% |              "
+        , template = "%focus% }{ Ws: %workspaces% | %cpu% | %memory% | %dynnetwork% | %default:Master% | %battery% | <fc=#ee9a00>%date%</fc> |           "
 }
 
 -- vim: ft=haskell

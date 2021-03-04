@@ -349,7 +349,6 @@ nmap <F2>  <Plug>(altr-back)
 " 2}}}
 " caw  " {{{2
 let g:caw_no_default_keymappings = 1
-let g:caw_hatpos_sp_blank = ' '
 
 nmap <Leader>co  <Plug>(caw:jump:comment-next)
 nmap <Leader>cO  <Plug>(caw:jump:comment-prev)
