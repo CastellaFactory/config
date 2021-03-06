@@ -61,20 +61,12 @@ on_map = [['xo', 'ib'], ['xo', 'ab']]
 # Filetype {{{
 # Haskell {{{
 [[plugins]]
-repo = 'eagletmt/ghcmod-vim'
-on_ft = 'haskell'
-
-[[plugins]]
-repo = 'eagletmt/neco-ghc'
-on_ft = 'haskell'
-
-[[plugins]]
 repo = 'itchyny/vim-haskell-indent'
 on_ft = 'haskell'
 # }}}
 # Go {{{
 [[plugins]]
-repo = 'fatih/vim-go'
+repo = 'mattn/vim-goimports'
 on_ft = 'go'
 # }}}
 # C++ {{{
@@ -219,9 +211,10 @@ repo = 'kana/vim-altr'
 on_map = '<Plug>(altr-'
 
 [[plugins]]
-repo = 'w0rp/ale'
+repo = 'dense-analysis/ale'
 on_cmd = 'ALELint'
 hook_add = '''
+let g:ale_disable_lsp = 1
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_save = 0
 let g:ale_lint_on_insert_leave = 0

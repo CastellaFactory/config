@@ -184,27 +184,6 @@ command! -nargs=+ Nvmap  execute 'nmap' <q-args> | execute 'vmap' <q-args>
 command! -nargs=+ Nvnoremap  execute 'nnoremap' <q-args> | execute 'vnoremap' <q-args>
 command! -nargs=+ Nvunmap execute 'nunmap' <q-args> | execute 'vunmap' <q-args>
 " 2}}}
-" SuspendWithAutomaticCD  " {{{2
-command! -bar SuspendWithAutomaticCD  call s:cmd_SuspendWithAutomaticCD()
-function! s:cmd_SuspendWithAutomaticCD()
-    if has('gui_running') && g:is_darwin_p
-        call system('open -a iTerm ' . shellescape(getcwd()))
-    elseif has('gui_running') && g:is_linux_p
-        call system('urxvt -cd ' . shellescape(getcwd()) . ' &')
-    elseif exists('$TMUX')
-        let shell_name = split(&shell, '/')[-1]
-        let windows = split(system('tmux list-windows'), '\n')
-        call map(windows, 'split(v:val, "^\\d\\+\\zs:\\s")')
-        call filter(windows, 'matchstr(v:val[1], "\\w\\+") ==# shell_name')    " looking for shell_name runnnig windows
-        let select_command = empty(windows) ? 'new-window' : 'select-window -t ' . windows[0][0]
-        " to avoid adding cd to cmdline history, add 'setopt hist_ignore_space' to zshrc and
-        " add spaces before 'cd'
-        call system('tmux ' . select_command . '&&' . 'tmux send-keys C-u \ cd\ ' . shellescape(getcwd()) . ' C-m C-l')
-        redraw!
-    else
-        suspend
-    endif
-endfunction  " 2}}}
 " 1}}}
 
 " Mappings  " {{{1
@@ -275,8 +254,6 @@ Ovnoremap gv  :<C-u>normal! gv<CR>
 
 nnoremap <silent> <Space>cd  :<C-u>call <SID>cd_to_current_buffer_dir()<CR>
 nnoremap <silent> <Space>cgd  :<C-u>call <SID>cd_to_git_root_dir()<CR>
-
-nnoremap ZZ  :<C-u>SuspendWithAutomaticCD<CR>
 
 " prefix-key for tmux
 noremap <C-z>  <Nop>
@@ -357,25 +334,13 @@ nmap <Leader>ca  <Plug>(caw:dollarpos:comment)
 Nvmap <Leader>cc  <Plug>(caw:hatpos:toggle)
 " 2}}}
 " devdocs  " {{{2
-let g:devdocs_filetype_map = {
-            \   'ruby' : 'ruby~2.5'
-            \ }
-
-autocmd Vimrc FileType c,cpp,crystal,go,haskell,ruby,rust
+autocmd Vimrc FileType c,cpp,go,rust,python
             \   nmap <buffer> K <Plug>(devdocs-under-cursor)
 " 2}}}
 " easy-align  " {{{2
 Nvmap <Leader>ea  <Plug>(EasyAlign)
 Nvmap <Leader>lea  <Plug>(LiveEasyAlign)
 " 2}}}
-" ghcmod-vim  " {{{2
-autocmd Vimrc FileType haskell
-            \   nnoremap <buffer> <Leader>t  :<C-u>GhcModType<CR>
-            \ | nnoremap <buffer><silent> <Space>/  :<C-u>GhcModTypeClear<CR>:nohlsearch<CR>
-" 2}}}
-" neco-ghc  " {{{2
-autocmd Vimrc FileType haskell setlocal omnifunc=necoghc#omnifunc
-" 2}}} "
 " operator  " {{{2
 " operator-clang-format  " {{{3
 autocmd Vimrc FileType c,cpp map <buffer> <Leader>x  <Plug>(operator-clang-format)
