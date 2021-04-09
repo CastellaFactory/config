@@ -102,6 +102,9 @@ repo = 'cocopon/iceberg.vim'
 
 [[plugins]]
 repo = 'rakr/vim-one'
+
+[[plugins]]
+repo = 'arcticicestudio/nord-vim'
 # }}}
 
 # Input {{{

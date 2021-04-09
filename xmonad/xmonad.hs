@@ -36,7 +36,8 @@ import           XMonad.Hooks.FadeWindows            (fadeWindowsEventHook,
                                                       fadeWindowsLogHook,
                                                       opaque, transparency)
 import           XMonad.Hooks.ManageDocks            (ToggleStruts (ToggleStruts),
-                                                      avoidStruts, docks)
+                                                      avoidStruts, docks,
+                                                      manageDocks, docksEventHook)
 import           XMonad.Hooks.ManageHelpers          (doCenterFloat, isDialog)
 import           XMonad.Hooks.SetWMName              (setWMName)
 import           XMonad.Layout.Grid                  (Grid (Grid))
@@ -71,7 +72,7 @@ main = do
   mapM_ (spawnPipe . xmobarCommand) xmobarOpts
 
   xmonad $ ewmh $ docks $ def {
-                         terminal             = "urxvt"
+                         terminal             = "alacritty"
                          , focusFollowsMouse  = False
                          , clickJustFocuses   = False
                          , borderWidth        = 3
@@ -92,16 +93,19 @@ main = do
                                                   $ Mag.magnifiercz 1.4
                                                   $ Tall 1 (3/100) (1/2) ||| Grid
 
-                         , manageHook         = composeAll
+                         , manageHook         = manageDocks <+> composeAll
                                                     [ isDialog                      --> doCenterFloat
                                                     , className =? "MPlayer"        --> doFloat
                                                     , className =? "Smplayer"       --> doFloat
                                                     , className =? "Kmix"           --> doFloat
+                                                    , className =? "Plasma-desktop" --> doFloat
                                                     , resource  =? "desktop_window" --> doIgnore
                                                     , resource  =? "kdesktop"       --> doIgnore
+                                                    , resource  =? "plasmashell     --> doFloat
                                                     ]
 
                          , handleEventHook    = handleEventHook def
+                                                  <+> docksEventHook
                                                   <+> hintsEventHook
                                                   <+> fadeWindowsEventHook
                                                   <+> fullscreenEventHook
@@ -114,24 +118,24 @@ main = do
                                                 fadeWindowsLogHook
                                                   $ composeAll
                                                     [ opaque
-                                                    , className =? "Gvim"  --> transparency 0.15
-                                                    , className =? "Emacs" --> transparency 0.15
+                                                    , className =? "Gvim"  --> transparency 0.2
+                                                    , className =? "Emacs" --> transparency 0.2
                                                     ]
 
                          , startupHook        = do
                                                   setWMName "LG3D"
                                                   liftIO $ Env.putEnv "_JAVA_AWT_WM_NONREPARENTING=1"
                                                   liftIO $ Env.putEnv "XDG_CURRENT_DESKTOP=KDE"
-                                                  -- spawnOnce "compton -b -C -G --config ~/.compton.conf"
-                                                  -- spawnOnce "/usr/lib64/libexec/polkit-kde-authentication-agent-1"
-                                                  -- spawnOnce "stalonetray"
-                                                  -- spawnOnce "nitrogen --restore"
-                                                  -- spawnOnce "kmix --keepvisibility"
-                                                  -- spawnOnce "fcitx-autostart"
-                                                  -- spawnOnce "insync start"
-                                                  -- spawnOnce "dropbox"
-                                                  -- spawnOnce "xset -b"
-                                                  -- spawnOnce "xrdb -merge ~/.Xresources"
+                                                  spawnOnce "picom -b"
+                                                  spawnOnce "/usr/lib64/libexec/polkit-kde-authentication-agent-1"
+                                                  spawnOnce "/usr/lib64/libexec/org_kde_powerdevil"
+                                                  spawnOnce "stalonetray"
+                                                  spawnOnce "nitrogen --restore"
+                                                  spawnOnce "kmix --keepvisibility"
+                                                  spawnOnce "fcitx-autostart"
+                                                  spawnOnce "insync start"
+                                                  spawnOnce "xset -b"
+                                                  spawnOnce "xrdb -merge ~/.Xresources"
                          }
 {- 1}}} -}
 
@@ -140,7 +144,7 @@ myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 myKeys conf@XConfig { XMonad.modMask = modMask } = M.fromList $
   [ ((modMask .|. shiftMask, xK_Return), unsafeSpawn $ XMonad.terminal conf)
   , ((modMask,               xK_p     ), unsafeSpawn "rofi\
-                                                      \ -combi-modi window,drun,run\
+                                                      \ -combi-modi window,drun\
                                                       \ -show combi\
                                                       \ -modi combi\
                                                       \ -color-enabled true\

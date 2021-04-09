@@ -1,4 +1,4 @@
-Config { font = "xft:Source Han Code JP:semibold:size=24:antialias=true"
+Config { font = "xft:Source Han Code JP:semibold:size=12:antialias=true"
         , alpha = 175
         , bgColor = "black"
         , fgColor = "gray"
