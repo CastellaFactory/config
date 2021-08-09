@@ -101,7 +101,7 @@ on_ft = 'rust'
 repo = 'cocopon/iceberg.vim'
 
 [[plugins]]
-repo = 'rakr/vim-one'
+repo = 'sainnhe/everforest'
 
 [[plugins]]
 repo = 'arcticicestudio/nord-vim'
