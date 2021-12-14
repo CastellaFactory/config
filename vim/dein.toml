@@ -84,11 +84,6 @@ on_ft = 'cpp'
 repo = 'leafgarland/typescript-vim'
 on_ft = 'typescript'
 # }}}
-# Crystal {{{
-[[plugins]]
-repo = 'rhysd/vim-crystal'
-on_ft = 'crystal'
-# }}}
 # Rust {{{
 [[plugins]]
 repo = 'rust-lang/rust.vim'
@@ -164,7 +159,7 @@ on_path = '.*'
 [[plugins]]
 repo = 'neoclide/coc.nvim'
 rev = 'release'
-on_i = 1
+on_event = 'InsertEnter'
 hook_add = '''
 let g:coc_global_extensions = ['coc-snippets', 'coc-rust-analyzer']
 '''
