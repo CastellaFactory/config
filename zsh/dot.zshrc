@@ -88,36 +88,28 @@ fi
 
 # peco  # {{{1
 # select-history  # {{{2
-function peco-select_history() {
-    local tac
-    if which tac > /dev/null; then
-        tac="tac"
-    else
-        tac="tail -r"
-    fi
-    BUFFER=$(history -n 1 | \
-        eval $tac | \
-        peco --query "$LBUFFER")
+function fzf-select_history() {
+    BUFFER=$(history -n 1 | fzf --tac --prompt="history> " --query="$LBUFFER")
     CURSOR=$#BUFFER
     zle clear-screen
 }
-zle -N peco-select_history
+zle -N fzf-select_history
 # 2}}}
 # cdr  # {{{2
-function peco-cdr () {
-    local selected_dir=$(cdr -l | awk '{ print $2 }' | peco)
+function fzf-cdr () {
+    local selected_dir=$(cdr -l | awk '{ print $2 }' | fzf --prompt="cdr> " --query="$LBUFFER")
     if [ -n "$selected_dir" ]; then
         BUFFER="cd ${selected_dir}"
         zle accept-line
     fi
     zle clear-screen
 }
-zle -N peco-cdr
+zle -N fzf-cdr
 # 2}}}
 # dir_find  # {{{2
-function peco-dir_find() {
+function fzf-dir_find() {
     local current_buffer=$BUFFER
-    local selected_dir="$(find . -maxdepth 5 -type d ! -path "*/.*"| peco)"
+    local selected_dir=$(find . -maxdepth 5 -type d ! -path "*/.*"| fzf --prompt="dir> ")
     if [ -d "$selected_dir" ]; then
         BUFFER="${current_buffer} \"${selected_dir}\""
         CURSOR=$#BUFFER
@@ -125,25 +117,21 @@ function peco-dir_find() {
     fi
     zle clear-screen
 }
-zle -N peco-dir_find
+zle -N fzf-dir_find
 # 2}}}
 # ghq  # {{{2
-function peco-ghq() {
-    local selected_dir=$(ghq list | peco --prompt 'ghq >' --query "$LBUFFER")
-    if [ -n "$selected_dir" ]; then
-        local ghq_root=$(git config ghq.root)
-        if [[ "$ghq_root" != "" ]] then
-            BUFFER="cd ${ghq_root}/${selected_dir}"
-            zle accept-line
-        else
-            echo "Set ghq root."
-        fi
+function fzf-ghq() {
+    local target_repo=$(ghq list | fzf --prompt="ghq >" --query="$LBUFFER")
+    local ghq_root=$(ghq root)
+    if [ -d "$ghq_root" ]; then
+        BUFFER="cd ${ghq_root}/${target_repo}"
+        zle accept-line
     fi
     zle clear-screen
 }
-zle -N peco-ghq
+zle -N fzf-ghq
 
-function peco-ghq_open() {
+function fzf-ghq_open() {
     local open
     case $OSTYPE in
     darwin*)
@@ -154,23 +142,23 @@ function peco-ghq_open() {
         ;;
     esac
 
-    local selected_repo=$(ghq list | peco --prompt 'ghq-open >' --query "$LBUFFER")
+    local selected_repo=$(ghq list | fzf --prompt "ghq-open >" --query="$LBUFFER")
     if [ -n "$selected_repo" ]; then
-        $open "https://${selected_repo}"
+        $open "https://${selected_repo}" &
     fi
     zle clear-screen
 }
-zle -N peco-ghq_open
+zle -N fzf-ghq_open
 # 2}}}
 # 1}}}
 
 # Keybinds  {{{1
-# peco
-bindkey '^r' peco-select_history
-bindkey '^@' peco-cdr
-bindkey '^x^f' peco-dir_find
-bindkey '^g' peco-ghq
-bindkey '^o' peco-ghq_open
+# fzf
+bindkey '^r' fzf-select_history
+bindkey '^f' fzf-cdr
+bindkey '^x^f' fzf-dir_find
+bindkey '^g' fzf-ghq
+bindkey '^o' fzf-ghq_open
 
 # delete key
 bindkey "^[[3~" delete-char
