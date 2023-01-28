@@ -89,7 +89,7 @@ fi
 # peco  # {{{1
 # select-history  # {{{2
 function fzf-select_history() {
-    BUFFER=$(history -n 1 | fzf --tac --prompt="history> " --query="$LBUFFER")
+    BUFFER=$(history -n 1 | fzf --tac --no-sort --prompt="history> " --query="$LBUFFER")
     CURSOR=$#BUFFER
     zle clear-screen
 }
