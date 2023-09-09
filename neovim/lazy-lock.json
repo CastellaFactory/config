@@ -1,0 +1,20 @@
+{
+  "devdocs.vim": { "branch": "master", "commit": "1c91c619874f11f2062f80e6ca4b49456f21ae91" },
+  "lazy.nvim": { "branch": "main", "commit": "2a9354c7d2368d78cbd5575a51a2af5bd8a6ad01" },
+  "lexima.vim": { "branch": "master", "commit": "b1e1b1bde07c1efc97288c98c5912eaa644ee6e1" },
+  "nightfox.nvim": { "branch": "main", "commit": "e886e39e592e89f316536a6f070365a9d88901c9" },
+  "vim-clang-format": { "branch": "master", "commit": "6b791825ff478061ad1c57b21bb1ed5a5fd0eb29" },
+  "vim-haskell-indent": { "branch": "master", "commit": "32af0fe63e961f56ea7faa66c3baa43460b9acd3" },
+  "vim-operator-flashy": { "branch": "master", "commit": "b24673a9b0d5d60b26d202deb13d4ebf90d7a2ae" },
+  "vim-operator-replace": { "branch": "master", "commit": "1345a556a321a092716e149d4765a5e17c0e9f0f" },
+  "vim-operator-user": { "branch": "master", "commit": "c3dfd41c1ed516b4b901c97562e644de62c367aa" },
+  "vim-quickrun": { "branch": "master", "commit": "50f9ced186cf2651f4356aa3548c2306e181ec3b" },
+  "vim-quickrun-neovim-job": { "branch": "master", "commit": "955c8b2f923f9355d4cda1395c2853dc763e4c4d" },
+  "vim-sandwich": { "branch": "master", "commit": "c5a2cc438ce6ea2005c556dc833732aa53cae21a" },
+  "vim-textobj-entire": { "branch": "master", "commit": "64a856c9dff3425ed8a863b9ec0a21dbaee6fb3a" },
+  "vim-textobj-fold": { "branch": "master", "commit": "78bfa22163133b0ca6cda63b5b5015ed4409b2ee" },
+  "vim-textobj-function": { "branch": "master", "commit": "adb50f38499b1f558cbd58845e3e91117e4538cf" },
+  "vim-textobj-indent": { "branch": "master", "commit": "deb76867c302f933c8f21753806cbf2d8461b548" },
+  "vim-textobj-line": { "branch": "master", "commit": "1a6780d29adcf7e464e8ddbcd0be0a9df1a37339" },
+  "vim-textobj-user": { "branch": "master", "commit": "41a675ddbeefd6a93664a4dc52f302fe3086a933" }
+}

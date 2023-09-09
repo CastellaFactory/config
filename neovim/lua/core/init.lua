@@ -1,0 +1,6 @@
+require('core.base')
+require('core.autocmd')
+require('core.options')
+require('core.func')
+require('core.mappings')
+require('core.lazy')
