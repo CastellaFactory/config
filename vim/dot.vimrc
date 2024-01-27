@@ -204,8 +204,8 @@ vnoremap >  >gv
 imap <silent> <C-c>  <Esc>
 
 " for fcitx
-if g:is_linux_p && executable('fcitx-remote')
-    autocmd Vimrc InsertLeave * call system('fcitx-remote -c')
+if g:is_linux_p && executable('fcitx5-remote')
+    autocmd Vimrc InsertLeave * call system('fcitx5-remote -c')
 endif
 
 " $MYVIMRC is not set, since vim launched with -u option
