@@ -16,11 +16,6 @@ return {
                 mods = cmd_or_ctrl,
                 action = wezterm.action.CloseCurrentTab { confirm = true },
             },
-            {
-                key = 'n',
-                mods = cmd_or_ctrl,
-                action = wezterm.action.SpawnWindow
-            },
             { key = 'F1', mods = 'NONE', action = 'ActivateCopyMode' },
             { key = 'F2', mods = 'NONE', action = wezterm.action.ActivateCommandPalette },
             { key = 'F3', mods = 'NONE', action = wezterm.action.ShowLauncher },
