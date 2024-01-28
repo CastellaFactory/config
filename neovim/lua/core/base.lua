@@ -1,7 +1,7 @@
-vim.cmd('language messages C')
+local os_name = vim.loop.os_uname().sysname
 
-vim.g.is_mac = vim.fn.has('mac') or vim.fn.has('macunix')
-vim.g.is_linux = not vim.g.mac and vim.fn.has('unix')
-vim.g.is_windows = vim.fn.has('win32')
-
-vim.g.my_init = vim.fn.stdpath('config') .. '/init.lua'
+vim.g.is_mac = os_name == "Darwin"
+vim.g.is_linux = os_name == "Linux"
+vim.g.is_windows = os_name == "Windows_NT"
+vim.g.is_wsl = vim.fn.has("wsl") == 1
+vim.g.vim_path = vim.fn.stdpath("config")

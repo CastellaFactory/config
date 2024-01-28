@@ -1,3 +1,5 @@
+vim.cmd('language messages C')
+
 if vim.fn.has('vim_starting') then
     vim.opt.encoding = 'utf-8'
 end

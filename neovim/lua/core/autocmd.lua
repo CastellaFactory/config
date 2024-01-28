@@ -10,12 +10,12 @@ vim.api.nvim_create_autocmd('BufReadPost', {
     end,
 })
 
-if vim.g.is_linux and vim.fn.executable('fcitx-remote') then
+if vim.g.is_linux and vim.fn.executable('fcitx5-remote') then
     vim.api.nvim_create_autocmd('InsertLeave', {
         pattern = '*',
         group = 'Vimrc',
         callback = function()
-            vim.fn.system('fcitx-remote -c')
+            vim.fn.system('fcitx5-remote -c')
         end
     })
 end
