@@ -9,5 +9,6 @@ end
 require('fontsetting').setup(config)
 require('appearance').setup(config)
 require('keymapping').setup(config)
+require('domain').setup(config)
 
 return config
