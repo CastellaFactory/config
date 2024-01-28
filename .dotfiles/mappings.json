@@ -12,5 +12,7 @@
   "zsh/dot.zprofile": "~/.zprofile",
   "zsh/dot.zshenv": "~/.zshenv",
   "zsh/dot.zshrc": "~/.zshrc",
-  "alacritty": "~/.config/alacritty"
+  "alacritty": "~/.config/alacritty",
+  "wezterm/dot.wezterm.lua": "~/.wezterm.lua",
+  "wezterm/dot.config/wezterm": "~/.config/wezterm"
 }
