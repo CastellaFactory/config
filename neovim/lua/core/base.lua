@@ -1,3 +1,5 @@
+vim.cmd('language messages C')
+
 local os_name = vim.loop.os_uname().sysname
 
 vim.g.is_mac = os_name == "Darwin"

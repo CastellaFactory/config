@@ -21,3 +21,6 @@ vim.keymap.set('i', '<F1>', '<Nop>', {noremap = true})
 
 vim.keymap.set('n', 'Q', 'q', {noremap = true})
 vim.keymap.set('n', 'q', '<Nop>', {noremap = true})
+
+vim.keymap.set('n', '<Space>cd', ':<C-u>lua cd_to_current_buffer_dir()<CR>', {noremap = true})
+vim.keymap.set('n', '<Space>cgd', ':<C-u>lua cd_to_git_root_dir()<CR>', {noremap = true})
