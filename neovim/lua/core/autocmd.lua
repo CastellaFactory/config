@@ -19,3 +19,11 @@ if vim.g.is_linux and vim.fn.executable('fcitx5-remote') then
         end
     })
 end
+
+vim.api.nvim_create_autocmd('FileType', {
+	pattern = '*',
+    group = 'Vimrc',
+	callback = function()
+        vim.opt_local.formatoptions:remove({'r','o'})
+    end,
+})

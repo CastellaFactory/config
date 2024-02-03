@@ -9,7 +9,7 @@ return {
             vim.g.quickrun_config = {
                 ['_'] = {
                     ['outputter'] = 'buffer',
-                    ['outputter/buffer/split'] = ':botright 10sp',
+                    ['outputter/buffer/opener'] = ':botright 8sp',
                     ['outputter/buffer/close_on_empty'] = 1,
                     ['runner'] = 'neovim_job'
                 }
@@ -104,7 +104,7 @@ return {
             vim.g.lexima_ctrlh_as_backspace = 1
         end,
         config = function()
-            vim.fn['lexima#add_rule']({ ['at'] = [[\s\+\%#]], ['char'] = [[<CR>]], ['input'] = [[<C-o>:call setline('.', substitute(getline('.'), '\s\+$', '', '')) | echo 'delete trailing spaces'<CR>a<CR>]] })
+            vim.fn['lexima#add_rule']({ ['at'] = [[\s\+\%#]], ['char'] = '<CR>', ['input'] = [[<C-o>:call setline('.', substitute(getline('.'), '\s\+$', '', '')) | echo 'delete trailing spaces'<CR>a<CR>]] })
         end
     },
 }
